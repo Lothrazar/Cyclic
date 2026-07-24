@@ -15,7 +15,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 
@@ -46,12 +46,12 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+  public InteractionResult use(Level level, Player player, InteractionHand hand) {
     ItemStack itemstack = player.getItemInHand(hand);
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       this.toggle(player, itemstack);
     }
-    return InteractionResultHolder.success(itemstack);
+    return InteractionResult.SUCCESS.heldItemTransformedTo(itemstack);
   }
 
   @Override

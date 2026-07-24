@@ -146,11 +146,11 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    red = tag.getInt("red");
-    green = tag.getInt("green");
-    blue = tag.getInt("blue");
-    alpha = tag.getInt("alpha");
-    thick = tag.getInt("thick");
+    red = tag.getIntOr("red", 0);
+    green = tag.getIntOr("green", 0);
+    blue = tag.getIntOr("blue", 0);
+    alpha = tag.getIntOr("alpha", 0);
+    thick = tag.getIntOr("thick", 0);
     super.loadAdditional(tag,registries);
   }
 

@@ -30,13 +30,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketChestSack implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketChestSack> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_chest_sack"));
+  public static final CustomPacketPayload.Type<PacketChestSack> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_chest_sack"));
 
   public static final StreamCodec<FriendlyByteBuf, PacketChestSack> STREAM_CODEC = StreamCodec.of(PacketChestSack::encode, PacketChestSack::decode);
 

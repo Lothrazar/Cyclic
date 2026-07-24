@@ -69,7 +69,7 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
 
   public void tick() {
     timer--;
-    if (level.isClientSide || timer > 0) {
+    if (level.isClientSide() || timer > 0) {
       return;
     }
     timer = PER_TICK;
@@ -228,15 +228,15 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    this.rangeX = tag.getInt("ox");
-    this.rangeY = tag.getInt("oy");
-    this.rangeZ = tag.getInt("oz");
-    this.limitUntilRedstone = tag.getInt("limit");
-    int cType = tag.getInt("compare");
+    this.rangeX = tag.getIntOr("ox", 0);
+    this.rangeY = tag.getIntOr("oy", 0);
+    this.rangeZ = tag.getIntOr("oz", 0);
+    this.limitUntilRedstone = tag.getIntOr("limit", 0);
+    int cType = tag.getIntOr("compare", 0);
     if (cType >= 0 && cType < CompareType.values().length) {
       this.compType = CompareType.values()[cType];
     }
-    int eType = tag.getInt("entityType");
+    int eType = tag.getIntOr("entityType", 0);
     if (eType >= 0 && eType < EntityFilterType.values().length) {
       this.entityFilter = EntityFilterType.values()[eType];
     }

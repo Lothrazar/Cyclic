@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.trash;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -42,6 +42,6 @@ public class BlockTrash extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.TRASH.get(), world.isClientSide ? null : TileTrash::serverTick);
+    return createTickerHelper(type, TileRegistry.TRASH.get(), world.isClientSide() ? null : TileTrash::serverTick);
   }
 }

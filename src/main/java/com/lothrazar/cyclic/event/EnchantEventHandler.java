@@ -20,7 +20,7 @@ public class EnchantEventHandler {
     ItemStack stackBow = event.getBow();
     Player player = event.getEntity();
     Level worldIn = player.level();
-    if (!worldIn.isClientSide) {
+    if (!worldIn.isClientSide()) {
       var holder = EnchantUtil.holder(EnchantRegistry.MULTIBOW, player);
       int level = EnchantUtil.getCurrentLevelTool(holder, stackBow);
       if (level <= 0) {

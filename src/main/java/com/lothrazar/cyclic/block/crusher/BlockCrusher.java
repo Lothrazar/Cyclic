@@ -32,6 +32,6 @@ public class BlockCrusher extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.CRUSHER.get(), world.isClientSide ? null : TileCrusher::serverTick);
+    return createTickerHelper(type, TileRegistry.CRUSHER.get(), world.isClientSide() ? null : TileCrusher::serverTick);
   }
 }

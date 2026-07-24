@@ -13,7 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -23,7 +23,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public class PacketSyncHorseCarrots implements CustomPacketPayload {
 
   public static final CustomPacketPayload.Type<PacketSyncHorseCarrots> TYPE =
-      new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "sync_horse_carrots"));
+      new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "sync_horse_carrots"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketSyncHorseCarrots> STREAM_CODEC =
       StreamCodec.of(PacketSyncHorseCarrots::encode, PacketSyncHorseCarrots::decode);
@@ -60,9 +60,9 @@ public class PacketSyncHorseCarrots implements CustomPacketPayload {
   public static PacketSyncHorseCarrots readFrom(AbstractHorse horse) {
     CompoundTag d = horse.getPersistentData();
     byte flags = 0;
-    if (d.getBoolean(ItemHorseCopperRadar.NBT_KEY)) { flags |= FLAG_COPPER; }
-    if (d.getBoolean(ItemHorseNetheriteFire.NBT_KEY)) { flags |= FLAG_NETHERITE; }
-    if (d.getBoolean(ItemHorsePrismarineWater.NBT_KEY)) { flags |= FLAG_PRISMARINE; }
+    if (d.getBooleanOr(ItemHorseCopperRadar.NBT_KEY, false)) { flags |= FLAG_COPPER; }
+    if (d.getBooleanOr(ItemHorseNetheriteFire.NBT_KEY, false)) { flags |= FLAG_NETHERITE; }
+    if (d.getBooleanOr(ItemHorsePrismarineWater.NBT_KEY, false)) { flags |= FLAG_PRISMARINE; }
     return new PacketSyncHorseCarrots(
         horse.getId(),
         d.getInt(ItemHorseRedstoneSpeed.NBT_COUNT),

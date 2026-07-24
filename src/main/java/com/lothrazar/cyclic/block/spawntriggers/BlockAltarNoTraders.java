@@ -49,7 +49,7 @@ public class BlockAltarNoTraders extends BlockCyclic implements SimpleWaterlogge
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.ALTAR_SOLICITING.get(), world.isClientSide ? null : TileAltar::serverTick);
+    return createTickerHelper(type, TileRegistry.ALTAR_SOLICITING.get(), world.isClientSide() ? null : TileAltar::serverTick);
   }
 
   @Override

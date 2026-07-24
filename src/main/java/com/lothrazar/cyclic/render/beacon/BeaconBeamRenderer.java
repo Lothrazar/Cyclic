@@ -6,10 +6,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
@@ -68,7 +68,7 @@ public final class BeaconBeamRenderer {
     renderBeaconBeam(ms, buf, BeaconRenderer.BEAM_LOCATION, partial, 1.0F, time, yOffset, height, rgb, 0.2F, 0.25F);
   }
 
-  public static void renderBeaconBeam(PoseStack ms, MultiBufferSource buf, ResourceLocation rl,
+  public static void renderBeaconBeam(PoseStack ms, MultiBufferSource buf, Identifier rl,
                                       float partial, float textureScale, long time,
                                       int yOffset, int height, float[] rgb,
                                       float innerRadius, float outerRadius) {
@@ -87,7 +87,7 @@ public final class BeaconBeamRenderer {
     float f12 = -innerRadius;
     float f15 = -1.0F + f2;
     float f16 = height * textureScale * (0.5F / innerRadius) + f15;
-    renderPart(ms, buf.getBuffer(RenderType.beaconBeam(rl, false)), r, g, b, 1.0F, yOffset, top,
+    renderPart(ms, buf.getBuffer(RenderTypes.beaconBeam(rl, false)), r, g, b, 1.0F, yOffset, top,
         0.0F, innerRadius, innerRadius, 0.0F, f9, 0.0F, 0.0F, f12, 0.0F, 1.0F, f16, f15);
     ms.popPose();
     float f6 = -outerRadius;
@@ -96,7 +96,7 @@ public final class BeaconBeamRenderer {
     f9 = -outerRadius;
     f15 = -1.0F + f2;
     f16 = height * textureScale + f15;
-    renderPart(ms, buf.getBuffer(RenderType.beaconBeam(rl, true)), r, g, b, 0.125F, yOffset, top,
+    renderPart(ms, buf.getBuffer(RenderTypes.beaconBeam(rl, true)), r, g, b, 0.125F, yOffset, top,
         f6, f7, outerRadius, f8, f9, outerRadius, outerRadius, outerRadius, 0.0F, 1.0F, f16, f15);
     ms.popPose();
   }

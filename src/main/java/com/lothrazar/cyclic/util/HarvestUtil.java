@@ -12,7 +12,7 @@ import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
@@ -173,7 +173,7 @@ public class HarvestUtil {
       // return crops.getAgeProperty();
     }
     String age = CropBlock.AGE.getName();
-    ResourceLocation bid = BuiltInRegistries.BLOCK.getKey(blockState.getBlock());
+    Identifier bid = BuiltInRegistries.BLOCK.getKey(blockState.getBlock());
     if (CompatConstants.RESYNTH.equalsIgnoreCase(bid.getNamespace())) {
       //some silly old mods dont use age for compatibility
       // https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/blob/a9f47439d103c1c17ca7a4ffd05c2dc0397e5e5f/src/main/java/com/ki11erwolf/resynth/plant/block/BlockBiochemicalPlant.java#L59

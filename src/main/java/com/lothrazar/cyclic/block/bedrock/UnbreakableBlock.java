@@ -47,7 +47,7 @@ public class UnbreakableBlock extends BlockCyclic {
   private void setBreakable(BlockState state, Level world, BlockPos pos, boolean isBreakable) {
     boolean oldBreakable = state.getValue(BREAKABLE);
     world.setBlockAndUpdate(pos, state.setValue(BREAKABLE, isBreakable));
-    if (world.isClientSide && oldBreakable != isBreakable) {
+    if (world.isClientSide() && oldBreakable != isBreakable) {
       ParticleUtil.spawnParticle(world, DustParticleOptions.REDSTONE, pos, 5);
     }
   }

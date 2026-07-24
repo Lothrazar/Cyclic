@@ -19,7 +19,7 @@ public class TileWeather extends TileBlockEntityCyclic {
 
   public void tick() {
     //if we are going from unpowered to powered, meaning state isnt set but power is
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       int newPower = 0;
       if (level.isThundering()) {
         newPower = 2;

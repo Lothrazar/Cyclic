@@ -196,12 +196,12 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     // For backwards-compatibility: these weren't always stored, so keep the default
     if (tag.contains("size", Tag.TAG_INT)) {
-      radius = tag.getInt("size");
+      radius = tag.getIntOr("size", 0);
     }
     if (tag.contains("height", Tag.TAG_INT)) {
-      height = tag.getInt("height");
+      height = tag.getIntOr("height", 0);
     }
-    shapeIndex = tag.getInt("shapeIndex");
+    shapeIndex = tag.getIntOr("shapeIndex", 0);
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
     if (tag.contains(NBTENERGY)) {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));

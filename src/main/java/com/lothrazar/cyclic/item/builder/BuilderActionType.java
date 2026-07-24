@@ -18,7 +18,7 @@ public enum BuilderActionType {
   private static final String NBTTIMEOUT = "timeout";
 
   public static int getTimeout(ItemStack wand) {
-    return wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(NBTTIMEOUT);
+    return wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBTTIMEOUT, 0);
   }
 
   public static void setTimeout(ItemStack wand) {
@@ -27,7 +27,7 @@ public enum BuilderActionType {
 
   public static void tickTimeout(ItemStack wand) {
     CompoundTag tags = wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-    int t = tags.getInt(NBTTIMEOUT);
+    int t = tags.getIntOr(NBTTIMEOUT, 0);
     if (t > 0) {
       CompoundTag tag = wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(); tag.putInt(NBTTIMEOUT, t - 1); wand.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
@@ -38,13 +38,13 @@ public enum BuilderActionType {
       return 0;
     }
     CompoundTag tags = wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-    return tags.getInt(NBT);
+    return tags.getIntOr(NBT, 0);
   }
 
   public static String getName(ItemStack wand) {
     try {
       CompoundTag tags = wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-      return "tool.action." + values()[tags.getInt(NBT)].toString().toLowerCase();
+      return "tool.action." + values()[tags.getIntOr(NBT, 0)].toString().toLowerCase();
     }
     catch (Exception e) {
       return "tool.action." + SINGLE.toString().toLowerCase();
@@ -53,7 +53,7 @@ public enum BuilderActionType {
 
   public static void toggle(ItemStack wand) {
     CompoundTag tags = wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-    int type = tags.getInt(NBT);
+    int type = tags.getIntOr(NBT, 0);
     type++;
     if (type >= values().length) {
       type = SINGLE.ordinal();

@@ -6,7 +6,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -21,19 +21,19 @@ public class StructureCard extends ItemBaseCyclic {
     super(properties);
   }
 
-  public static ResourceLocation readDisk(ItemStack item) {
+  public static Identifier readDisk(ItemStack item) {
     CompoundTag tag = item.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     if (!tag.contains(NBTSTRUCTURE)) {
       return null;
     }
-    return ResourceLocation.tryParse(tag.getString(NBTSTRUCTURE));
+    return Identifier.tryParse(tag.getStringOr(NBTSTRUCTURE, ""));
   }
 
   public static void deleteDisk(ItemStack item) {
     item.remove(DataComponents.CUSTOM_DATA);
   }
 
-  public static void saveDisk(ItemStack item, ResourceLocation saved) {
+  public static void saveDisk(ItemStack item, Identifier saved) {
     CompoundTag tag = item.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     tag.putString(NBTSTRUCTURE, saved.toString());
     item.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));

@@ -8,7 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,7 +42,7 @@ public class EntityDataCard extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+  public InteractionResult use(Level level, Player player, InteractionHand hand) {
     if (player.isCrouching()) {
       CompoundTag atag = player.getMainHandItem().getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       atag.put(ENTITY_DATA, player.getPersistentData());
@@ -78,7 +77,7 @@ public class EntityDataCard extends ItemBaseCyclic {
 
   private static EntityType<?> getEntityType(ItemStack stack) {
     if (stack.getItem() instanceof EntityDataCard) {
-      final String key = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(ENTITY_KEY);
+      final String key = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(ENTITY_KEY, "");
       return EntityType.byString(key).orElse(null);
     }
     return null;

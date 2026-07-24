@@ -3,13 +3,13 @@ package com.lothrazar.cyclic.net;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketPlayerSyncToClient implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketPlayerSyncToClient> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_player_sync_to_client"));
+  public static final CustomPacketPayload.Type<PacketPlayerSyncToClient> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_player_sync_to_client"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketPlayerSyncToClient> STREAM_CODEC = StreamCodec.of(PacketPlayerSyncToClient::encode, PacketPlayerSyncToClient::decode);
 

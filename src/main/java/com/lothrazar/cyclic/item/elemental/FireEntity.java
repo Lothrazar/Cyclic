@@ -49,7 +49,7 @@ public class FireEntity extends ThrowableItemProjectile {
       var level = level();
       if (target.isAlive()) {
         target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 6));
-        if (!level.isClientSide && target.isOnFire() == false
+        if (!level.isClientSide() && target.isOnFire() == false
             && target instanceof LivingEntity) {
           target.hurt(level.damageSources().inFire(), Mth.nextInt(level.random, 3, 5));
           LivingEntity living = (LivingEntity) target;
@@ -62,7 +62,7 @@ public class FireEntity extends ThrowableItemProjectile {
       BlockHitResult ray = (BlockHitResult) result;
       //  set fire in the area here, small radius randomized, similar to lightning strike or tnt
       var level = this.level();
-      if (!level.isClientSide && ray.getBlockPos() != null) {
+      if (!level.isClientSide() && ray.getBlockPos() != null) {
         final int radius = 2;
         final BlockPos center = ray.getBlockPos().relative(ray.getDirection());
         final int attempts = Mth.nextInt(level.random, 3, 6); //range similar to lightning default

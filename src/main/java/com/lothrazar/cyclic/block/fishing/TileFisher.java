@@ -91,9 +91,9 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
     final int radius = RADIUS.get();
     ItemStack stack = inventory.getStackInSlot(0);
     if (stack.is(DataTags.FISHING_RODS)) {
-      int x = worldPosition.getX() + level.random.nextInt(radius * 2) - radius;
+      int x = worldPosition.getX() + level.getRandom().nextInt(radius * 2) - radius;
       int y = worldPosition.getY();
-      int z = worldPosition.getZ() + level.random.nextInt(radius * 2) - radius;
+      int z = worldPosition.getZ() + level.getRandom().nextInt(radius * 2) - radius;
       BlockPos center = new BlockPos(x, y, z);
       if (isWater(this.level, center)) {
         try {
@@ -114,7 +114,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
   private void doFishing(ItemStack fishingRod, BlockPos center) {
 
     Level world = this.getLevel();
-    RandomSource rand = world.random;
+    RandomSource rand = world.getRandom();
     if (rand.nextDouble() < CHANCE.get() && world instanceof ServerLevel) {
       LootTable table = level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
       if (table == null) {

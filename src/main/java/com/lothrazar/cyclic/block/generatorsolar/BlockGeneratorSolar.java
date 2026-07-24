@@ -53,6 +53,6 @@ public class BlockGeneratorSolar extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.GENERATOR_SOLAR.get(), world.isClientSide ? null : TileGeneratorSolar::serverTick);
+    return createTickerHelper(type, TileRegistry.GENERATOR_SOLAR.get(), world.isClientSide() ? null : TileGeneratorSolar::serverTick);
   }
 }

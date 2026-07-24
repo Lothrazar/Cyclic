@@ -32,7 +32,7 @@ public class EnderPearlEnchant {
   public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
     if (!isEnabled()) { return; }
     Level world = event.getLevel();
-    if (world.isClientSide || event.isCanceled()) { return; }
+    if (world.isClientSide() || event.isCanceled()) { return; }
     ItemStack stack = event.getItemStack();
     int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.PEARL, world), stack);
     if (level <= 0) { return; }
@@ -43,7 +43,7 @@ public class EnderPearlEnchant {
     Vec3 lookVector = player.getLookAngle();
     pearl.shoot(lookVector.x(), lookVector.y(), lookVector.z(), VELOCITY, INNACCURACY);
     EntityUtil.setCooldownItem(player, stack.getItem(), adjustedCooldown);
-    SoundUtil.playSound(player, SoundEvents.ENDER_PEARL_THROW, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
+    SoundUtil.playSound(player, SoundEvents.ENDER_PEARL_THROW, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
     world.addFreshEntity(pearl);
     event.setCancellationResult(InteractionResult.SUCCESS);
     event.setCanceled(true);

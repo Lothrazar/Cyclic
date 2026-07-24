@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -19,7 +19,7 @@ public class SnowScepter extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
+  public InteractionResult use(Level world, Player player, InteractionHand handIn) {
     ItemStack stack = player.getItemInHand(handIn);
     if (player.getCooldowns().isOnCooldown(this)) {
       return super.use(world, player, handIn);
@@ -27,7 +27,7 @@ public class SnowScepter extends ItemBaseCyclic {
     shootMe(world, player, new SnowEntity(player, world), 0, ItemBaseCyclic.VELOCITY_MAX);
     shootMe(world, player, new SnowEntity(player, world), 10, ItemBaseCyclic.VELOCITY_MAX);
     shootMe(world, player, new SnowEntity(player, world), -10, ItemBaseCyclic.VELOCITY_MAX);
-    player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
+    player.getCooldowns().addCooldown(stack, COOLDOWN);
     ItemStackUtil.damageItem(player, stack);
     SoundUtil.playSound(player, SoundRegistry.FROST_STAFF_LAUNCH.get());
     return super.use(world, player, handIn);

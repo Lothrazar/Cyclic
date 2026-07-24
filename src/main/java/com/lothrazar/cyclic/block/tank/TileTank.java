@@ -32,7 +32,7 @@ public class TileTank extends TileBlockEntityCyclic {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    CompoundTag fluid = tag.getCompound(NBTFLUID);
+    CompoundTag fluid = tag.getCompoundOrEmpty(NBTFLUID);
     tank.readFromNBT(registries,fluid);
     super.loadAdditional(tag,registries);
   }

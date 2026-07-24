@@ -4,18 +4,39 @@ import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
-public class RenderDropper implements BlockEntityRenderer<TileDropper> {
+public class RenderDropper implements BlockEntityRenderer<TileDropper, RenderDropper.State> {
+
+  public static class State extends BlockEntityRenderState {
+    TileDropper blockEntity;
+  }
 
   public RenderDropper(BlockEntityRendererProvider.Context d) {}
 
   @Override
-  public void render(TileDropper te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {
+  public State createRenderState() {
+    return new State();
+  }
+
+  @Override
+  public void extractRenderState(TileDropper blockEntity, State state, float partialTicks, Vec3 cameraPosition,
+      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
+    state.blockEntity = blockEntity;
+  }
+
+  @Override
+  public void submit(State state, PoseStack matrixStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    TileDropper te = state.blockEntity;
     int previewType = te.getField(TileDropper.Fields.RENDER.ordinal());
     if (previewType == PreviewOutlineType.SHADOW.ordinal()) {
       RenderBlockUtils.renderOutline(te.getBlockPos(), te.getShape(), matrixStack, 0.9F, ClientConfigCyclic.getColor(te));

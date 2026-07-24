@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +30,7 @@ public class LeverRemote extends ItemBaseCyclic {
   private static final String LEVER_DIM = "LeverDim";
 
   private static String getDim(ItemStack stack) {
-    return stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(LEVER_DIM);
+    return stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(LEVER_DIM, "");
   }
 
   private static void setDim(ItemStack stack, String dim) {
@@ -56,15 +55,15 @@ public class LeverRemote extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand hand) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand hand) {
     ItemStack stack = playerIn.getItemInHand(hand);
     boolean success = trigger(stack, worldIn, playerIn);
     if (success) {
       playerIn.swing(hand);
-      return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+      return new InteractionResult(InteractionResult.SUCCESS, stack);
     }
     else {
-      return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, stack);
+      return new InteractionResult(InteractionResult.FAIL, stack);
     }
   }
 
@@ -82,7 +81,7 @@ public class LeverRemote extends ItemBaseCyclic {
       //and save dimension
       setDim(stack, LevelWorldUtil.dimensionToString(player.level()));
       //      UtilNBT.setItemStackNBTVal(stack, "LeverDim", player.dimension.getId());
-      if (world.isClientSide) {
+      if (world.isClientSide()) {
         ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".saved");
       }
       //      UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
@@ -105,7 +104,7 @@ public class LeverRemote extends ItemBaseCyclic {
     BlockPos blockPos = TagDataUtil.getItemStackBlockPos(stack);
     //default is zero which is ok
     if (blockPos == null) {
-      if (world.isClientSide) {
+      if (world.isClientSide()) {
         ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".invalid");
       }
       return false;
@@ -116,7 +115,7 @@ public class LeverRemote extends ItemBaseCyclic {
     if (dimensionTarget.equalsIgnoreCase(currentDim)) { //same dim eh
       BlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
           ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".invalid");
         }
         return false;

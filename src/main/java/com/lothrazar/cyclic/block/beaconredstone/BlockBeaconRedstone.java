@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
@@ -46,6 +46,6 @@ public class BlockBeaconRedstone extends BlockCyclic implements BeaconBeamBlock 
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.BEACON_REDSTONE.get(), world.isClientSide ? TileBeaconRedstone::clientTick : TileBeaconRedstone::serverTick);
+    return createTickerHelper(type, TileRegistry.BEACON_REDSTONE.get(), world.isClientSide() ? TileBeaconRedstone::clientTick : TileBeaconRedstone::serverTick);
   }
 }

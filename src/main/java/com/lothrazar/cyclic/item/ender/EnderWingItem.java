@@ -38,7 +38,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -52,8 +52,8 @@ public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    if (worldIn.isClientSide
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (worldIn.isClientSide()
         || playerIn.getCooldowns().isOnCooldown(this)) {
       return super.use(worldIn, playerIn, handIn);
     }

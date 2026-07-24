@@ -8,7 +8,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
@@ -42,7 +42,7 @@ public class BlockShearing extends BlockCyclic {
       if (sheep.isShearable(null,ItemStack.EMPTY, worldIn, pos)) {
         List<ItemStack> drops = sheep.onSheared(null, ItemStack.EMPTY, worldIn, pos); //, worldIn.random.nextInt(3)
         drops.forEach(d -> {
-          RandomSource rand = worldIn.random;
+          RandomSource rand = worldIn.getRandom();
           ItemEntity ent = entityIn.spawnAtLocation(d, 1.0F);
           ent.setDeltaMovement(ent.getDeltaMovement().add((rand.nextFloat() - rand.nextFloat()) * 0.1F, rand.nextFloat() * 0.05F, (rand.nextFloat() - rand.nextFloat()) * 0.1F));
         });

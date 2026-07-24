@@ -67,7 +67,7 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
 
   @Override
   public void inventoryTick(ItemStack stack, Level world, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (world.isClientSide) {
+    if (world.isClientSide()) {
       return;
     }
     if (!this.isOn(stack)) {

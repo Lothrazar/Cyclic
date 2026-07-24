@@ -30,13 +30,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketHarvesting implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketHarvesting> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_harvesting"));
+  public static final CustomPacketPayload.Type<PacketHarvesting> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_harvesting"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketHarvesting> STREAM_CODEC = StreamCodec.of(PacketHarvesting::encode, PacketHarvesting::decode);
 
@@ -57,7 +57,7 @@ public class PacketHarvesting implements CustomPacketPayload {
 
   public static PacketHarvesting decode(RegistryFriendlyByteBuf buf) {
     CompoundTag tags = buf.readNbt();
-    return new PacketHarvesting(new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z")), buf.readInt());
+    return new PacketHarvesting(new BlockPos(tags.getIntOr("x", 0), tags.getInt("y"), tags.getInt("z")), buf.readInt());
   }
 
   public static void encode(RegistryFriendlyByteBuf buf, PacketHarvesting msg) {

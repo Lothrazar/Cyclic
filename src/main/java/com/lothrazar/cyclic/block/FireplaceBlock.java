@@ -32,7 +32,7 @@ public class FireplaceBlock extends BlockCyclic {
       //use case: facing obsidian or wood plank instead of air
     }
     if (isPowered && !state.getValue(LIT)) { //set fire
-      if (setFire(worldIn, posFire, false) && worldIn.isClientSide) {
+      if (setFire(worldIn, posFire, false) && worldIn.isClientSide()) {
         SoundUtil.playSound(worldIn, pos, SoundEvents.FLINTANDSTEEL_USE);
       }
     }

@@ -85,7 +85,7 @@ public class BlockEnderShelf extends BlockCyclic {
       if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
         ItemStack stackInSlot = shelf.inventory.getStackInSlot(slot);
         if (stackInSlot == ItemStack.EMPTY || EnchantUtil.doBookEnchantmentsMatch(stackInSlot, heldItem)) {
-          if (!world.isClientSide) {
+          if (!world.isClientSide()) {
             ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
             player.setItemInHand(InteractionHand.MAIN_HAND, remaining);
             player.swing(InteractionHand.MAIN_HAND);

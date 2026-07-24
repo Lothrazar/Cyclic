@@ -62,7 +62,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
       return;
     }
     setLitProperty(true);
-    if (this.level.isClientSide) {
+    if (this.level.isClientSide()) {
       return;
     }
     //get and update target
@@ -160,10 +160,10 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    radius = tag.getInt("radius");
-    height = tag.getInt("height");
-    directionIsUp = tag.getBoolean("directionIsUp");
-    shapeIndex = tag.getInt("shapeIndex");
+    radius = tag.getIntOr("radius", 0);
+    height = tag.getIntOr("height", 0);
+    directionIsUp = tag.getBooleanOr("directionIsUp", false);
+    shapeIndex = tag.getIntOr("shapeIndex", 0);
     if (tag.contains(NBTENERGY)) {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }

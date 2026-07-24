@@ -25,7 +25,7 @@ public class TileTerraGlass extends TileBlockEntityCyclic {
 
   public void tick() {
     //sprinkler to ONLY whats directly above/below
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     timer--;

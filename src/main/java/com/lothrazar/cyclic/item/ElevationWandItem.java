@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,8 +26,8 @@ public class ElevationWandItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    return tryTeleport(worldIn, playerIn, playerIn, playerIn.getItemInHand(handIn)) ? InteractionResultHolder.success(playerIn.getItemInHand(handIn)) : InteractionResultHolder.consume(playerIn.getItemInHand(handIn));
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    return tryTeleport(worldIn, playerIn, playerIn, playerIn.getItemInHand(handIn)) ? InteractionResult.SUCCESS.heldItemTransformedTo(playerIn.getItemInHand(handIn)) : InteractionResult.CONSUME.heldItemTransformedTo(playerIn.getItemInHand(handIn));
   }
 
   private boolean tryTeleport(Level world, Player playerIn, LivingEntity target, ItemStack stack) {
@@ -39,7 +38,7 @@ public class ElevationWandItem extends ItemBaseCyclic {
     if (destination != null) {
       //play sound at old locaiton on leaving
       SoundUtil.playSound(target, SoundRegistry.WARP_ECHO.get());
-      if (!world.isClientSide) {
+      if (!world.isClientSide()) {
         EntityUtil.enderTeleportEvent(target, world, destination);
         ItemStackUtil.damageItem(playerIn, stack);
       }

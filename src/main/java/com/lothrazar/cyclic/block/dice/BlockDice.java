@@ -10,7 +10,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -66,7 +66,7 @@ public class BlockDice extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.DICE.get(), world.isClientSide ? null : TileDice::serverTick);
+    return createTickerHelper(type, TileRegistry.DICE.get(), world.isClientSide() ? null : TileDice::serverTick);
   }
 
   @Override
@@ -86,7 +86,7 @@ public class BlockDice extends BlockCyclic {
     BlockEntity tile = world.getBlockEntity(pos);
     if (tile instanceof TileDice) {
       ((TileDice) tile).startSpinning();
-      if (world.isClientSide) {
+      if (world.isClientSide()) {
         SoundUtil.playSound(world, pos, SoundRegistry.DICE_MIKE_KOENIG.get());
       }
       return InteractionResult.SUCCESS;

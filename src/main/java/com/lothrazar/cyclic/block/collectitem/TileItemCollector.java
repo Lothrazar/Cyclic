@@ -64,7 +64,7 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
       return;
     }
     setLitProperty(true);
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     AABB aabb = getRange();
@@ -72,7 +72,7 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
       return entity.isAlive(); //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
     });
     if (list.size() > 0) {
-      ItemEntity stackEntity = list.get(level.random.nextInt(list.size()));
+      ItemEntity stackEntity = list.get(level.getRandom().nextInt(list.size()));
       ItemStack remainder = stackEntity.getItem();
       // and then pull 
       if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), remainder)) {
@@ -106,9 +106,9 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     filter.deserializeNBT(registries,tag.getCompound("filter"));
-    radius = tag.getInt("radius");
-    height = tag.getInt("height");
-    directionIsUp = tag.getBoolean("directionIsUp");
+    radius = tag.getIntOr("radius", 0);
+    height = tag.getIntOr("height", 0);
+    directionIsUp = tag.getBooleanOr("directionIsUp", false);
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.loadAdditional(tag, registries);
   }

@@ -19,14 +19,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeCrusher>> {
 
   private static final int FONT = 0xFFFFFFFF;
-  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "crusher");
+  private static final Identifier ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "crusher");
   static final RecipeType<RecipeHolder<RecipeCrusher>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
@@ -35,7 +35,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
 
   public CrusherRecipeCategory(IGuiHelper helper) {
     font = Minecraft.getInstance().font;
-    gui = helper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/crusher.png"), 0, 0, 155, 49).setTextureSize(155, 49).build();
+    gui = helper.drawableBuilder(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/crusher.png"), 0, 0, 155, 49).setTextureSize(155, 49).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.CRUSHER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);
     bar.setHeight(48);

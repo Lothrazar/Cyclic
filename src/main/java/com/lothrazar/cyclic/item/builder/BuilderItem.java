@@ -17,7 +17,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 
 public class BuilderItem extends ItemHasEnergy {
@@ -59,10 +59,10 @@ public class BuilderItem extends ItemHasEnergy {
     if (side != null && buildStyle.isOffset()) {
       pos = pos.relative(side);
     }
-    if (context.getLevel().isClientSide) {
+    if (context.getLevel().isClientSide()) {
       BuilderActionType type = getActionType(stack);
       PacketSwapBlock message = new PacketSwapBlock(pos, type, side, context.getHand());
-      PacketDistributor.sendToServer(message);
+      ClientPacketDistributor.sendToServer(message);
       return InteractionResult.SUCCESS;
     }
     return super.useOn(context);

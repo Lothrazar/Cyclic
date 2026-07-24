@@ -16,7 +16,7 @@ import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -37,7 +37,7 @@ public class SolidifierZen implements IRecipeManager<RecipeSolidifier> {
 
   @ZenCodeType.Method
   public void addRecipe(String name, IIngredient[] input, IFluidStack fluid, IItemStack output, int rfPertick, int ticks) {
-    ResourceLocation id = fixRecipeId(name);
+    Identifier id = fixRecipeId(name);
     if (output.isEmpty()) {
       throw new IllegalArgumentException("Output cannot be empty!");
     }
@@ -57,7 +57,7 @@ public class SolidifierZen implements IRecipeManager<RecipeSolidifier> {
 
   @ZenCodeType.Method
   public void addRecipe(String name, IIngredient[] input, String fluidTag, int fluidQuantity, IItemStack output, int rfPertick, int ticks) {
-    ResourceLocation id = fixRecipeId(name);
+    Identifier id = fixRecipeId(name);
     if (output.isEmpty()) {
       throw new IllegalArgumentException("Output cannot be empty!");
     }
@@ -68,7 +68,7 @@ public class SolidifierZen implements IRecipeManager<RecipeSolidifier> {
     //because CT doesnt have a fluid tag ingredient type really and it could come in foramt <fluid:minecraft:water>
     //parse it out into a TagKey
     fluidTag = fluidTag.replace("<", "").replace(">", "").replace("fluid:", "");
-    TagKey<Fluid> tag = TagKey.create(Registries.FLUID, ResourceLocation.parse(fluidTag));
+    TagKey<Fluid> tag = TagKey.create(Registries.FLUID, Identifier.parse(fluidTag));
     RecipeSolidifier recipe = new RecipeSolidifier(
         list,
         SizedFluidIngredient.of(tag, fluidQuantity),

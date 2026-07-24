@@ -72,7 +72,7 @@ public class BlockSimpleHopper extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.HOPPER.get(), world.isClientSide ? null : TileSimpleHopper::serverTick);
+    return createTickerHelper(type, TileRegistry.HOPPER.get(), world.isClientSide() ? null : TileSimpleHopper::serverTick);
   }
 
   private static final VoxelShape HOPPER_TOP = Block.box(0, 10, 0, 16, 16, 16);

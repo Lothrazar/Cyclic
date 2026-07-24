@@ -30,7 +30,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 
 public class ScytheBrush extends ItemBaseCyclic {
@@ -52,8 +52,8 @@ public class ScytheBrush extends ItemBaseCyclic {
     }
     // send work packet
     int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
-    if (context.getLevel().isClientSide) {
-      PacketDistributor.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius)); // line 51
+    if (context.getLevel().isClientSide()) {
+      ClientPacketDistributor.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius)); // line 51
     }
     context.getPlayer().swing(context.getHand());
     ItemStackUtil.damageItem(context.getPlayer(), context.getItemInHand());

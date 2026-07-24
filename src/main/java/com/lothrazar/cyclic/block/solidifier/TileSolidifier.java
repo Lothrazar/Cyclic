@@ -158,8 +158,8 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     }
     inputSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
     outputSlots.deserializeNBT(registries,tag.getCompound("invoutput"));
-    burnTimeMax = tag.getInt("burnTimeMax");
-    lock = tag.getInt(NBT_LOCK);
+    burnTimeMax = tag.getIntOr("burnTimeMax", 0);
+    lock = tag.getIntOr(NBT_LOCK, 0);
     super.loadAdditional(tag,registries);
   }
 

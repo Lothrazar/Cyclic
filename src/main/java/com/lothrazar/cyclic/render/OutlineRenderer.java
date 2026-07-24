@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.LaserItem;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
@@ -193,7 +193,7 @@ public class OutlineRenderer {
         //Render and Shoot. closerange version
         RenderEntityToBlockLaser.renderLaser(event, player, mc.getTimer().getGameTimeDeltaPartialTick(false), stack, InteractionHand.MAIN_HAND, 18, -0.02F, lr, lg, lb);
         if (world.getGameTime() % 4 == 0) {
-          PacketDistributor.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
+          ClientPacketDistributor.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
           SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
         }
       }
@@ -221,7 +221,7 @@ public class OutlineRenderer {
               //  dont shoot thru walls
               RenderEntityToBlockLaser.renderLaser(event, player, mc.getTimer().getGameTimeDeltaPartialTick(false), stack, InteractionHand.MAIN_HAND, lr, lg, lb);
               if (world.getGameTime() % 4 == 0) {
-                PacketDistributor.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
+                ClientPacketDistributor.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
                 SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
               }
             }

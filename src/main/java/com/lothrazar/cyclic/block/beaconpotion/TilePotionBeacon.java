@@ -154,8 +154,8 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     filter.deserializeNBT(registries,tag.getCompound("filter"));
-    this.radius = tag.getInt("radius");
-    entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];
+    this.radius = tag.getIntOr("radius", 0);
+    entityFilter = EntityFilterType.values()[tag.getIntOr("entityFilter", 0)];
     if (tag.contains(NBTENERGY)) {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }

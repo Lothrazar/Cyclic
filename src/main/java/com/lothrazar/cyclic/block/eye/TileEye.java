@@ -21,7 +21,7 @@ public class TileEye extends TileBlockEntityCyclic {
   }
 
   public void tick() {
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     timer--;

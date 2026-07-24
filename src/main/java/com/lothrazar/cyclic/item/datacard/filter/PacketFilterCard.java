@@ -5,13 +5,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
 public class PacketFilterCard implements CustomPacketPayload {
   public static final int TOGGLE_IGNORE = 0;
   public static final int TOGGLE_TAGMATCH = 1;
-  public static final CustomPacketPayload.Type<PacketFilterCard> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_filter_card"));
+  public static final CustomPacketPayload.Type<PacketFilterCard> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_filter_card"));
   public static final StreamCodec<FriendlyByteBuf, PacketFilterCard> STREAM_CODEC = StreamCodec.of(PacketFilterCard::encode, PacketFilterCard::decode);
   @Override public CustomPacketPayload.Type<? extends CustomPacketPayload> type() { return TYPE; }
   private int toggleType;

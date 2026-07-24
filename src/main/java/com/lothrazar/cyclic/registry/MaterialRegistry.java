@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.registry;
 import java.util.List;
 import java.util.EnumMap;
 import com.lothrazar.cyclic.ModCyclic;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorItem;
@@ -54,7 +54,7 @@ public class MaterialRegistry {
         25, // enchantment value (from ArmorMaterials.GOLD)
         SoundRegistry.EQUIP_EMERALD,
         () -> Ingredient.of(Items.EMERALD),
-        List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "emerald"))),
+        List.of(new ArmorMaterial.Layer(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "emerald"))),
         3.0F, // toughness
         (ArmorMaterials.DIAMOND.value().knockbackResistance() + ArmorMaterials.NETHERITE.value().knockbackResistance()) / 2.0F
     ));
@@ -71,7 +71,7 @@ public class MaterialRegistry {
         15, // enchantment value (between iron=9 and gold=25)
         SoundRegistry.EQUIP_EMERALD,
         () -> Ingredient.of(Items.COPPER_INGOT),
-        List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "copper"))),
+        List.of(new ArmorMaterial.Layer(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "copper"))),
         0.5F, // toughness (iron is 0)
         ArmorMaterials.IRON.value().knockbackResistance()
     ));
@@ -87,7 +87,7 @@ public class MaterialRegistry {
         ArmorMaterials.GOLD.value().enchantmentValue() + 3,
         SoundRegistry.EQUIP_EMERALD,
         () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get()),
-        List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "crystal"))),
+        List.of(new ArmorMaterial.Layer(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "crystal"))),
         6.0F,
         ArmorMaterials.NETHERITE.value().knockbackResistance()
     ));
@@ -99,7 +99,7 @@ public class MaterialRegistry {
           iron.enchantmentValue() + 1,
           SoundRegistry.EQUIP_EMERALD,
           () -> Ingredient.of(ItemRegistry.GEM_AMBER.get()),
-          List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "glowing"))),
+          List.of(new ArmorMaterial.Layer(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "glowing"))),
           iron.toughness(),
           iron.knockbackResistance()
       );

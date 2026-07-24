@@ -8,7 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -16,7 +16,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public class PacketFreezeWater implements CustomPacketPayload {
 
   public static final Type<PacketFreezeWater> TYPE = new Type<>(
-      ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_freeze_water"));
+      Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_freeze_water"));
 
   public static final StreamCodec<FriendlyByteBuf, PacketFreezeWater> STREAM_CODEC = StreamCodec.of(
       PacketFreezeWater::encode,

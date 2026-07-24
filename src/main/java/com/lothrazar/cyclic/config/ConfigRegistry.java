@@ -81,7 +81,7 @@ import com.lothrazar.cyclic.registry.MaterialRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.StringParseUtil;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -746,7 +746,7 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> FACADE_IGNORELIST;
 
   public static boolean isFacadeAllowed(ItemStack item) {
-    ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item.getItem());
+    Identifier itemId = BuiltInRegistries.ITEM.getKey(item.getItem());
     if (StringParseUtil.isInList(getFacadeIgnoreList(), itemId)) {
       return false;
     }

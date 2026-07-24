@@ -6,26 +6,68 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
-public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
+public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf, ItemShelfRenderer.State> {
 
-  public ItemShelfRenderer(BlockEntityRendererProvider.Context d) {}
+  public static class State extends BlockEntityRenderState {
+    TileItemShelf blockEntity;
+    ItemStackRenderState[] items;
+  }
+
+  private final ItemModelResolver itemModelResolver;
+
+  public ItemShelfRenderer(BlockEntityRendererProvider.Context d) {
+    this.itemModelResolver = d.itemModelResolver();
+  }
 
   @Override
-  public void render(TileItemShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
-    Direction side = tile.getCurrentFacing();
-    RenderTextUtil.alignRendering(ms, side);
-    for (int i = 0; i < tile.inventory.getSlots(); i++) {
-      renderSlot(tile, i, tile.inventory.getStackInSlot(i), ms, buffer, combinedLightIn, combinedOverlayIn);
+  public State createRenderState() {
+    return new State();
+  }
+
+  @Override
+  public void extractRenderState(TileItemShelf blockEntity, State state, float partialTicks, Vec3 cameraPosition,
+      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
+    state.blockEntity = blockEntity;
+    int slots = blockEntity.inventory.getSlots();
+    state.items = new ItemStackRenderState[slots];
+    for (int i = 0; i < slots; i++) {
+      ItemStack stack = blockEntity.inventory.getStackInSlot(i);
+      if (!stack.isEmpty()) {
+        ItemStackRenderState itemState = new ItemStackRenderState();
+        itemModelResolver.updateForTopItem(itemState, stack, ItemDisplayContext.NONE, blockEntity.getLevel(), null, i);
+        state.items[i] = itemState;
+      }
     }
   }
 
-  private void renderSlot(TileItemShelf tile, int slot, ItemStack stack, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
+  @Override
+  public void submit(State state, PoseStack ms, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    TileItemShelf tile = state.blockEntity;
+    Direction side = tile.getCurrentFacing();
+    RenderTextUtil.alignRendering(ms, side);
+    for (int i = 0; i < tile.inventory.getSlots(); i++) {
+      renderSlot(tile, i, tile.inventory.getStackInSlot(i), state.items[i], ms, submitNodeCollector, state.lightCoords);
+    }
+  }
+
+  private void renderSlot(TileItemShelf tile, int slot, ItemStack stack, ItemStackRenderState itemState, PoseStack ms,
+      SubmitNodeCollector submitNodeCollector, int combinedLightIn) {
     if (stack.isEmpty()) {
       return;
     }
@@ -36,6 +78,7 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
     final double z = 1.01;
     final float scaleNum = 0.094F;
     Font fontRenderer = Minecraft.getInstance().font; // this.renderer.getFont();
+    MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
     if (tile.renderStyle == RenderTextType.STACK) {
       final float sp = 0.19F;
       final float xf = 0.16F + slot * sp / 1.5F;
@@ -47,8 +90,9 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
       ms.translate(0, 0, 1);
       ms.translate(xf, yf, 0);
       ms.scale(size, size, size);
-      //      float lf = tile.getWorld().getLight(tile.getPos().offset(tile.getCurrentFacing()));
-      Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.NONE, combinedLightIn, combinedOverlayIn, ms, buffer, tile.getLevel(), combinedLightIn);
+      if (itemState != null) {
+        itemState.submit(ms, submitNodeCollector, combinedLightIn, OverlayTexture.NO_OVERLAY, 0);
+      }
       ms.popPose();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {
@@ -71,6 +115,7 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
       fontRenderer.drawInBatch(displayCount, 110, 0, color, false, ms.last().pose(), buffer, Font.DisplayMode.NORMAL, 0, combinedLightIn);
       ms.popPose();
     }
+    buffer.endBatch();
   }
 
   private float getScaleFactor(String displayName) {

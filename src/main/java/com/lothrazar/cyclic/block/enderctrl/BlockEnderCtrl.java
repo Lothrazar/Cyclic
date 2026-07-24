@@ -87,7 +87,7 @@ public class BlockEnderCtrl extends BlockCyclic {
       return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-      if (!world.isClientSide) {
+      if (!world.isClientSide()) {
         TileEnderCtrl ctrl = (TileEnderCtrl) world.getBlockEntity(pos);
         if (ctrl != null) {
           ItemStack remaining = ctrl.controllerInv.insertItem(0, heldItem, false);

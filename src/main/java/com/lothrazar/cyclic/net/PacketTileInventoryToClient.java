@@ -5,13 +5,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketTileInventoryToClient implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketTileInventoryToClient> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_tile_inventory_to_client"));
+  public static final CustomPacketPayload.Type<PacketTileInventoryToClient> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_tile_inventory_to_client"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketTileInventoryToClient> STREAM_CODEC = StreamCodec.of(PacketTileInventoryToClient::encode, PacketTileInventoryToClient::decode);
 

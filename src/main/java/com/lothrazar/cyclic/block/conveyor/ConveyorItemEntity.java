@@ -36,7 +36,7 @@ public class ConveyorItemEntity extends ItemEntity {
 
   @Override
   public void tick() {
-    if (!level().isClientSide) {
+    if (!level().isClientSide()) {
       BlockPos bp = this.blockPosition();
       boolean onConveyor = level().getBlockState(bp).getBlock() instanceof BlockConveyor
           || level().getBlockState(bp.below()).getBlock() instanceof BlockConveyor;

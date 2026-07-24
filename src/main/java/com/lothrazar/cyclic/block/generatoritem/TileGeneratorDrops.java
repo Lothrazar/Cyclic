@@ -68,7 +68,7 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
     if (this.burnTime == 0) {
       setLitProperty(false);
     }
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     if (this.burnTime <= 0) {
@@ -135,9 +135,9 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    burnTime = tag.getInt("burnTime");
-    burnTimeMax = tag.getInt("burnTimeMax");
-    burnPerTick = tag.getInt("burnPerTick");
+    burnTime = tag.getIntOr("burnTime", 0);
+    burnTimeMax = tag.getIntOr("burnTimeMax", 0);
+    burnPerTick = tag.getIntOr("burnPerTick", 0);
     super.loadAdditional(tag,registries);
   }
 

@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,12 +25,12 @@ public class GpsCompassItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+  public InteractionResult use(Level level, Player player, InteractionHand hand) {
     ItemStack stack = player.getItemInHand(hand);
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       ((ServerPlayer) player).openMenu(new ContainerProviderGpsCompass(), player.blockPosition());
     }
-    return InteractionResultHolder.success(stack);
+    return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
   }
 
   public static float getAngle(ItemStack stack, @Nullable LivingEntity entity) {

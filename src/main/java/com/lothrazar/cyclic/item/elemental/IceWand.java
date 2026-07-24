@@ -35,7 +35,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class IceWand extends ItemBaseCyclic {
 
@@ -52,8 +52,8 @@ public class IceWand extends ItemBaseCyclic {
     if (side != null) {
       pos = pos.relative(side);
     }
-    if (context.getLevel().isClientSide) {
-      PacketDistributor.sendToServer(new PacketFreezeWater(pos, side, context.getHand()));
+    if (context.getLevel().isClientSide()) {
+      ClientPacketDistributor.sendToServer(new PacketFreezeWater(pos, side, context.getHand()));
       return InteractionResult.SUCCESS;
     }
     return super.useOn(context);

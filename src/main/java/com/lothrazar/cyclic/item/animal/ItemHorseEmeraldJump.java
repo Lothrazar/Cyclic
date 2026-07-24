@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.HorseFeedUtil;
 import com.lothrazar.library.core.IEntityInteractable;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -16,7 +16,7 @@ public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInter
   public static final String NBT_COUNT = ModCyclic.MODID + "_carrot_emerald_count";
   private static final int JUMP_MAX = 10;
   private static final double JUMP_AMT = 0.08;
-  private static final ResourceLocation MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "horse_emerald_jump");
+  private static final Identifier MODIFIER_ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "horse_emerald_jump");
 
   public ItemHorseEmeraldJump(Properties prop) {
     super(prop);

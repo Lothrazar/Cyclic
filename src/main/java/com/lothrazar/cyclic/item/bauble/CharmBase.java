@@ -29,7 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public abstract class CharmBase extends ItemBaseToggle {
 
@@ -130,19 +130,19 @@ public abstract class CharmBase extends ItemBaseToggle {
   private static void toggleAttribute(Player player, Item charm, Holder<Attribute> attr, UUID id, float factor, int flatIncrease, Operation op) {
     ItemStack charmStack = CharmUtil.getIfEnabled(player, charm);
     AttributeInstance attrPlayer = player.getAttribute(attr);
-    AttributeModifier oldValue = attrPlayer.getModifier(ResourceLocation.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)));
+    AttributeModifier oldValue = attrPlayer.getModifier(Identifier.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)));
     if (charmStack.isEmpty()) {
       ///i am NOT holding it. OR im holding but its OFF
       //remove my modifier
       if (oldValue != null) {
-        attrPlayer.removeModifier(ResourceLocation.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)));
+        attrPlayer.removeModifier(Identifier.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)));
       }
     }
     else { // im   holding it AND its enabled
       if (oldValue == null) {
         /// add new
         double baseVal = attrPlayer.getBaseValue();
-        AttributeModifier newValue = new AttributeModifier(ResourceLocation.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)), baseVal * factor + flatIncrease, op);
+        AttributeModifier newValue = new AttributeModifier(Identifier.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)), baseVal * factor + flatIncrease, op);
         attrPlayer.addPermanentModifier(newValue);
         ItemStackUtil.damageItem(player, charmStack);
       }

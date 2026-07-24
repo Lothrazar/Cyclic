@@ -6,10 +6,10 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
 
@@ -25,35 +25,33 @@ public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
     int size = 14;
     this.addRenderableWidget(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_EMPTY, "cyclic.gui.craft.empty", b -> {
       //pressed
-      PacketDistributor.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));
+      ClientPacketDistributor.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));
     }));
     //
     x += 18;
     this.addRenderableWidget(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_BALANCE, "cyclic.gui.craft.balance", b -> {
-      PacketDistributor.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREAD));
+      ClientPacketDistributor.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREAD));
     }));
     x += 18;
     this.addRenderableWidget(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_MATCH, "cyclic.gui.craft.match", b -> {
-      PacketDistributor.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREADMATCH));
+      ClientPacketDistributor.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREADMATCH));
     }));
   }
 
   @Override
-  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms, mouseX, mouseY, partialTicks);
-    super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderTooltip(ms, mouseX, mouseY);
+  public void extractRenderState(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+    super.extractRenderState(ms, mouseX, mouseY, partialTicks);
   }
 
   @Override
-  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
+  protected void extractLabels(GuiGraphicsExtractor ms, int mouseX, int mouseY) {
     //    super.drawGuiContainerForegroundLayer(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
     this.drawButtonTooltips(ms, mouseX, mouseY);
   }
 
   @Override
-  protected void renderBg(GuiGraphics ms, float partialTicks, int x, int y) {
+  protected void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
     //previous was fine, but this references exactly the 'minecraft:' vanilla crafting table
     this.drawBackground(ms, TextureRegistry.V_CRAFTING);
   }

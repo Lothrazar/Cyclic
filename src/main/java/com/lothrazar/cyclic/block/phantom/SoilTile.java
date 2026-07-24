@@ -20,7 +20,7 @@ public class SoilTile extends TileBlockEntityCyclic {
 
   @Override
   public void onLoad() {
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       AABB box = new AABB(worldPosition);
       farmWater = FarmlandWaterManager.addAABBTicket(level, box.inflate(RANGE, HEIGHT, RANGE));
       farmWater.validate();
@@ -29,7 +29,7 @@ public class SoilTile extends TileBlockEntityCyclic {
 
   @Override
   public void onChunkUnloaded() {
-    if (!level.isClientSide && farmWater != null) {
+    if (!level.isClientSide() && farmWater != null) {
       farmWater.invalidate();
     }
   }

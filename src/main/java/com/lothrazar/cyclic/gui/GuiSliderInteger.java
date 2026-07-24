@@ -7,12 +7,13 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractSliderButton;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class GuiSliderInteger extends AbstractSliderButton implements IHasTooltip {
 
@@ -73,7 +74,8 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
    * Fires when control is selected, also I call this from screen class whenever mouse is hovered for extra UX
    */
   @Override
-  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+  public boolean keyPressed(KeyEvent event) {
+    int keyCode = event.key();
     if (keyCode == ESC) {
       //close
       LocalPlayer pl = Minecraft.getInstance().player;
@@ -85,16 +87,16 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
     if (keyCode == ARROW_LEFT || keyCode == ARROW_RIGHT) {
       // move from arrow keys
       int delta = (keyCode == ARROW_LEFT) ? -1 : 1;
-      if (Screen.hasShiftDown()) {
+      if (event.hasShiftDown()) {
         delta = delta * 5;
       }
-      else if (Screen.hasAltDown()) {
+      else if (event.hasAltDown()) {
         delta = delta * 10;
       }
       moveSliderAndUpdate(delta);
       return true;
     }
-    return super.keyPressed(keyCode, scanCode, modifiers);
+    return super.keyPressed(event);
   }
 
   /**
@@ -112,12 +114,12 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   @Override
   protected void applyValue() { // func_230979_b_();
     int val = getSliderAsInteger();
-    PacketDistributor.sendToServer(new PacketTileData(this.field, val, pos));
+    ClientPacketDistributor.sendToServer(new PacketTileData(this.field, val, pos));
   }
 
   @Override
-  protected void onDrag(double mouseX, double mouseY, double dragX, double dragY) {
-    super.onDrag(mouseX, mouseY, dragX, dragY);
+  protected void onDrag(MouseButtonEvent event, double dragX, double dragY) {
+    super.onDrag(event, dragX, dragY);
     applyValue();
     updateMessage();
   }

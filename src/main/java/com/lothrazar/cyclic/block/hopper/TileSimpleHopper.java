@@ -67,7 +67,7 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
   private void tryPullFromWorld(BlockPos center) {
     List<ItemEntity> list = HopperBlockEntity.getItemsAtAndAbove(level, this);
     if (list.size() > 0) {
-      ItemEntity stackEntity = list.get(level.random.nextInt(list.size()));
+      ItemEntity stackEntity = list.get(level.getRandom().nextInt(list.size()));
       ItemStack remainder = stackEntity.getItem();
       remainder = inventory.insertItem(0, remainder, false);
       stackEntity.setItem(remainder);

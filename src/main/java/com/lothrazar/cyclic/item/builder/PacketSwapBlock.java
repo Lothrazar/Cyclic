@@ -8,7 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import com.lothrazar.cyclic.ModCyclic;
@@ -23,7 +23,7 @@ import java.util.*;
 
 public class PacketSwapBlock implements CustomPacketPayload {
 
-  public static final Type<PacketSwapBlock> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_swap_block"));
+  public static final Type<PacketSwapBlock> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_swap_block"));
 
   public static final StreamCodec<FriendlyByteBuf, PacketSwapBlock> STREAM_CODEC = StreamCodec.of(
       PacketSwapBlock::encode,

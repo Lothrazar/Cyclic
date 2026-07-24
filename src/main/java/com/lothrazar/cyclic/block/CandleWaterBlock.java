@@ -103,7 +103,7 @@ public class CandleWaterBlock extends BlockCyclic {
 
   private void triggerUpdate(Level world, BlockPos pos, RandomSource rand) {
     try {
-      if (world instanceof ServerLevel sl && !world.isClientSide && world.getBlockState(pos).getValue(LIT)) {
+      if (world instanceof ServerLevel sl && !world.isClientSide() && world.getBlockState(pos).getValue(LIT)) {
         trySpawn(sl, pos, rand);
       }
     }
@@ -122,7 +122,7 @@ public class CandleWaterBlock extends BlockCyclic {
     if (monster == null || !world.isEmptyBlock(posTarget)) {
       return;
     }
-    monster.moveTo(x, y, z, world.random.nextFloat() * 360.0F, 0.0F);
+    monster.moveTo(x, y, z, world.getRandom().nextFloat() * 360.0F, 0.0F);
     //null means not from a spawner 
     ///https://gist.github.com/ChampionAsh5357/163a75e87599d19ee6b4b879821953e8
     // null means cancelled

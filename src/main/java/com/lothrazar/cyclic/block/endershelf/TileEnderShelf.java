@@ -38,9 +38,9 @@ public class TileEnderShelf extends TileBlockEntityCyclic {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    inventory.deserializeNBT(registries, tag.getCompound(NBTINV));
+    inventory.deserializeNBT(registries, tag.getCompoundOrEmpty(NBTINV));
     if (tag.contains("RenderTextType")) {
-      int rt = tag.getInt("RenderTextType");
+      int rt = tag.getIntOr("RenderTextType", 0);
       this.renderStyle = RenderTextType.values()[rt];
     }
     inventory.resetNameCache();

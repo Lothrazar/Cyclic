@@ -43,7 +43,7 @@ public class ItemHorseLapisVariant extends ItemBaseCyclic implements IEntityInte
         && !event.getEntity().getCooldowns().isOnCooldown(this)) {
       // lets go 
       Horse ahorse = (Horse) event.getTarget();
-      int seed = event.getLevel().random.nextInt(7);
+      int seed = event.getLevel().getRandom().nextInt(7);
       //setHorseVariant
       //  access transformers
       // ahorse.getEntityData().set(Horse.DATA_ID_TYPE_VARIANT, (seed | event.getLevel().random.nextInt(5) << 8));

@@ -14,7 +14,7 @@ import com.lothrazar.cyclic.block.crusher.RecipeCrusher;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.library.recipe.ingredient.RandomizedOutputIngredient;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 
@@ -36,7 +36,7 @@ public class CrusherZen implements IRecipeManager<RecipeCrusher> {
 
   @ZenCodeType.Method
   public void addRecipe(String name, IIngredient input, IItemStack output, int rfPertick, int ticks, IItemStack bonus, int percentage) {
-    ResourceLocation id = fixRecipeId(name);
+    Identifier id = fixRecipeId(name);
     RecipeCrusher m = new RecipeCrusher(input.asVanillaIngredient(), new EnergyIngredient(rfPertick, ticks), output.getInternal(),
         new RandomizedOutputIngredient(percentage, bonus.getInternal()));
     RecipeHolder<RecipeCrusher> holder = createHolder(id, m);

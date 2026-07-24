@@ -6,7 +6,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
@@ -21,7 +21,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
  */
 public class PacketDisplayFluidMessage implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketDisplayFluidMessage> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_display_fluid_message"));
+  public static final CustomPacketPayload.Type<PacketDisplayFluidMessage> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_display_fluid_message"));
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketDisplayFluidMessage> STREAM_CODEC = StreamCodec.of(PacketDisplayFluidMessage::encode, PacketDisplayFluidMessage::decode);
 
   private String translationKey;

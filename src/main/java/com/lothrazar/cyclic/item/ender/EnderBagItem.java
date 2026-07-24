@@ -29,7 +29,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ChestMenu;
@@ -44,7 +44,7 @@ public class EnderBagItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+  public InteractionResult use(Level world, Player player, InteractionHand hand) {
     PlayerEnderChestContainer enderchestinventory = player.getEnderChestInventory();
     enderchestinventory.setActiveChest(null);
     player.openMenu(new SimpleMenuProvider((id, pl, b) -> {
@@ -53,7 +53,7 @@ public class EnderBagItem extends ItemBaseCyclic {
     // EnderChestBlock.CONTAINER_NAME));//stupid mojang makes things private for no reason becasue  they hate modders
     //..
     player.awardStat(Stats.OPEN_ENDERCHEST);
-    if (world.random.nextDouble() > 0.5) {
+    if (world.getRandom().nextDouble() > 0.5) {
       SoundUtil.playSound(player, SoundEvents.ENDER_CHEST_CLOSE);
     }
     else {

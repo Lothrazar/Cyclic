@@ -20,7 +20,7 @@ public class FluidTankBase extends FluidTank {
 
   @Override
   public void onContentsChanged() {
-    if (tile.getLevel() == null || tile.getLevel().isClientSide) {
+    if (tile.getLevel() == null || tile.getLevel().isClientSide()) {
       return;
     }
     IFluidHandler handler = CapabilityUtil.fluid(tile.getLevel(), tile.getBlockPos());

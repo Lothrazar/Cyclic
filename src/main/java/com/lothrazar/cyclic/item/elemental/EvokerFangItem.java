@@ -22,7 +22,7 @@ public class EvokerFangItem extends ItemBaseCyclic {
     if (player.getCooldowns().isOnCooldown(this)) {
       return super.useOn(context);
     }
-    player.getCooldowns().addCooldown(context.getItemInHand().getItem(), COOLDOWN);
+    player.getCooldowns().addCooldown(context.getItemInHand(), COOLDOWN);
     player.swing(context.getHand());
     this.summonFangRay(player.blockPosition().getX(), player.blockPosition().getZ(), player, context.getClickLocation().x(), context.getClickLocation().y(), context.getClickLocation().z());
     ItemStackUtil.damageItem(player, context.getItemInHand());

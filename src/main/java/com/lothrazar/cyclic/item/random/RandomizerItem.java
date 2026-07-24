@@ -21,7 +21,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class RandomizerItem extends ItemHasEnergy {
 
@@ -85,8 +85,8 @@ public class RandomizerItem extends ItemHasEnergy {
     }
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
-    if (player.level().isClientSide) {
-      PacketDistributor.sendToServer(new PacketRandomize(pos, side, context.getHand()));
+    if (player.level().isClientSide()) {
+      ClientPacketDistributor.sendToServer(new PacketRandomize(pos, side, context.getHand()));
     }
     EntityUtil.setCooldownItem(player, this, COOLDOWN);
     return super.useOn(context);

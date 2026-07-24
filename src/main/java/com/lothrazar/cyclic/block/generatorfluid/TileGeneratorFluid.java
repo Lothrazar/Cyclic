@@ -81,7 +81,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
     if (this.burnTime == 0) {
       setLitProperty(false);
     }
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     if (this.requiresRedstone() && !this.isPowered()) {

@@ -11,7 +11,7 @@ import com.lothrazar.library.util.FakePlayerUtil;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -41,7 +41,7 @@ public class GloomCurseEnchant {
   public void doPostHurt(LivingDamageEvent.Post event) {
     LivingEntity user = event.getEntity();
     Entity attacker = event.getSource().getEntity();
-    if (!isEnabled() || user.level().isClientSide || !(attacker instanceof LivingEntity livingAttacker)
+    if (!isEnabled() || user.level().isClientSide() || !(attacker instanceof LivingEntity livingAttacker)
         || FakePlayerUtil.isFakePlayer(attacker)) {
       return;
     }
@@ -52,18 +52,18 @@ public class GloomCurseEnchant {
         + EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.FEET);
     if (totalLevels <= 0) { return; }
     double adjustedActivationChance = BASE_ACTIVATION_CHANCE / totalLevels;
-    if (adjustedActivationChance > user.level().random.nextDouble()) {
+    if (adjustedActivationChance > user.level().getRandom().nextDouble()) {
       List<MobEffect> negativeEffects = EnchantUtil.getNegativeEffects();
       Collections.shuffle(negativeEffects);
       int appliedEffects = 0;
       for (MobEffect effect : negativeEffects) {
         if (effect == null) {continue;}
-        ResourceLocation effectKey = BuiltInRegistries.MOB_EFFECT.getKey(effect);
+        Identifier effectKey = BuiltInRegistries.MOB_EFFECT.getKey(effect);
         if (StringParseUtil.isInList(ConfigRegistry.getGloomIgnoreList(), effectKey)) {
           ModCyclic.LOGGER.debug("Gloom(curse) effect cannot apply " + effectKey);
           continue;
         }
-        if (appliedEffects < MIN_EFFECTS || BASE_APPLY_CHANCE > user.level().random.nextDouble()) {
+        if (appliedEffects < MIN_EFFECTS || BASE_APPLY_CHANCE > user.level().getRandom().nextDouble()) {
           livingAttacker.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect), EFFECT_DURATION));
           appliedEffects++;
           if (appliedEffects >= MAX_EFFECTS) {break;}

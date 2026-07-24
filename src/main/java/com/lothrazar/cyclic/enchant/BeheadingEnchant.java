@@ -10,7 +10,7 @@ import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.TagDataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,7 +56,7 @@ public class BeheadingEnchant {
         return;
       }
       Level world = attacker.level();
-      if (Mth.nextInt(world.random, 0, 100) > percentForLevel(level)) {
+      if (Mth.nextInt(world.getRandom(), 0, 100) > percentForLevel(level)) {
         return;
       }
       LivingEntity target = event.getEntity();
@@ -71,7 +71,7 @@ public class BeheadingEnchant {
       }
       //else the random number was less than 10, so it passed the 10% chance req
       @Nullable
-      ResourceLocation type = BuiltInRegistries.ENTITY_TYPE.getKey(target.getType());
+      Identifier type = BuiltInRegistries.ENTITY_TYPE.getKey(target.getType());
       String key = type == null ? "" : type.toString();
       ////we allow all these, which include config, to override the vanilla skulls below
       Map<String, String> mappedBeheading = ConfigRegistry.getMappedBeheading();

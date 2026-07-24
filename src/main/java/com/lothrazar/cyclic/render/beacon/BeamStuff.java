@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.render.beacon;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.world.level.block.entity.BeaconBlockEntity.BeaconBeamSection;
+import net.minecraft.world.level.block.entity.BeaconBeamOwner.Section;
 
 /**
  * Per-tile state for the incremental beam scan. One instance lives on each
@@ -12,15 +12,15 @@ import net.minecraft.world.level.block.entity.BeaconBlockEntity.BeaconBeamSectio
  */
 public class BeamStuff {
 
-  public List<BeaconBeamSection> beamSections;
-  public List<BeaconBeamSection> checkingBeamSections;
+  public List<Section> beamSections;
+  public List<Section> checkingBeamSections;
   public int lastCheckY;
 
   public BeamStuff() {
     this(new ArrayList<>(), new ArrayList<>(), 0);
   }
 
-  private BeamStuff(ArrayList<BeaconBeamSection> beamSections, ArrayList<BeaconBeamSection> checkingBeamSections, int lastCheckY) {
+  private BeamStuff(ArrayList<Section> beamSections, ArrayList<Section> checkingBeamSections, int lastCheckY) {
     this.beamSections = beamSections;
     this.checkingBeamSections = checkingBeamSections;
     this.lastCheckY = lastCheckY;

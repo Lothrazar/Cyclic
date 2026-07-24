@@ -14,7 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
@@ -76,7 +76,7 @@ public class EnderApple extends ItemBaseCyclic {
         for (String conf : structList) {
           //EXAMPLE    test = StructureTags.EYE_OF_ENDER_LOCATED;
           Pair<BlockPos, Holder<Structure>> blockpos = findNearestPair(serverlevel,
-              TagKey.create(Registries.STRUCTURE, ResourceLocation.parse(conf)),
+              TagKey.create(Registries.STRUCTURE, Identifier.parse(conf)),
               entityLiving.blockPosition(), 100, false);
           if (blockpos != null) {
             //add to ze frekni map yo

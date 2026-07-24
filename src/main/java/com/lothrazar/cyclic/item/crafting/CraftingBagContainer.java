@@ -76,7 +76,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   public void removed(Player playerIn) { // onContainerClosed
     super.removed(playerIn);
     this.craftResult.setItem(0, ItemStack.EMPTY);
-    if (playerIn.level().isClientSide == false) {
+    if (playerIn.level().isClientSide() == false) {
       IItemHandler handler = CapabilityUtil.item(bag);//bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
       if (handler != null)
         for (int i = 0; i < 9; i++) {
@@ -90,7 +90,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   @Override
   public void slotsChanged(Container inventory) {
     Level world = playerInventory.player.level();
-    if (!world.isClientSide) {
+    if (!world.isClientSide()) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;
       java.util.Optional<RecipeHolder<CraftingRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix.asCraftInput(), world);

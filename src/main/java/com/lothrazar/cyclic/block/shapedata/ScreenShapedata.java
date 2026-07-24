@@ -10,11 +10,11 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.client.gui.components.Tooltip;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
 
@@ -40,7 +40,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
       ButtonMachine btnShape = addRenderableWidget(new ButtonMachine(x, y, width, 20,
           shape.name(), (p) -> {
             //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
-            PacketDistributor.sendToServer(
+            ClientPacketDistributor.sendToServer(
                 new PacketTileData(Fields.COMMAND.ordinal(),
                     shape.ordinal(), menu.tile.getBlockPos()));
           }));
@@ -52,14 +52,12 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
   }
 
   @Override
-  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms, mouseX, mouseY, partialTicks);
-    super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderTooltip(ms, mouseX, mouseY);
+  public void extractRenderState(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+    super.extractRenderState(ms, mouseX, mouseY, partialTicks);
   }
 
   @Override
-  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
+  protected void extractLabels(GuiGraphicsExtractor ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
 
     btnRender.onValueUpdate(menu.tile);
@@ -70,7 +68,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
   }
 
   @Override
-  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
+  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 8, 28 + 18, TextureRegistry.SLOT_GPS, 18);
     this.drawSlot(ms, 8 + 18, 28, TextureRegistry.SLOT_GPS, 18);

@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -49,7 +49,7 @@ public class ConveyorItemRenderer<T extends Entity & ItemSupplier> extends Entit
   }
 
   @Override
-  public ResourceLocation getTextureLocation(ConveyorItemEntity entity) {
+  public Identifier getTextureLocation(ConveyorItemEntity entity) {
     return InventoryMenu.BLOCK_ATLAS;
   }
 

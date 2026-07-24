@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
@@ -12,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
@@ -74,19 +75,19 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   }
 
   @Override
-  public void render(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphicsExtractor gg, int mouseX, int mouseY, float partialTicks) {
     super.renderBackground(gg, mouseX, mouseY, partialTicks);
     super.render(gg, mouseX, mouseY, partialTicks);
     this.renderTooltip(gg, mouseX, mouseY);
   }
 
   @Override
-  protected void renderLabels(GuiGraphics gg, int x, int y) {}
+  protected void extractLabels(GuiGraphicsExtractor gg, int x, int y) {}
 
   @Override
-  protected void renderBg(GuiGraphics gg, float partialTicks, int x, int y) {
+  protected void extractBackground(GuiGraphicsExtractor gg, int x, int y, float partialTicks) {
     this.drawBackground(gg, TextureRegistry.INVENTORY_LARGE);
-    gg.blit(TextureRegistry.INVENTORY_SIDEBAR, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);
+    gg.blit(RenderPipelines.GUI_TEXTURED, TextureRegistry.INVENTORY_SIDEBAR, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);
   }
 
   private class ToggleButton extends Button {
@@ -121,7 +122,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
       }
       this.setMessage(titles.get(index));
       this.setTooltip(Tooltip.create(tooltips.get(index)));
-      PacketDistributor.sendToServer(new PacketStorageBagScreen(
+      ClientPacketDistributor.sendToServer(new PacketStorageBagScreen(
           ScreenStorageBag.this.menu.bag, ScreenStorageBag.this.menu.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
     }
 

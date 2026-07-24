@@ -60,7 +60,7 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     if (tag.contains("RenderTextType")) {
-      int rt = tag.getInt("RenderTextType");
+      int rt = tag.getIntOr("RenderTextType", 0);
       this.renderStyle = RenderTextType.values()[rt];
     }
     if (tag.contains(NBT_SHELVES)) {

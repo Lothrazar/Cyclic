@@ -3,21 +3,33 @@ package com.lothrazar.cyclic.block.disenchant;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
-public class RenderDisenchant implements BlockEntityRenderer<TileDisenchant> {
+public class RenderDisenchant implements BlockEntityRenderer<TileDisenchant, RenderDisenchant.State> {
+
+  public static class State extends BlockEntityRenderState {
+    TileDisenchant blockEntity;
+    float partialTick;
+  }
 
   private static final Material BOOK_LOCATION = new Material(TextureAtlas.LOCATION_BLOCKS,
-      ResourceLocation.withDefaultNamespace("entity/enchanting_table_book"));
+      Identifier.withDefaultNamespace("entity/enchanting_table_book"));
   private final BookModel bookModel;
 
   public RenderDisenchant(BlockEntityRendererProvider.Context ctx) {
@@ -25,8 +37,22 @@ public class RenderDisenchant implements BlockEntityRenderer<TileDisenchant> {
   }
 
   @Override
-  public void render(TileDisenchant tile, float partialTick, PoseStack pose,
-      MultiBufferSource buffer, int packedLight, int packedOverlay) {
+  public State createRenderState() {
+    return new State();
+  }
+
+  @Override
+  public void extractRenderState(TileDisenchant blockEntity, State state, float partialTicks, Vec3 cameraPosition,
+      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
+    state.blockEntity = blockEntity;
+    state.partialTick = partialTicks;
+  }
+
+  @Override
+  public void submit(State state, PoseStack pose, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    TileDisenchant tile = state.blockEntity;
+    float partialTick = state.partialTick;
     if (tile.inputSlots.getStackInSlot(1).isEmpty()) {
       return;
     }
@@ -49,8 +75,10 @@ public class RenderDisenchant implements BlockEntityRenderer<TileDisenchant> {
     pageL = Mth.clamp(pageL, 0.0F, 1.0F);
     pageR = Mth.clamp(pageR, 0.0F, 1.0F);
     this.bookModel.setupAnim(time, pageL, pageR, 0.2F);
+    MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
     VertexConsumer vc = BOOK_LOCATION.buffer(buffer, RenderType::entitySolid);
-    this.bookModel.renderToBuffer(pose, vc, packedLight, packedOverlay);
+    this.bookModel.renderToBuffer(pose, vc, state.lightCoords, 0);
+    buffer.endBatch();
     pose.popPose();
   }
 }

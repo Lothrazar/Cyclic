@@ -44,6 +44,6 @@ public class BlockPackager extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.PACKAGER.get(), world.isClientSide ? null : TilePackager::serverTick);
+    return createTickerHelper(type, TileRegistry.PACKAGER.get(), world.isClientSide() ? null : TilePackager::serverTick);
   }
 }

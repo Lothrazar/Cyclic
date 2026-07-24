@@ -12,10 +12,10 @@ import com.lothrazar.library.gui.FluidBar;
 import com.lothrazar.library.gui.TexturedProgress;
 import com.lothrazar.library.util.ChatUtil;
 import com.mojang.math.Axis;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
 
@@ -47,12 +47,12 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     btnToggle = addRenderableWidget(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       int f = TileGeneratorFluid.Fields.FLOWING.ordinal();
       int tog = (menu.tile.getField(f) + 1) % 2;
-      PacketDistributor.sendToServer(new PacketTileData(f, tog, menu.tile.getBlockPos()));
+      ClientPacketDistributor.sendToServer(new PacketTileData(f, tog, menu.tile.getBlockPos()));
     }));
   }
 
   @Override
-  public void render(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphicsExtractor gg, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(gg, mouseX, mouseY, partialTicks);
     super.render(gg, mouseX, mouseY, partialTicks);
     this.renderTooltip(gg, mouseX, mouseY);
@@ -74,7 +74,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
   }
 
   @Override
-  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
+  protected void extractLabels(GuiGraphicsExtractor ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     int fld = TileGeneratorFluid.Fields.FLOWING.ordinal();
@@ -83,7 +83,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
   }
 
   @Override
-  protected void renderBg(GuiGraphics gg, float partialTicks, int mouseX, int mouseY) {
+  protected void extractBackground(GuiGraphicsExtractor gg, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(gg, TextureRegistry.INVENTORY);
     energy.draw(gg, menu.tile.getEnergy());
     progress.max = menu.tile.getField(TileGeneratorFluid.Fields.BURNMAX.ordinal());

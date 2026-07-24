@@ -42,7 +42,7 @@ public class EntityTorchBolt extends ThrowableItemProjectile {
   @Override
   protected void onHit(HitResult result) {
     Level level = this.level();
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     HitResult.Type type = result.getType();

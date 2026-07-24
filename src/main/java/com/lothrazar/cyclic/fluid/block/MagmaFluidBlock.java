@@ -23,7 +23,7 @@ public class MagmaFluidBlock extends PartialHeightFluidBlock {
     if (entityIn instanceof LivingEntity ent && !ent.isOnFire() && !ent.fireImmune()) {
       int level = EnchantUtil.getCurrentArmorLevel(EnchantUtil.holder(Enchantments.FIRE_PROTECTION, ent), ent);
       if (level < 4) {
-        ent.igniteForSeconds(Mth.floor(worldIn.random.nextDouble() * 10));
+        ent.igniteForSeconds(Mth.floor(worldIn.getRandom().nextDouble() * 10));
       }
     }
     super.entityInside(state, worldIn, pos, entityIn);

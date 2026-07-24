@@ -76,7 +76,7 @@ public class MembraneBlock extends BlockCyclic {
 
   @Override
   public void stepOn(Level worldIn, BlockPos pos, BlockState state, Entity entityIn) {
-    if (worldIn.isClientSide || !(entityIn instanceof Player)) {
+    if (worldIn.isClientSide() || !(entityIn instanceof Player)) {
       //not a server player
       return;
     }

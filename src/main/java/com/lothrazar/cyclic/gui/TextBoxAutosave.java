@@ -7,9 +7,11 @@ import com.lothrazar.cyclic.net.PacketTileString;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class TextBoxAutosave extends EditBox {
 
@@ -35,8 +37,8 @@ public class TextBoxAutosave extends EditBox {
   }
 
   @Override
-  public boolean charTyped(char chr, int p) {
-    boolean worked = super.charTyped(chr, p);
+  public boolean charTyped(CharacterEvent event) {
+    boolean worked = super.charTyped(event);
     if (worked) {
       saveValue();
     }
@@ -44,8 +46,9 @@ public class TextBoxAutosave extends EditBox {
   }
 
   @Override
-  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-    boolean spr = super.keyPressed(keyCode, scanCode, modifiers);
+  public boolean keyPressed(KeyEvent event) {
+    boolean spr = super.keyPressed(event);
+    int keyCode = event.key();
     if (keyCode == KEY_BACKSPACE || keyCode == KEY_DELETE) {
       saveValue();
     }
@@ -55,7 +58,7 @@ public class TextBoxAutosave extends EditBox {
   private void saveValue() {
     String current = getValue();
     tile.setFieldString(tileFieldId, current);
-    PacketDistributor.sendToServer(new PacketTileString(this.tileFieldId, current, pos));
+    ClientPacketDistributor.sendToServer(new PacketTileString(this.tileFieldId, current, pos));
   }
 
   private int tileFieldId;

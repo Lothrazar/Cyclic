@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.fluid.block.AmethystFluidBlock;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import com.lothrazar.library.item.BucketItemFlib;
 import net.minecraft.world.item.Item;
@@ -21,8 +21,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public class FluidAmethystHolder {
 
   private static final String ID = "amethyst";
-  public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_still");
-  public static final ResourceLocation FLUID_FLOW = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
+  public static final Identifier FLUID_STILL = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_still");
+  public static final Identifier FLUID_FLOW = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
   public static final int COLOR = 0xFFFFFF;
   public static final int LIGHT_LEVEL = 7;
 
@@ -37,7 +37,7 @@ public class FluidAmethystHolder {
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new BaseFlowingFluid.Flowing(makeProperties()));
 
   public static final DeferredBlock<AmethystFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new AmethystFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollission().strength(100.0F).lightLevel(s -> LIGHT_LEVEL).noLootTable()));
+      () -> new AmethystFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollision().strength(100.0F).lightLevel(s -> LIGHT_LEVEL).noLootTable()));
 
   public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",
       () -> new BucketItemFlib(STILL.get()));

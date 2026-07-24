@@ -11,7 +11,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ScytheHarvest extends ItemBaseCyclic {
 
@@ -33,9 +33,9 @@ public class ScytheHarvest extends ItemBaseCyclic {
       pos = pos.relative(side);
     }
     Player player = context.getPlayer();
-    if (player.level().isClientSide) {
+    if (player.level().isClientSide()) {
       int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
-      PacketDistributor.sendToServer(new PacketHarvesting(pos, radius));
+      ClientPacketDistributor.sendToServer(new PacketHarvesting(pos, radius));
     }
     player.swing(context.getHand());
     ItemStackUtil.damageItem(player, context.getItemInHand());

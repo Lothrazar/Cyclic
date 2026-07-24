@@ -17,7 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -50,7 +50,7 @@ public class BlockExpPylon extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.EXPERIENCE_PYLON.get(), world.isClientSide ? null : TileExpPylon::serverTick);
+    return createTickerHelper(type, TileRegistry.EXPERIENCE_PYLON.get(), world.isClientSide() ? null : TileExpPylon::serverTick);
   }
 
   @Override
@@ -63,7 +63,7 @@ public class BlockExpPylon extends BlockCyclic {
   public ItemInteractionResult useItemOn(ItemStack st, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     ItemStack held = player.getItemInHand(hand);
 
-    if (!world.isClientSide) {
+    if (!world.isClientSide()) {
       IFluidHandler handler = CapabilityUtil.fluid(world, pos, hit.getDirection());
       if (handler != null) {
         int drainMeExp = 0, drainMeFluid = 0;

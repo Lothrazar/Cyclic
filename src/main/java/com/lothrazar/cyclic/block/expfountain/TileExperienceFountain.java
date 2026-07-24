@@ -44,7 +44,7 @@ public class TileExperienceFountain extends TileBlockEntityCyclic {
   }
 
   public void tick() {
-    if (level == null || level.isClientSide) {
+    if (level == null || level.isClientSide()) {
       return;
     }
     tryPullFromBelow();
@@ -58,15 +58,15 @@ public class TileExperienceFountain extends TileBlockEntityCyclic {
     timer = TIMER_FULL.get();
     int min = XP_MIN.get();
     int max = XP_MAX.get();
-    int xpValue = min + level.random.nextInt(Math.max(1, max - min + 1));
+    int xpValue = min + level.getRandom().nextInt(Math.max(1, max - min + 1));
     int fluidCost = xpValue * TileExpPylon.FLUID_PER_EXP;
     if (tank.getFluidAmount() < fluidCost) {
       return;
     }
     tank.drain(fluidCost, IFluidHandler.FluidAction.EXECUTE);
-    double dx = worldPosition.getX() + 0.5D + (level.random.nextDouble() * 2.0D - 1.0D);
+    double dx = worldPosition.getX() + 0.5D + (level.getRandom().nextDouble() * 2.0D - 1.0D);
     double dy = worldPosition.getY() + 1.0D;
-    double dz = worldPosition.getZ() + 0.5D + (level.random.nextDouble() * 2.0D - 1.0D);
+    double dz = worldPosition.getZ() + 0.5D + (level.getRandom().nextDouble() * 2.0D - 1.0D);
     ExperienceOrb orb = new ExperienceOrb(level, dx, dy, dz, xpValue);
     level.addFreshEntity(orb);
     this.setChanged();

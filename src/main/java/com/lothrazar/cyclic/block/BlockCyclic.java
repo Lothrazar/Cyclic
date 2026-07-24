@@ -82,7 +82,7 @@ public class BlockCyclic extends EntityBlockFlib {
   @Override
   public ItemInteractionResult useItemOn(ItemStack st, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     if (hasFluidInteract) {
-      if (!level.isClientSide) {
+      if (!level.isClientSide()) {
         BlockEntity tankHere = level.getBlockEntity(pos);
         if (tankHere != null) {
          //getting fluid capability from a block
@@ -110,7 +110,7 @@ public class BlockCyclic extends EntityBlockFlib {
       }
     }
     if (this.hasGui) {
-      if (!level.isClientSide) {
+      if (!level.isClientSide()) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity instanceof MenuProvider mp) {
           player.openMenu(mp, pos);
@@ -128,7 +128,7 @@ public class BlockCyclic extends EntityBlockFlib {
   @Override
   protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
     if (this.hasGui) {
-      if (!level.isClientSide) {
+      if (!level.isClientSide()) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity instanceof MenuProvider mp) {
           player.openMenu(mp, pos);

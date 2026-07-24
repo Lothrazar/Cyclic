@@ -150,7 +150,7 @@ public class SoulboundEnchant {
       if (durabilityCost > 0 && saved.isDamageableItem() && !respawned.isCreative()) {
         saved.setDamageValue(Math.min(saved.getDamageValue() + durabilityCost, saved.getMaxDamage() - 1));
       }
-      int slot = entry.getInt(NBT_SLOT);
+      int slot = entry.getIntOr(NBT_SLOT, 0);
       if (slot >= 0) {
         Inventory inv = respawned.getInventory();
         boolean canUseSlot = slot < inv.getContainerSize()

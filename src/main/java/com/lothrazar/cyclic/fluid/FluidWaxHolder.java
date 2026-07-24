@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.library.fluid.GenericFluidBlock;
 import com.lothrazar.library.util.EnchantUtil;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -23,8 +23,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public class FluidWaxHolder {
 
   private static final String ID = "wax";
-  public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_still");
-  public static final ResourceLocation FLUID_FLOW = ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_flow");
+  public static final Identifier FLUID_STILL = Identifier.fromNamespaceAndPath("minecraft", "block/water_still");
+  public static final Identifier FLUID_FLOW = Identifier.fromNamespaceAndPath("minecraft", "block/water_flow");
   public static final int COLOR = 0xEEEEEE;
 
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
@@ -37,12 +37,12 @@ public class FluidWaxHolder {
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new BaseFlowingFluid.Flowing(makeProperties()));
 
   public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollission().strength(100.0F).noLootTable(),
+      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollision().strength(100.0F).noLootTable(),
           List.of(ent -> {
             if (!ent.isOnFire() && !ent.fireImmune()) {
               int lvl = EnchantUtil.getCurrentArmorLevel(EnchantUtil.holder(Enchantments.FIRE_PROTECTION, ent), ent);
               if (lvl < 4) {
-                ent.igniteForSeconds(Mth.floor(ent.level().random.nextDouble() * 10));
+                ent.igniteForSeconds(Mth.floor(ent.level().getRandom().nextDouble() * 10));
               }
             }
           })));

@@ -80,7 +80,7 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.*;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ItemEventHandler {
 
@@ -171,7 +171,7 @@ public class ItemEventHandler {
         ItemStackUtil.damageItem(ply, find);
       }
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.QUIVER_LIT.get());
-      if (!find.isEmpty() && world.random.nextDouble() < 0.25) {
+      if (!find.isEmpty() && world.getRandom().nextDouble() < 0.25) {
         if (hit == HitResult.Type.ENTITY && ((EntityHitResult) event.getRayTraceResult()).getEntity() instanceof LivingEntity) {
           LivingEntity target = (LivingEntity) ((EntityHitResult) event.getRayTraceResult()).getEntity();
           target.setGlowingTag(true);
@@ -282,8 +282,8 @@ public class ItemEventHandler {
       //player DEALING damage
       Player ply = (Player) src.getEntity();
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_VENOM.get());
-      if (!find.isEmpty() && ply.level().random.nextDouble() < 0.25F) {
-        int seconds = 2 + ply.level().random.nextInt(4);
+      if (!find.isEmpty() && ply.level().getRandom().nextDouble() < 0.25F) {
+        int seconds = 2 + ply.level().getRandom().nextInt(4);
         event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, Const.TICKS_PER_SEC * seconds, 0, false, false, false));
         ItemStackUtil.damageItem(ply, find);
       }
@@ -430,25 +430,25 @@ public class ItemEventHandler {
 
     if (state.getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
       event.setSuccessful(true);
-      if (world.random.nextDouble() < 0.5) {
+      if (world.getRandom().nextDouble() < 0.5) {
         ItemStackUtil.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_CYAN.get()));
       }
     }
     else if (state.getBlock() == BlockRegistry.FLOWER_PURPLE_TULIP.get()) {
       event.setSuccessful(true);
-      if (world.random.nextDouble() < 0.25) {
+      if (world.getRandom().nextDouble() < 0.25) {
         ItemStackUtil.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_PURPLE_TULIP.get()));
       }
     }
     else if (state.getBlock() == BlockRegistry.FLOWER_ABSALON_TULIP.get()) {
       event.setSuccessful(true);
-      if (world.random.nextDouble() < 0.25) {
+      if (world.getRandom().nextDouble() < 0.25) {
         ItemStackUtil.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_ABSALON_TULIP.get()));
       }
     }
     else if (state.getBlock() == BlockRegistry.FLOWER_LIME_CARNATION.get()) {
       event.setSuccessful(true);
-      if (world.random.nextDouble() < 0.25) {
+      if (world.getRandom().nextDouble() < 0.25) {
         ItemStackUtil.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_LIME_CARNATION.get()));
       }
     }
@@ -457,7 +457,7 @@ public class ItemEventHandler {
   @SubscribeEvent
   public void onBedCheck(CanContinueSleepingEvent event) {
     if (event.getEntity() instanceof Player p) {
-      if (p.getPersistentData().getBoolean(SleepingMatItem.CYCLIC_SLEEPING)) {
+      if (p.getPersistentData().getBooleanOr(SleepingMatItem.CYCLIC_SLEEPING, false)) {
         event.setContinueSleeping(true);
       }
     }
@@ -562,7 +562,7 @@ public class ItemEventHandler {
       }
       else {
         //change size
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
           BuilderActionType.toggle(held);
         }
         SoundUtil.playSound(player, SoundRegistry.TOOL_MODE.get());
@@ -579,7 +579,7 @@ public class ItemEventHandler {
       }
       BuilderActionType.setTimeout(held);
       event.setCanceled(true);
-      if (!world.isClientSide) {
+      if (!world.isClientSide()) {
         BuilderActionType.toggle(held);
       }
       SoundUtil.playSound(player, SoundRegistry.TOOL_MODE.get());
@@ -589,7 +589,7 @@ public class ItemEventHandler {
 
   private void onHitFacadeHandler(PlayerInteractEvent.LeftClickBlock event, Player player, ItemStack held, BlockState target) {
     if (held.isEmpty() && event.getLevel().isClientSide()) {
-      PacketDistributor.sendToServer(new BlockFacadeMessage(event.getPos(), true));
+      ClientPacketDistributor.sendToServer(new BlockFacadeMessage(event.getPos(), true));
     }
     else {
       Block block = Block.byItem(held.getItem()); // getBlockFromItem
@@ -623,7 +623,7 @@ public class ItemEventHandler {
       BlockPlaceContext context = new BlockPlaceContext(player, event.getHand(), held, (BlockHitResult) bhr);
       BlockState facadeState = block.getStateForPlacement(context);
       CompoundTag tags = (facadeState == null) ? null : NbtUtils.writeBlockState(facadeState);
-      PacketDistributor.sendToServer(new BlockFacadeMessage(event.getPos(), tags));
+      ClientPacketDistributor.sendToServer(new BlockFacadeMessage(event.getPos(), tags));
     }
   }
 

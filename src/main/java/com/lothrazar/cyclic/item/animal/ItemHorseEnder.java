@@ -53,7 +53,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
   }
 
   private static void increment(LivingEntity ahorse, int val) {
-    int old = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
+    int old = ahorse.getPersistentData().getIntOr(NBT_KEYACTIVE, 0);
     ahorse.getPersistentData().putInt(NBT_KEYACTIVE, old + val);
   }
 

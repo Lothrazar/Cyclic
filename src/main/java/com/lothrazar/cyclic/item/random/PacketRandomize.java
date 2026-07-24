@@ -8,7 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Random;
 
 public class PacketRandomize implements CustomPacketPayload {
-  public static final CustomPacketPayload.Type<PacketRandomize> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_randomize"));
+  public static final CustomPacketPayload.Type<PacketRandomize> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_randomize"));
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketRandomize> STREAM_CODEC =
       StreamCodec.of(PacketRandomize::encode, PacketRandomize::decode);
 

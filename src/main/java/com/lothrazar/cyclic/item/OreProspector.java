@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -35,13 +34,13 @@ public class OreProspector extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
     if (player.isCrouching()) {
       ItemStackUtil.deleteTag(itemstack);
       player.swing(handIn);
     }
-    return InteractionResultHolder.fail(itemstack);
+    return InteractionResult.FAIL;
   }
 
   @Override
@@ -52,7 +51,7 @@ public class OreProspector extends ItemBaseCyclic {
     if (player.getCooldowns().isOnCooldown(held.getItem())) {
       return InteractionResult.PASS;
     }
-    player.getCooldowns().addCooldown(held.getItem(), CD);
+    player.getCooldowns().addCooldown(held, CD);
     //first delete old pos
     ItemStackUtil.deleteTag(held);
     BlockPos pos = context.getClickedPos();
@@ -101,10 +100,10 @@ public class OreProspector extends ItemBaseCyclic {
     if (!tag.contains(ORESIZE)) {
       return list;
     }
-    int size = tag.getInt(ORESIZE);
-    String dim = tag.getString(NBT_DIM);
+    int size = tag.getIntOr(ORESIZE, 0);
+    String dim = tag.getStringOr(NBT_DIM, "");
     for (int i = 0; i < size; i++) {
-      BlockPos pos = TagDataUtil.getBlockPos(tag.getCompound("tag" + i));
+      BlockPos pos = TagDataUtil.getBlockPos(tag.getCompoundOrEmpty("tag" + i));
       list.add(new BlockPosDim(pos, dim, tag));
     }
     //    this.read  

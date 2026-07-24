@@ -8,7 +8,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,7 +21,7 @@ public class SleepingMatItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
     BlockPos pos = player.blockPosition();
     if (!worldIn.isDay()) {
@@ -32,13 +31,13 @@ public class SleepingMatItem extends ItemBaseCyclic {
         }
       });
     }
-    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+    return InteractionResult.SUCCESS.heldItemTransformedTo(itemstack);
   }
 
   public Either<Player.BedSleepingProblem, Unit> trySleep(Player player, BlockPos at, ItemStack itemstack) {
 
     Level world = player.level();
-    if (!world.isClientSide) {
+    if (!world.isClientSide()) {
       if (player.isSleeping() || !player.isAlive()) {
         return Either.left(Player.BedSleepingProblem.OTHER_PROBLEM);
       }

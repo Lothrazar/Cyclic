@@ -62,7 +62,7 @@ public class TileSprinkler extends TileBlockEntityCyclic {
     if (shapeIndex >= shape.size()) {
       shapeIndex = 0;
     }
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       ParticleUtil.spawnParticle(level, ParticleTypes.FALLING_WATER, shape.get(shapeIndex), 9);
     }
     if (GrowthUtil.isValidGrow(level, shape.get(shapeIndex)) &&
@@ -77,7 +77,7 @@ public class TileSprinkler extends TileBlockEntityCyclic {
   }
 
   private void grabWater() {
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     //only drink from below. similar to but updated from 1.12.2
@@ -98,9 +98,9 @@ public class TileSprinkler extends TileBlockEntityCyclic {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    CompoundTag fluid = tag.getCompound(NBTFLUID);
+    CompoundTag fluid = tag.getCompoundOrEmpty(NBTFLUID);
     tank.readFromNBT(registries,fluid);
-    shapeIndex = tag.getInt("shapeIndex");
+    shapeIndex = tag.getIntOr("shapeIndex", 0);
     super.loadAdditional(tag,registries);
   }
 

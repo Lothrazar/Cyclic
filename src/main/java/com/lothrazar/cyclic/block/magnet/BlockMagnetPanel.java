@@ -14,7 +14,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -41,7 +41,7 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
   protected static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
 
   public BlockMagnetPanel(Properties properties) {
-    super(properties.strength(1.8F).sound(SoundType.METAL).noOcclusion().noCollission());
+    super(properties.strength(1.8F).sound(SoundType.METAL).noOcclusion().noCollision());
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(LIT, true));
   }
 
@@ -70,7 +70,7 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
   }
 
   private static void openFilterMenu(Level world, BlockPos pos, Player player) {
-    if (!world.isClientSide && world.getBlockEntity(pos) instanceof MenuProvider mp) {
+    if (!world.isClientSide() && world.getBlockEntity(pos) instanceof MenuProvider mp) {
       player.openMenu(mp, pos);
     }
   }
@@ -111,6 +111,6 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.MAGNET.get(), world.isClientSide ? null : TileInsertingMagnet::serverTick);
+    return createTickerHelper(type, TileRegistry.MAGNET.get(), world.isClientSide() ? null : TileInsertingMagnet::serverTick);
   }
 }

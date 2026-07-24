@@ -48,7 +48,7 @@ public class PeatBlock extends BlockCyclic {
    * Percent chance to bake based on how much water. If touching 1 water source its just the PCT. Touching all 6 water sources means 6 * PCT
    */
   private void tryBake(Level world, BlockPos pos, int waters) {
-    if (world.random.nextDouble() < PEATCHANCE.get().doubleValue() * waters) {
+    if (world.getRandom().nextDouble() < PEATCHANCE.get().doubleValue() * waters) {
       world.setBlockAndUpdate(pos, BlockRegistry.PEAT_BAKED.get().defaultBlockState());
     }
   }

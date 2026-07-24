@@ -5,13 +5,14 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class PacketItemScroll implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketItemScroll> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_item_scroll"));
+  public static final CustomPacketPayload.Type<PacketItemScroll> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_item_scroll"));
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketItemScroll> STREAM_CODEC = StreamCodec.of(PacketItemScroll::encode, PacketItemScroll::decode);
 
   private int slot;
@@ -33,7 +34,7 @@ public class PacketItemScroll implements CustomPacketPayload {
     context.enqueueWork(() -> {
       ServerPlayer player = (ServerPlayer) context.player();
       if (player != null) {
-        player.getCooldowns().addCooldown(ItemRegistry.ENDER_BOOK.get(), 5);
+        player.getCooldowns().addCooldown(new ItemStack(ItemRegistry.ENDER_BOOK.get()), 5);
         EnderBookItem.scroll(player, message.slot, message.isDown);
       }
     });

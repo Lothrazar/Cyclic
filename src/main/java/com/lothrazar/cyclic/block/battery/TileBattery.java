@@ -78,7 +78,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void chargeSlot() {
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     ItemStack slotItem = this.batterySlots.getStackInSlot(0);
@@ -146,7 +146,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
+      poweredSides.put(f, tag.getBooleanOr("flow_" + f.getName(), false));
     }
     if (tag.contains(NBTENERGY)) {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));

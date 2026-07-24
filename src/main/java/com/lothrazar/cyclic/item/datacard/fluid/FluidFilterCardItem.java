@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -36,8 +36,8 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    if (!worldIn.isClientSide && !playerIn.isCrouching()) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide() && !playerIn.isCrouching()) {
       playerIn.openMenu(new ContainerProviderFluidFilterCard(), playerIn.blockPosition());
     }
     return super.use(worldIn, playerIn, handIn);
@@ -51,7 +51,7 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
       t.withStyle(isIgnore ? ChatFormatting.DARK_GRAY : ChatFormatting.DARK_BLUE);
       tooltip.add(t);
       CompoundTag stackTag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-      int count = stackTag.getInt("fluidCount");
+      int count = stackTag.getIntOr("fluidCount", 0);
       if (count > 0) {
         if (stackTag.contains("fluidTooltip")) {
           tooltip.add(Component.translatable(stackTag.getString("fluidTooltip")).withStyle(ChatFormatting.AQUA));
@@ -79,11 +79,11 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
   }
 
   public static boolean getIsIgnoreList(ItemStack filterStack) {
-    return filterStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBoolean(NBTFILTER);
+    return filterStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBooleanOr(NBTFILTER, false);
   }
 
   public static boolean getIsTagMatch(ItemStack filterStack) {
-    return filterStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBoolean(NBTTAGMATCH);
+    return filterStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBooleanOr(NBTTAGMATCH, false);
   }
 
   /**

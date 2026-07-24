@@ -14,7 +14,7 @@ if (deployFile.exists()) {
 
 tasks.register('deployLocal') {
     description = 'Copies build jar to all destinations in deploy.properties'
-    group = 'distribution'
+    group = 'publishing'
     dependsOn 'jar'
 
     def jarFile = layout.buildDirectory.file("libs/${base.archivesName.get()}-${version}.jar")
@@ -86,31 +86,14 @@ modrinth {
 tasks.named('modrinth').configure {
   notCompatibleWithConfigurationCache('Minotaur is not configuration-cache compatible')
 
+  def modVersion  = project.version
+  def modProjectId = modrinth_id
+
   doFirst {
-    if (!modrinth_id?.trim()) {
-      logger.warn("""
-================================================================================
-  MODRINTH PROJECT NOT CONFIGURED — ${project.name}
-================================================================================
-
-  'modrinth_id' is empty. You must create the Modrinth project by hand first:
-
-    1. Go to https://modrinth.com/dashboard and create a new project
-    2. Copy the project ID (shown on the project settings page)
-    3. Open gradle.properties in this subproject
-    4. Set:  modrinth_id=<your-project-id>
-
-  This cannot be automated — Modrinth requires manual project creation.
-
-================================================================================
-""")
-      throw new StopExecutionException()
-    }
-
     def versions = new groovy.json.JsonSlurper()
-        .parse(new URI("https://api.modrinth.com/v2/project/${modrinth_id}/version").toURL())
-    if (versions.any { it.version_number == project.version }) {
-      throw new GradleException("Modrinth version ${modrinth_id}-${project.version} already exists — bump mod_version before publishing.")
+        .parse(new URI("https://api.modrinth.com/v2/project/${modProjectId}/version").toURL())
+    if (versions.any { it.version_number == modVersion }) {
+      throw new GradleException("Modrinth version ${modProjectId}-${modVersion} already exists - bump mod_version before publishing.")
     }
   }
 }

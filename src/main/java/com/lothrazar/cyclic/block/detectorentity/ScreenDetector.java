@@ -9,11 +9,11 @@ import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.client.gui.components.Tooltip;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ScreenDetector extends ScreenBase<ContainerDetector> {
 
@@ -38,13 +38,13 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     int w = 50, h = 20;
     btnEntity = addRenderableWidget(new ButtonMachine(x, y, w, h, "", (p) -> {
       int f = TileDetector.Fields.ENTITYTYPE.ordinal();
-      PacketDistributor.sendToServer(new PacketTileData(f,
+      ClientPacketDistributor.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     x += 58;
     btnComp = addRenderableWidget(new ButtonMachine(x, y, w, h, "", (p) -> {
       int f = TileDetector.Fields.GREATERTHAN.ordinal();
-      PacketDistributor.sendToServer(new PacketTileData(f,
+      ClientPacketDistributor.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     //sliders
@@ -74,14 +74,12 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
   }
 
   @Override
-  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms, mouseX, mouseY, partialTicks);
-    super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderTooltip(ms, mouseX, mouseY);
+  public void extractRenderState(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+    super.extractRenderState(ms, mouseX, mouseY, partialTicks);
   }
 
   @Override
-  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
+  protected void extractLabels(GuiGraphicsExtractor ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRender.onValueUpdate(menu.tile);
@@ -102,7 +100,7 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
   }
 
   @Override
-  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
+  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_MEDIUM);
     this.drawSlot(ms, 151, 6, TextureRegistry.SLOT_FILTER, 18);
   }

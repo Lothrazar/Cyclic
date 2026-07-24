@@ -51,7 +51,7 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
+      poweredSides.put(f, tag.getBooleanOr("flow_" + f.getName(), false));
     }
     if (tag.contains(NBTENERGY)) {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));

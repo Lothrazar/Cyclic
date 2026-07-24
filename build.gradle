@@ -1,4 +1,6 @@
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 
 plugins {
     id 'java-library'
@@ -6,7 +8,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.141'
     id 'idea'
     id 'net.darkhax.curseforgegradle' version '1.1.25'
-    id 'com.modrinth.minotaur' version '2.8.7' apply false
+    id 'com.modrinth.minotaur' version '2.9.0' apply false
 }
 def localProps = new Properties()
 def localFile = file("mod.properties")
@@ -38,7 +40,7 @@ sourceSets.main.resources {
 
 
 repositories {
-//    mavenLocal()
+
   flatDir { dir 'libs' }
 
   maven {
@@ -53,15 +55,30 @@ base {
     archivesName = mod_id
 }
 
-// Mojang ships Java 21 to end users in 1.21.1, so mods should target Java 21.
+// Mojang ships Java 25 to end users in 26.1.2, so mods should target Java 25.
 // for intellij make sure to set JVM  Navigate to Build, Execution, Deployment > Build Tools > Gradle
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
 neoForge {
     // Specify the version of NeoForge to use.
     version = project.neo_version
 
+    mods {
+        // define mod <-> source bindings
+        // these are used to tell the game which sources are for which mod
+        // multi mod projects should define one per mod
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+
+    //this cannot be above the mods block
+    unitTest {
+      enable()
+      // ties test/ classes to the flib mod so NeoForge's test launcher can load them
+      testedMod = mods."${mod_id}"
+    }
 
     // This property allows configuring Gradle's ProcessResources task(s) to run on IDE output locations before launching the game.
     // It is REQUIRED to be set to true for the 1.21.1 template to function correctly.
@@ -70,10 +87,7 @@ neoForge {
     // Other optional settings
     // validateAccessTransformers = true
 
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
-    }
+
     accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
@@ -88,7 +102,7 @@ neoForge {
 
         server {
             server()
-            // programArgument '--nogui'
+            programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
@@ -101,7 +115,7 @@ neoForge {
         }
 
         data {
-            data()
+            clientData()
 
             // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
             // gameDirectory = project.file('run-data')
@@ -117,22 +131,13 @@ neoForge {
             // "SCAN": For mods scan.
             // "REGISTRIES": For firing of registry events.
             // "REGISTRYDUMP": For getting the contents of all registries.
-            systemProperty 'neoforge.logging.markers', 'REGISTRIES'
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
 
             // Recommended logging level for the console
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             logLevel = org.slf4j.event.Level.DEBUG
 
-        }
-    }
-
-    mods {
-        // define mod <-> source bindings
-        // these are used to tell the game which sources are for which mod
-        // multi mod projects should define one per mod
-        "${mod_id}" {
-            sourceSet(sourceSets.main)
         }
     }
 }
@@ -145,12 +150,24 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
+// to force test to rerun even when results are cached, use
+// ./gradlew test --rerun-tasks
+test {
+  useJUnitPlatform()
+  testLogging {
+    events "passed", "skipped", "failed"
+    exceptionFormat = "full"
+    showStandardStreams = false
+  }
+}
 
 dependencies {
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // for other mods depending on THIS FLIB library, use either a local copy or a maven
     //   implementation "local.mods:flib:${minecraft_version}-${flib_version}"
-       implementation "curse.maven:flib-661261:${flib_file}"
+  implementation "curse.maven:flib-661261:${flib_file}"
 
 
   //these mods have API jars for compile as well as the full mod for local
@@ -160,10 +177,16 @@ dependencies {
   compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}"
   localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}"
 
-  // no APIs
-  compileOnly "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-NEOFORGE"
+  // vazkii.patchouli:Patchouli:26.1-${patchouli_version}-NEOFORGE-SNAPSHOT is the correct maven.blamejared.com
+  //  but no syced build on maven yet
+  // so this is temp fix
+  // use this once vazkii.patchouli:Patchouli:26.1-94-NEOFORGE-SNAPSHOT actually resolves there.
+  // might not be a snapshot anymore at this point
+//  compileOnly "vazkii.patchouli:Patchouli:26.1-${patchouli_version}-NEOFORGE-SNAPSHOT"
+  compileOnly "curse.maven:patchouli-306770:8404543" // patchouli-neoforge-26.1-94.jar
+  localRuntime "curse.maven:patchouli-306770:8404543"
 
-  compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${minecraft_version}:${crafttweaker_version}"
+ // compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${minecraft_version}:${crafttweaker_version}"
 
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
@@ -180,8 +203,6 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
-  if (file('extra.gradle').exists()) { apply from: 'extra.gradle' }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -191,14 +212,14 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             minecraft_version      : minecraft_version,
             neo_version            : neo_version,
             loader_version_range   : loader_version_range,
-            flib_version           : flib_version,
             curse_slug             : curse_slug,
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
             mod_version            : mod_version,
             mod_authors            : mod_authors,
-            mod_description        : mod_description
+            mod_description        : mod_description,
+            flib_version           : flib_version
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -217,16 +238,6 @@ neoForge.ideSyncTask generateModMetadata
 // Ensure standard processResources doesn't try to double-process the same files
 
 
-//processResources {
-//    //from("src/main/resources")
-//    // 1. Tell Gradle what to do if it finds a duplicate (usually take the first one)
-//    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-//
-//    // 2. Ensure we aren't accidentally pulling the raw templates folder
-//    // into the final build (the generateModMetadata task handles this instead)
-//    exclude 'templates'
-//}
-
 // Example configuration to allow publishing using the maven-publish plugin
 publishing {
     publications {
@@ -236,8 +247,6 @@ publishing {
     }
     repositories {
         maven {
-            // url "file://${project.projectDir}/repo"
-            // url uri("${project.projectDir}/repo")
             url = uri("${project.projectDir}/repo")
         }
     }
@@ -253,6 +262,7 @@ def changelog = ext.changelog
 // --- CurseForge ---
 // Defined here (not deploy.gradle) so TaskPublishCurseForge resolves against
 // the plugins {} block classpath.
+// it will safely fail if the version already exists: will not overwrite or create a duplicate entry
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
   group       = 'publishing'
   description = 'Uploads the mod jar to CurseForge.'
@@ -264,27 +274,15 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
   mainFile.releaseType   = 'release'
   mainFile.addGameVersion(minecraft_version)
   mainFile.addGameVersion('NeoForge')
-  mainFile.addGameVersion('Java 21')
+  mainFile.addGameVersion('Java 25')
   mainFile.addEnvironment('Client', 'Server')
   mainFile.changelog     = changelog
   mainFile.changelogType = 'markdown'
-
-  doFirst {
-    def coreKey = project.findProperty('curseforge_core_api_key') ?: ''
-    def url = new URI("https://api.curseforge.com/v1/mods/${curse_id}/files").toURL()
-    def connection = url.openConnection()
-    connection.setRequestProperty('x-api-key', coreKey)
-    connection.setRequestProperty('Accept', 'application/json')
-    def response = new groovy.json.JsonSlurper().parse(connection.inputStream)
-    if (response.data.any { it.displayName?.contains(project.version as String) }) {
-      logger.warn("\n⚠️  CurseForge: version ${project.version} already exists for ${mod_name} — skipping upload.\n")
-      throw new StopExecutionException()
-    }
-  }
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    options.compilerArgs += ['-Xmaxerrs', '20000']
 }
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
@@ -299,13 +297,16 @@ tasks.register('syncExampleConfigs') {
   group = 'documentation'
   description = 'Copies generated example config files from run/config/ into examples/.'
 
-  doLast {
-    def modId   = project.mod_id
-    def srcDir  = file('run/config')
-    def destDir = file('examples')
+  // Resolve everything project-related at configuration time so the task stays
+  // compatible with the configuration cache (Task.project is unavailable at execution time).
+  def modId       = project.mod_id
+  def projectName = project.name
+  def srcDir      = file('run/config')
+  def destDir     = file('examples')
 
+  doLast {
     if (!srcDir.exists()) {
-      logger.lifecycle("[${project.name}] run/config/ not found — nothing to sync.")
+      logger.lifecycle("[${projectName}] run/config/ not found nothing to sync.")
       return
     }
 
@@ -318,18 +319,18 @@ tasks.register('syncExampleConfigs') {
     ].collect { new File(srcDir, it) }.findAll { it.exists() }
 
     if (found.isEmpty()) {
-      logger.lifecycle("[${project.name}] No matching config files in run/config/ for '${modId}'.")
+      logger.lifecycle("[${projectName}] No matching config files in run/config/ for '${modId}'.")
       return
     }
 
     destDir.mkdirs()
     found.each { src ->
-      java.nio.file.Files.copy(
+      Files.copy(
         src.toPath(),
         new File(destDir, src.name).toPath(),
-        java.nio.file.StandardCopyOption.REPLACE_EXISTING
+        StandardCopyOption.REPLACE_EXISTING
       )
-      logger.lifecycle("[${project.name}] Synced: ${src.name} → examples/")
+      logger.lifecycle("[${projectName}] Synced: ${src.name} → examples/")
     }
   }
 }

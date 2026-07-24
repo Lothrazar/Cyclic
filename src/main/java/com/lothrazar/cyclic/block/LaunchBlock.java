@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class LaunchBlock extends BlockCyclic {
 
@@ -23,7 +23,7 @@ public class LaunchBlock extends BlockCyclic {
   boolean doRedstone;
 
   public LaunchBlock(Properties properties, boolean doRedstone) {
-    super(properties.noCollission().strength(0.5F));
+    super(properties.noCollision().strength(0.5F));
     this.doRedstone = doRedstone;
   }
 
@@ -46,14 +46,14 @@ public class LaunchBlock extends BlockCyclic {
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
     if (sneakPlayerAvoid && entity instanceof Player && entity.isCrouching()) {
-      if (worldIn.isClientSide && entity instanceof Player) {
-        PacketDistributor.sendToServer(new PacketPlayerFalldamage());
+      if (worldIn.isClientSide() && entity instanceof Player) {
+        ClientPacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
       return;
     }
-    if (worldIn.isClientSide) {
+    if (worldIn.isClientSide()) {
       if (entity instanceof Player) {
-        PacketDistributor.sendToServer(new PacketPlayerFalldamage());
+        ClientPacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
       EntityUtil.launch(entity, ANGLE, getPower(worldIn, pos));
     }

@@ -20,7 +20,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -55,8 +54,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    if (!worldIn.isClientSide && !playerIn.isCrouching()) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide() && !playerIn.isCrouching()) {
       int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
       ((ServerPlayer) playerIn).openMenu(new StorageBagContainerProvider(slot), buf -> buf.writeInt(slot));
     }
@@ -73,7 +72,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
     if (tags.contains(NBT_COLOUR) == false) {
       return DyeColor.BROWN.getTextColor(); //BROWN as default for normal look
     }
-    return tags.getInt(NBT_COLOUR);
+    return tags.getIntOr(NBT_COLOUR, 0);
   }
 
   @Override
@@ -116,9 +115,9 @@ public class ItemStorageBag extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack,  Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     CompoundTag nbt = getCustomData(stack);
-    String pickupMode = nbt.getString(PickupMode.NBT);
-    String depositMode = nbt.getString("deposit_mode");
-    String refillMode = nbt.getString("refill_mode");
+    String pickupMode = nbt.getStringOr(PickupMode.NBT, "");
+    String depositMode = nbt.getStringOr("deposit_mode", "");
+    String refillMode = nbt.getStringOr("refill_mode", "");
     if (!pickupMode.equals("")) {
       tooltip.add(Component.translatable("item.cyclic.storage_bag.tooltip.pickup",
           Component.translatable(String.format(
@@ -146,7 +145,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
       return;
     }
     timer = 0;
-    if (!world.isClientSide && entity instanceof Player) {
+    if (!world.isClientSide() && entity instanceof Player) {
       if (getRefillMode(stack) == RefillMode.HOTBAR) {
         tryRefillHotbar(stack, (Player) entity);
       }
@@ -242,7 +241,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   public static PickupMode getPickupMode(ItemStack stack) {
-    String mode = getCustomData(stack).getString(PickupMode.NBT);
+    String mode = getCustomData(stack).getStringOr(PickupMode.NBT, "");
     for (int i = 0; i < PickupMode.values().length; i++) {
       if (mode.equals(PickupMode.values()[i].getSerializedName())) {
         return PickupMode.values()[i];
@@ -252,7 +251,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   private static DepositMode getDepositMode(ItemStack stack) {
-    String mode = getCustomData(stack).getString(DepositMode.NBT);
+    String mode = getCustomData(stack).getStringOr(DepositMode.NBT, "");
     for (int i = 0; i < DepositMode.values().length; i++) {
       if (mode.equals(DepositMode.values()[i].getSerializedName())) {
         return DepositMode.values()[i];

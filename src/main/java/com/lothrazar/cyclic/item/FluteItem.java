@@ -34,7 +34,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -61,12 +60,12 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
     //    playerIn.startUsingItem(handIn);
     if (!player.getCooldowns().isOnCooldown(this) &&
         itemstack.has(DataComponents.CUSTOM_DATA) && itemstack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(EntityMagicNetEmpty.NBT_ENTITYID)) {
-      int id = itemstack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(UNIQUEMAGIC);
+      int id = itemstack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(UNIQUEMAGIC, 0);
       Entity found = worldIn.getEntity(id);
       if (found instanceof LivingEntity living) {
         boolean success = EntityUtil.enderTeleportEvent(living, worldIn, player.blockPosition());
@@ -77,7 +76,7 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
         }
       }
     }
-    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+    return InteractionResult.SUCCESS.heldItemTransformedTo(itemstack);
   }
 
   @Override

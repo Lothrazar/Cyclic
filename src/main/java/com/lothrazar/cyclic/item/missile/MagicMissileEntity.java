@@ -50,13 +50,13 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
     super.tick();
     lifetime--;
     var level = level();
-    if (!level.isClientSide && lifetime <= 0) {
+    if (!level.isClientSide() && lifetime <= 0) {
       this.kill();
       //no target found
       return;
     }
     //ModCyclic.logger.error("UPDATE ET  isclient==" + this.world.isRemote);
-    if (!level.isClientSide &&
+    if (!level.isClientSide() &&
         (targetEntity == null || !targetEntity.isAlive())) {
       this.kill();
       //no target found

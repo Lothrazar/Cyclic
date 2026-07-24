@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -200,9 +200,9 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
         break;
       }
       entity.setDeltaMovement(newx, newy, newz);
-      if (level.isClientSide && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
+      if (level.isClientSide() && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
           && entity instanceof Player p) {
-        PacketDistributor.sendToServer(new PacketPlayerFalldamage());
+        ClientPacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
     }
     return moved;
@@ -211,8 +211,8 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     filter.deserializeNBT(registries,tag.getCompound("filter"));
-    speed = tag.getInt("speed");
-    range = tag.getInt("range");
+    speed = tag.getIntOr("speed", 0);
+    range = tag.getIntOr("range", 0);
     super.loadAdditional(tag, registries);
   }
 

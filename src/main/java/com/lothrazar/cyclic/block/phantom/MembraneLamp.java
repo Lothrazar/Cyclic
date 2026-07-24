@@ -36,7 +36,7 @@ public class MembraneLamp extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.LAMP.get(), world.isClientSide ? null : MembraneLampTile::serverTick);
+    return createTickerHelper(type, TileRegistry.LAMP.get(), world.isClientSide() ? null : MembraneLampTile::serverTick);
   }
 
   @Override

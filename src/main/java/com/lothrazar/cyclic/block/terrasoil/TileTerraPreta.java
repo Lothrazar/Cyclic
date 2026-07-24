@@ -49,10 +49,10 @@ public class TileTerraPreta extends TileBlockEntityCyclic {
     if (world instanceof ServerLevel) {
       try {
         ServerLevel sw = (ServerLevel) world;
-        if (d >= 1 || world.random.nextDouble() < d) {
-          bState.randomTick(sw, current, world.random);
-          bState.randomTick(sw, current, world.random);
-          bState.randomTick(sw, current, world.random);
+        if (d >= 1 || world.getRandom().nextDouble() < d) {
+          bState.randomTick(sw, current, world.getRandom());
+          bState.randomTick(sw, current, world.getRandom());
+          bState.randomTick(sw, current, world.getRandom());
         }
       }
       catch (Exception e) {
@@ -66,7 +66,7 @@ public class TileTerraPreta extends TileBlockEntityCyclic {
     BlockState bState = world.getBlockState(current);
     if (bState.getBlock() instanceof BonemealableBlock) {
       BonemealableBlock crop = ((BonemealableBlock) bState.getBlock());
-      if (!crop.isValidBonemealTarget(world, current, bState) || !crop.isBonemealSuccess(world, world.random, current, bState)) {
+      if (!crop.isValidBonemealTarget(world, current, bState) || !crop.isBonemealSuccess(world, world.getRandom(), current, bState)) {
         return false; //cant grow, or cant bonemeal. no
       }
     }

@@ -58,13 +58,13 @@ public class BlockstateCard extends ItemBaseCyclic {
       //get it
       ListTag stateTags = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getList(STATESTAG, 10);
       for (int i = 0; i < stateTags.size(); ++i) {
-        CompoundTag currTag = stateTags.getCompound(i);
+        CompoundTag currTag = stateTags.getCompoundOrEmpty(i);
         BlockState stateFound = NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), currTag);
         if (stateFound != null && !stateFound.isAir()) {
           BlockStateMatcher matcher = new BlockStateMatcher();
           matcher.setState(stateFound);
           if (currTag.contains(EXACT_TAG)) {
-            matcher.setExactProperties(currTag.getBoolean(EXACT_TAG));
+            matcher.setExactProperties(currTag.getBooleanOr(EXACT_TAG, false));
           }
           st.add(matcher);
         }
@@ -109,7 +109,7 @@ public class BlockstateCard extends ItemBaseCyclic {
     }
     //wait wait wait does it exist
     for (int i = 0; i < stateTags.size(); ++i) {
-      BlockState stateFound = NbtUtils.readBlockState(player.level().holderLookup(Registries.BLOCK), stateTags.getCompound(i));
+      BlockState stateFound = NbtUtils.readBlockState(player.level().holderLookup(Registries.BLOCK), stateTags.getCompoundOrEmpty(i));
       if (stateFound.equals(state)) {
         return InteractionResult.PASS;
       }

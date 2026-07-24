@@ -47,7 +47,7 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic implements MenuPro
   //  @Override
   public void tick() {
     this.syncEnergy();
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     moveEnergy(Direction.DOWN, MAX);

@@ -34,7 +34,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class WaterSpreaderItem extends ItemBaseCyclic {
 
@@ -52,8 +52,8 @@ public class WaterSpreaderItem extends ItemBaseCyclic {
     if (side != null) {
       pos = pos.relative(side);
     }
-    if (context.getLevel().isClientSide) {
-      PacketDistributor.sendToServer(new PacketWaterFlow(pos, context.getHand()));
+    if (context.getLevel().isClientSide()) {
+      ClientPacketDistributor.sendToServer(new PacketWaterFlow(pos, context.getHand()));
       return InteractionResult.SUCCESS;
     }
     return super.useOn(context);

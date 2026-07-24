@@ -17,7 +17,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -54,7 +54,7 @@ public class EnderBookItem extends ItemBaseCyclic {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     CompoundTag tag = getData(stack);
     if (tag.contains(ITEMCOUNT)) {
-      int itemCount = tag.getInt(ITEMCOUNT);
+      int itemCount = tag.getIntOr(ITEMCOUNT, 0);
       MutableComponent t = Component.translatable("cyclic.screen.filter.item.count");
       t.append("" + itemCount);
       t.withStyle(ChatFormatting.GRAY);
@@ -71,15 +71,15 @@ public class EnderBookItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
     ItemStack stack = playerIn.getItemInHand(handIn);
-    if (!worldIn.isClientSide && !playerIn.isCrouching()) {
+    if (!worldIn.isClientSide() && !playerIn.isCrouching()) {
       ((ServerPlayer) playerIn).openMenu(new EnderBookContainerProvider());
     }
-    if (!worldIn.isClientSide && playerIn.isCrouching()) {
+    if (!worldIn.isClientSide() && playerIn.isCrouching()) {
       if (stack.getDamageValue() < stack.getMaxDamage() - 1) {
         CompoundTag tag = getData(stack);
-        int enderslot = tag.getInt(ENDERSLOT);
+        int enderslot = tag.getIntOr(ENDERSLOT, 0);
         BlockPosDim loc = getLocation(stack, enderslot);
         if (loc != null) {
           ChatUtil.addServerChatMessage(playerIn, Component.translatable("item.cyclic.ender_book.start").append(loc.toString()));
@@ -102,14 +102,14 @@ public class EnderBookItem extends ItemBaseCyclic {
       ChatUtil.sendStatusMessage(player, Component.translatable("item.cyclic.ender_book.cancel"));
       return;
     }
-    int ct = tag.getInt(TELEPORT_COUNTDOWN);
+    int ct = tag.getIntOr(TELEPORT_COUNTDOWN, 0);
     if (ct < 0) {
       cancelTeleport(stack);
       return;
     }
     if (ct == 0 && entityIn instanceof Player p) {
       cancelTeleport(stack);
-      int enderslot = tag.getInt(ENDERSLOT);
+      int enderslot = tag.getIntOr(ENDERSLOT, 0);
       BlockPosDim loc = getLocation(stack, enderslot);
       if (loc != null && loc.getPos() != null) {
         if (loc.getDimension().equalsIgnoreCase(LevelWorldUtil.dimensionToString(worldIn))) {
@@ -155,7 +155,7 @@ public class EnderBookItem extends ItemBaseCyclic {
       return;
     }
     CompoundTag tag = getData(book);
-    int enderslot = tag.getInt(ENDERSLOT);
+    int enderslot = tag.getIntOr(ENDERSLOT, 0);
     enderslot = scrollSlot(isDown, enderslot);
     enderslot = enderslot % EnderBookCapability.SLOTS;
     tag.putInt(ENDERSLOT, enderslot);

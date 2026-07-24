@@ -68,7 +68,7 @@ public class BlockCableFluid extends CableBase {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.FLUID_PIPE.get(), world.isClientSide ? null : TileCableFluid::serverTick);
+    return createTickerHelper(type, TileRegistry.FLUID_PIPE.get(), world.isClientSide() ? null : TileCableFluid::serverTick);
   }
 
   @Override

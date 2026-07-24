@@ -40,7 +40,7 @@ public class BlockMoon extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.DETECTOR_MOON.get(), world.isClientSide ? null : TileMoon::serverTick);
+    return createTickerHelper(type, TileRegistry.DETECTOR_MOON.get(), world.isClientSide() ? null : TileMoon::serverTick);
   }
 
   @Override

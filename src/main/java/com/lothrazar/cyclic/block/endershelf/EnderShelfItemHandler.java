@@ -56,8 +56,8 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
     super.deserializeNBT(provider,nbt);
     for (int i = 0; i < ROWS; i++) {
-      extraBooks[i] = nbt.getInt("cyclicmagic" + ":idc" + i);
-      enchantmentIdCache[i] = nbt.getString("cyclicmagic" + ":ench");
+      extraBooks[i] = nbt.getIntOr("cyclicmagic" + ":idc" + i, 0);
+      enchantmentIdCache[i] = nbt.getStringOr("cyclicmagic" + ":ench", "");
     }
   }
 
@@ -86,7 +86,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     if (!simulate) {
       PacketRegistry.sendToAllClients(shelf.getLevel(), new PacketTileInventoryToClient(shelf.getBlockPos(), slot, getStackInSlot(slot), SyncPacketType.SET));
     }
-    if (this.shelf.getLevel().isClientSide && oldEmpty != stacks.get(slot).isEmpty()) {
+    if (this.shelf.getLevel().isClientSide() && oldEmpty != stacks.get(slot).isEmpty()) {
       nameCache[slot] = "";
     }
     return extracted;

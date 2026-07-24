@@ -151,8 +151,8 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    burnTimeMax = tag.getInt("burnTimeMax");
-    lock = tag.getInt(NBT_LOCK);
+    burnTimeMax = tag.getIntOr("burnTimeMax", 0);
+    lock = tag.getIntOr(NBT_LOCK, 0);
     super.loadAdditional(tag,registries);
   }
 

@@ -28,7 +28,7 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -78,7 +78,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
     if (!stack.has(DataComponents.CUSTOM_DATA)) {
       return 0;
     }
-    float max = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt("count_max");
+    float max = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr("count_max", 0);
     float current = max - stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt("count_empty");
     return (max == 0) ? 0 : Math.round(13.0F * current / max);
     //    }
@@ -91,7 +91,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-    if (!worldIn.isClientSide && entityLiving instanceof Player player) { // && !player.isCrouching()
+    if (!worldIn.isClientSide() && entityLiving instanceof Player player) { // && !player.isCrouching()
       IItemHandler handler = stack.getCapability(Capabilities.ItemHandler.ITEM);
       if (handler != null) {
         int foundSlot = -1;
@@ -119,24 +119,24 @@ public class ItemLunchbox extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player player, InteractionHand handIn) {
     ItemStack stack = player.getItemInHand(handIn);
     if (player.isCrouching()) {
-      if (!worldIn.isClientSide) {
+      if (!worldIn.isClientSide()) {
         ((ServerPlayer) player).openMenu(new ContainerProviderLunchbox(), player.blockPosition());
       }
-      return InteractionResultHolder.success(stack);
+      return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
     }
     if (isEmpty(stack)) {
-      return InteractionResultHolder.fail(stack);
+      return InteractionResult.FAIL;
     }
     return ItemUtils.startUsingInstantly(worldIn, player, handIn);
   }
 
   private static boolean isEmpty(ItemStack stack) {
     CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-    int max = tag.getInt("count_max");
-    int empty = tag.getInt("count_empty");
+    int max = tag.getIntOr("count_max", 0);
+    int empty = tag.getIntOr("count_empty", 0);
     return max == 0 || empty >= max;
   }
 

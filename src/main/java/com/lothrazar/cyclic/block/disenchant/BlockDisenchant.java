@@ -7,7 +7,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -78,6 +78,6 @@ public class BlockDisenchant extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.DISENCHANTER.get(), world.isClientSide ? null : TileDisenchant::serverTick);
+    return createTickerHelper(type, TileRegistry.DISENCHANTER.get(), world.isClientSide() ? null : TileDisenchant::serverTick);
   }
 }

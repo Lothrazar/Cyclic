@@ -37,7 +37,7 @@ public class SettingsCard extends ItemBaseCyclic {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     CompoundTag stackdata = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     if (stackdata.contains(NBT_ID)) {
-      String tiledataID = stackdata.getString(NBT_ID);
+      String tiledataID = stackdata.getStringOr(NBT_ID, "");
       MutableComponent t = Component.translatable("[" + tiledataID + "]");
       t.withStyle(ChatFormatting.DARK_GRAY);
       tooltip.add(t);
@@ -77,14 +77,14 @@ public class SettingsCard extends ItemBaseCyclic {
         ChatUtil.addChatMessage(player, getDescriptionId() + ".savednew");
       }
     }
-    else if (stackdata.getBoolean(NBT_SETSAVED)) {
+    else if (stackdata.getBooleanOr(NBT_SETSAVED, false)) {
       //yep put data into tile 
-      String stackdataID = stackdata.getString(NBT_ID);
+      String stackdataID = stackdata.getStringOr(NBT_ID, "");
       if (tile instanceof TileBlockEntityCyclic) {
         //for now, only do cyclic tile entities
         //WRITE TO TILE from my stackdata
         CompoundTag tiledata = tile.saveWithoutMetadata(tile.getLevel().registryAccess());
-        String tiledataID = stackdata.getString(NBT_ID);
+        String tiledataID = stackdata.getStringOr(NBT_ID, "");
         //go merge and let it read
         if (tiledataID.equalsIgnoreCase(stackdataID)) {
           stackdata = stackdata.copy();

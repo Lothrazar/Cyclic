@@ -18,7 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -75,14 +75,14 @@ public class TileTransporterItem extends ItemBaseCyclic {
 
   private boolean placeStoredTileEntity(Player player, ItemStack heldChestSack, BlockPos pos) {
     CompoundTag itemData = heldChestSack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-    ResourceLocation res =   ResourceLocation.parse(itemData.getString(KEY_BLOCKID));
+    Identifier res =   Identifier.parse(itemData.getStringOr(KEY_BLOCKID, ""));
     Block block = BuiltInRegistries.BLOCK.get(res);
     if (block == null) {
       heldChestSack = ItemStack.EMPTY;
       ChatUtil.addChatMessage(player, "Invalid block id " + res);
       return false;
     }
-    BlockState toPlace = NbtUtils.readBlockState(player.level().holderLookup(Registries.BLOCK), itemData.getCompound(KEY_BLOCKSTATE));
+    BlockState toPlace = NbtUtils.readBlockState(player.level().holderLookup(Registries.BLOCK), itemData.getCompoundOrEmpty(KEY_BLOCKSTATE));
     if (ConfigRegistry.OVERRIDE_TRANSPORTER_SINGLETON.get()) {
       if (toPlace.hasProperty(BlockStateProperties.CHEST_TYPE)
           && toPlace.getValue(BlockStateProperties.CHEST_TYPE) != ChestType.SINGLE) {
@@ -95,7 +95,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
       world.setBlockAndUpdate(pos, toPlace);
       BlockEntity tile = world.getBlockEntity(pos);
       if (tile != null) {
-        CompoundTag tileData = itemData.getCompound(TileTransporterItem.KEY_BLOCKTILE);
+        CompoundTag tileData = itemData.getCompoundOrEmpty(TileTransporterItem.KEY_BLOCKTILE);
         tileData.putInt("x", pos.getX());
         tileData.putInt("y", pos.getY());
         tileData.putInt("z", pos.getZ());
@@ -122,7 +122,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
   public void appendHoverText(ItemStack itemStack, Item.TooltipContext worldIn, List<Component> list, TooltipFlag flagIn) {
     if (itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null
         && itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(KEY_BLOCKNAME)) {
-      String blockname = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(KEY_BLOCKNAME);
+      String blockname = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(KEY_BLOCKNAME, "");
       if (blockname != null && blockname.length() > 0) {
         MutableComponent t = Component.translatable(ChatUtil.lang(blockname));
         t.withStyle(ChatFormatting.DARK_GREEN);

@@ -10,7 +10,6 @@ import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
@@ -39,10 +38,10 @@ public class WandMissileItem extends ItemHasEnergy {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
     ItemStack itemstack = playerIn.getItemInHand(handIn);
     this.doAction(itemstack, worldIn, playerIn);
-    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+    return InteractionResult.SUCCESS.heldItemTransformedTo(itemstack);
   }
 
   private void doAction(ItemStack stack, Level world, Player player) {
@@ -58,7 +57,7 @@ public class WandMissileItem extends ItemHasEnergy {
         trimmedTargets.add(target);
       }
     }
-    if (!world.isClientSide) {
+    if (!world.isClientSide()) {
       IEnergyStorage storage = CapabilityUtil.energy(stack);//stack.getCapability(Capabilities.ENERGY, null).orElse(null);
       final int cost = COST.get();
       if (storage != null && storage.extractEnergy(cost, true) == cost) {

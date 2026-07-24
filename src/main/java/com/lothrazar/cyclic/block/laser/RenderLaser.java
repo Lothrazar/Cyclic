@@ -8,11 +8,16 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 /**
  * laser rendering by direwolf20-MC from this MIT project
@@ -20,22 +25,41 @@ import net.minecraft.world.phys.AABB;
  * <p>
  * https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
  */
-public class RenderLaser implements BlockEntityRenderer<TileLaser> {
+public class RenderLaser implements BlockEntityRenderer<TileLaser, RenderLaser.State> {
+
+  public static class State extends BlockEntityRenderState {
+    TileLaser blockEntity;
+  }
 
   public RenderLaser(BlockEntityRendererProvider.Context d) {}
 
   @Override
-  public AABB getRenderBoundingBox(TileLaser blockEntity) {
-    return AABB.INFINITE;
+  public boolean shouldRender(TileLaser blockEntity, Vec3 cameraPosition) {
+    return true;
   }
 
   @Override
-  public void render(TileLaser te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {
+  public State createRenderState() {
+    return new State();
+  }
+
+  @Override
+  public void extractRenderState(TileLaser blockEntity, State state, float partialTicks, Vec3 cameraPosition,
+      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
+    state.blockEntity = blockEntity;
+  }
+
+  @Override
+  public void submit(State state, PoseStack matrixStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    TileLaser te = state.blockEntity;
     if (te.requiresRedstone() && !te.isPowered()) {
       return;
     }
     try {
+      MultiBufferSource.BufferSource iRenderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
       draw(te, matrixStack, iRenderTypeBuffer);
+      iRenderTypeBuffer.endBatch();
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("RenderLaser.java ", e);
@@ -94,10 +118,5 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser> {
     // vertex call stub
     // vertex call stub
     // vertex call stub
-  }
-
-  @Override
-  public boolean shouldRenderOffScreen(TileLaser te) { // isGlobalRenderer
-    return true;
   }
 }

@@ -51,7 +51,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
   @Override
   public void slotsChanged(Container inventory) {
     Level world = playerInventory.player.level();
-    if (!world.isClientSide) {
+    if (!world.isClientSide()) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;
       java.util.Optional<RecipeHolder<CraftingRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix.asCraftInput(), world);

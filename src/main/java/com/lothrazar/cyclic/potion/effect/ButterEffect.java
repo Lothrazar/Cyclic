@@ -25,7 +25,7 @@ public class ButterEffect extends CyclicMobEffect {
     // delete me i guess
     if(event.getEntity() instanceof LivingEntity living) {
       var level = living.level();
-      if (level.random.nextDouble() > DROP_CHANCE) {
+      if (level.getRandom().nextDouble() > DROP_CHANCE) {
         return;
       }
       List<EquipmentSlot> slots = null;
@@ -41,7 +41,7 @@ public class ButterEffect extends CyclicMobEffect {
       if (slots == null) {
         return;
       }
-      int slotix = level.random.nextInt(slots.size());
+      int slotix = level.getRandom().nextInt(slots.size());
       ItemStack dropMe = living.getItemBySlot(slots.get(slotix));
       ItemStackUtil.drop(level, living.blockPosition(), dropMe);
       living.setItemSlot(slots.get(slotix), ItemStack.EMPTY);

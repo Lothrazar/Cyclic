@@ -85,7 +85,7 @@ public class CommandRegistry {
         // cyclic home set @p x y z
         .then(Commands.literal(CyclicCommands.HOME.toString())
             .requires((p) -> {
-              return p.hasPermission(COMMANDHOME.get() ? PERM_ELEVATED : PERM_EVERYONE);
+              return (COMMANDHOME.get() ? Commands.LEVEL_GAMEMASTERS : Commands.LEVEL_ALL).check(p.permissions());
             })
             .then(Commands.literal(FORK_TP)
                 .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
@@ -113,7 +113,7 @@ public class CommandRegistry {
         //cyclic gethome   !! this is player only, not command block
         .then(Commands.literal(CyclicCommands.GETHOME.toString())
             .requires((p) -> {
-              return p.hasPermission(COMMANDGETHOME.get() ? PERM_ELEVATED : PERM_EVERYONE);
+              return (COMMANDGETHOME.get() ? Commands.LEVEL_GAMEMASTERS : Commands.LEVEL_ALL).check(p.permissions());
             })
             .executes(x -> {
               return CommandGetHome.execute(x);
@@ -123,7 +123,7 @@ public class CommandRegistry {
         // cyclic health factor @p 0.8
         .then(Commands.literal(CyclicCommands.HEALTH.toString())
             .requires((p) -> {
-              return p.hasPermission(COMMANDHEALTH.get() ? PERM_ELEVATED : PERM_EVERYONE);
+              return (COMMANDHEALTH.get() ? Commands.LEVEL_GAMEMASTERS : Commands.LEVEL_ALL).check(p.permissions());
             })
             .then(Commands.literal(FORK_SET)
                 .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
@@ -155,7 +155,7 @@ public class CommandRegistry {
         // cyclic hearts factor @p 0.8
         .then(Commands.literal(CyclicCommands.HEARTS.toString())
             .requires((p) -> {
-              return p.hasPermission(COMMANDHEALTH.get() ? PERM_ELEVATED : PERM_EVERYONE);
+              return (COMMANDHEALTH.get() ? Commands.LEVEL_GAMEMASTERS : Commands.LEVEL_ALL).check(p.permissions());
             })
             .then(Commands.literal(FORK_SET)
                 .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
@@ -187,7 +187,7 @@ public class CommandRegistry {
         //cyclic scoreboard test @p <objective>
         .then(Commands.literal(CyclicCommands.SCOREBOARD.toString())
             .requires((p) -> {
-              return p.hasPermission(PERM_ELEVATED);
+              return (Commands.LEVEL_GAMEMASTERS).check(p.permissions());
             })
             .then(Commands.literal(FORK_RANDOM)
                 .then(Commands.argument(ARG_TARGETS, ScoreHolderArgument.scoreHolders())
@@ -233,7 +233,7 @@ public class CommandRegistry {
         // /cyclic attributes minecraft:reach_distance reset @p
         .then(Commands.literal(CyclicCommands.ATTRIBUTE.toString()) //same as hearts but subcommand again instead of just number
             .requires((p) -> {
-              return p.hasPermission(PERM_ELEVATED);
+              return (Commands.LEVEL_GAMEMASTERS).check(p.permissions());
             })
             .then(Commands.argument(ARG_ATTR, ResourceKeyArgument.key(Registries.ATTRIBUTE))
                 .then(Commands.literal(FORK_ADD)
@@ -263,7 +263,7 @@ public class CommandRegistry {
         // cyclic gamemode @p 1
         .then(Commands.literal(CyclicCommands.GAMEMODE.toString())
             .requires((p) -> {
-              return p.hasPermission(PERM_ELEVATED);
+              return (Commands.LEVEL_GAMEMASTERS).check(p.permissions());
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(0, 3))
@@ -275,7 +275,7 @@ public class CommandRegistry {
         //  cyclic gravity toggle @p
         .then(Commands.literal(CyclicCommands.GRAVITY.toString())
             .requires((p) -> {
-              return p.hasPermission(PERM_ELEVATED);
+              return (Commands.LEVEL_GAMEMASTERS).check(p.permissions());
             })
             .then(Commands.literal(FORK_SET)
                 .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
@@ -298,7 +298,7 @@ public class CommandRegistry {
         //       /cyclic glowing toggle @p
         .then(Commands.literal(CyclicCommands.GLOWING.toString())
             .requires((p) -> {
-              return p.hasPermission(PERM_ELEVATED);
+              return (Commands.LEVEL_GAMEMASTERS).check(p.permissions());
             })
             .then(Commands.literal(FORK_SET)
                 .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
@@ -322,7 +322,7 @@ public class CommandRegistry {
         //   /cyclic hunger factor @p 0.5
         .then(Commands.literal(CyclicCommands.HUNGER.toString())
             .requires((p) -> {
-              return p.hasPermission(COMMANDHUNGER.get() ? PERM_ELEVATED : PERM_EVERYONE);
+              return (COMMANDHUNGER.get() ? Commands.LEVEL_GAMEMASTERS : Commands.LEVEL_ALL).check(p.permissions());
             })
             .then(Commands.literal(FORK_FACTOR)
                 .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
@@ -351,7 +351,7 @@ public class CommandRegistry {
                             }))))))
         .then(Commands.literal(CyclicCommands.DEV.toString())
             .requires((p) -> {
-              return p.hasPermission(COMMANDDEV.get() ? PERM_ELEVATED : PERM_EVERYONE);
+              return (COMMANDDEV.get() ? Commands.LEVEL_GAMEMASTERS : Commands.LEVEL_ALL).check(p.permissions());
             })
             .then(Commands.literal("nbt")
                 .executes(x -> {
@@ -371,7 +371,7 @@ public class CommandRegistry {
                         })))))
         .then(Commands.literal(CyclicCommands.PING.toString())
             .requires((p) -> {
-              return p.hasPermission(COMMANDPING.get() ? PERM_ELEVATED : PERM_EVERYONE);
+              return (COMMANDPING.get() ? Commands.LEVEL_GAMEMASTERS : Commands.LEVEL_ALL).check(p.permissions());
             })
             .then(Commands.literal("nether")
                 .executes(x -> {
@@ -383,7 +383,7 @@ public class CommandRegistry {
                 })))
         .then(Commands.literal(CyclicCommands.TODO.toString())
             .requires((p) -> {
-              return p.hasPermission(PERM_EVERYONE);
+              return (Commands.LEVEL_ALL).check(p.permissions());
             })
             .then(Commands.literal(FORK_ADD)
                 .then(Commands.argument("arguments", StringArgumentType.greedyString())

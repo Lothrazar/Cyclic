@@ -21,7 +21,7 @@ public class ItemEnergyCap extends EnergyStorageWrapper {
     this.host = host;
     CompoundTag data = host.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     if (data.contains(KEY)) {
-      super.setEnergy(data.getInt(KEY));
+      super.setEnergy(data.getIntOr(KEY, 0));
     }
   }
 

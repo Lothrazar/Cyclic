@@ -57,15 +57,15 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
   public void loadAdditional(CompoundTag tags, HolderLookup.Provider registries) {
     text = new String[STRINGS];
     for (int i = 0; i < STRINGS; i++) {
-      text[i] = tags.getString("text" + i);
+      text[i] = tags.getStringOr("text" + i, "");
     }
-    red = tags.getInt("red");
-    green = tags.getInt("green");
-    blue = tags.getInt("blue");
-    padding = tags.getInt("padding");
-    fontSize = tags.getInt("font");
-    offset = tags.getInt("offset");
-    dropShadow = tags.getBoolean("dropShadow");
+    red = tags.getIntOr("red", 0);
+    green = tags.getIntOr("green", 0);
+    blue = tags.getIntOr("blue", 0);
+    padding = tags.getIntOr("padding", 0);
+    fontSize = tags.getIntOr("font", 0);
+    offset = tags.getIntOr("offset", 0);
+    dropShadow = tags.getBooleanOr("dropShadow", false);
     super.loadAdditional(tags, registries);
   }
 

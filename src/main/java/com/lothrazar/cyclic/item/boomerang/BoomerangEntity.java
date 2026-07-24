@@ -129,7 +129,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
 
   private void tryPickupNearby() {
     Entity owner = getOwner();
-    if (owner == null || level().isClientSide) {
+    if (owner == null || level().isClientSide()) {
       return;
     }
     //try to find entities to pick up
@@ -273,7 +273,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     }
     switch (this.boomerangType) {
       case CARRY:
-        if (!entityHit.level().isClientSide) {
+        if (!entityHit.level().isClientSide()) {
           entityHit.startRiding(this);
         }
       break;

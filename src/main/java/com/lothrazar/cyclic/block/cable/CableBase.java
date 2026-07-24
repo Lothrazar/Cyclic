@@ -147,7 +147,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
         }
       }
       if (hasExtractor && (this == BlockRegistry.ITEM_PIPE.get() || this == BlockRegistry.FLUID_PIPE.get())) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
           BlockEntity tileEntity = world.getBlockEntity(pos);
           if (tileEntity instanceof MenuProvider) {
             ((ServerPlayer) player).openMenu((MenuProvider) tileEntity, tileEntity.getBlockPos());
@@ -239,7 +239,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
         if (updatePost) {
           newState.updateShape(sideToToggle, world.getBlockState(pos.relative(sideToToggle)), world, pos, pos.relative(sideToToggle));
         }
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
           SoundUtil.playSound(player, SoundRegistry.THUNK.get(), 0.2F, 1F);
         }
       }

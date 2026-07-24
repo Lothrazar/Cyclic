@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.network.chat.Component;
@@ -23,14 +23,12 @@ public class ScreenLunchbox extends ScreenBase<ContainerLunchbox> {
   }
 
   @Override
-  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms, mouseX, mouseY, partialTicks);
-    super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderTooltip(ms, mouseX, mouseY);
+  public void extractRenderState(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+    super.extractRenderState(ms, mouseX, mouseY, partialTicks);
   }
 
   @Override
-  protected void renderBg(GuiGraphics ms, float partialTicks, int x, int y) {
+  protected void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     for (int colPos = 0; colPos < ItemLunchbox.SLOTS; colPos++) {
       this.drawSlot(ms, 25 + colPos * Const.SQ, 35);

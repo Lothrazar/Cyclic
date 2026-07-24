@@ -79,7 +79,7 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
-    this.transferRate = tag.getInt("transferRate");
+    this.transferRate = tag.getIntOr("transferRate", 0);
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
     super.loadAdditional(tag,registries);
   }
@@ -111,7 +111,7 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
       setLitProperty(false);
       return;
     }
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     boolean moved = false;

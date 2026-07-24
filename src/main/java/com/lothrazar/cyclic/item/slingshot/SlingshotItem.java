@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
@@ -31,10 +30,10 @@ public class SlingshotItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
     ItemStack itemstack = playerIn.getItemInHand(handIn);
     playerIn.startUsingItem(handIn);
-    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+    return InteractionResult.SUCCESS.heldItemTransformedTo(itemstack);
   }
 
   @Override

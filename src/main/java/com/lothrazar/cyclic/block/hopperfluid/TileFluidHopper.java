@@ -76,7 +76,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic implements MenuProvid
     if (this.isPowered()) {
       return;
     }
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     //first pull down from above

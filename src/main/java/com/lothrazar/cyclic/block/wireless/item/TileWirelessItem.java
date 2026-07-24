@@ -68,7 +68,7 @@ public class TileWirelessItem extends TileBlockEntityCyclic implements MenuProvi
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV + "gps"));
-    this.transferRate = tag.getInt("transferRate");
+    this.transferRate = tag.getIntOr("transferRate", 0);
     super.loadAdditional(tag,registries);
   }
 
@@ -87,7 +87,7 @@ public class TileWirelessItem extends TileBlockEntityCyclic implements MenuProvi
       setLitProperty(false);
       return;
     }
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     boolean moved = false;

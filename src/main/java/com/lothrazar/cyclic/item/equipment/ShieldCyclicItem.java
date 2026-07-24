@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.ItemAbility;
 
 public class ShieldCyclicItem extends ItemBaseCyclic implements Equipable {
 
-  public static final ResourceLocation BLOCKING = ResourceLocation.parse("minecraft:blocking");
+  public static final Identifier BLOCKING = Identifier.parse("minecraft:blocking");
 
   public static enum ShieldType {
     LEATHER, WOOD, FLINT, OBSIDIAN, BONE;
@@ -79,11 +79,11 @@ public class ShieldCyclicItem extends ItemBaseCyclic implements Equipable {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level world, Player playerIn, InteractionHand hand) {
+  public InteractionResult use(Level world, Player playerIn, InteractionHand hand) {
 
     ItemStack itemstack = playerIn.getItemInHand(hand);
     playerIn.startUsingItem(hand); //important for Blocking property
-    return InteractionResultHolder.consume(itemstack);
+    return InteractionResult.CONSUME.heldItemTransformedTo(itemstack);
   }
 
 }

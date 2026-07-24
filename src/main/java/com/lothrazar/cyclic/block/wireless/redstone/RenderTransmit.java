@@ -14,12 +14,21 @@ import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
-public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit> {
+public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit, RenderTransmit.State> {
+
+  public static class State extends BlockEntityRenderState {
+    TileWirelessTransmit blockEntity;
+  }
 
   public RenderTransmit(BlockEntityRendererProvider.Context d) {}
 
@@ -53,12 +62,25 @@ public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit>
   }
 
   @Override
-  public boolean shouldRenderOffScreen(TileWirelessTransmit te) {
+  public boolean shouldRenderOffScreen() {
     return true;
   }
 
   @Override
-  public void render(TileWirelessTransmit te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {
+  public State createRenderState() {
+    return new State();
+  }
+
+  @Override
+  public void extractRenderState(TileWirelessTransmit blockEntity, State state, float partialTicks, Vec3 cameraPosition,
+      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
+    state.blockEntity = blockEntity;
+  }
+
+  @Override
+  public void submit(State state, PoseStack matrixStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    TileWirelessTransmit te = state.blockEntity;
     if (te.requiresRedstone() && !te.isPowered()) {
       return;
     }
@@ -84,31 +106,4 @@ public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit>
       }
     }
   }
-  //  @Override
-  //  public void render(TileWirelessTransmit te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
-  //    //    if (te.requiresRedstone() && !te.isPowered()) {
-  //    //      return;
-  //    //    }
-  //    int previewType = te.getField(TileWirelessTransmit.Fields.RENDER.ordinal());
-  //    if (previewType <= 0) {
-  //      return;
-  //    }
-  //    List<BlockPos> shape = new ArrayList<>();
-  //    String dimensionId = UtilWorld.dimensionToString(te.getWorld());
-  //    for (int slot = 0; slot < te.inventory.getSlots(); slot++) {
-  //      BlockPosDim dimPosSaved = te.getTargetInSlot(slot);
-  //      if (dimPosSaved != null
-  //          && dimPosSaved.getDimension().equalsIgnoreCase(dimensionId)) {
-  //        shape.add(dimPosSaved.getPos());
-  //      }
-  //      //        draw(slot, te, matrixStack, iRenderTypeBuffer);
-  //    }
-  //    if (PreviewOutlineType.SHADOW.ordinal() == previewType) {
-  //      UtilRender.renderOutline(te.getPos(), shape, matrixStack, 0.4F, ClientConfigCyclic.getColor(te));
-  //    }
-  //    else if (PreviewOutlineType.WIREFRAME.ordinal() == previewType) {
-  //      for (BlockPos crd : shape) {
-  //        UtilRender.createBox(matrixStack, crd, Vector3d.copy(te.getPos()));
-  //      }
-  //    }
 }

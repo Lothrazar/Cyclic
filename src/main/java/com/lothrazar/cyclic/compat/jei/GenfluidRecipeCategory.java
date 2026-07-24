@@ -18,7 +18,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -26,13 +26,13 @@ import net.neoforged.neoforge.fluids.FluidStack;
 public class GenfluidRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeGeneratorFluid>> {
 
   private static final int FONT = 0xFFFFFFFF;
-  static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "generator_fluid");
+  static final Identifier ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "generator_fluid");
   static final RecipeType<RecipeHolder<RecipeGeneratorFluid>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
 
   public GenfluidRecipeCategory(IGuiHelper helper) {
-    gui = helper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/generator_fluid.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
+    gui = helper.drawableBuilder(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/generator_fluid.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.GENERATOR_FLUID.get()));
   }
 

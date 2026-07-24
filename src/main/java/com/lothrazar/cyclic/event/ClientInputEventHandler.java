@@ -24,7 +24,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ClientInputEventHandler {
 
@@ -41,7 +41,7 @@ public class ClientInputEventHandler {
       event.setCanceled(true);
       if (!player.getCooldowns().isOnCooldown(ItemRegistry.ENDER_BOOK.get())) {
         boolean isDown = event.getScrollDeltaY() < 0;
-        PacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
+        ClientPacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
       }
     }
   }
@@ -74,7 +74,7 @@ public class ClientInputEventHandler {
               // send the slot and info to the server to process with the lunchbox
               int slotId = gui.getSlotUnderMouse().getContainerSlot();
               SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK.value());
-              PacketDistributor.sendToServer(new PacketItemGui(slotId, stackTarget.getItem()));
+              ClientPacketDistributor.sendToServer(new PacketItemGui(slotId, stackTarget.getItem()));
               event.setCanceled(true);
             }
           }
@@ -96,21 +96,21 @@ public class ClientInputEventHandler {
         Slot slotHit = gui.getSlotUnderMouse();
         ItemStack maybeCharm = slotHit.getItem();
         if (maybeCharm.getItem() instanceof IHasClickToggle) {
-          PacketDistributor.sendToServer(new PacketItemToggle(slotHit.index));
+          ClientPacketDistributor.sendToServer(new PacketItemToggle(slotHit.index));
           event.setCanceled(true);
           //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);
         }
         else if (maybeCharm.getItem() instanceof ItemStorageBag
             || maybeCharm.getItem() instanceof CraftingStickItem
             || maybeCharm.getItem() instanceof CraftingBagItem) {
-              PacketDistributor.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
+              ClientPacketDistributor.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
               event.setCanceled(true);
             }
         else if (maybeCharm.getItem() instanceof ItemLunchbox) {
           // if you have an EMPTY hand, use this to open the GUI screen of the lunchbox
           ItemStack maybeFood = mc.player.containerMenu.getCarried();
           if (maybeFood.isEmpty()) {
-            PacketDistributor.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
+            ClientPacketDistributor.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
             event.setCanceled(true);
           }
         }

@@ -5,7 +5,9 @@ import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import java.util.Optional;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 
 public class TimerBar {
@@ -33,24 +35,21 @@ public class TimerBar {
         && guiTop + y < mouseY && mouseY < guiTop + y + height;
   }
 
-  public void draw(GuiGraphics gg, float timer) {
+  public void draw(GuiGraphicsExtractor gg, float timer) {
     if (!visible) {
       return;
     }
 
     float pct = Math.min(timer / capacity, 1.0F);
-    gg.blit(TextureRegistry.PROGRESS, guiLeft + x, guiTop + y,
-        0, 0,
-        (int) (width * pct), height,
-        width, height);
+    gg.blit(RenderPipelines.GUI_TEXTURED, TextureRegistry.PROGRESS, guiLeft + x, guiTop + y, 0, 0, (int) (width * pct), height, width, height);
     if (showText) {
-      gg.drawString(font, "[" + ((int) timer) + "]",
+      gg.text(font, "[" + ((int) timer) + "]",
           guiLeft + x + 2,
           guiTop + y + 4, 4209792);
     }
   }
 
-  public void renderHoveredToolTip(GuiGraphics gg, int mouseX, int mouseY, int curr) {
+  public void renderHoveredToolTip(GuiGraphicsExtractor gg, int mouseX, int mouseY, int curr) {
     if (this.isMouseover(mouseX, mouseY) && this.visible) {
       String display = "";
       int seconds = curr / Const.TICKS_PER_SEC;
@@ -69,7 +68,7 @@ public class TimerBar {
       }
       List<Component> list = new ArrayList<>();
       list.add(Component.translatable(display));
-      gg.renderComponentTooltip(font, list, mouseX, mouseY);
+      gg.setTooltipForNextFrame(font, list, Optional.empty(), mouseX, mouseY);
     }
   }
 }

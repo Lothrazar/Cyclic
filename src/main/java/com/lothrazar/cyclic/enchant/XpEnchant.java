@@ -39,6 +39,6 @@ public class XpEnchant {
   }
 
   private int getRandomExpAmount(int level, Level world) {
-    return world.random.nextInt(3) * (level + 1); // max level is 3
+    return world.getRandom().nextInt(3) * (level + 1); // max level is 3
   }
 }

@@ -7,7 +7,7 @@ import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +24,7 @@ public class ItemProjectileDungeon extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+  public InteractionResult use(Level world, Player player, InteractionHand hand) {
     ItemStack stack = player.getMainHandItem();
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
 
@@ -40,13 +40,13 @@ public class ItemProjectileDungeon extends ItemBaseCyclic {
     }
     BlockPos blockpos = LevelWorldUtil.findClosestBlock(player, Blocks.SPAWNER, RANGE.get());
     if (blockpos == null) {
-      if (!world.isClientSide) ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.notfound") + " " + RANGE.get());
+      if (!world.isClientSide()) ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.notfound") + " " + RANGE.get());
       entityendereye.remove(Entity.RemovalReason.DISCARDED);
     }
     else {
-      if (!world.isClientSide) ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.found"));
+      if (!world.isClientSide()) ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.found"));
       entityendereye.moveTowards(blockpos);
-      if (!world.isClientSide) {
+      if (!world.isClientSide()) {
         world.addFreshEntity(entityendereye);
       }
     }

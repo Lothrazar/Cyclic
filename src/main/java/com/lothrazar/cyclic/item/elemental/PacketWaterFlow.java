@@ -6,14 +6,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class PacketWaterFlow implements CustomPacketPayload {
 
   public static final Type<PacketWaterFlow> TYPE = new Type<>(
-      ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_water_flow"));
+      Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_water_flow"));
 
   public static final StreamCodec<FriendlyByteBuf, PacketWaterFlow> STREAM_CODEC = StreamCodec.of(
       PacketWaterFlow::encode,

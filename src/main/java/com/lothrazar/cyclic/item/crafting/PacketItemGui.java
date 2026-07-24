@@ -12,7 +12,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +21,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class PacketItemGui implements CustomPacketPayload {
 
-  public static final Type<PacketItemGui> ID = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_item_gui"));
+  public static final Type<PacketItemGui> ID = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_item_gui"));
 
   public static final StreamCodec<FriendlyByteBuf, PacketItemGui> STREAM_CODEC = StreamCodec.ofMember(
       PacketItemGui::write,
@@ -38,15 +38,15 @@ public class PacketItemGui implements CustomPacketPayload {
 
   public PacketItemGui(FriendlyByteBuf buf) {
     this.slot = buf.readInt();
-    ResourceLocation rl = buf.readResourceLocation();
+    Identifier rl = buf.readIdentifier();
     Item read = BuiltInRegistries.ITEM.get(rl);
     this.item = read == null ? Items.AIR : read;
   }
 
   public void write(FriendlyByteBuf buf) {
     buf.writeInt(slot);
-    ResourceLocation key = BuiltInRegistries.ITEM.getKey(item);
-    buf.writeResourceLocation(key);
+    Identifier key = BuiltInRegistries.ITEM.getKey(item);
+    buf.writeIdentifier(key);
   }
 
   @Override

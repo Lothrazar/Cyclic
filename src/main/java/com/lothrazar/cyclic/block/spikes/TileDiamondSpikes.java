@@ -35,7 +35,7 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
       timer--;
       return;
     }
-    timer = level.random.nextInt(24) + 12;
+    timer = level.getRandom().nextInt(24) + 12;
     if (fakePlayer == null && level instanceof ServerLevel) {
       fakePlayer = setupBeforeTrigger((ServerLevel) level, "spikes_diamond");
       if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
@@ -43,7 +43,7 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
 
         fakePlayer.get().setItemInHand(InteractionHand.MAIN_HAND, sword);
       }
-      if (level.random.nextDouble() < 0.001F) {
+      if (level.getRandom().nextDouble() < 0.001F) {
         tryDumpFakePlayerInvo(fakePlayer, null, dropItemsOnGround);
       }
     }

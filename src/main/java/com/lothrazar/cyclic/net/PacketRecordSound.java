@@ -31,13 +31,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketRecordSound implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketRecordSound> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_record_sound"));
+  public static final CustomPacketPayload.Type<PacketRecordSound> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_record_sound"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketRecordSound> STREAM_CODEC = StreamCodec.of(PacketRecordSound::encode, PacketRecordSound::decode);
 
@@ -59,7 +59,7 @@ public class PacketRecordSound implements CustomPacketPayload {
   public static PacketRecordSound decode(RegistryFriendlyByteBuf buf) {
     String s = buf.readUtf();
     CompoundTag tags = buf.readNbt();
-    return new PacketRecordSound(s, new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z")));
+    return new PacketRecordSound(s, new BlockPos(tags.getIntOr("x", 0), tags.getInt("y"), tags.getInt("z")));
   }
 
   public static void encode(RegistryFriendlyByteBuf buf, PacketRecordSound msg) {

@@ -102,11 +102,11 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    radius = tag.getInt("size");
-    height = tag.getInt("height");
-    isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
-    shapeIndex = tag.getInt("shapeIndex");
-    directionIsUp = tag.getBoolean("directionIsUp");
+    radius = tag.getIntOr("size", 0);
+    height = tag.getIntOr("height", 0);
+    isCurrentlyMining = tag.getBooleanOr("isCurrentlyMining", false);
+    shapeIndex = tag.getIntOr("shapeIndex", 0);
+    directionIsUp = tag.getBooleanOr("directionIsUp", false);
     if (tag.contains(NBTENERGY)) {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }

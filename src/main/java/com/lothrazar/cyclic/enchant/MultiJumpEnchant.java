@@ -20,7 +20,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class MultiJumpEnchant {
 
@@ -58,7 +58,7 @@ public class MultiJumpEnchant {
     if (player.getCooldowns().isOnCooldown(feet.getItem())) { return; }
     if (Minecraft.getInstance().options.keyJump.isDown()
         && player.getY() < player.yOld && player.hasImpulse && !player.isInWater()) {
-      int uses = feet.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(NBT_USES);
+      int uses = feet.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBT_USES, 0);
       player.fallDistance = 0;
       float angle = (player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0) ? 90 : ROTATIONPITCH;
       EntityUtil.launch(player, angle, POWER);
@@ -71,7 +71,7 @@ public class MultiJumpEnchant {
       final int finalUses = uses;
       feet.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, d -> { CompoundTag t = d.copyTag(); t.putInt(NBT_USES, finalUses); return CustomData.of(t); });
       player.fallDistance = 0;
-      PacketDistributor.sendToServer(new PacketPlayerFalldamage());
+      ClientPacketDistributor.sendToServer(new PacketPlayerFalldamage());
     }
   }
 }

@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.config.LootConfig.ParsedEntry;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -38,7 +38,7 @@ public class LootInjectModifier extends LootModifier {
   @Override
   protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> originalLoot, LootContext context) {
     // Only react to vanilla loot tables in the minecraft namespace.
-    ResourceLocation tableId = context.getQueriedLootTableId();
+    Identifier tableId = context.getQueriedLootTableId();
     if (!"minecraft".equals(tableId.getNamespace())) {
       return originalLoot;
     }

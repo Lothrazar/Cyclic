@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -41,7 +41,7 @@ public class BoomerangRenderer<T extends BoomerangEntity> extends EntityRenderer
   }
 
   @Override
-  public ResourceLocation getTextureLocation(T entity) {
+  public Identifier getTextureLocation(T entity) {
     return InventoryMenu.BLOCK_ATLAS;
   }
 }

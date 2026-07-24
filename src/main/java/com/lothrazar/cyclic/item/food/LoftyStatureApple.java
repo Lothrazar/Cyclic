@@ -31,8 +31,8 @@ public class LoftyStatureApple extends ItemBaseCyclic {
     if (player.getCooldowns().isOnCooldown(stack.getItem())) {
       return super.finishUsingItem(stack, worldIn, entityLiving);
     }
-    player.getCooldowns().addCooldown(stack.getItem(), 40); // 2seconds
-    if (!worldIn.isClientSide) {
+    player.getCooldowns().addCooldown(stack, 40); // 2seconds
+    if (!worldIn.isClientSide()) {
       PlayerCyclicAttachment data = player.getData(AttachmentRegistry.CYCLIC_PLAYER);
       data.toggleStepHeight();
       ChatUtil.addServerChatMessage(player, "cyclic.unlocks.stepheight." + data.stepHeight);
@@ -46,7 +46,7 @@ public class LoftyStatureApple extends ItemBaseCyclic {
   }
 
   public static void onUpdate(Player player) {
-    if (player.level().isClientSide) {
+    if (player.level().isClientSide()) {
       return;
     }
     PlayerCyclicAttachment data = player.getData(AttachmentRegistry.CYCLIC_PLAYER);

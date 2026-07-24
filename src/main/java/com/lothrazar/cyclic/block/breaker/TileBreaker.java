@@ -60,7 +60,7 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     setLitProperty(true);
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     BlockPos target = worldPosition.relative(this.getCurrentFacing());

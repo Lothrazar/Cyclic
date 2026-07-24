@@ -10,13 +10,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketTileString implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketTileString> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_tile_string"));
+  public static final CustomPacketPayload.Type<PacketTileString> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_tile_string"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketTileString> STREAM_CODEC = StreamCodec.of(PacketTileString::encode, PacketTileString::decode);
 
@@ -59,7 +59,7 @@ public class PacketTileString implements CustomPacketPayload {
     PacketTileString p = new PacketTileString();
     p.field = buf.readInt();
     CompoundTag tags = buf.readNbt();
-    p.pos = new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z"));
+    p.pos = new BlockPos(tags.getIntOr("x", 0), tags.getInt("y"), tags.getInt("z"));
     //something in vanilla or forge marks this as CLIENT ONLY. unless i give it a max length
     p.value = buf.readUtf(32767);
     return p;

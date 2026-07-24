@@ -103,11 +103,11 @@ public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProv
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    delay = tag.getInt("redstone_delay");
-    duration = tag.getInt("redstone_duration");
-    power = tag.getInt("redstone_power");
+    delay = tag.getIntOr("redstone_delay", 0);
+    duration = tag.getIntOr("redstone_duration", 0);
+    power = tag.getIntOr("redstone_power", 0);
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBoolean(f.getName()));
+      poweredSides.put(f, tag.getBooleanOr(f.getName(), false));
     }
     if (this.detectAllOff()) {
       this.facingResetAllOn(); //fix legacy data for one

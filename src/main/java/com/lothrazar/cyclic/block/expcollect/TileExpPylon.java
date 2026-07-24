@@ -63,7 +63,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   public void tick() {
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       //ignore on/off state, for player standing on top collecting exp
       collectPlayerExperience();
     }
@@ -84,7 +84,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    int legacy = tag.getInt("storedXp");
+    int legacy = tag.getIntOr("storedXp", 0);
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * FLUID_PER_EXP));
     }
@@ -152,7 +152,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
           //entity != null && entity.getHorizontalFacing() == facing;
         });
     if (list.size() > 0) {
-      ExperienceOrb myOrb = list.get(level.random.nextInt(list.size()));
+      ExperienceOrb myOrb = list.get(level.getRandom().nextInt(list.size()));
       int addMeXp = myOrb.getValue();
       if (getStoredXp() + addMeXp <= tank.getCapacity()) {
         myOrb.value = 0;

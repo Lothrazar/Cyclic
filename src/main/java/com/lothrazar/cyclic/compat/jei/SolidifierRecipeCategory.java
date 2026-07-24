@@ -23,7 +23,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -31,7 +31,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 public class SolidifierRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeSolidifier>> {
 
   private static final int FONT = 0xFFFFFFFF;
-  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "solidifier");
+  private static final Identifier ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "solidifier");
   static final RecipeType<RecipeHolder<RecipeSolidifier>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
@@ -41,7 +41,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeHolder<Re
 
   public SolidifierRecipeCategory(IGuiHelper helper) {
     font = Minecraft.getInstance().font;
-    gui = helper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/solidifier_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
+    gui = helper.drawableBuilder(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/solidifier_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.SOLIDIFIER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);
     progress = new TexturedProgress(font, 63, 25, 24, 17, TextureRegistry.ARROW);

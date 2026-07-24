@@ -5,7 +5,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +28,7 @@ public class MilkBottle extends ItemBaseCyclic {
     if (player instanceof ServerPlayer) {
       CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, drink);
     }
-    if (!world.isClientSide && drink.getItem() == this) {
+    if (!world.isClientSide() && drink.getItem() == this) {
       entity.removeAllEffects();
     }
     if (player != null) {
@@ -61,7 +61,7 @@ public class MilkBottle extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+  public InteractionResult use(Level world, Player player, InteractionHand hand) {
     return ItemUtils.startUsingInstantly(world, player, hand);
   }
 }

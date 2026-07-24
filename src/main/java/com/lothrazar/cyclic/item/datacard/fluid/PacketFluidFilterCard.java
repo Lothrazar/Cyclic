@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +14,7 @@ public class PacketFluidFilterCard implements CustomPacketPayload {
 
   public static final int TOGGLE_IGNORE = 0;
   public static final int TOGGLE_TAGMATCH = 1;
-  public static final CustomPacketPayload.Type<PacketFluidFilterCard> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_fluid_filter_card"));
+  public static final CustomPacketPayload.Type<PacketFluidFilterCard> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_fluid_filter_card"));
   public static final StreamCodec<FriendlyByteBuf, PacketFluidFilterCard> STREAM_CODEC = StreamCodec.of(PacketFluidFilterCard::encode, PacketFluidFilterCard::decode);
 
   @Override

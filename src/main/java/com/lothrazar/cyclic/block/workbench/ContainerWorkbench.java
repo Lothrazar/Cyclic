@@ -184,7 +184,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingInput, CraftingRe
   }
 
   protected static void updateCraftingResult(int id, int stateId, Level world, Player player, CraftingContainer inventory, ResultContainer inventoryResult) {
-    if (!world.isClientSide) {
+    if (!world.isClientSide()) {
       ServerPlayer sp = (ServerPlayer) player;
       ItemStack itemstack = ItemStack.EMPTY;
       CraftingInput craftingInput = CraftingInput.of(3, 3, java.util.List.of(

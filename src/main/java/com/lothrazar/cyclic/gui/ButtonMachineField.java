@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.core.BlockPos;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ButtonMachineField extends ButtonMachine {
 
@@ -27,7 +27,7 @@ public class ButtonMachineField extends ButtonMachine {
   public ButtonMachineField(int xPos, int yPos, int field, BlockPos pos,
       TextureEnum toff, TextureEnum tonn, String tooltipPrefix) {
     super(xPos, yPos, 20, 20, "", (p) -> {
-      PacketDistributor.sendToServer(new PacketTileData(field, pos));
+      ClientPacketDistributor.sendToServer(new PacketTileData(field, pos));
     });
     this.tilePos = pos;
     this.setTileField(field);

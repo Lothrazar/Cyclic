@@ -32,7 +32,7 @@ public class TileDice extends TileBlockEntityCyclic {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    spinningIfZero = tag.getInt("spinningIfZero");
+    spinningIfZero = tag.getIntOr("spinningIfZero", 0);
     super.loadAdditional(tag, registries);
   }
 
@@ -58,7 +58,7 @@ public class TileDice extends TileBlockEntityCyclic {
       //toggle block state
       if (this.timer % TICKS_PER_CHANGE == 0) {
         this.spinningIfZero = 0;
-        Direction fac = LevelWorldUtil.getRandomDirection(level.random);
+        Direction fac = LevelWorldUtil.getRandomDirection(level.getRandom());
         BlockState stateold = level.getBlockState(worldPosition);
         BlockState newstate = stateold.setValue(BlockStateProperties.FACING, fac);
         level.setBlockAndUpdate(worldPosition, newstate);

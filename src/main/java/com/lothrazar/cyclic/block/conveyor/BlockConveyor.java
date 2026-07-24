@@ -229,7 +229,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
     ItemStack heldStack = player.getMainHandItem();
     // Empty-handed right-click: pick up one stack from the belt
     if (heldStack.isEmpty()) {
-      if (!world.isClientSide) {
+      if (!world.isClientSide()) {
         List<ConveyorItemEntity> beltItems = world.getEntitiesOfClass(ConveyorItemEntity.class,
             new net.minecraft.world.phys.AABB(pos).expandTowards(0, 0.5, 0));
         if (!beltItems.isEmpty()) {
@@ -322,7 +322,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.CONVEYOR.get(), world.isClientSide ? null : TileConveyor::serverTick);
+    return createTickerHelper(type, TileRegistry.CONVEYOR.get(), world.isClientSide() ? null : TileConveyor::serverTick);
   }
 
   @Override
@@ -351,7 +351,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
 
   @Override
   public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-    if (!world.isClientSide) {
+    if (!world.isClientSide()) {
       TileConveyor.makeEntitiesTravel(entity, state, pos, world);
     }
     super.entityInside(state, world, pos, entity);

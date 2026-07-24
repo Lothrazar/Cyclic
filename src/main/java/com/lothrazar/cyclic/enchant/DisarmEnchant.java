@@ -46,7 +46,7 @@ public class DisarmEnchant {
     List<ItemStack> toDisarm = new ArrayList<>();
     livingTarget.getHandSlots().forEach(itemStack -> {
       if (!(itemStack.getItem() instanceof SwordItem)) { return; }
-      if (getChanceToDisarm(level) > user.level().random.nextDouble()) {
+      if (getChanceToDisarm(level) > user.level().getRandom().nextDouble()) {
         toDisarm.add(itemStack);
       }
     });

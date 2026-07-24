@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.AttributesUtil;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -33,7 +33,7 @@ public class ReachEnchant {
     return 4 * (level - oldLevel) + LEVELS[oldLevel];
   }
 
-  public static final ResourceLocation ENCHANTMENT_REACH_ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, ID);
+  public static final Identifier ENCHANTMENT_REACH_ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, ID);
 
   private void turnReachOff(Player player) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, false);

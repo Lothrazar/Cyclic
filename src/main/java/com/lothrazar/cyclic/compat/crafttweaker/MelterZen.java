@@ -13,7 +13,7 @@ import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -34,7 +34,7 @@ public class MelterZen implements IRecipeManager<RecipeMelter> {
 
   @ZenCodeType.Method
   public void addRecipe(String name, IIngredient input, IFluidStack fluidStack, int rfPertick, int ticks) {
-    ResourceLocation id = fixRecipeId(name);
+    Identifier id = fixRecipeId(name);
     NonNullList<Ingredient> list = NonNullList.withSize(1, Ingredient.EMPTY);
     list.set(0, input.asVanillaIngredient());
     RecipeMelter m = new RecipeMelter(list,

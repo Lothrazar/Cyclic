@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +19,7 @@ public class ItemScaffolding extends BlockItem {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
+  public InteractionResult use(Level worldIn, Player player, InteractionHand hand) {
     if (player.isCrouching()) {
       // || worldIn.getBlockState(context.getPos()).isAir() == false) {
       return super.use(worldIn, player, hand);
@@ -80,12 +79,12 @@ public class ItemScaffolding extends BlockItem {
         //        facing = Direction.NORTH;
       }
     }
-    if (worldIn.isClientSide == false && worldIn.isEmptyBlock(pos)) {
+    if (worldIn.isClientSide() == false && worldIn.isEmptyBlock(pos)) {
       ItemStack stac = player.getMainHandItem();
       if (worldIn.setBlockAndUpdate(pos, Block.byItem(this).defaultBlockState())) {
         ItemStackUtil.shrink(player, stac);
       }
-      return new InteractionResultHolder<>(InteractionResult.SUCCESS, stac);
+      return InteractionResult.SUCCESS.heldItemTransformedTo(stac);
     }
     return super.use(worldIn, player, hand);
   }

@@ -108,8 +108,8 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
     }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV + "gps"));
-    this.delay = tag.getInt("delay");
-    this.dropCount = tag.getInt("dropCount");
+    this.delay = tag.getIntOr("delay", 0);
+    this.dropCount = tag.getIntOr("dropCount", 0);
     super.loadAdditional(tag, registries);
   }
 

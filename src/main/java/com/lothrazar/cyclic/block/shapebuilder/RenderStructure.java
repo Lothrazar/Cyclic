@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.shapebuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
@@ -10,13 +11,18 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockStateModelSet;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.resources.model.geometry.BakedQuad;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -25,39 +31,53 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.items.IItemHandler;
+import org.jspecify.annotations.Nullable;
 
-public class RenderStructure implements BlockEntityRenderer<TileStructure> {
+public class RenderStructure implements BlockEntityRenderer<TileStructure, RenderStructure.State> {
 
   private static final float PREVIEW_ALPHA = 0.7f;
 
-  private final BlockRenderDispatcher brd;
+  public static class State extends BlockEntityRenderState {
+    TileStructure blockEntity;
+  }
 
-  public RenderStructure(BlockEntityRendererProvider.Context d) {
-    this.brd = d.getBlockRenderDispatcher();
+  public RenderStructure(BlockEntityRendererProvider.Context d) {}
+
+  @Override
+  public State createRenderState() {
+    return new State();
   }
 
   @Override
-  public void render(TileStructure te, float v, PoseStack matrixStack, MultiBufferSource ibuffer, int partialTicks, int destroyStage) {
-    IItemHandler inv = CapabilityUtil.item(te.getLevel(),te.getBlockPos());
+  public void extractRenderState(TileStructure blockEntity, State state, float partialTicks, Vec3 cameraPosition,
+      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
+    state.blockEntity = blockEntity;
+  }
+
+  @Override
+  public void submit(State state, PoseStack matrixStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    TileStructure te = state.blockEntity;
+    IItemHandler inv = CapabilityUtil.item(te.getLevel(), te.getBlockPos());
     if (inv == null) {
       return;
     }
     int previewType = te.getField(TileStructure.Fields.RENDER.ordinal());
     if (PreviewOutlineType.SHADOW.ordinal() == previewType) {
       ItemStack stack = inv.getStackInSlot(0);
+      MultiBufferSource.BufferSource ibuffer = Minecraft.getInstance().renderBuffers().bufferSource();
       try {
-        renderPreviewInWorld(te, matrixStack, ibuffer, partialTicks, destroyStage, stack);
+        renderPreviewInWorld(te, matrixStack, ibuffer, state.lightCoords, 0, stack);
       }
       catch (NullPointerException e) {
         //handle unexpected & unsupported model types, for example: https://github.com/Lothrazar/Cyclic/issues/2473
-        // java.lang.NullPointerException: Cannot invoke "net.minecraftforge.client.model.data.ModelData.derive()" because "data" is null
         ModCyclic.LOGGER.error("Error rendering preview: broken or unsupported model", e);
       }
       catch (Exception ex) {
         ModCyclic.LOGGER.error("Error in structure block preview", ex);
       }
+      ibuffer.endBatch();
     }
     if (PreviewOutlineType.WIREFRAME.ordinal() == previewType) {
       for (BlockPos crd : te.getShape()) {
@@ -78,28 +98,31 @@ public class RenderStructure implements BlockEntityRenderer<TileStructure> {
   // Renders ghost block previews at each shape position using the ibuffer passed by the
   // block entity render system (same approach as RenderCableFacade / FacadeUtil).
   // Uses Sheets.translucentCullBlockSheet() so alpha blending is enabled, and fetches
-  // quads with RenderType.solid() so solid blocks (like planks) actually return quads.
-  // renderModelBrightnessColorQuads lets us inject a custom alpha for the ghost effect.
+  // quads via the modern BlockStateModelSet/collectParts pipeline (BlockRenderDispatcher and
+  // BakedModel#getQuads are gone in 26.1). renderModelBrightnessColorQuads lets us inject a
+  // custom alpha for the ghost effect; tint is left neutral (white) since this is a preview overlay.
   private void renderBlockPreview(Level level, BlockPos origin, List<BlockPos> positions, PoseStack poseStack, MultiBufferSource ibuffer, int packedLight, int packedOverlay, ItemStack stack) {
     BlockState state = Block.byItem(stack.getItem()).defaultBlockState();
     if (state.getRenderShape() != RenderShape.MODEL) {
       return;
     }
     VertexConsumer consumer = ibuffer.getBuffer(Sheets.translucentCullBlockSheet());
-    Minecraft mc = Minecraft.getInstance();
+    BlockAndTintGetter btg = level instanceof BlockAndTintGetter g ? g : BlockAndTintGetter.EMPTY;
+    BlockStateModelSet modelSet = Minecraft.getInstance().getModelManager().getBlockStateModelSet();
+    BlockStateModel model = modelSet.get(state);
     for (BlockPos crd : positions) {
       poseStack.pushPose();
       poseStack.translate(crd.getX() - origin.getX(), crd.getY() - origin.getY(), crd.getZ() - origin.getZ());
-      BakedModel model = brd.getBlockModel(state);
-      int tint = mc.getBlockColors().getColor(state, level, crd, 0);
-      float r = ((tint >> 16) & 255) / 255f;
-      float g = ((tint >> 8) & 255) / 255f;
-      float b = (tint & 255) / 255f;
-      for (Direction dir : Direction.values()) {
-        ModelData modelData = model.getModelData(level, crd, state, ModelData.EMPTY);
-        List<BakedQuad> quads = model.getQuads(state, dir, level.random, modelData, RenderType.solid());
-        RenderBlockUtils.renderModelBrightnessColorQuads(poseStack.last(), consumer, r, g, b, PREVIEW_ALPHA, quads, RenderBlockUtils.FULL_LIGHT, packedOverlay);
+      List<BlockStateModelPart> parts = new ArrayList<>();
+      model.collectParts(btg, crd, state, level.getRandom(), parts);
+      List<BakedQuad> quads = new ArrayList<>();
+      for (BlockStateModelPart part : parts) {
+        for (Direction dir : Direction.values()) {
+          quads.addAll(part.getQuads(dir));
+        }
+        quads.addAll(part.getQuads(null));
       }
+      RenderBlockUtils.renderModelBrightnessColorQuads(poseStack.last(), consumer, 1F, 1F, 1F, PREVIEW_ALPHA, quads, RenderBlockUtils.FULL_LIGHT, packedOverlay);
       poseStack.popPose();
     }
   }

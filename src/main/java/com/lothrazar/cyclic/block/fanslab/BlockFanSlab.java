@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -118,7 +118,7 @@ public class BlockFanSlab extends BlockCyclic implements SimpleWaterloggedBlock 
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.FAN_SLAB.get(), world.isClientSide ? null : TileFanSlab::serverTick);
+    return createTickerHelper(type, TileRegistry.FAN_SLAB.get(), world.isClientSide() ? null : TileFanSlab::serverTick);
   }
 
   @Override

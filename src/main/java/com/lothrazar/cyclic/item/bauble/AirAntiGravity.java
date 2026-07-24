@@ -7,7 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class AirAntiGravity extends ItemBaseToggle {
 
@@ -41,12 +41,12 @@ public class AirAntiGravity extends ItemBaseToggle {
       //if we set onGround->true all the time, it blocks fwd movement anywya
       player.setOnGround(true);
       // (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
-      if (level.random.nextDouble() < 0.1) {
+      if (level.getRandom().nextDouble() < 0.1) {
         //        super.damageCharm(player, stack);
         ItemStackUtil.damageItem(player, stack);
       }
-      if (level.isClientSide && player.tickCount % TICKS_FALLDIST_SYNC == 0) {
-        PacketDistributor.sendToServer(new PacketPlayerFalldamage());
+      if (level.isClientSide() && player.tickCount % TICKS_FALLDIST_SYNC == 0) {
+        ClientPacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
     }
   }

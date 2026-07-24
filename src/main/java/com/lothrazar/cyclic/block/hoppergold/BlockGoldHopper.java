@@ -34,6 +34,6 @@ public class BlockGoldHopper extends BlockSimpleHopper {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.HOPPER_GOLD.get(), world.isClientSide ? null : TileGoldHopper::serverTick);
+    return createTickerHelper(type, TileRegistry.HOPPER_GOLD.get(), world.isClientSide() ? null : TileGoldHopper::serverTick);
   }
 }

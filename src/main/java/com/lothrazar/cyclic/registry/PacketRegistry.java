@@ -62,7 +62,7 @@ public class PacketRegistry {
   }
 
   public static void sendToAllClients(Level world, CustomPacketPayload packet) {
-    if (world.isClientSide) {
+    if (world.isClientSide()) {
       return;
     }
     for (Player player : world.players()) {

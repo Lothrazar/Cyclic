@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 
@@ -34,13 +35,13 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
   }
 
   @Override
-  public void renderWidget(GuiGraphics gg, int mouseX, int mouseY, float partial) {
-    super.renderWidget(gg, mouseX, mouseY, partial);
+  public void extractContents(GuiGraphicsExtractor gg, int mouseX, int mouseY, float partial) {
+    super.extractContents(gg, mouseX, mouseY, partial);
     if (textureId != null) {
-      gg.blit(TextureRegistry.WIDGETS,
+      gg.blit(RenderPipelines.GUI_TEXTURED, TextureRegistry.WIDGETS,
           this.getX() + textureId.getOffsetX(), this.getY() + textureId.getOffsetY(),
           textureId.getX() + xOffset, textureId.getY() + yOffset,
-          textureId.getWidth() - yOffset, textureId.getHeight() - yOffset);
+          textureId.getWidth() - yOffset, textureId.getHeight() - yOffset, 256, 256);
     }
   }
 

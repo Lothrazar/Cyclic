@@ -20,7 +20,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 
 public class BlockSoundRecorder extends BlockCyclic {
@@ -51,7 +51,7 @@ public class BlockSoundRecorder extends BlockCyclic {
         ConfigRegistry.RECORDER_RADIUS.get(), isPowered);
     for (BlockPos nearby : blocks) {
       String sid = event.getSound().getLocation().toString();
-      PacketDistributor.sendToServer(new PacketRecordSound(sid, nearby));
+      ClientPacketDistributor.sendToServer(new PacketRecordSound(sid, nearby));
       //hack save to client. otherwise have to hard sync or reload world
       BlockEntity tile = clientWorld.getBlockEntity(nearby);
       if (tile instanceof TileSoundRecorder) {

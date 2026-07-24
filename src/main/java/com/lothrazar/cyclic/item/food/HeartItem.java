@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.AttributesUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +25,7 @@ public class HeartItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (playerIn.getCooldowns().isOnCooldown(this)) {
       return super.use(worldIn, playerIn, handIn);
     }

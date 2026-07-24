@@ -93,7 +93,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
 
   public void tick() {
     this.syncEnergy();
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -145,7 +145,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     }
     timer = 0;
     //success happening
-    if (level.random.nextDouble() < 0.5) {
+    if (level.getRandom().nextDouble() < 0.5) {
       SoundUtil.playSound(level, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE);
     } else {
       SoundUtil.playSound(level, worldPosition, SoundEvents.ANVIL_USE);

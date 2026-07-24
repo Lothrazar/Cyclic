@@ -15,7 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -99,7 +99,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     timer = TIMER.get();
-    if (level.isClientSide || level.getServer() == null) {
+    if (level.isClientSide() || level.getServer() == null) {
       return;
     }
     RecipeHolder<?> match = this.findMatchingRecipe(level, dropMe);
@@ -139,7 +139,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    this.status = UncraftStatusEnum.values()[tag.getInt("ucstats")];
+    this.status = UncraftStatusEnum.values()[tag.getIntOr("ucstats", 0)];
     super.loadAdditional(tag, registries);
   }
 
@@ -221,7 +221,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       //check the RECIPE id list
       return false;
     }
-    ResourceLocation stackKey = BuiltInRegistries.ITEM.getKey(stack.getItem());
+    Identifier stackKey = BuiltInRegistries.ITEM.getKey(stack.getItem());
     if (StringParseUtil.isInList((List<String>) TileUncraft.IGNORE_LIST.get(), stackKey)) {
       //checked the ITEM id list
       return false;

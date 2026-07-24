@@ -11,15 +11,15 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 
 public final class SpinModelRenderer {
 
   public static final ModelResourceLocation SPRINKLER_SPIN = ModelResourceLocation.standalone(
-      ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/sprinkler_spin"));
+      Identifier.fromNamespaceAndPath(ModCyclic.MODID, "block/sprinkler_spin"));
   public static final ModelResourceLocation FOUNTAIN_SPIN = ModelResourceLocation.standalone(
-      ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/experience_fountain_spin"));
+      Identifier.fromNamespaceAndPath(ModCyclic.MODID, "block/experience_fountain_spin"));
 
   private static final RandomSource RANDOM = RandomSource.create();
 

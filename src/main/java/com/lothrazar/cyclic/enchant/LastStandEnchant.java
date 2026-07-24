@@ -50,7 +50,7 @@ public class LastStandEnchant {
         player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, absTicks, level - 1));
       }
       if (cooldownTicks > 0) {
-        player.getCooldowns().addCooldown(player.getItemBySlot(EquipmentSlot.LEGS).getItem(), cooldownTicks);
+        player.getCooldowns().addCooldown(player.getItemBySlot(EquipmentSlot.LEGS), cooldownTicks);
       }
     }
   }

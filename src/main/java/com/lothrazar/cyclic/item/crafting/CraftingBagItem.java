@@ -6,7 +6,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -18,8 +18,8 @@ public class CraftingBagItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    if (!worldIn.isClientSide && !playerIn.isCrouching()) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide() && !playerIn.isCrouching()) {
       int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
       playerIn.openMenu(new CraftingBagContainerProvider(slot), buf -> buf.writeInt(slot));
     }

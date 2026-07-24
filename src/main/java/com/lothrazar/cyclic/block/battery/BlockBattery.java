@@ -74,7 +74,7 @@ public class BlockBattery extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.BATTERY.get(), world.isClientSide ? null: TileBattery::serverTick);
+    return createTickerHelper(type, TileRegistry.BATTERY.get(), world.isClientSide() ? null: TileBattery::serverTick);
   }
 
   @Override
@@ -86,7 +86,7 @@ public class BlockBattery extends BlockCyclic {
       current = storage.getEnergyStored();
     }
     else if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(TileBlockEntityCyclic.NBTENERGY)) {
-      current = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(TileBlockEntityCyclic.NBTENERGY);
+      current = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(TileBlockEntityCyclic.NBTENERGY, 0);
     }
 //    TileBattery container = (TileBattery) world.getBlockEntity(pos);
     if (current > 0 && world.getBlockEntity(pos) instanceof TileBattery tile) {

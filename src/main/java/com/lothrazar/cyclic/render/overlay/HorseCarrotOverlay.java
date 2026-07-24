@@ -7,7 +7,8 @@ import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import java.util.Optional;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.HorseInventoryScreen;
 import net.minecraft.client.renderer.Rect2i;
@@ -69,7 +70,7 @@ public class HorseCarrotOverlay {
     AbstractContainerScreen<?> cs = horseScreen;
     int panelX = cs.getGuiLeft() + cs.getXSize() + PANEL_PAD_X;
     int panelY = cs.getGuiTop();
-    GuiGraphics g = event.getGuiGraphics();
+    GuiGraphicsExtractor g = event.getGuiGraphics();
     int mouseX = event.getMouseX();
     int mouseY = event.getMouseY();
     Entry hovered = null;
@@ -90,7 +91,7 @@ public class HorseCarrotOverlay {
       List<Component> lines = new ArrayList<>();
       lines.add(hovered.stack.getHoverName().copy().withStyle(ChatFormatting.AQUA));
       lines.add(Component.translatable(hovered.descriptionKey).withStyle(ChatFormatting.GRAY));
-      g.renderComponentTooltip(Minecraft.getInstance().font, lines, mouseX, mouseY);
+      g.setTooltipForNextFrame(Minecraft.getInstance().font, lines, Optional.empty(), mouseX, mouseY);
     }
   }
 

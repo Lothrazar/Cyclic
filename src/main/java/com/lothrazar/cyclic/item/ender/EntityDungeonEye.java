@@ -43,11 +43,11 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
   @Override
   public void readAdditionalSaveData(CompoundTag compound) {
     super.readAdditionalSaveData(compound);
-    targetX = compound.getDouble("sp_target_x");
-    targetY = compound.getDouble("sp_target_y");
-    targetZ = compound.getDouble("sp_target_z");
+    targetX = compound.getDoubleOr("sp_target_x", 0d);
+    targetY = compound.getDoubleOr("sp_target_y", 0d);
+    targetZ = compound.getDoubleOr("sp_target_z", 0d);
     tickCount = compound.getInt("ticksExisted");
-    isLost = compound.getBoolean("isLost");
+    isLost = compound.getBooleanOr("isLost", false);
   }
 
   public void moveTowards(BlockPos pos) {
@@ -65,7 +65,7 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
       return;
     }
     //  UtilParticle.spawnParticle(world, ParticleTypes.DRAGON_BREATH, this.getPosition(), 1);
-    if (!this.level().isClientSide) {
+    if (!this.level().isClientSide()) {
       double posX = this.getX();
       double posY = this.getY();
       double posZ = this.getZ();

@@ -66,7 +66,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
-    if (level.isClientSide) { //  || !(level instanceof ServerLevel)
+    if (level.isClientSide()) { //  || !(level instanceof ServerLevel)
       return;
     }
     if (timer > 0) {
@@ -203,13 +203,13 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    timerDelay = tag.getInt("delay");
+    timerDelay = tag.getIntOr("delay", 0);
     if (tag.contains(NBTENERGY)) {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }
     userSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
-    doHitBreak = tag.getBoolean("doBreakBlock");
-    entities = tag.getBoolean("entities");
+    doHitBreak = tag.getBooleanOr("doBreakBlock", false);
+    entities = tag.getBooleanOr("entities", false);
     super.loadAdditional(tag,registries);
   }
 

@@ -36,7 +36,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -48,7 +48,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class TileTransporterEmptyItem extends ItemBaseCyclic {
 
@@ -71,14 +71,14 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
       ChatUtil.sendStatusMessage(player, "chest_sack.error.null");
       return InteractionResult.FAIL;
     }
-    ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+    Identifier blockId = BuiltInRegistries.BLOCK.getKey(state.getBlock());
     if (StringParseUtil.isInList((List<String>) IGNORELIST.get(), blockId)) {
       ChatUtil.sendStatusMessage(player, "chest_sack.error.config");
       return InteractionResult.FAIL;
     }
     SoundUtil.playSound(player, SoundRegistry.THUNK.get());
-    if (world.isClientSide) {
-      PacketDistributor.sendToServer(new PacketChestSack(pos));
+    if (world.isClientSide()) {
+      ClientPacketDistributor.sendToServer(new PacketChestSack(pos));
     }
     return InteractionResult.SUCCESS;
   }

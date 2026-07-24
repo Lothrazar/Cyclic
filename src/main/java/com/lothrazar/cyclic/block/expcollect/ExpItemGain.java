@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -20,8 +20,8 @@ public class ExpItemGain extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide() && handIn == InteractionHand.MAIN_HAND) {
       playerIn.giveExperiencePoints(EXP_PER_FOOD);
       playerIn.getMainHandItem().shrink(1);
       SoundUtil.playSound(playerIn, SoundEvents.EXPERIENCE_ORB_PICKUP);

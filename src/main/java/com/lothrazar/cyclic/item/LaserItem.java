@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.item;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,10 +24,10 @@ public class LaserItem extends ItemHasEnergy {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
     ItemStack itemstack = playerIn.getItemInHand(handIn);
     playerIn.startUsingItem(handIn);
-    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+    return InteractionResult.SUCCESS.heldItemTransformedTo(itemstack);
   }
 
   @Override
@@ -53,7 +52,7 @@ public class LaserItem extends ItemHasEnergy {
   }
 
   public static int getDamageCooldown(ItemStack lasercannon) {
-    int thisOne = CustomData.EMPTY.copyTag().getInt("damagecooldown");
+    int thisOne = CustomData.EMPTY.copyTag().getIntOr("damagecooldown", 0);
     return thisOne;
   }
 }

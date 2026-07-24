@@ -8,7 +8,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class TextboxInteger extends EditBox implements IHasTooltip {
 
@@ -44,7 +44,7 @@ public class TextboxInteger extends EditBox implements IHasTooltip {
   }
 
   private void saveValue() {
-    PacketDistributor.sendToServer(new PacketTileData(this.tileFieldId, this.getCurrent(), pos));
+    ClientPacketDistributor.sendToServer(new PacketTileData(this.tileFieldId, this.getCurrent(), pos));
   }
 
   @Override

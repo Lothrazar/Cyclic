@@ -4,17 +4,20 @@ import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.ChatUtil;
-import com.mojang.blaze3d.systems.RenderSystem;
+import java.util.Optional;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 
 public abstract class ScreenBase<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
@@ -22,20 +25,20 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
     super(screenContainer, inv, titleIn);
   }
 
-  protected void drawBackground(GuiGraphics ms, ResourceLocation gui) {
+  protected void drawBackground(GuiGraphicsExtractor ms, Identifier gui) {
     int relX = (this.width - this.imageWidth) / 2;
     int relY = (this.height - this.imageHeight) / 2;
-    ms.blit(gui, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+    ms.blit(RenderPipelines.GUI_TEXTURED, gui, relX, relY, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
   }
 
   @Override
-  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+  public boolean keyPressed(KeyEvent event) {
     for (GuiEventListener btn : this.children()) {
       Minecraft mc = Minecraft.getInstance();
       int mouseX = (int) (mc.mouseHandler.xpos() * mc.getWindow().getGuiScaledWidth() / mc.getWindow().getScreenWidth());
       int mouseY = (int) (mc.mouseHandler.ypos() * mc.getWindow().getGuiScaledHeight() / mc.getWindow().getScreenHeight());
       if (btn instanceof GuiSliderInteger && btn.isMouseOver(mouseX, mouseY)) {
-        return btn.keyPressed(keyCode, scanCode, modifiers);
+        return btn.keyPressed(event);
       }
     }
     for (GuiEventListener widget : this.children()) {
@@ -44,28 +47,26 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
         //keybindings like E OPEN INVENTORY dont make trigger the textbox, oops
         TextBoxAutosave txt = (TextBoxAutosave) widget;
         if (txt.isFocused()) {
-          return txt.keyPressed(keyCode, scanCode, modifiers);
+          return txt.keyPressed(event);
         }
       }
     }
-    return super.keyPressed(keyCode, scanCode, modifiers);
+    return super.keyPressed(event);
   }
 
-  protected void drawSlot(GuiGraphics ms, int x, int y, ResourceLocation texture) {
+  protected void drawSlot(GuiGraphicsExtractor ms, int x, int y, Identifier texture) {
     drawSlot(ms, x, y, texture, Const.SQ);
   }
 
-  protected void drawSlot(GuiGraphics ms, int x, int y, ResourceLocation texture, int size) {
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, texture);
-    ms.blit(texture, leftPos + x, topPos + y, 0, 0, size, size, size, size);
+  protected void drawSlot(GuiGraphicsExtractor ms, int x, int y, Identifier texture, int size) {
+    ms.blit(RenderPipelines.GUI_TEXTURED, texture, leftPos + x, topPos + y, 0, 0, size, size, size, size);
   }
 
-  protected void drawSlot(GuiGraphics ms, int x, int y) {
+  protected void drawSlot(GuiGraphicsExtractor ms, int x, int y) {
     drawSlot(ms, x, y, TextureRegistry.SLOT, Const.SQ);
   }
 
-  protected void drawSlotLarge(GuiGraphics ms, int x, int y) {
+  protected void drawSlotLarge(GuiGraphicsExtractor ms, int x, int y) {
     drawSlot(ms, x, y, TextureRegistry.SLOT_LARGE, 26);
   }
 
@@ -74,26 +75,27 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
    *
    * @param name
    */
-  protected void drawName(GuiGraphics ms, String name) {
+  protected void drawName(GuiGraphicsExtractor ms, String name) {
     drawString(ms, name, (this.getXSize() - this.font.width(name)) / 2, 6.0F);
   }
 
-  protected void drawString(GuiGraphics gg, String name, float x, float y) {
-    gg.drawString(font, ChatUtil.lang(name), x, y, 4210752, false);
+  protected void drawString(GuiGraphicsExtractor gg, String name, float x, float y) {
+    gg.text(font, ChatUtil.lang(name), (int) x, (int) y, 4210752, false);
   }
 
-  public void drawButtonTooltips(GuiGraphics gg, int mouseX, int mouseY) {
+  public void drawButtonTooltips(GuiGraphicsExtractor gg, int mouseX, int mouseY) {
+    Optional<TooltipComponent> noImage = Optional.empty();
     for (GuiEventListener btn : this.children()) {
       if (btn instanceof IHasTooltip ww && btn.isMouseOver(mouseX, mouseY)) {
         if (ww.getTooltips() != null) {
-          gg.renderComponentTooltip(font, ww.getTooltips(), mouseX - leftPos, mouseY - topPos);
+          gg.setTooltipForNextFrame(font, ww.getTooltips(), noImage, mouseX - leftPos, mouseY - topPos);
         }
       }
     }
     for (GuiEventListener widget : this.children()) {
       if (widget instanceof IHasTooltip txt && widget.isMouseOver(mouseX, mouseY)) {
         if (txt.getTooltips() != null) {
-          gg.renderComponentTooltip(font, txt.getTooltips(), mouseX - leftPos, mouseY - topPos);
+          gg.setTooltipForNextFrame(font, txt.getTooltips(), noImage, mouseX - leftPos, mouseY - topPos);
         }
       }
     }
@@ -103,12 +105,12 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
    * Propogate mouse drag events down to slider widgets
    */
   @Override
-  public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+  public boolean mouseDragged(MouseButtonEvent event, double dragX, double dragY) {
     for (GuiEventListener btn : this.children()) {
-      if (btn.isMouseOver(mouseX, mouseY) && btn instanceof AbstractSliderButton) {
-        ((AbstractSliderButton) btn).mouseDragged(mouseX, mouseY, button, dragX, dragY);
+      if (btn.isMouseOver(event.x(), event.y()) && btn instanceof AbstractSliderButton) {
+        ((AbstractSliderButton) btn).mouseDragged(event, dragX, dragY);
       }
     }
-    return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+    return super.mouseDragged(event, dragX, dragY);
   }
 }

@@ -12,7 +12,7 @@ import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.lothrazar.cyclic.block.generatoritem.RecipeGeneratorItem;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 
@@ -29,7 +29,7 @@ public class EnergyItemZen implements IRecipeManager<RecipeGeneratorItem> {
 
   @ZenCodeType.Method
   public void addRecipe(String name, IIngredient input, int rfPertick, int ticks) {
-    ResourceLocation id = fixRecipeId(name);
+    Identifier id = fixRecipeId(name);
     RecipeGeneratorItem m = new RecipeGeneratorItem(input.asVanillaIngredient(), new EnergyIngredient(rfPertick, ticks));
     RecipeHolder<RecipeGeneratorItem> holder = createHolder(id, m);
     CraftTweakerAPI.apply(new ActionAddRecipe<RecipeGeneratorItem>(this, holder, ""));

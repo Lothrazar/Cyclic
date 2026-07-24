@@ -66,7 +66,7 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
       }
       if (TileFisher.isWater(level, pos)) {
         //fish!
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
           LootTable table;
           if (level.random.nextDouble() < 0.10) { // 10% junk
             table = level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING_JUNK);

@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -38,7 +38,7 @@ public class MelterRecipeComponent implements ICustomComponent {
     if (level == null || recipe == null) {
       return;
     }
-    ResourceLocation rl = ResourceLocation.tryParse(recipe);
+    Identifier rl = Identifier.tryParse(recipe);
     if (rl == null) {
       return;
     }

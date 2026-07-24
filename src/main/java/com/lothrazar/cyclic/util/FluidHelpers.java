@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -170,7 +170,7 @@ public class FluidHelpers {
     return FluidRenderMap.getFluidTexture(new FluidStack(fluid, 1), type);
   }
 
-  public static TextureAtlasSprite getSprite(ResourceLocation spriteLocation) {
+  public static TextureAtlasSprite getSprite(Identifier spriteLocation) {
     return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(spriteLocation);
   }
 

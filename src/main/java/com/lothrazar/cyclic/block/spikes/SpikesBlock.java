@@ -44,7 +44,7 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
   private EnumSpikeType type;
 
   public SpikesBlock(Properties properties, EnumSpikeType type) {
-    super(properties.strength(1.1F).noOcclusion().noCollission());
+    super(properties.strength(1.1F).noOcclusion().noCollision());
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     this.type = type;
   }
@@ -92,9 +92,9 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
   }
 
   private void triggerCurse(Level worldIn, Entity entity) {
-    if (worldIn.random.nextDouble() < CURSE_CHANCE) {
+    if (worldIn.getRandom().nextDouble() < CURSE_CHANCE) {
       LivingEntity living = (LivingEntity) entity;
-      switch (worldIn.random.nextInt(4)) { //[0,3] if nextInt(4) given 
+      switch (worldIn.getRandom().nextInt(4)) { //[0,3] if nextInt(4) given 
         case 0:
           if (!living.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) {
             living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, CURSE_TIME, 2, false, false, false));
@@ -131,14 +131,14 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
   public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     if (state.getValue(ACTIVATED).booleanValue() == false && world.hasNeighborSignal(pos)) {
       world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, true));
-      if (!world.isClientSide) {
+      if (!world.isClientSide()) {
         //playSoundFromServer
         SoundUtil.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_ON.get());
       }
     }
     else if (state.getValue(ACTIVATED).booleanValue() && world.hasNeighborSignal(pos) == false) {
       world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false));
-      if (!world.isClientSide) {
+      if (!world.isClientSide()) {
         SoundUtil.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_OFF.get());
       }
     }

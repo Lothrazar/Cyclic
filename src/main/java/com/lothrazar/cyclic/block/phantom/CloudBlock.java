@@ -45,7 +45,7 @@ public class CloudBlock extends BlockCyclic {
 
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-    if (!worldIn.isClientSide && entityIn instanceof LivingEntity) {
+    if (!worldIn.isClientSide() && entityIn instanceof LivingEntity) {
       LivingEntity e = (LivingEntity) entityIn;
       MobEffectInstance eff = new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 5, false, false, false);
 

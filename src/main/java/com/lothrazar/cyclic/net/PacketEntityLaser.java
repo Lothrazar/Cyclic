@@ -32,14 +32,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
 public class PacketEntityLaser implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketEntityLaser> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_entity_laser"));
+  public static final CustomPacketPayload.Type<PacketEntityLaser> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_entity_laser"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketEntityLaser> STREAM_CODEC = StreamCodec.of(PacketEntityLaser::encode, PacketEntityLaser::decode);
 

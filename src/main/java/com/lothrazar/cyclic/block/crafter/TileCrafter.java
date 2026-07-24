@@ -120,7 +120,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
     }
     //i am running
     setLitProperty(true);
-    if (this.level.isClientSide) {
+    if (this.level.isClientSide()) {
       return;
     }
 

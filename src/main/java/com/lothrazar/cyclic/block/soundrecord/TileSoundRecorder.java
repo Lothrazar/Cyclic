@@ -65,12 +65,12 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     for (int i = 0; i < MAX_SOUNDS; i++) {
       if (tag.contains(SOUNDAT + i)) {
-        sounds.set(i, tag.getString(SOUNDAT + i));
+        sounds.set(i, tag.getStringOr(SOUNDAT + i, ""));
       }
     }
     for (int i = 0; i < MAX_SOUNDS * 100; i++) {
       if (tag.contains(IGNORED + i)) {
-        ignored.add(tag.getString(IGNORED + i));
+        ignored.add(tag.getStringOr(IGNORED + i, ""));
       }
     }
     super.loadAdditional(tag,registries);

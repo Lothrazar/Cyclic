@@ -155,7 +155,7 @@ public class BlockRegistry {
               try {
                 // important: keep FQCN
                 ItemStack guideBook = vazkii.patchouli.api.PatchouliAPI.get().getBookStack(
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "guide_book"));
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath(ModCyclic.MODID, "guide_book"));
                 if (!guideBook.isEmpty()) {
                   output.accept(guideBook);
                 }
@@ -231,7 +231,7 @@ public class BlockRegistry {
           4.0F,
           Block.Properties.of()
                   .mapColor(MapColor.PLANT)
-                  .noCollission()
+                  .noCollision()
                   .instabreak()
                   .sound(SoundType.GRASS)
                   .offsetType(BlockBehaviour.OffsetType.XZ)
@@ -241,7 +241,7 @@ public class BlockRegistry {
           4.0F,
           Block.Properties.of()
                   .mapColor(MapColor.PLANT)
-                  .noCollission()
+                  .noCollision()
                   .instabreak()
                   .sound(SoundType.GRASS)
                   .offsetType(BlockBehaviour.OffsetType.XZ)
@@ -251,7 +251,7 @@ public class BlockRegistry {
           4.0F,
           Block.Properties.of()
                   .mapColor(MapColor.PLANT)
-                  .noCollission()
+                  .noCollision()
                   .instabreak()
                   .sound(SoundType.GRASS)
                   .offsetType(BlockBehaviour.OffsetType.XZ)
@@ -261,7 +261,7 @@ public class BlockRegistry {
           4.0F,
           Block.Properties.of()
                   .mapColor(MapColor.PLANT)
-                  .noCollission()
+                  .noCollision()
                   .instabreak()
                   .sound(SoundType.GRASS)
                   .offsetType(BlockBehaviour.OffsetType.XZ)
@@ -275,7 +275,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> CLOUD_GHOST = BLOCKS.register("cloud_ghost", () -> new GhostBlock(Block.Properties.of(), false));
   public static final DeferredBlock<Block> CLOUD_BARRIER = BLOCKS.register("cloud_barrier", () -> new GhostBlock(Block.Properties.of(), true));
   public static final DeferredBlock<Block> WORKBENCH = BLOCKS.register("workbench", () -> new BlockWorkbench(Block.Properties.of()));
-  public static final DeferredBlock<Block> OBSIDIAN_PRESSURE_PLATE = BLOCKS.register("obsidian_pressure_plate", () -> new PressurePlateMetal(Block.Properties.of().noCollission().strength(0.5F)));
+  public static final DeferredBlock<Block> OBSIDIAN_PRESSURE_PLATE = BLOCKS.register("obsidian_pressure_plate", () -> new PressurePlateMetal(Block.Properties.of().noCollision().strength(0.5F)));
   public static final DeferredBlock<Block> GOLD_BARS = BLOCKS.register("gold_bars", () -> new MetalBarsBlock(Block.Properties.of().strength(3.0F, 6.0F)));
   public static final DeferredBlock<Block> GOLD_CHAIN = BLOCKS.register("gold_chain", () -> new ChainBlock(BlockBehaviour.Properties.of().strength(1).sound(SoundType.CHAIN).noOcclusion()));
   public static final DeferredBlock<Block> GOLD_LANTERN = BLOCKS.register("gold_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 14)));
@@ -284,7 +284,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> COPPER_CHAIN = BLOCKS.register("copper_chain", () -> new ChainBlock(BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.CHAIN).noOcclusion()));
   public static final DeferredBlock<Block> COPPER_LANTERN = BLOCKS.register("copper_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 12))); //soul_lantern=10
   public static final DeferredBlock<Block> COPPER_SOUL_LANTERN = BLOCKS.register("copper_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 13))); //soul_lantern=10
-  public static final DeferredBlock<Block> COPPER_PRESSURE_PLATE = BLOCKS.register("copper_pressure_plate", () -> new PressurePlateBlock(BlockSetType.COPPER, Block.Properties.of().noCollission().strength(0.5F)) {
+  public static final DeferredBlock<Block> COPPER_PRESSURE_PLATE = BLOCKS.register("copper_pressure_plate", () -> new PressurePlateBlock(BlockSetType.COPPER, Block.Properties.of().noCollision().strength(0.5F)) {
 
     @Override
     protected int getSignalForState(BlockState st) {
@@ -294,7 +294,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> NETHERITE_BARS = BLOCKS.register("netherite_bars", () -> new MetalBarsBlock(Block.Properties.of().strength(6.0F, 12.0F)));
   public static final DeferredBlock<Block> NETHERITE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of().strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
   public static final DeferredBlock<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
-  public static final DeferredBlock<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(BlockSetType.STONE, Block.Properties.of().noCollission().strength(0.5F)));
+  public static final DeferredBlock<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(BlockSetType.STONE, Block.Properties.of().noCollision().strength(0.5F)));
   public static final DeferredBlock<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of().sound(SoundType.SPORE_BLOSSOM).lightLevel(p -> 2)));
   public static final DeferredBlock<Block> SPONGE_MILK = BLOCKS.register("sponge_milk", () -> new MilkSpongeBlock(Block.Properties.of().lightLevel(p -> 1)));
   public static final DeferredBlock<Block> CRUSHER = BLOCKS.register("crusher", () -> new BlockCrusher(Block.Properties.of()));

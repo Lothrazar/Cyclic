@@ -63,7 +63,7 @@ public class LocationGpsCard extends ItemBaseCyclic {
     Player player = context.getPlayer();
     InteractionHand hand = context.getHand();
     player.swing(hand);
-    if (player.level().isClientSide) {
+    if (player.level().isClientSide()) {
       return InteractionResult.PASS;
     }
     BlockPos pos = context.getClickedPos();
@@ -94,12 +94,12 @@ public class LocationGpsCard extends ItemBaseCyclic {
     //    this.read 
     CompoundTag tag = item.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     item.getHoverName();
-    BlockPosDim dim = new BlockPosDim(pos, tag.getString(NBT_DIM), tag);
+    BlockPosDim dim = new BlockPosDim(pos, tag.getStringOr(NBT_DIM, ""), tag);
     try {
-      dim.setSidePlayerFacing(Direction.values()[tag.getInt(NBT_SIDE + "facing")]);
-      dim.setSide(Direction.values()[tag.getInt(NBT_SIDE)]);
+      dim.setSidePlayerFacing(Direction.values()[tag.getIntOr(NBT_SIDE + "facing", 0)]);
+      dim.setSide(Direction.values()[tag.getIntOr(NBT_SIDE, 0)]);
       Vec3 vec = new Vec3(
-          tag.getDouble("hitx"),
+          tag.getDoubleOr("hitx", 0d),
           tag.getDouble("hity"),
           tag.getDouble("hitz"));
       dim.setHitVec(vec);

@@ -138,7 +138,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
       CompoundTag cs = (CompoundTag) tag.get("copiedShape");
       this.copiedShape = RelativeShape.read(cs);
     }
-    hasStashIfOne = tag.getInt("stashToggle");
+    hasStashIfOne = tag.getIntOr("stashToggle", 0);
     super.loadAdditional(tag,registries);
   }
 
@@ -155,7 +155,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
 
   //  @Override
   public void tick() {
-    if (level.isClientSide == false) {
+    if (level.isClientSide() == false) {
       hasStashIfOne = (this.copiedShape == null) ? 0 : 1;
     }
   }

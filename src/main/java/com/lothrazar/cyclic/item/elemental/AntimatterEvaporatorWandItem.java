@@ -68,7 +68,7 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     Level world = context.getLevel();
     Direction face = context.getClickedFace();
     ItemStack itemstack = context.getItemInHand();
-    EvaporateMode fluidMode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getInt(NBT_MODE)];
+    EvaporateMode fluidMode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getIntOr(NBT_MODE, 0)];
     List<BlockPos> area = ShapeUtil.cubeSquareBase(pos.relative(face), SIZE, 1);
     //    AtomicBoolean removed = new AtomicBoolean(false);
     switch (fluidMode) {
@@ -108,7 +108,7 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
       Player player = context.getPlayer();
       player.swing(context.getHand());
       ItemStackUtil.damageItem(player, itemstack);
-      if (world.isClientSide) {
+      if (world.isClientSide()) {
         SoundUtil.playSound(world, pos, SoundRegistry.PSCHEW_FIRE.get());
       }
     }
@@ -129,7 +129,7 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
   }
 
   private static MutableComponent getModeTooltip(ItemStack stack) {
-    EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getInt(NBT_MODE)];
+    EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getIntOr(NBT_MODE, 0)];
     return Component.translatable("item.cyclic.scepter_antimatter.tooltip0",
         Component.translatable(String.format("item.cyclic.scepter_antimatter.mode.%s",
             mode.getSerializedName())));
@@ -139,10 +139,10 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     if (player.getCooldowns().isOnCooldown(stack.getItem())) {
       return;
     }
-    EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getInt(NBT_MODE)];
+    EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getIntOr(NBT_MODE, 0)];
     CustomData.EMPTY.copyTag().putInt(NBT_MODE, mode.getNext().ordinal());
-    player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
-    if (player.level().isClientSide) {
+    player.getCooldowns().addCooldown(stack, COOLDOWN);
+    if (player.level().isClientSide()) {
       player.displayClientMessage(getModeTooltip(stack), true);
       SoundUtil.playSound(player, SoundRegistry.TOOL_MODE.get());
     }

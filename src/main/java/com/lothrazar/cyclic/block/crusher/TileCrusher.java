@@ -64,8 +64,8 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider, 
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    this.burnTime = tag.getInt("burnTime");
-    this.burnTimeMax = tag.getInt("burnTimeMax");
+    this.burnTime = tag.getIntOr("burnTime", 0);
+    this.burnTimeMax = tag.getIntOr("burnTimeMax", 0);
     super.loadAdditional(tag,registries);
   }
 
@@ -85,7 +85,7 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider, 
       return;
     }
     setLitProperty(true);
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return;
     }
     if (currentRecipe == null) {
@@ -112,8 +112,8 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider, 
       if (!currentRecipe.randOutput.bonus.isEmpty() && currentRecipe.randOutput.percent > 0) {
         // 1 is always, 0 is never so yeah
         //if you put 90, and i roll between 0 and 90 gj u win
-        if (currentRecipe.randOutput.percent == 1 || level.random.nextInt(100) < currentRecipe.randOutput.percent) {
-          this.outputSlots.insertItem(1, this.currentRecipe.createBonus(level.random), false);
+        if (currentRecipe.randOutput.percent == 1 || level.getRandom().nextInt(100) < currentRecipe.randOutput.percent) {
+          this.outputSlots.insertItem(1, this.currentRecipe.createBonus(level.getRandom()), false);
         }
       }
       level.levelEvent((Player) null, 1042, worldPosition, 0);

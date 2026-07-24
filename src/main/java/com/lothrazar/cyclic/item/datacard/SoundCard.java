@@ -36,7 +36,7 @@ public class SoundCard extends ItemBaseCyclic {
       player.getCooldowns().addCooldown(this, 10);
       player.swing(context.getHand());
       //actually play it
-      String sid = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(SOUND_ID);
+      String sid = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(SOUND_ID, "");
       SoundUtil.playSoundById(player, sid);
     }
     return InteractionResult.PASS;

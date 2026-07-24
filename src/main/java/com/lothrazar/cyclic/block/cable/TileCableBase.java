@@ -79,7 +79,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
     this.loadFacade(tag);
     if (this.isEnergyCable) {
       for (Direction f : Direction.values()) {
-        mapIncomingEnergy.put(f, tag.getInt(f.getSerializedName() + "_incenergy"));
+        mapIncomingEnergy.put(f, tag.getIntOr(f.getSerializedName() + "_incenergy", 0));
       }
       if (tag.contains(NBTENERGY)) {
         energy.deserializeNBT(registries, tag.get(NBTENERGY));
@@ -90,7 +90,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
       for (Direction f : Direction.values()) {
         item = mapItemFlow.get(f);
         if(item !=null){ //item.ifPresent(h -> {
-          CompoundTag itemTag = tag.getCompound("item" + f.toString());
+          CompoundTag itemTag = tag.getCompoundOrEmpty("item" + f.toString());
           ((ItemStackHandler)item).deserializeNBT(registries, itemTag);
         }
       }

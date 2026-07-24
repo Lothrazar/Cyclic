@@ -12,14 +12,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
@@ -61,7 +61,7 @@ public class BlockAntiBeacon extends BlockCyclic implements BeaconBeamBlock {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.BEACON_SPONGE.get(), world.isClientSide ? TileAntiBeacon::clientTick : TileAntiBeacon::serverTick);
+    return createTickerHelper(type, TileRegistry.BEACON_SPONGE.get(), world.isClientSide() ? TileAntiBeacon::clientTick : TileAntiBeacon::serverTick);
   }
 
   @Override
@@ -152,13 +152,13 @@ public class BlockAntiBeacon extends BlockCyclic implements BeaconBeamBlock {
     List<String> entries = (List<String>) TileAntiBeacon.POTIONS.get();
     for (String entry : entries) {
       if (entry.startsWith("#")) {
-        ResourceLocation tagId = ResourceLocation.tryParse(entry.substring(1));
+        Identifier tagId = Identifier.tryParse(entry.substring(1));
         if (tagId != null && mobEffectHolder.is(TagKey.create(Registries.MOB_EFFECT, tagId))) {
           return true;
         }
       }
     }
-    ResourceLocation potionId = BuiltInRegistries.MOB_EFFECT.getKey(mobEffect);
+    Identifier potionId = BuiltInRegistries.MOB_EFFECT.getKey(mobEffect);
     return StringParseUtil.isInList(entries, potionId);
   }
 }

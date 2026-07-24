@@ -9,7 +9,8 @@ import net.minecraft.util.FastColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BeaconBlockEntity;
+import net.minecraft.world.level.block.entity.BeaconBeamOwner;
+import net.minecraft.world.level.block.entity.BeaconBeamOwner.Section;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 
@@ -32,7 +33,7 @@ public interface BeamHolder {
    */
   boolean isBeamActive();
 
-  default List<BeaconBlockEntity.BeaconBeamSection> getBeamSections() {
+  default List<Section> getBeamSections() {
     return getBeamStuff().beamSections;
   }
 
@@ -51,7 +52,7 @@ public interface BeamHolder {
    *
    *  - color blocks now implement {@link BeaconBeamBlock} (vanilla's
    *    {@code BlockState#getBeaconColorMultiplier} was removed),
-   *  - {@link BeaconBlockEntity.BeaconBeamSection} stores ARGB ints instead
+   *  - {@link Section} stores ARGB ints instead
    *    of {@code float[3]}; mixing uses {@link FastColor.ARGB32#average}.
    *
    * For the beam to form without requiring stained glass on top, the beacon
@@ -67,7 +68,7 @@ public interface BeamHolder {
     else {
       blockpos = new BlockPos(pos.getX(), beamStuff.lastCheckY + 1, pos.getZ());
     }
-    BeaconBlockEntity.BeaconBeamSection currentSection = beamStuff.checkingBeamSections.isEmpty()
+    Section currentSection = beamStuff.checkingBeamSections.isEmpty()
         ? null
         : beamStuff.checkingBeamSections.get(beamStuff.checkingBeamSections.size() - 1);
     int surfaceHeight = level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ());
@@ -76,7 +77,7 @@ public interface BeamHolder {
       if (blockstate.getBlock() instanceof BeaconBeamBlock beamBlock) {
         int beamColor = beamBlock.getColor().getTextureDiffuseColor();
         if (beamStuff.checkingBeamSections.size() <= 1) {
-          currentSection = new BeaconBlockEntity.BeaconBeamSection(beamColor);
+          currentSection = new Section(beamColor);
           beamStuff.checkingBeamSections.add(currentSection);
         }
         else if (currentSection != null) {
@@ -85,7 +86,7 @@ public interface BeamHolder {
           }
           else {
             int blended = FastColor.ARGB32.average(currentSection.getColor(), beamColor);
-            currentSection = new BeaconBlockEntity.BeaconBeamSection(blended);
+            currentSection = new Section(blended);
             beamStuff.checkingBeamSections.add(currentSection);
           }
         }

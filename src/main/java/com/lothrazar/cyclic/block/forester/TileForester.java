@@ -78,7 +78,7 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
       return;
     }
     setLitProperty(true);
-    if (this.level.isClientSide) {
+    if (this.level.isClientSide()) {
       return;
     }
     final int cost = POWERCONF.get();
@@ -136,9 +136,9 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    height = tag.getInt("height");
-    shapeIndex = tag.getInt("shapeIndex");
-    radius = tag.getInt("radius");
+    height = tag.getIntOr("height", 0);
+    shapeIndex = tag.getIntOr("shapeIndex", 0);
+    radius = tag.getIntOr("radius", 0);
     if (tag.contains(NBTENERGY)) {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }

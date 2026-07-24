@@ -421,7 +421,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (quantity <= 0) {
       return false;
     }
-    if (this.level.isClientSide) {
+    if (this.level.isClientSide()) {
       return false; //important to not desync cables 
     }
     Direction myFacingDir = loc.getSide();
@@ -438,7 +438,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (quantity <= 0) {
       return false;
     }
-    if (this.level.isClientSide) {
+    if (this.level.isClientSide()) {
       return false; //important to not desync cables 
     }
     final IEnergyStorage handlerHere = CapabilityUtil.energy(level, this.worldPosition, myFacingDir);  //this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
@@ -486,10 +486,10 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    flowing = tag.getInt("flowing");
-    needsRedstone = tag.getInt("needsRedstone");
-    render = tag.getInt("renderParticles");
-    timer = tag.getInt("timer");
+    flowing = tag.getIntOr("flowing", 0);
+    needsRedstone = tag.getIntOr("needsRedstone", 0);
+    render = tag.getIntOr("renderParticles", 0);
+    timer = tag.getIntOr("timer", 0);
     super.loadAdditional(tag,registries);
   }
 
@@ -625,7 +625,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   protected int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
-    if (level.isClientSide == false && level.getGameTime() % Const.TICKS_PER_SEC == 0) { //if serverside then
+    if (level.isClientSide() == false && level.getGameTime() % Const.TICKS_PER_SEC == 0) { //if serverside then
       var energy = CapabilityUtil.energy(level,worldPosition);
       if (energy != null) {
         final int currentEnergy = energy.getEnergyStored();

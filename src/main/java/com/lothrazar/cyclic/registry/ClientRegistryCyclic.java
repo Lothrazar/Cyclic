@@ -61,7 +61,7 @@ import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.client.player.LocalPlayer;
@@ -152,7 +152,7 @@ public class ClientRegistryCyclic {
 
   @SubscribeEvent
   public static void onRegisterGuiOverlays(RegisterGuiLayersEvent event) {
-    event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID,"energy_hud"), ENERGY_HUD_LAYER);
+    event.registerAbove(VanillaGuiLayers.HOTBAR, Identifier.fromNamespaceAndPath(ModCyclic.MODID,"energy_hud"), ENERGY_HUD_LAYER);
   }
   /**
    *
@@ -258,70 +258,70 @@ public class ClientRegistryCyclic {
   private static void initCompass() {
     ItemPropertyFunction compassFn = (stack, level, entity, seed) -> GpsCompassItem.getAngle(stack, entity);
     ItemProperties.register(ItemRegistry.GPS_COMPASS.get(),
-        ResourceLocation.fromNamespaceAndPath("minecraft", "angle"), compassFn);
+        Identifier.fromNamespaceAndPath("minecraft", "angle"), compassFn);
   }
 
   // the | 0xFF000000 is to force max alpha
   @SubscribeEvent
   public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidXpJuiceHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidXpJuiceHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidXpJuiceHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidXpJuiceHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidXpJuiceHolder.COLOR | 0xFF000000; }
     }, FluidXpJuiceHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidMagmaHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidMagmaHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidMagmaHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidMagmaHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidMagmaHolder.COLOR | 0xFF000000; }
     }, FluidMagmaHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidSlimeHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidSlimeHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidSlimeHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidSlimeHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidSlimeHolder.COLOR | 0xFF000000; }
     }, FluidSlimeHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidWaxHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidWaxHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidWaxHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidWaxHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidWaxHolder.COLOR | 0xFF000000; }
     }, FluidWaxHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidBiomassHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidBiomassHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidBiomassHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidBiomassHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidBiomassHolder.COLOR | 0xFF000000; }
     }, FluidBiomassHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidHoneyHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidHoneyHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidHoneyHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidHoneyHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidHoneyHolder.COLOR | 0xFF000000; }
     }, FluidHoneyHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidChocolateHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidChocolateHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidChocolateHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidChocolateHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidChocolateHolder.COLOR | 0xFF000000; }
     }, FluidChocolateHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidRedstoneHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidRedstoneHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidRedstoneHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidRedstoneHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidRedstoneHolder.COLOR | 0xFF000000; }
     }, FluidRedstoneHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidEnderHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidEnderHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidEnderHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidEnderHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidEnderHolder.COLOR | 0xFF000000; }
     }, FluidEnderHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidGlowstoneHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidGlowstoneHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidGlowstoneHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidGlowstoneHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidGlowstoneHolder.COLOR | 0xFF000000; }
     }, FluidGlowstoneHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidAmethystHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidAmethystHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidAmethystHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidAmethystHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidAmethystHolder.COLOR | 0xFF000000; }
     }, FluidAmethystHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public ResourceLocation getStillTexture() { return FluidSculkHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidSculkHolder.FLUID_FLOW; }
+      @Override public Identifier getStillTexture() { return FluidSculkHolder.FLUID_STILL; }
+      @Override public Identifier getFlowingTexture() { return FluidSculkHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidSculkHolder.COLOR | 0xFF000000; }
     }, FluidSculkHolder.TYPE.get());
     IClientItemExtensions shieldExt = new IClientItemExtensions() {
@@ -423,7 +423,7 @@ public class ClientRegistryCyclic {
     event.register((stack, tintIndex) -> {
       if (stack.has(DataComponents.CUSTOM_DATA) && tintIndex > 0) {
         //what entity is inside
-        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
+        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(Identifier.parse(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
         //pull the colours from the egg
         for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
           if (spawneggitem.getType(spawneggitem.getDefaultInstance()) == thing) {

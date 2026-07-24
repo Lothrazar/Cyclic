@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,10 +38,10 @@ public class FilterCardItem extends ItemBaseCyclic {
       // caps arent synced from server very well
       CompoundTag stackTag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       if (stackTag.contains("itemCount")) {
-        int itemCount = stackTag.getInt("itemCount");
+        int itemCount = stackTag.getIntOr("itemCount", 0);
         if (itemCount > 0) {
           if (stackTag.contains("itemTooltip")) {
-            String itemTooltip = stackTag.getString("itemTooltip");
+            String itemTooltip = stackTag.getStringOr("itemTooltip", "");
             tooltip.add(Component.translatable(itemTooltip).withStyle(ChatFormatting.GRAY));
           }
           tooltip.add(Component.translatable("cyclic.screen.filter.item.count").append("" + itemCount).withStyle(ChatFormatting.GRAY));
@@ -54,8 +54,8 @@ public class FilterCardItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    if (!worldIn.isClientSide && !playerIn.isCrouching()) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide() && !playerIn.isCrouching()) {
       playerIn.openMenu(new ContainerProviderFilterCard(), playerIn.blockPosition());
     }
     return super.use(worldIn, playerIn, handIn);
@@ -76,7 +76,7 @@ public class FilterCardItem extends ItemBaseCyclic {
   }
 
   public static boolean getIsTagMatch(ItemStack filterStack) {
-    return filterStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBoolean(NBTTAGMATCH);
+    return filterStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBooleanOr(NBTTAGMATCH, false);
   }
 
   public static boolean filterAllowsExtract(ItemStack filterStack, ItemStack itemTarget) {
@@ -121,7 +121,7 @@ public class FilterCardItem extends ItemBaseCyclic {
   }
 
   public static boolean getIsIgnoreList(ItemStack filterStack) {
-    return filterStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBoolean(NBTFILTER);
+    return filterStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBooleanOr(NBTFILTER, false);
   }
 
 }

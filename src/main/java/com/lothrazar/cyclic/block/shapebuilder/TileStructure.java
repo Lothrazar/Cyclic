@@ -96,11 +96,11 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
     if (tag.contains("filter")) {
       filter.deserializeNBT(registries, tag.getCompound("filter"));
     }
-    int t = tag.getInt("buildType");
+    int t = tag.getIntOr("buildType", 0);
     buildType = BuildStructureType.values()[t];
-    buildSize = tag.getInt("buildSize");
-    height = tag.getInt("height");
-    shapeIndex = tag.getInt("shapeIndex");
+    buildSize = tag.getIntOr("buildSize", 0);
+    height = tag.getIntOr("height", 0);
+    shapeIndex = tag.getIntOr("shapeIndex", 0);
     super.loadAdditional(tag,registries);
   }
 
@@ -204,7 +204,7 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
       if (!level.isOutsideBuildHeight(nextPos)
           && level.isEmptyBlock(nextPos)) { // check if this spot is even valid
         BlockState placeState = stuff.defaultBlockState();
-        if (level.isClientSide == false && BlockUtil.placeStateSafe(level, null, nextPos, placeState)) {
+        if (level.isClientSide() == false && BlockUtil.placeStateSafe(level, null, nextPos, placeState)) {
           //build success
           this.incrementPosition(shape);
           stack.shrink(1);

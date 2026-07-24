@@ -10,7 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -43,10 +42,10 @@ public class TeleporterWandItem extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
     ItemStack itemstack = playerIn.getItemInHand(handIn);
     playerIn.startUsingItem(handIn);
-    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+    return InteractionResult.SUCCESS.heldItemTransformedTo(itemstack);
   }
 
   @Override
@@ -72,7 +71,7 @@ public class TeleporterWandItem extends ItemBaseCyclic {
         BlockPos oldPos = player.blockPosition();
         if (EntityUtil.enderTeleportEvent(player, world, newPos)) { // && player.getPosition() != currentPlayerPos    
           ItemStackUtil.damageItem(player, stack);
-          if (world.isClientSide) {
+          if (world.isClientSide()) {
             ParticleUtil.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
             SoundUtil.playSound(player, SoundRegistry.WARP_ECHO.get());
           }

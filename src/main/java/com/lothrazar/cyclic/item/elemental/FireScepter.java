@@ -6,7 +6,6 @@ import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
@@ -33,10 +32,10 @@ public class FireScepter extends ItemBaseCyclic {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+  public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
     ItemStack itemstack = playerIn.getItemInHand(handIn);
     playerIn.startUsingItem(handIn);
-    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+    return InteractionResult.SUCCESS.heldItemTransformedTo(itemstack);
   }
 
   @Override
@@ -51,7 +50,7 @@ public class FireScepter extends ItemBaseCyclic {
     shootMe(worldIn, player, new FireEntity(player, worldIn), 0, velocityFactor);
     shootMe(worldIn, player, new FireEntity(player, worldIn), 10, velocityFactor);
     shootMe(worldIn, player, new FireEntity(player, worldIn), -10, velocityFactor);
-    player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
+    player.getCooldowns().addCooldown(stack, COOLDOWN);
     ItemStackUtil.damageItem(player, stack);
     SoundUtil.playSound(player, SoundRegistry.FIREBALL_STAFF_LAUNCH.get());
   }
