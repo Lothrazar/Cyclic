@@ -13,6 +13,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -133,21 +135,17 @@ public class TileFluidHopper extends TileBlockEntityCyclic implements MenuProvid
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tank.readFromNBT(registries, tag.getCompound(NBTFLUID));
-    if (tag.contains(NBT_FILTER)) {
-      filter.deserializeNBT(registries, tag.getCompound(NBT_FILTER));
-    }
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+    tank.deserialize(input.childOrEmpty(NBTFLUID));
+          filter.deserialize(input.childOrEmpty(NBT_FILTER));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(registries, fluid);
-    tag.put(NBTFLUID, fluid);
-    tag.put(NBT_FILTER, filter.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    tank.serialize(output.child(NBTFLUID));
+    filter.serialize(output.child(NBT_FILTER));
+    super.saveAdditional(output);
   }
 
   public int getFill() {

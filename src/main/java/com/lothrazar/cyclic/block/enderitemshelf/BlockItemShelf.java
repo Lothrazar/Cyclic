@@ -15,6 +15,8 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -163,7 +165,9 @@ public class BlockItemShelf extends BlockCyclic {
           sh.setStackInSlot(i, shelf.inventory.getStackInSlot(i).copy());
         }
       }
-      CompoundTag tileData = shelf.inventory.serializeNBT(world.registryAccess());
+      TagValueOutput shelfOutput = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, world.registryAccess());
+      shelf.inventory.serialize(shelfOutput);
+      CompoundTag tileData = shelfOutput.buildResult();
       // newStack.setTag(tileData); // disabled: use DataComponents in 1.21.1
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, newStack);

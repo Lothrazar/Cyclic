@@ -100,7 +100,7 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_MEDIUM);
     this.drawSlot(ms, 151, 6, TextureRegistry.SLOT_FILTER, 18);
   }

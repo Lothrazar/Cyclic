@@ -54,7 +54,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     energy.draw(ms, menu.getEnergy());
     fluid.draw(ms, menu.tile.getFluid());

@@ -9,6 +9,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -95,17 +97,15 @@ public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvid
 
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    energy.serialize(output.child(NBTENERGY));
+    super.saveAdditional(output);
   }
 
   @Override

@@ -13,6 +13,8 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.MenuProvider;
@@ -87,19 +89,17 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
 
 
   @Override
-  public void loadAdditional( CompoundTag tag, HolderLookup.Provider provider) {
-    inventory.deserializeNBT(provider,tag.getCompound(NBTINV));
-    tank.readFromNBT(provider,tag.getCompound(NBTFLUID));
-    super.loadAdditional(tag, provider);
+  public void loadAdditional(ValueInput input) {
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    tank.deserialize(input.childOrEmpty(NBTFLUID));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-    tag.put(NBTINV, inventory.serializeNBT(provider));
-    CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(provider,fluid);
-    tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag, provider);
+  public void saveAdditional(ValueOutput output) {
+    inventory.serialize(output.child(NBTINV));
+    tank.serialize(output.child(NBTFLUID));
+    super.saveAdditional(output);
   }
 
   //  @Override

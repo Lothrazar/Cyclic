@@ -7,6 +7,8 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,12 +54,12 @@ public class TileBeaconRedstone extends TileBlockEntityCyclic implements BeamHol
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    super.saveAdditional(output);
   }
 }

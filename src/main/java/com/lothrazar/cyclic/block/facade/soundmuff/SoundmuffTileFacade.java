@@ -6,6 +6,8 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,15 +33,15 @@ public class SoundmuffTileFacade extends TileBlockEntityCyclic implements ITileF
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    this.loadFacade(tag);
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+    this.loadFacade(input);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    this.saveFacade(tag);
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    this.saveFacade(output);
+    super.saveAdditional(output);
   }
 
   @Override

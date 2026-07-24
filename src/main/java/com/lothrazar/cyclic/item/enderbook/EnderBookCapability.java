@@ -2,6 +2,9 @@ package com.lothrazar.cyclic.item.enderbook;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -20,7 +23,7 @@ public class EnderBookCapability extends ItemStackHandler {
     if (server != null) {
       CompoundTag data = bookStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       if (data.contains(NBT_KEY)) {
-        deserializeNBT(server.registryAccess(), data.getCompound(NBT_KEY));
+        deserialize(TagValueInput.create(ProblemReporter.DISCARDING, server.registryAccess(), data.getCompound(NBT_KEY)));
       }
     }
   }
@@ -37,7 +40,9 @@ public class EnderBookCapability extends ItemStackHandler {
       return;
     }
     CompoundTag data = bookStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-    data.put(NBT_KEY, serializeNBT(server.registryAccess()));
+    TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, server.registryAccess());
+      serialize(output);
+      data.put(NBT_KEY, output.buildResult());
     int count = 0;
     for (int i = 0; i < getSlots(); i++) {
       if (!getStackInSlot(i).isEmpty()) {

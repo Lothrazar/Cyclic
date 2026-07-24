@@ -4,8 +4,11 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.RegistryHolder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class GpsCompassCapability extends ItemStackHandler {
@@ -20,7 +23,7 @@ public class GpsCompassCapability extends ItemStackHandler {
     if (lookup != null) {
       CompoundTag data = compassStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       if (data.contains(NBT_KEY)) {
-        deserializeNBT(lookup, data.getCompound(NBT_KEY));
+        deserialize(TagValueInput.create(ProblemReporter.DISCARDING, lookup, data.getCompound(NBT_KEY)));
       }
     }
   }
@@ -37,7 +40,9 @@ public class GpsCompassCapability extends ItemStackHandler {
       return;
     }
     CompoundTag data = compassStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-    data.put(NBT_KEY, serializeNBT(lookup));
+    TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, lookup);
+    serialize(output);
+    data.put(NBT_KEY, output.buildResult());
     compassStack.set(DataComponents.CUSTOM_DATA, CustomData.of(data));
   }
 }

@@ -18,6 +18,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -101,29 +103,27 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    radius = tag.getIntOr("size", 0);
-    height = tag.getIntOr("height", 0);
-    isCurrentlyMining = tag.getBooleanOr("isCurrentlyMining", false);
-    shapeIndex = tag.getIntOr("shapeIndex", 0);
-    directionIsUp = tag.getBooleanOr("directionIsUp", false);
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    radius = input.getIntOr("size", 0);
+    height = input.getIntOr("height", 0);
+    isCurrentlyMining = input.getBooleanOr("isCurrentlyMining", false);
+    shapeIndex = input.getIntOr("shapeIndex", 0);
+    directionIsUp = input.getBooleanOr("directionIsUp", false);
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("size", radius);
-    tag.putInt("height", height);
-    tag.putBoolean("isCurrentlyMining", isCurrentlyMining);
-    tag.putInt("shapeIndex", shapeIndex);
-    tag.putBoolean("directionIsUp", directionIsUp);
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("size", radius);
+    output.putInt("height", height);
+    output.putBoolean("isCurrentlyMining", isCurrentlyMining);
+    output.putInt("shapeIndex", shapeIndex);
+    output.putBoolean("directionIsUp", directionIsUp);
+    energy.serialize(output.child(NBTENERGY));
+    inventory.serialize(output.child(NBTINV));
+    super.saveAdditional(output);
   }
 
   public void tick() {

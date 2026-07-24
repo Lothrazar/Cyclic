@@ -16,6 +16,8 @@ import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -88,32 +90,28 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    inventory.deserializeNBT(registries, tag.getCompound(NBTINV));
-    if (tag.contains("filter")) {
-      filter.deserializeNBT(registries, tag.getCompound("filter"));
-    }
-    int t = tag.getIntOr("buildType", 0);
+  public void loadAdditional(ValueInput input) {
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+          filter.deserialize(input.childOrEmpty("filter"));
+    int t = input.getIntOr("buildType", 0);
     buildType = BuildStructureType.values()[t];
-    buildSize = tag.getIntOr("buildSize", 0);
-    height = tag.getIntOr("height", 0);
-    shapeIndex = tag.getIntOr("shapeIndex", 0);
-    super.loadAdditional(tag,registries);
+    buildSize = input.getIntOr("buildSize", 0);
+    height = input.getIntOr("height", 0);
+    shapeIndex = input.getIntOr("shapeIndex", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("buildType", buildType.ordinal());
-    tag.putInt("buildSize", buildSize);
-    tag.putInt("height", height);
-    tag.putInt("shapeIndex", shapeIndex);
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    tag.put("filter", filter.serializeNBT(registries));
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("buildType", buildType.ordinal());
+    output.putInt("buildSize", buildSize);
+    output.putInt("height", height);
+    output.putInt("shapeIndex", shapeIndex);
+    energy.serialize(output.child(NBTENERGY));
+    inventory.serialize(output.child(NBTINV));
+    filter.serialize(output.child("filter"));
+    super.saveAdditional(output);
   }
 
   @Override

@@ -6,6 +6,8 @@ import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,15 +31,15 @@ public class TileItemInfinite extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.loadAdditional(tag, registries);
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+  public void loadAdditional(ValueInput input) {
+    super.loadAdditional(input);
+    inventory.deserialize(input.childOrEmpty(NBTINV));
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    inventory.serialize(output.child(NBTINV));
+    super.saveAdditional(output);
   }
 
   public void tick() {

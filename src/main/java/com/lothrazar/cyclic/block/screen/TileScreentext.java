@@ -5,6 +5,8 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -54,36 +56,36 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
-  public void loadAdditional(CompoundTag tags, HolderLookup.Provider registries) {
+  public void loadAdditional(ValueInput input) {
     text = new String[STRINGS];
     for (int i = 0; i < STRINGS; i++) {
-      text[i] = tags.getStringOr("text" + i, "");
+      text[i] = input.getStringOr("text" + i, "");
     }
-    red = tags.getIntOr("red", 0);
-    green = tags.getIntOr("green", 0);
-    blue = tags.getIntOr("blue", 0);
-    padding = tags.getIntOr("padding", 0);
-    fontSize = tags.getIntOr("font", 0);
-    offset = tags.getIntOr("offset", 0);
-    dropShadow = tags.getBooleanOr("dropShadow", false);
-    super.loadAdditional(tags, registries);
+    red = input.getIntOr("red", 0);
+    green = input.getIntOr("green", 0);
+    blue = input.getIntOr("blue", 0);
+    padding = input.getIntOr("padding", 0);
+    fontSize = input.getIntOr("font", 0);
+    offset = input.getIntOr("offset", 0);
+    dropShadow = input.getBooleanOr("dropShadow", false);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+  public void saveAdditional(ValueOutput output) {
     for (int i = 0; i < STRINGS; i++) {
       if (text[i] != null) {
-        tag.putString("text" + i, text[i]);
+        output.putString("text" + i, text[i]);
       }
     }
-    tag.putInt("red", red);
-    tag.putInt("green", green);
-    tag.putInt("blue", blue);
-    tag.putInt("padding", padding);
-    tag.putInt("font", fontSize);
-    tag.putInt("offset", offset);
-    tag.putBoolean("dropShadow", dropShadow);
-    super.saveAdditional(tag, registries);
+    output.putInt("red", red);
+    output.putInt("green", green);
+    output.putInt("blue", blue);
+    output.putInt("padding", padding);
+    output.putInt("font", fontSize);
+    output.putInt("offset", offset);
+    output.putBoolean("dropShadow", dropShadow);
+    super.saveAdditional(output);
   }
 
   @Override

@@ -17,7 +17,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.MenuProvider;
@@ -152,43 +153,34 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    filter.deserializeNBT(registries,tag.getCompound("filter"));
-    this.radius = tag.getIntOr("radius", 0);
-    entityFilter = EntityFilterType.values()[tag.getIntOr("entityFilter", 0)];
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-  if (tag.contains("Effects", 9)) {
-      ListTag listnbt = tag.getList("Effects", 10);
-      this.effects.clear();
-      for (int i = 0; i < listnbt.size(); ++i) {
-        MobEffectInstance effectinstance = MobEffectInstance.load(listnbt.getCompound(i));
-        if (effectinstance != null) {
-          effects.add(effectinstance);
-        }
-      }
+  public void loadAdditional(ValueInput input) {
+    filter.deserialize(input.childOrEmpty("filter"));
+    this.radius = input.getIntOr("radius", 0);
+    entityFilter = EntityFilterType.values()[input.getIntOr("entityFilter", 0)];
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    this.effects.clear();
+    for (MobEffectInstance effectinstance : input.listOrEmpty("Effects", MobEffectInstance.CODEC)) {
+      effects.add(effectinstance);
     }
 
-    super.loadAdditional(tag, registries);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put("filter", filter.serializeNBT(registries));
-    tag.putInt("radius", radius);
-    tag.putInt("entityFilter", entityFilter.ordinal());
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-     if (!this.effects.isEmpty()) {
-      ListTag listnbt = new ListTag();
+  public void saveAdditional(ValueOutput output) {
+    filter.serialize(output.child("filter"));
+    output.putInt("radius", radius);
+    output.putInt("entityFilter", entityFilter.ordinal());
+    energy.serialize(output.child(NBTENERGY));
+    inventory.serialize(output.child(NBTINV));
+    if (!this.effects.isEmpty()) {
+      var effectsList = output.list("Effects", MobEffectInstance.CODEC);
       for (MobEffectInstance effectinstance : this.effects) {
-        listnbt.add(effectinstance.save());
+        effectsList.add(effectinstance);
       }
-      tag.put("Effects", listnbt);
     }
-   super.saveAdditional(tag, registries);
+    super.saveAdditional(output);
   }
 
   private void pullFromItem(Iterable<MobEffectInstance> newEffects) {

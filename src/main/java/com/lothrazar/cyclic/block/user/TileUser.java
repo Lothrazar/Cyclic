@@ -11,6 +11,8 @@ import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -202,25 +204,23 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    timerDelay = tag.getIntOr("delay", 0);
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    userSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
-    doHitBreak = tag.getBooleanOr("doBreakBlock", false);
-    entities = tag.getBooleanOr("entities", false);
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    timerDelay = input.getIntOr("delay", 0);
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    userSlots.deserialize(input.childOrEmpty(NBTINV));
+    doHitBreak = input.getBooleanOr("doBreakBlock", false);
+    entities = input.getBooleanOr("entities", false);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("delay", timerDelay);
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    tag.put(NBTINV, userSlots.serializeNBT(registries));
-    tag.putBoolean("doBreakBlock", doHitBreak);
-    tag.putBoolean("entities", entities);
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("delay", timerDelay);
+    energy.serialize(output.child(NBTENERGY));
+    userSlots.serialize(output.child(NBTINV));
+    output.putBoolean("doBreakBlock", doHitBreak);
+    output.putBoolean("entities", entities);
+    super.saveAdditional(output);
   }
 
   @Override

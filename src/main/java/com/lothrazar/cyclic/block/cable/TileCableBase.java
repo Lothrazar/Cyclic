@@ -16,6 +16,8 @@ import com.lothrazar.library.util.DirectionUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -75,75 +77,69 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    this.loadFacade(tag);
+  public void loadAdditional(ValueInput input) {
+    this.loadFacade(input);
     if (this.isEnergyCable) {
       for (Direction f : Direction.values()) {
-        mapIncomingEnergy.put(f, tag.getIntOr(f.getSerializedName() + "_incenergy", 0));
+        mapIncomingEnergy.put(f, input.getIntOr(f.getSerializedName() + "_incenergy", 0));
       }
-      if (tag.contains(NBTENERGY)) {
-        energy.deserializeNBT(registries, tag.get(NBTENERGY));
-      }
+              energy.deserialize(input.childOrEmpty(NBTENERGY));
     }
     if(this.isItemCable()) {
       IItemHandler item;
       for (Direction f : Direction.values()) {
         item = mapItemFlow.get(f);
         if(item !=null){ //item.ifPresent(h -> {
-          CompoundTag itemTag = tag.getCompoundOrEmpty("item" + f.toString());
-          ((ItemStackHandler)item).deserializeNBT(registries, itemTag);
+          ((ItemStackHandler)item).deserialize(input.childOrEmpty("item" + f.toString()));
         }
       }
-      itemFilter.deserializeNBT(registries,tag.getCompound("itemFilter"));
+      itemFilter.deserialize(input.childOrEmpty("itemFilter"));
     }
     if(this.isFluidCable()) {
 
-      fluidFilter.deserializeNBT(registries,tag.getCompound("filter"));
+      fluidFilter.deserialize(input.childOrEmpty("filter"));
       FluidTankBase fluidh;
       for (Direction dir : Direction.values()) {
         fluidh = mapFluidFlow.get(dir);
-        if (tag.contains("fluid" + dir.toString())) {
-          fluidh.readFromNBT(registries,tag.getCompound("fluid" + dir.toString()));
+        if (fluidh != null) {
+          fluidh.deserialize(input.childOrEmpty("fluid" + dir.toString()));
         }
       }
     }
-    super.loadAdditional(tag, registries);
+    super.loadAdditional(input);
   }
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    this.saveFacade(tag);
+  public void saveAdditional(ValueOutput output) {
+    this.saveFacade(output);
     if (this.isEnergyCable) {
       for (Direction f : Direction.values()) {
-        tag.putInt(f.getSerializedName() + "_incenergy", mapIncomingEnergy.get(f));
+        output.putInt(f.getSerializedName() + "_incenergy", mapIncomingEnergy.get(f));
       }
-      tag.put(NBTENERGY, energy.serializeNBT(registries));
+      energy.serialize(output.child(NBTENERGY));
     }
     if(this.isItemCable()) {
 
-      tag.put("itemFilter", itemFilter.serializeNBT(registries));
+      itemFilter.serialize(output.child("itemFilter"));
       IItemHandler item;
       for (Direction f : Direction.values()) {
         item = mapItemFlow.get(f);
         if (item != null) {
-          CompoundTag compound = ((ItemStackHandler) item).serializeNBT(registries);
-          tag.put("item" + f.toString(), compound);
+          ((ItemStackHandler) item).serialize(output.child("item" + f.toString()));
         }
       }
     }
     if(this.isFluidCable()) {
 
-      tag.put("filter", fluidFilter.serializeNBT(registries));
+      fluidFilter.serialize(output.child("filter"));
       FluidTankBase fluidh;
       for (Direction dir : Direction.values()) {
         fluidh = mapFluidFlow.get(dir);
-        CompoundTag fluidtag = new CompoundTag();
         if (fluidh != null) {
-          fluidh.writeToNBT(registries, fluidtag);
+          fluidh.serialize(output.child("fluid" + dir.toString()));
         }
-        tag.put("fluid" + dir.toString(), fluidtag);
       }
     }
-    super.saveAdditional(tag, registries);
+    super.saveAdditional(output);
   }
 
   protected void setIsEnergy() {

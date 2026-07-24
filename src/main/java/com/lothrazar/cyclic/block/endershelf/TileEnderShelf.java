@@ -4,6 +4,8 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -37,21 +39,19 @@ public class TileEnderShelf extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    inventory.deserializeNBT(registries, tag.getCompoundOrEmpty(NBTINV));
-    if (tag.contains("RenderTextType")) {
-      int rt = tag.getIntOr("RenderTextType", 0);
-      this.renderStyle = RenderTextType.values()[rt];
-    }
+  public void loadAdditional(ValueInput input) {
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    int rt = input.getIntOr("RenderTextType", 0);
+    this.renderStyle = RenderTextType.values()[rt];
     inventory.resetNameCache();
-    super.loadAdditional(tag, registries);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    tag.putInt("RenderTextType", this.renderStyle.ordinal());
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    inventory.serialize(output.child(NBTINV));
+    output.putInt("RenderTextType", this.renderStyle.ordinal());
+    super.saveAdditional(output);
   }
 
   public void toggleShowText() {

@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.util.RandomSource;
 
 public class BlockCableBundled extends CableBase {
 
@@ -94,7 +95,8 @@ public class BlockCableBundled extends CableBase {
   }
 
   @Override
-  public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+  public BlockState updateShape(BlockState stateIn, LevelReader world, ScheduledTickAccess ticks, BlockPos currentPos,
+      Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     EnumConnectType oldProp = stateIn.getValue(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {
@@ -106,8 +108,8 @@ public class BlockCableBundled extends CableBase {
             || CapabilityUtil.isFluid(facing, lvl, facingPos));
     if (hasAnyCap) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
-      if (world.getBlockState(currentPos).getBlock() == this) {
-        ((Level) world).setBlockAndUpdate(currentPos, with);
+      if (world.getBlockState(currentPos).getBlock() == this && world instanceof Level lvl) {
+        lvl.setBlockAndUpdate(currentPos, with);
       }
       return with;
     } else {

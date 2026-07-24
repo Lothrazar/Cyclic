@@ -10,6 +10,8 @@ import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -151,29 +153,25 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    inputSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
-    outputSlots.deserializeNBT(registries,tag.getCompound("invoutput"));
-    burnTimeMax = tag.getIntOr("burnTimeMax", 0);
-    lock = tag.getIntOr(NBT_LOCK, 0);
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    tank.deserialize(input.childOrEmpty(NBTFLUID));
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    inputSlots.deserialize(input.childOrEmpty(NBTINV));
+    outputSlots.deserialize(input.childOrEmpty("invoutput"));
+    burnTimeMax = input.getIntOr("burnTimeMax", 0);
+    lock = input.getIntOr(NBT_LOCK, 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(registries,fluid);
-    tag.put(NBTFLUID, fluid);
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    tag.put(NBTINV, inputSlots.serializeNBT(registries));
-    tag.put("invoutput", outputSlots.serializeNBT(registries));
-    tag.putInt("burnTimeMax", this.burnTimeMax);
-    tag.putInt(NBT_LOCK, this.lock);
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    tank.serialize(output.child(NBTFLUID));
+    energy.serialize(output.child(NBTENERGY));
+    inputSlots.serialize(output.child(NBTINV));
+    outputSlots.serialize(output.child("invoutput"));
+    output.putInt("burnTimeMax", this.burnTimeMax);
+    output.putInt(NBT_LOCK, this.lock);
+    super.saveAdditional(output);
   }
 
   public float getCapacity() {

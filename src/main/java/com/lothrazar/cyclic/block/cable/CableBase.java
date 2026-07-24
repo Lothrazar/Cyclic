@@ -237,7 +237,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
       //
       if (world.getBlockState(pos).getBlock() instanceof CableBase && world.setBlockAndUpdate(pos, newState)) {
         if (updatePost) {
-          newState.updateShape(sideToToggle, world.getBlockState(pos.relative(sideToToggle)), world, pos, pos.relative(sideToToggle));
+          newState.updateShape(world, world, pos, sideToToggle, pos.relative(sideToToggle), world.getBlockState(pos.relative(sideToToggle)), world.getRandom());
         }
         if (world.isClientSide()) {
           SoundUtil.playSound(player, SoundRegistry.THUNK.get(), 0.2F, 1F);

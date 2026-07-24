@@ -12,6 +12,8 @@ import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -77,21 +79,19 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
-    this.transferRate = tag.getIntOr("transferRate", 0);
-    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    gpsSlots.deserialize(input.childOrEmpty(NBTINV));
+    this.transferRate = input.getIntOr("transferRate", 0);
+    tank.deserialize(input.childOrEmpty(NBTFLUID));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("transferRate", transferRate);
-    tag.put(NBTINV, gpsSlots.serializeNBT(registries));
-    CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(registries,fluid);
-    tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("transferRate", transferRate);
+    gpsSlots.serialize(output.child(NBTINV));
+    tank.serialize(output.child(NBTFLUID));
+    super.saveAdditional(output);
   }
 
   @Override

@@ -12,6 +12,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -144,26 +146,24 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+  public void loadAdditional(ValueInput input) {
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBooleanOr("flow_" + f.getName(), false));
+      poweredSides.put(f, input.getBooleanOr("flow_" + f.getName(), false));
     }
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    batterySlots.deserializeNBT(registries,tag.getCompound(NBTINV + "batt"));
-    super.loadAdditional(tag, registries);
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    batterySlots.deserialize(input.childOrEmpty(NBTINV + "batt"));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+  public void saveAdditional(ValueOutput output) {
     for (Direction f : Direction.values()) {
-      tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
+      output.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
-    tag.put(NBTINV + "batt", batterySlots.serializeNBT(registries));
-    tag.putInt("flowing", getFlowing());
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+    batterySlots.serialize(output.child(NBTINV + "batt"));
+    output.putInt("flowing", getFlowing());
+    energy.serialize(output.child(NBTENERGY));
+    super.saveAdditional(output);
   }
 
   @Override

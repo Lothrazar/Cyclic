@@ -18,7 +18,7 @@ public class ScreenGpsCompass extends ScreenBase<ContainerGpsCompass> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 79, 35, TextureRegistry.SLOT_GPS);
   }

@@ -53,7 +53,7 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     energy.draw(ms, menu.getEnergy());
     this.progress.max = menu.tile.getField(TileSolidifier.Fields.BURNMAX.ordinal());

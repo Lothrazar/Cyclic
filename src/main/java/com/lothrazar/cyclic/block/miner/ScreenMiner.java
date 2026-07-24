@@ -76,7 +76,7 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     if (menu.tile.inventory.getStackInSlot(TileMiner.SLOT_TOOL).isEmpty()) {
       this.drawSlot(ms, 32, 8, TextureRegistry.SLOT_TOOL, 18);

@@ -6,6 +6,8 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,15 +41,15 @@ public class TileTrash extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    inventory.serialize(output.child(NBTINV));
+    super.saveAdditional(output);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTrash e) {

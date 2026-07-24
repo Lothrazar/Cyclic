@@ -14,6 +14,8 @@ import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.MenuProvider;
@@ -134,21 +136,19 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    this.status = UncraftStatusEnum.values()[tag.getIntOr("ucstats", 0)];
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    this.status = UncraftStatusEnum.values()[input.getIntOr("ucstats", 0)];
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("ucstats", status.ordinal());
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("ucstats", status.ordinal());
+    energy.serialize(output.child(NBTENERGY));
+    inventory.serialize(output.child(NBTINV));
+    super.saveAdditional(output);
   }
 
   private UncraftStatusEnum uncraftRecipe(Recipe<?> match) {

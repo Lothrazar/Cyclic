@@ -7,6 +7,8 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -71,16 +73,14 @@ public class TileGoldHopper extends TileSimpleHopper implements MenuProvider {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.loadAdditional(tag, registries);
-    if (tag.contains(NBT_FILTER)) {
-      filter.deserializeNBT(registries, tag.getCompound(NBT_FILTER));
-    }
+  public void loadAdditional(ValueInput input) {
+    super.loadAdditional(input);
+          filter.deserialize(input.childOrEmpty(NBT_FILTER));
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.saveAdditional(tag, registries);
-    tag.put(NBT_FILTER, filter.serializeNBT(registries));
+  public void saveAdditional(ValueOutput output) {
+    super.saveAdditional(output);
+    filter.serialize(output.child(NBT_FILTER));
   }
 }

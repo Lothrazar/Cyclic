@@ -83,7 +83,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor gg, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor gg, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(gg, TextureRegistry.INVENTORY);
     energy.draw(gg, menu.tile.getEnergy());
     progress.max = menu.tile.getField(TileGeneratorFluid.Fields.BURNMAX.ordinal());

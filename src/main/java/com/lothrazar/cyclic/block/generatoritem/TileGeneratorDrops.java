@@ -10,6 +10,8 @@ import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -130,25 +132,23 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    burnTime = tag.getIntOr("burnTime", 0);
-    burnTimeMax = tag.getIntOr("burnTimeMax", 0);
-    burnPerTick = tag.getIntOr("burnPerTick", 0);
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    burnTime = input.getIntOr("burnTime", 0);
+    burnTimeMax = input.getIntOr("burnTimeMax", 0);
+    burnPerTick = input.getIntOr("burnPerTick", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    tag.putInt("burnTime", this.burnTime);
-    tag.putInt("burnTimeMax", this.burnTimeMax);
-    tag.putInt("burnPerTick", this.burnPerTick);
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    energy.serialize(output.child(NBTENERGY));
+    inventory.serialize(output.child(NBTINV));
+    output.putInt("burnTime", this.burnTime);
+    output.putInt("burnTimeMax", this.burnTimeMax);
+    output.putInt("burnPerTick", this.burnPerTick);
+    super.saveAdditional(output);
   }
 
   @Override

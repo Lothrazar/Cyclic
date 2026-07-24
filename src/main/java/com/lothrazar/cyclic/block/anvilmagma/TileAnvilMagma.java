@@ -11,6 +11,8 @@ import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -121,19 +123,17 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
 
 
   @Override
-  public void loadAdditional( CompoundTag tag,HolderLookup.Provider registries) {
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    tank.deserialize(input.childOrEmpty(NBTFLUID));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag,HolderLookup.Provider provider) {
-    CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(provider,fluid);
-    tag.put(NBTFLUID, fluid);
-    tag.put(NBTINV, inventory.serializeNBT(provider));
-    super.saveAdditional(tag,provider);
+  public void saveAdditional(ValueOutput output) {
+    tank.serialize(output.child(NBTFLUID));
+    inventory.serialize(output.child(NBTINV));
+    super.saveAdditional(output);
   }
 
   @Override

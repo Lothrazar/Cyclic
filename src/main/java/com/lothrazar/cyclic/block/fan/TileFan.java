@@ -14,6 +14,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
@@ -209,19 +211,19 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    filter.deserializeNBT(registries,tag.getCompound("filter"));
-    speed = tag.getIntOr("speed", 0);
-    range = tag.getIntOr("range", 0);
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+    filter.deserialize(input.childOrEmpty("filter"));
+    speed = input.getIntOr("speed", 0);
+    range = input.getIntOr("range", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put("filter", filter.serializeNBT(registries));
-    tag.putInt("speed", speed);
-    tag.putInt("range", range);
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    filter.serialize(output.child("filter"));
+    output.putInt("speed", speed);
+    output.putInt("range", range);
+    super.saveAdditional(output);
   }
 
   @Override

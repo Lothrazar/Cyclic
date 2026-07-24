@@ -11,10 +11,8 @@ import net.minecraft.core.Direction;
 import net.neoforged.neoforge.items.IItemHandler;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class TileEnderCtrl extends TileBlockEntityCyclic {
@@ -58,30 +56,23 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    if (tag.contains("RenderTextType")) {
-      int rt = tag.getIntOr("RenderTextType", 0);
-      this.renderStyle = RenderTextType.values()[rt];
+  public void loadAdditional(ValueInput input) {
+    int rt = input.getIntOr("RenderTextType", 0);
+    this.renderStyle = RenderTextType.values()[rt];
+    for (BlockPos pos : input.listOrEmpty(NBT_SHELVES, BlockPos.CODEC)) {
+      this.connectedShelves.add(pos);
     }
-    if (tag.contains(NBT_SHELVES)) {
-      ListTag shelves = tag.getList(NBT_SHELVES, Tag.TAG_COMPOUND);
-      for (int i = 0; i < shelves.size(); i++) {
-        BlockPos pos = BlockPos.of(shelves.getCompound(i).getLong("pos"));
-        this.connectedShelves.add(pos);
-      }
-    }
-    super.loadAdditional(tag,registries);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("RenderTextType", this.renderStyle.ordinal());
-    ListTag shelves = new ListTag();
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("RenderTextType", this.renderStyle.ordinal());
+    var shelvesList = output.list(NBT_SHELVES, BlockPos.CODEC);
     for (BlockPos pos : this.connectedShelves) {
-      CompoundTag pTag = new CompoundTag(); pTag.putLong("pos", pos.asLong()); shelves.add(pTag);
+      shelvesList.add(pos);
     }
-    tag.put(NBT_SHELVES, shelves);
-    super.saveAdditional(tag,registries);
+    super.saveAdditional(output);
   }
 
   public void toggleShowText() {

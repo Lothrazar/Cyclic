@@ -8,6 +8,8 @@ import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -192,17 +194,17 @@ public class TileFanSlab extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    speed = tag.getIntOr("speed", 0);
-    range = tag.getIntOr("range", 0);
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+    speed = input.getIntOr("speed", 0);
+    range = input.getIntOr("range", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("speed", speed);
-    tag.putInt("range", range);
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("speed", speed);
+    output.putInt("range", range);
+    super.saveAdditional(output);
   }
 
   @Override

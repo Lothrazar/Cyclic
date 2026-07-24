@@ -26,6 +26,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
@@ -259,14 +263,16 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   @Override
   public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
     CompoundTag syncData = super.getUpdateTag(registries);
-    this.saveAdditional(syncData, registries);
+    syncData.merge(this.saveCustomOnly(registries));
     return syncData;
   }
 
   @Override
   public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
     if (pkt.getTag() != null) {
-      this.loadAdditional(pkt.getTag(), registries);
+      try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(this.problemPath(), ModCyclic.LOGGER)) {
+        this.loadAdditional(TagValueInput.create(reporter, registries, pkt.getTag()));
+      }
     }
     super.onDataPacket(net, pkt, registries);
   }
@@ -485,21 +491,21 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    flowing = tag.getIntOr("flowing", 0);
-    needsRedstone = tag.getIntOr("needsRedstone", 0);
-    render = tag.getIntOr("renderParticles", 0);
-    timer = tag.getIntOr("timer", 0);
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    flowing = input.getIntOr("flowing", 0);
+    needsRedstone = input.getIntOr("needsRedstone", 0);
+    render = input.getIntOr("renderParticles", 0);
+    timer = input.getIntOr("timer", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("flowing", flowing);
-    tag.putInt("needsRedstone", needsRedstone);
-    tag.putInt("renderParticles", render);
-    tag.putInt("timer", timer);
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("flowing", flowing);
+    output.putInt("needsRedstone", needsRedstone);
+    output.putInt("renderParticles", render);
+    output.putInt("timer", timer);
+    super.saveAdditional(output);
   }
 
   public abstract void setField(int field, int value);

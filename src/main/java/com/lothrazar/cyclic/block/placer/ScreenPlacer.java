@@ -37,7 +37,7 @@ public class ScreenPlacer extends ScreenBase<ContainerPlacer> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, imageWidth / 2 - 9, 28);
   }

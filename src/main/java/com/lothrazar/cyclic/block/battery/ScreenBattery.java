@@ -118,7 +118,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 133, 53, TextureRegistry.SLOT_CHARGE);
     energy.draw(ms, menu.getEnergy());

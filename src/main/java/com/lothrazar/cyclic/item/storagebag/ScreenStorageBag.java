@@ -85,7 +85,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   protected void extractLabels(GuiGraphicsExtractor gg, int x, int y) {}
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor gg, int x, int y, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor gg, int x, int y, float partialTicks) {
     this.drawBackground(gg, TextureRegistry.INVENTORY_LARGE);
     gg.blit(RenderPipelines.GUI_TEXTURED, TextureRegistry.INVENTORY_SIDEBAR, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);
   }

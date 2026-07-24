@@ -107,7 +107,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
     energy.draw(ms, menu.getEnergy());
     this.drawSlot(ms, 60, 20);

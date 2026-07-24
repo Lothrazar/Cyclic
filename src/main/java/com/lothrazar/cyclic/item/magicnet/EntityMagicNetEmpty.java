@@ -13,6 +13,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
@@ -79,8 +81,9 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       if (target instanceof LivingEntity) {
         ((LivingEntity) target).stopSleeping();
       }
-      CompoundTag compound = new CompoundTag();
-      target.save(compound);
+      TagValueOutput targetOutput = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, target.registryAccess());
+      target.save(targetOutput);
+      CompoundTag compound = targetOutput.buildResult();
       //
       if (target.getType().builtInRegistryHolder().is(DataTags.MAGICNET_BLOCKED)) {
         // datapack-extensible blocklist (defaults to inventory-holding minecarts,

@@ -9,6 +9,8 @@ import com.lothrazar.library.data.BlockPosDim;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -60,19 +62,17 @@ public class TileTeleport extends TileBlockEntityCyclic implements MenuProvider 
 
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    gpsSlots.deserialize(input.childOrEmpty(NBTINV));
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put(NBTINV, gpsSlots.serializeNBT(registries));
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    gpsSlots.serialize(output.child(NBTINV));
+    energy.serialize(output.child(NBTENERGY));
+    super.saveAdditional(output);
   }
 
   BlockPosDim getTargetInSlot(int s) {

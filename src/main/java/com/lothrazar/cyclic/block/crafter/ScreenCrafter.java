@@ -76,7 +76,7 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
     energy.draw(ms, menu.tile.getEnergy());
     for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {

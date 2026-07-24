@@ -58,7 +58,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     for (int i = 0; i < 9; i++) {
       this.drawSlot(ms, 7 + i * Const.SQ, 31);

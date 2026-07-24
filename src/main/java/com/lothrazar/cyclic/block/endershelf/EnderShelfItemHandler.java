@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient.SyncPacketType;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.EnchantUtil;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -40,24 +40,23 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   }
 
   @Override
-  public CompoundTag serializeNBT(HolderLookup.Provider provider) {
-    CompoundTag tag = super.serializeNBT(provider);
+  public void serialize(ValueOutput output) {
+    super.serialize(output);
     for (int i = 0; i < ROWS; i++) {
-      tag.putInt("cyclicmagic" + ":idc" + i, extraBooks[i]);
+      output.putInt("cyclicmagic" + ":idc" + i, extraBooks[i]);
       if (enchantmentIdCache[i] == null) {
         enchantmentIdCache[i] = "";
       }
-      tag.putString("cyclicmagic" + ":ench", enchantmentIdCache[i]);
+      output.putString("cyclicmagic" + ":ench", enchantmentIdCache[i]);
     }
-    return tag;
   }
 
   @Override
-  public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-    super.deserializeNBT(provider,nbt);
+  public void deserialize(ValueInput input) {
+    super.deserialize(input);
     for (int i = 0; i < ROWS; i++) {
-      extraBooks[i] = nbt.getIntOr("cyclicmagic" + ":idc" + i, 0);
-      enchantmentIdCache[i] = nbt.getStringOr("cyclicmagic" + ":ench", "");
+      extraBooks[i] = input.getIntOr("cyclicmagic" + ":idc" + i, 0);
+      enchantmentIdCache[i] = input.getStringOr("cyclicmagic" + ":ench", "");
     }
   }
 

@@ -14,6 +14,8 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.MenuProvider;
@@ -82,24 +84,22 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
 
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    int legacy = tag.getIntOr("storedXp", 0);
+  public void loadAdditional(ValueInput input) {
+    tank.deserialize(input.childOrEmpty(NBTFLUID));
+    int legacy = input.getIntOr("storedXp", 0);
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * FLUID_PER_EXP));
     }
-    this.collect = tag.contains("collect") ? tag.getInt("collect") : 1;
-    super.loadAdditional(tag, registries);
+    this.collect = input.getIntOr("collect", 1);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(registries,fluid);
-    tag.put(NBTFLUID, fluid);
-    tag.putInt("storedXp", getStoredXp());
-    tag.putInt("collect", this.collect);
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    tank.serialize(output.child(NBTFLUID));
+    output.putInt("storedXp", getStoredXp());
+    output.putInt("collect", this.collect);
+    super.saveAdditional(output);
   }
 
   private void collectPlayerExperience() {

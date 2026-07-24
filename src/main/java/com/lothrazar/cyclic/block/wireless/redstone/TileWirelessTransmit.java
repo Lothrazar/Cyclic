@@ -11,6 +11,8 @@ import com.lothrazar.library.data.BlockPosDim;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
@@ -63,25 +65,25 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries)  {
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    if (tag.hasUUID(REDSTONE_ID)) {
-      this.id = tag.getUUID(REDSTONE_ID);
+  public void loadAdditional(ValueInput input) {
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    if (input.hasUUID(REDSTONE_ID)) {
+      this.id = input.getUUID(REDSTONE_ID);
     }
     else {
       this.id = UUID.randomUUID();
     }
-    super.loadAdditional(tag,registries);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put(NBTINV, inventory.serializeNBT(registries));
+  public void saveAdditional(ValueOutput output) {
+    inventory.serialize(output.child(NBTINV));
     if (this.id == null) {
       this.id = UUID.randomUUID();
     }
-    tag.putUUID(REDSTONE_ID, id);
-    super.saveAdditional(tag,registries);
+    output.putUUID(REDSTONE_ID, id);
+    super.saveAdditional(output);
   }
 
   private void toggleTarget(BlockPosDim dimPos) {

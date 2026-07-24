@@ -50,7 +50,7 @@ public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 79, 35, TextureRegistry.SLOT_GPS);
     fluid.draw(ms, menu.tile.getFluid());

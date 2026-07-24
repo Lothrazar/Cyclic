@@ -36,6 +36,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -323,33 +325,31 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    if (tag.contains("energy")) {
-      energy.deserializeNBT(registries, tag.get("energy"));
-    }
-    inputHandler.deserializeNBT(registries,tag.getCompound("input"));
-    outHandler.deserializeNBT(registries,tag.getCompound("output"));
-    gridCap.deserializeNBT(registries,tag.getCompound("grid"));
-    preview.deserializeNBT(registries,tag.getCompound("preview"));
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+          energy.deserialize(input.childOrEmpty("energy"));
+    inputHandler.deserialize(input.childOrEmpty("input"));
+    outHandler.deserialize(input.childOrEmpty("output"));
+    gridCap.deserialize(input.childOrEmpty("grid"));
+    preview.deserialize(input.childOrEmpty("preview"));
+    super.loadAdditional(input);
   }
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+  public void saveAdditional(ValueOutput output) {
 
-      tag.put("energy", energy.serializeNBT(registries));
+      energy.serialize(output.child("energy"));
 
-      tag.put("input", inputHandler.serializeNBT(registries));
-
-
-      tag.put("output", outHandler.serializeNBT(registries));
+      inputHandler.serialize(output.child("input"));
 
 
-      tag.put("grid", gridCap.serializeNBT(registries));
+      outHandler.serialize(output.child("output"));
 
 
-      tag.put("preview", preview.serializeNBT(registries));
+      gridCap.serialize(output.child("grid"));
 
-    super.saveAdditional(tag,registries);
+
+      preview.serialize(output.child("preview"));
+
+    super.saveAdditional(output);
   }
 
   @Override

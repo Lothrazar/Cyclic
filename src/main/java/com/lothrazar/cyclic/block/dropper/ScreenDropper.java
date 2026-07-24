@@ -65,7 +65,7 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 88, 58);
     this.drawSlot(ms, 9, 58, TextureRegistry.SLOT_GPS);

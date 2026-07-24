@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
@@ -58,13 +60,13 @@ public class LightningEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  public void addAdditionalSaveData(CompoundTag tag) {
-    super.addAdditionalSaveData(tag);
+  public void addAdditionalSaveData(ValueOutput output) {
+    super.addAdditionalSaveData(output);
   }
 
   @Override
-  public void readAdditionalSaveData(CompoundTag tag) {
-    super.readAdditionalSaveData(tag);
+  public void readAdditionalSaveData(ValueInput input) {
+    super.readAdditionalSaveData(input);
   }
 
   @Override

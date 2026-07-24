@@ -9,6 +9,8 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -102,28 +104,28 @@ public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    delay = tag.getIntOr("redstone_delay", 0);
-    duration = tag.getIntOr("redstone_duration", 0);
-    power = tag.getIntOr("redstone_power", 0);
+  public void loadAdditional(ValueInput input) {
+    delay = input.getIntOr("redstone_delay", 0);
+    duration = input.getIntOr("redstone_duration", 0);
+    power = input.getIntOr("redstone_power", 0);
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBooleanOr(f.getName(), false));
+      poweredSides.put(f, input.getBooleanOr(f.getName(), false));
     }
     if (this.detectAllOff()) {
       this.facingResetAllOn(); //fix legacy data for one
     }
-    super.loadAdditional(tag, registries);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("redstone_delay", delay);
-    tag.putInt("redstone_duration", duration);
-    tag.putInt("redstone_power", power);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("redstone_delay", delay);
+    output.putInt("redstone_duration", duration);
+    output.putInt("redstone_power", power);
     for (Direction f : Direction.values()) {
-      tag.putBoolean(f.getName(), poweredSides.get(f));
+      output.putBoolean(f.getName(), poweredSides.get(f));
     }
-    super.saveAdditional(tag, registries);
+    super.saveAdditional(output);
   }
 
   private void updateMyState() throws IllegalArgumentException {

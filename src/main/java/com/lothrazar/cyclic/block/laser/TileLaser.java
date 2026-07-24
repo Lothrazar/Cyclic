@@ -9,6 +9,8 @@ import com.lothrazar.library.data.OffsetEnum;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -144,25 +146,25 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    red = tag.getIntOr("red", 0);
-    green = tag.getIntOr("green", 0);
-    blue = tag.getIntOr("blue", 0);
-    alpha = tag.getIntOr("alpha", 0);
-    thick = tag.getIntOr("thick", 0);
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    red = input.getIntOr("red", 0);
+    green = input.getIntOr("green", 0);
+    blue = input.getIntOr("blue", 0);
+    alpha = input.getIntOr("alpha", 0);
+    thick = input.getIntOr("thick", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    tag.putInt("red", red);
-    tag.putInt("green", green);
-    tag.putInt("blue", blue);
-    tag.putInt("alpha", alpha);
-    tag.putInt("thick", thick);
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    inventory.serialize(output.child(NBTINV));
+    output.putInt("red", red);
+    output.putInt("green", green);
+    output.putInt("blue", blue);
+    output.putInt("alpha", alpha);
+    output.putInt("thick", thick);
+    super.saveAdditional(output);
   }
 
   public float getRed() {

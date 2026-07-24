@@ -21,6 +21,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.core.component.DataComponents;
@@ -62,7 +64,8 @@ public class ItemMobContainer extends ItemBaseCyclic {
       Entity entity = BuiltInRegistries.ENTITY_TYPE.get(Identifier.parse(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(EntityMagicNetEmpty.NBT_ENTITYID, "")))
           .create(world);
       //    entity.egg
-      entity.load(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag());
+      entity.load(TagValueInput.create(ProblemReporter.DISCARDING, world.registryAccess(),
+          stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag()));
       entity.setPos(pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5);
       if (world.addFreshEntity(entity)) {
         //eat up that stack

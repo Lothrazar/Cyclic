@@ -11,6 +11,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -52,25 +54,23 @@ public class TileCask extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+  public void loadAdditional(ValueInput input) {
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBooleanOr("flow_" + f.getName(), false));
+      poweredSides.put(f, input.getBooleanOr("flow_" + f.getName(), false));
     }
-    this.flowing = (tag.getIntOr("flowing", 0));
-    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    super.loadAdditional(tag,registries);
+    this.flowing = (input.getIntOr("flowing", 0));
+    tank.deserialize(input.childOrEmpty(NBTFLUID));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries ) {
+  public void saveAdditional(ValueOutput output) {
     for (Direction f : Direction.values()) {
-      tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
+      output.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
-    tag.putInt("flowing", this.flowing);
-    CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(registries,fluid);
-    tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag,registries);
+    output.putInt("flowing", this.flowing);
+    tank.serialize(output.child(NBTFLUID));
+    super.saveAdditional(output);
   }
 
   @Override

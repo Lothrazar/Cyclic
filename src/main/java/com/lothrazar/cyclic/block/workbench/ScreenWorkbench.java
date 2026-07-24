@@ -51,7 +51,7 @@ public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
     //previous was fine, but this references exactly the 'minecraft:' vanilla crafting table
     this.drawBackground(ms, TextureRegistry.V_CRAFTING);
   }

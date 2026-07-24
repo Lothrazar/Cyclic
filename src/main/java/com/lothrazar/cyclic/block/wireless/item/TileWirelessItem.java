@@ -11,6 +11,8 @@ import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -65,19 +67,19 @@ public class TileWirelessItem extends TileBlockEntityCyclic implements MenuProvi
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV + "gps"));
-    this.transferRate = tag.getIntOr("transferRate", 0);
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    gpsSlots.deserialize(input.childOrEmpty(NBTINV + "gps"));
+    this.transferRate = input.getIntOr("transferRate", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("transferRate", transferRate);
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    tag.put(NBTINV + "gps", gpsSlots.serializeNBT(registries));
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("transferRate", transferRate);
+    inventory.serialize(output.child(NBTINV));
+    gpsSlots.serialize(output.child(NBTINV + "gps"));
+    super.saveAdditional(output);
   }
 
   //  @Override

@@ -41,7 +41,7 @@ public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     for (int s = 0; s < 9; s++) {
       this.drawSlot(ms, 8 + 18 * s, 48, TextureRegistry.SLOT_GPS, Const.SQ);

@@ -13,6 +13,9 @@ import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -136,7 +139,7 @@ public class BlockEnderShelf extends BlockCyclic {
     CompoundTag stored = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     if (stored != null && !stored.isEmpty()) {
       //to tile from tag
-      shelf.inventory.deserializeNBT(world.registryAccess(), stored);
+      shelf.inventory.deserialize(TagValueInput.create(ProblemReporter.DISCARDING, world.registryAccess(), stored));
     }
   }
 
@@ -147,7 +150,9 @@ public class BlockEnderShelf extends BlockCyclic {
     if (tileentity instanceof TileEnderShelf) {
       TileEnderShelf shelf = (TileEnderShelf) tileentity;
       //read from tile, write to itemstack
-      CompoundTag tileData = shelf.inventory.serializeNBT(world.registryAccess());
+      TagValueOutput shelfOutput = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, world.registryAccess());
+      shelf.inventory.serialize(shelfOutput);
+      CompoundTag tileData = shelfOutput.buildResult();
       newStack.set(DataComponents.CUSTOM_DATA, CustomData.of(tileData));
       // newStack.setTag(tileData); // disabled
     }

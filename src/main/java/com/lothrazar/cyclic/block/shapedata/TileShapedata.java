@@ -14,6 +14,8 @@ import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -132,25 +134,22 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
 
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    ((ItemStackHandler)inventory).deserializeNBT(registries, tag.getCompound(NBTINV));
-    if (tag.contains("copiedShape")) {
-      CompoundTag cs = (CompoundTag) tag.get("copiedShape");
-      this.copiedShape = RelativeShape.read(cs);
-    }
-    hasStashIfOne = tag.getIntOr("stashToggle", 0);
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    ((ItemStackHandler)inventory).deserialize(input.childOrEmpty(NBTINV));
+    input.read("copiedShape", CompoundTag.CODEC).ifPresent(cs -> this.copiedShape = RelativeShape.read(cs));
+    hasStashIfOne = input.getIntOr("stashToggle", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("stashToggle", hasStashIfOne);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("stashToggle", hasStashIfOne);
     if (this.copiedShape != null) {
       CompoundTag copiedShapeTags = this.copiedShape.write(new CompoundTag());
-      tag.put("copiedShape", copiedShapeTags);
+      output.store("copiedShape", CompoundTag.CODEC, copiedShapeTags);
     }
-    tag.put(NBTINV, ((ItemStackHandler)inventory).serializeNBT(registries));
-    super.saveAdditional(tag,registries);
+    ((ItemStackHandler)inventory).serialize(output.child(NBTINV));
+    super.saveAdditional(output);
   }
 
   //  @Override

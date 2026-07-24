@@ -68,7 +68,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 8, 28 + 18, TextureRegistry.SLOT_GPS, 18);
     this.drawSlot(ms, 8 + 18, 28, TextureRegistry.SLOT_GPS, 18);

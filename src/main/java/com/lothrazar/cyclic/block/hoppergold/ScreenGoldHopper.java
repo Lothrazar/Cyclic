@@ -23,7 +23,7 @@ public class ScreenGoldHopper extends ScreenBase<ContainerGoldHopper> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 79, 33);
     this.drawSlot(ms, 151, 7, TextureRegistry.SLOT_FILTER, 18);

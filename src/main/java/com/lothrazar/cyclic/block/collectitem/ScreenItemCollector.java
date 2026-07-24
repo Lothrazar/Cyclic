@@ -75,7 +75,7 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_MEDIUM);
     for (int i = 0; i < 9; i++) {
       int y = 81;

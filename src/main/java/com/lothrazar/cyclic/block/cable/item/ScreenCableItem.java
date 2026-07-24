@@ -29,7 +29,7 @@ public class ScreenCableItem extends ScreenBase<ContainerCableItem> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, imageWidth / 2 - 9, 28, TextureRegistry.SLOT_FILTER, 18);
   }

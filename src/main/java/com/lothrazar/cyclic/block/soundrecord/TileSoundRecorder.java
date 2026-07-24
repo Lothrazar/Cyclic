@@ -12,6 +12,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -61,31 +63,31 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+  public void loadAdditional(ValueInput input) {
+    inventory.deserialize(input.childOrEmpty(NBTINV));
     for (int i = 0; i < MAX_SOUNDS; i++) {
-      if (tag.contains(SOUNDAT + i)) {
-        sounds.set(i, tag.getStringOr(SOUNDAT + i, ""));
+      if (input.getString(SOUNDAT + i).isPresent()) {
+        sounds.set(i, input.getStringOr(SOUNDAT + i, ""));
       }
     }
     for (int i = 0; i < MAX_SOUNDS * 100; i++) {
-      if (tag.contains(IGNORED + i)) {
-        ignored.add(tag.getStringOr(IGNORED + i, ""));
+      if (input.getString(IGNORED + i).isPresent()) {
+        ignored.add(input.getStringOr(IGNORED + i, ""));
       }
     }
-    super.loadAdditional(tag,registries);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put(NBTINV, inventory.serializeNBT(registries));
+  public void saveAdditional(ValueOutput output) {
+    inventory.serialize(output.child(NBTINV));
     for (int i = 0; i < MAX_SOUNDS; i++) {
-      tag.putString(SOUNDAT + i, sounds.get(i));
+      output.putString(SOUNDAT + i, sounds.get(i));
     }
     for (int i = 0; i < ignored.size(); i++) {
-      tag.putString(IGNORED + i, ignored.get(i));
+      output.putString(IGNORED + i, ignored.get(i));
     }
-    super.saveAdditional(tag,registries);
+    super.saveAdditional(output);
   }
 
   @Override

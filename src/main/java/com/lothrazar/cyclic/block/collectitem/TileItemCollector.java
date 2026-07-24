@@ -12,6 +12,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
@@ -104,23 +106,23 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
 
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    filter.deserializeNBT(registries,tag.getCompound("filter"));
-    radius = tag.getIntOr("radius", 0);
-    height = tag.getIntOr("height", 0);
-    directionIsUp = tag.getBooleanOr("directionIsUp", false);
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+    filter.deserialize(input.childOrEmpty("filter"));
+    radius = input.getIntOr("radius", 0);
+    height = input.getIntOr("height", 0);
+    directionIsUp = input.getBooleanOr("directionIsUp", false);
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put("filter", filter.serializeNBT(registries));
-    tag.putInt("radius", radius);
-    tag.putInt("height", height);
-    tag.putBoolean("directionIsUp", directionIsUp);
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    filter.serialize(output.child("filter"));
+    output.putInt("radius", radius);
+    output.putInt("height", height);
+    output.putBoolean("directionIsUp", directionIsUp);
+    inventory.serialize(output.child(NBTINV));
+    super.saveAdditional(output);
   }
 
   private int heightWithDirection() {

@@ -28,7 +28,7 @@ public class ScreenLunchbox extends ScreenBase<ContainerLunchbox> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     for (int colPos = 0; colPos < ItemLunchbox.SLOTS; colPos++) {
       this.drawSlot(ms, 25 + colPos * Const.SQ, 35);

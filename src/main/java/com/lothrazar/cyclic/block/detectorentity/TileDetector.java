@@ -12,6 +12,8 @@ import com.lothrazar.library.data.EntityFilterType;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
@@ -227,34 +229,32 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    this.rangeX = tag.getIntOr("ox", 0);
-    this.rangeY = tag.getIntOr("oy", 0);
-    this.rangeZ = tag.getIntOr("oz", 0);
-    this.limitUntilRedstone = tag.getIntOr("limit", 0);
-    int cType = tag.getIntOr("compare", 0);
+  public void loadAdditional(ValueInput input) {
+    this.rangeX = input.getIntOr("ox", 0);
+    this.rangeY = input.getIntOr("oy", 0);
+    this.rangeZ = input.getIntOr("oz", 0);
+    this.limitUntilRedstone = input.getIntOr("limit", 0);
+    int cType = input.getIntOr("compare", 0);
     if (cType >= 0 && cType < CompareType.values().length) {
       this.compType = CompareType.values()[cType];
     }
-    int eType = tag.getIntOr("entityType", 0);
+    int eType = input.getIntOr("entityType", 0);
     if (eType >= 0 && eType < EntityFilterType.values().length) {
       this.entityFilter = EntityFilterType.values()[eType];
     }
-    if (tag.contains("filter")) {
-      filter.deserializeNBT(registries, tag.getCompound("filter"));
-    }
-    super.loadAdditional(tag, registries);
+          filter.deserialize(input.childOrEmpty("filter"));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("ox", rangeX);
-    tag.putInt("oy", rangeY);
-    tag.putInt("oz", rangeZ);
-    tag.putInt("limit", limitUntilRedstone);
-    tag.putInt("compare", compType.ordinal());
-    tag.putInt("entityType", entityFilter.ordinal());
-    tag.put("filter", filter.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("ox", rangeX);
+    output.putInt("oy", rangeY);
+    output.putInt("oz", rangeZ);
+    output.putInt("limit", limitUntilRedstone);
+    output.putInt("compare", compType.ordinal());
+    output.putInt("entityType", entityFilter.ordinal());
+    filter.serialize(output.child("filter"));
+    super.saveAdditional(output);
   }
 }

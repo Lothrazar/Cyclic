@@ -50,7 +50,7 @@ public class CraftingStickScreen extends ScreenBase<CraftingStickContainer> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int x, int y, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.V_CRAFTING);
   }
 }

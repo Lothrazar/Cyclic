@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
 import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.library.data.ShapeCache;
@@ -18,15 +17,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -40,13 +40,13 @@ public class BlockCableFluid extends CableBase {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
-    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
     if (Screen.hasShiftDown()) {
-      tooltip.accept(Component.translatable("block.cyclic.fluid_pipe.tooltip0").withStyle(ChatFormatting.GRAY));
+      tooltip.add(Component.translatable("block.cyclic.fluid_pipe.tooltip0").withStyle(ChatFormatting.GRAY));
     }
     else {
-      tooltip.accept(Component.translatable("item.cyclic.shift").withStyle(ChatFormatting.DARK_GRAY));
+      tooltip.add(Component.translatable("item.cyclic.shift").withStyle(ChatFormatting.DARK_GRAY));
     }
   }
 
@@ -105,7 +105,7 @@ public class BlockCableFluid extends CableBase {
   }
 
   @Override
-  public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+  public BlockState updateShape(BlockState stateIn, LevelReader world, ScheduledTickAccess ticks, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     EnumConnectType oldProp = stateIn.getValue(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {

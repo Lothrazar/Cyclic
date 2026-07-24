@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.conveyor;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.data.DataTags;
@@ -18,7 +17,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
@@ -346,9 +344,9 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
     super.setPlacedBy(world, pos, state, placer, stack);
   }
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flag) {
-    super.appendHoverText(stack, context, tooltipDisplay, tooltip, flag);
-    tooltip.accept(Component.translatable("block.cyclic.conveyor.tooltip1").withStyle(ChatFormatting.GRAY));
+  public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    super.appendHoverText(stack, context, tooltip, flag);
+    tooltip.add(Component.translatable("block.cyclic.conveyor.tooltip1").withStyle(ChatFormatting.GRAY));
   }
 
   @Override

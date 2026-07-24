@@ -69,7 +69,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     int relX = this.getXSize() / 2 - 9;
     energy.draw(ms, menu.getEnergy());

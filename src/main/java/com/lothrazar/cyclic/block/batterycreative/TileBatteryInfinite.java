@@ -10,6 +10,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -49,23 +51,21 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
 
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+  public void loadAdditional(ValueInput input) {
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBooleanOr("flow_" + f.getName(), false));
+      poweredSides.put(f, input.getBooleanOr("flow_" + f.getName(), false));
     }
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    super.loadAdditional(tag, registries);
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+  public void saveAdditional(ValueOutput output) {
     for (Direction f : Direction.values()) {
-      tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
+      output.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+    energy.serialize(output.child(NBTENERGY));
+    super.saveAdditional(output);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileBatteryInfinite e) {

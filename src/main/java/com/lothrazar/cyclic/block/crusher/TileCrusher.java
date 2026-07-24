@@ -9,6 +9,8 @@ import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -59,23 +61,21 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider, 
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    this.burnTime = tag.getIntOr("burnTime", 0);
-    this.burnTimeMax = tag.getIntOr("burnTimeMax", 0);
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    this.burnTime = input.getIntOr("burnTime", 0);
+    this.burnTimeMax = input.getIntOr("burnTimeMax", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("burnTime", burnTime);
-    tag.putInt("burnTimeMax", burnTimeMax);
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("burnTime", burnTime);
+    output.putInt("burnTimeMax", burnTimeMax);
+    energy.serialize(output.child(NBTENERGY));
+    inventory.serialize(output.child(NBTINV));
+    super.saveAdditional(output);
   }
 
   public void tick() {

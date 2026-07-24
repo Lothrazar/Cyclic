@@ -48,7 +48,7 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 50, 40);
     // int timerMax = menu.tile.getField(TilePackager.Fields.BURNMAX.ordinal());

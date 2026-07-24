@@ -2,6 +2,9 @@ package com.lothrazar.cyclic.item.datacard.fluid;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -29,7 +32,7 @@ public class FluidFilterCardCapability extends ItemStackHandler {
     if (server != null) {
       CompoundTag data = cardStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       if (data.contains(NBT_KEY)) {
-        deserializeNBT(server.registryAccess(), data.getCompound(NBT_KEY));
+        deserialize(TagValueInput.create(ProblemReporter.DISCARDING, server.registryAccess(), data.getCompound(NBT_KEY)));
       }
     }
   }
@@ -53,7 +56,9 @@ public class FluidFilterCardCapability extends ItemStackHandler {
     var server = ServerLifecycleHooks.getCurrentServer();
     if (server != null) {
       CompoundTag data = cardStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-      data.put(NBT_KEY, serializeNBT(server.registryAccess()));
+      TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, server.registryAccess());
+      serialize(output);
+      data.put(NBT_KEY, output.buildResult());
       //precompute tooltip data into CUSTOM_DATA so it syncs to the client
       int count = 0;
       String firstName = null;

@@ -5,6 +5,8 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.util.Mth;
@@ -82,13 +84,13 @@ public class FireEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  public void addAdditionalSaveData(CompoundTag tag) {
-    super.addAdditionalSaveData(tag);
+  public void addAdditionalSaveData(ValueOutput output) {
+    super.addAdditionalSaveData(output);
   }
 
   @Override
-  public void readAdditionalSaveData(CompoundTag tag) {
-    super.readAdditionalSaveData(tag);
+  public void readAdditionalSaveData(ValueInput input) {
+    super.readAdditionalSaveData(input);
   }
 
   @Override

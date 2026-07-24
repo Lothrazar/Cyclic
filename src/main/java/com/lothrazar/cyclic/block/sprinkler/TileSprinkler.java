@@ -14,6 +14,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -97,20 +99,17 @@ public class TileSprinkler extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    CompoundTag fluid = tag.getCompoundOrEmpty(NBTFLUID);
-    tank.readFromNBT(registries,fluid);
-    shapeIndex = tag.getIntOr("shapeIndex", 0);
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    tank.deserialize(input.childOrEmpty(NBTFLUID));
+    shapeIndex = input.getIntOr("shapeIndex", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(registries,fluid);
-    tag.put(NBTFLUID, fluid);
-    tag.putInt("shapeIndex", shapeIndex);
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    tank.serialize(output.child(NBTFLUID));
+    output.putInt("shapeIndex", shapeIndex);
+    super.saveAdditional(output);
   }
 
   @Override

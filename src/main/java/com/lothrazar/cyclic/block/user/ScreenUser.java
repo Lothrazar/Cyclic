@@ -77,7 +77,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 150, 52);
     energy.draw(ms, menu.tile.getEnergy());

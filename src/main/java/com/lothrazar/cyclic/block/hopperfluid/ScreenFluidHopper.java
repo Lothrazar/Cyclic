@@ -37,7 +37,7 @@ public class ScreenFluidHopper extends ScreenBase<ContainerFluidHopper> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 79, 23, TextureRegistry.SLOT_FILTER_FLUID, 18);
     fluid.draw(ms, menu.tile.getFluid());

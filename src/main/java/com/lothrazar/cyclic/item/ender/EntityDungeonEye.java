@@ -4,6 +4,8 @@ import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,23 +34,23 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
   private boolean isLost = true;
 
   @Override
-  public void addAdditionalSaveData(CompoundTag compound) {
-    compound.putDouble("sp_target_x", targetX);
-    compound.putDouble("sp_target_y", targetY);
-    compound.putDouble("sp_target_z", targetZ);
-    compound.putInt("ticksExisted", tickCount);
-    compound.putBoolean("isLost", isLost);
-    super.addAdditionalSaveData(compound);
+  public void addAdditionalSaveData(ValueOutput output) {
+    output.putDouble("sp_target_x", targetX);
+    output.putDouble("sp_target_y", targetY);
+    output.putDouble("sp_target_z", targetZ);
+    output.putInt("ticksExisted", tickCount);
+    output.putBoolean("isLost", isLost);
+    super.addAdditionalSaveData(output);
   }
 
   @Override
-  public void readAdditionalSaveData(CompoundTag compound) {
-    super.readAdditionalSaveData(compound);
-    targetX = compound.getDoubleOr("sp_target_x", 0d);
-    targetY = compound.getDoubleOr("sp_target_y", 0d);
-    targetZ = compound.getDoubleOr("sp_target_z", 0d);
-    tickCount = compound.getInt("ticksExisted");
-    isLost = compound.getBooleanOr("isLost", false);
+  public void readAdditionalSaveData(ValueInput input) {
+    super.readAdditionalSaveData(input);
+    targetX = input.getDoubleOr("sp_target_x", 0d);
+    targetY = input.getDoubleOr("sp_target_y", 0d);
+    targetZ = input.getDoubleOr("sp_target_z", 0d);
+    tickCount = input.getIntOr("ticksExisted", 0);
+    isLost = input.getBooleanOr("isLost", false);
   }
 
   public void moveTowards(BlockPos pos) {

@@ -7,6 +7,8 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.core.Direction;
@@ -35,20 +37,18 @@ public class TileItemShelf extends TileBlockEntityCyclic {
 
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    if (tag.contains("RenderTextType")) {
-      int rt = tag.getIntOr("RenderTextType", 0);
-      this.renderStyle = RenderTextType.values()[rt];
-    }
-    super.loadAdditional(tag,registries);
+  public void loadAdditional(ValueInput input) {
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+    int rt = input.getIntOr("RenderTextType", 0);
+    this.renderStyle = RenderTextType.values()[rt];
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag,HolderLookup.Provider registries) {
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    tag.putInt("RenderTextType", this.renderStyle.ordinal());
-    super.saveAdditional(tag,registries);
+  public void saveAdditional(ValueOutput output) {
+    inventory.serialize(output.child(NBTINV));
+    output.putInt("RenderTextType", this.renderStyle.ordinal());
+    super.saveAdditional(output);
   }
 
   public void toggleShowText() {

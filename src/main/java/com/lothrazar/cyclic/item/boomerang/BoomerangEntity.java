@@ -13,6 +13,8 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -75,27 +77,23 @@ public class BoomerangEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  public void addAdditionalSaveData(CompoundTag tag) {
-    tag.putString("OWNER", entityData.get(OWNER));
-    tag.putByte("returning", entityData.get(IS_RETURNING));
-    tag.putByte("REDSTONE_TRIGGERED", entityData.get(REDSTONE_TRIGGERED));
+  public void addAdditionalSaveData(ValueOutput output) {
+    output.putString("OWNER", entityData.get(OWNER));
+    output.putByte("returning", entityData.get(IS_RETURNING));
+    output.putByte("REDSTONE_TRIGGERED", entityData.get(REDSTONE_TRIGGERED));
     if (!boomerangThrown.isEmpty()) {
-      tag.put("boomerangItem", boomerangThrown.saveOptional(this.registryAccess()));
+      output.store("boomerangItem", ItemStack.OPTIONAL_CODEC, boomerangThrown);
     }
-    super.addAdditionalSaveData(tag);
+    super.addAdditionalSaveData(output);
   }
 
   @Override
-  public void readAdditionalSaveData(CompoundTag tag) {
-    entityData.set(OWNER, tag.getString("OWNER"));
-    entityData.set(IS_RETURNING, tag.getByte("returning"));
-    entityData.set(REDSTONE_TRIGGERED, tag.getByte("REDSTONE_TRIGGERED"));
-    if (tag.contains("boomerangItem")) {
-      boomerangThrown = ItemStack.parseOptional(this.registryAccess(), tag.getCompound("boomerangItem"));
-    } else {
-      boomerangThrown = ItemStack.EMPTY;
-    }
-    super.readAdditionalSaveData(tag);
+  public void readAdditionalSaveData(ValueInput input) {
+    entityData.set(OWNER, input.getStringOr("OWNER", ""));
+    entityData.set(IS_RETURNING, input.getByteOr("returning", (byte) 0));
+    entityData.set(REDSTONE_TRIGGERED, input.getByteOr("REDSTONE_TRIGGERED", (byte) 0));
+    boomerangThrown = input.read("boomerangItem", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
+    super.readAdditionalSaveData(input);
   }
 
   public void setOwner(Player ent) {

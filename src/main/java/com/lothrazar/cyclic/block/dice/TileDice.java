@@ -6,6 +6,8 @@ import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,15 +33,15 @@ public class TileDice extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    spinningIfZero = tag.getIntOr("spinningIfZero", 0);
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+    spinningIfZero = input.getIntOr("spinningIfZero", 0);
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("spinningIfZero", spinningIfZero);
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("spinningIfZero", spinningIfZero);
+    super.saveAdditional(output);
   }
 
   public void startSpinning() {

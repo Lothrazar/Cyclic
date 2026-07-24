@@ -12,6 +12,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -159,25 +161,23 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    radius = tag.getIntOr("radius", 0);
-    height = tag.getIntOr("height", 0);
-    directionIsUp = tag.getBooleanOr("directionIsUp", false);
-    shapeIndex = tag.getIntOr("shapeIndex", 0);
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    super.loadAdditional(tag, registries);
+  public void loadAdditional(ValueInput input) {
+    radius = input.getIntOr("radius", 0);
+    height = input.getIntOr("height", 0);
+    directionIsUp = input.getBooleanOr("directionIsUp", false);
+    shapeIndex = input.getIntOr("shapeIndex", 0);
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("radius", radius);
-    tag.putInt("shapeIndex", shapeIndex);
-    tag.putInt("height", height);
-    tag.putBoolean("directionIsUp", directionIsUp);
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("radius", radius);
+    output.putInt("shapeIndex", shapeIndex);
+    output.putInt("height", height);
+    output.putBoolean("directionIsUp", directionIsUp);
+    energy.serialize(output.child(NBTENERGY));
+    super.saveAdditional(output);
   }
 
   @Override

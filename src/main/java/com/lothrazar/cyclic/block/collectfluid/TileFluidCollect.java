@@ -15,6 +15,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -193,38 +195,28 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
 
 
   @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+  public void loadAdditional(ValueInput input) {
     // For backwards-compatibility: these weren't always stored, so keep the default
-    if (tag.contains("size", Tag.TAG_INT)) {
-      radius = tag.getIntOr("size", 0);
-    }
-    if (tag.contains("height", Tag.TAG_INT)) {
-      height = tag.getIntOr("height", 0);
-    }
-    shapeIndex = tag.getIntOr("shapeIndex", 0);
-    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    if (tag.contains(NBTENERGY)) {
-      energy.deserializeNBT(registries, tag.get(NBTENERGY));
-    }
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    if (tag.contains("filter")) {
-      filter.deserializeNBT(registries, tag.getCompound("filter"));
-    }
-    super.loadAdditional(tag, registries);
+    radius = input.getIntOr("size", 0);
+    height = input.getIntOr("height", 0);
+    shapeIndex = input.getIntOr("shapeIndex", 0);
+    tank.deserialize(input.childOrEmpty(NBTFLUID));
+          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    inventory.deserialize(input.childOrEmpty(NBTINV));
+          filter.deserialize(input.childOrEmpty("filter"));
+    super.loadAdditional(input);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.putInt("size", radius);
-    tag.putInt("height", height);
-    tag.put(NBTENERGY, energy.serializeNBT(registries));
-    tag.put(NBTINV, inventory.serializeNBT(registries));
-    tag.put("filter", filter.serializeNBT(registries));
-    CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(registries,fluid);
-    tag.put(NBTFLUID, fluid);
-    tag.putInt("shapeIndex", shapeIndex);
-    super.saveAdditional(tag, registries);
+  public void saveAdditional(ValueOutput output) {
+    output.putInt("size", radius);
+    output.putInt("height", height);
+    energy.serialize(output.child(NBTENERGY));
+    inventory.serialize(output.child(NBTINV));
+    filter.serialize(output.child("filter"));
+    tank.serialize(output.child(NBTFLUID));
+    output.putInt("shapeIndex", shapeIndex);
+    super.saveAdditional(output);
   }
 
   private void incrementShapePtr(List<BlockPos> shape) {

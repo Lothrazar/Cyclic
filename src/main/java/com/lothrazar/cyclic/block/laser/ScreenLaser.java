@@ -102,7 +102,7 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
   }
 
   @Override
-  protected void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
+  public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
     this.drawSlot(ms, 151, 7, TextureRegistry.SLOT_GPS, 18);
     btnX.setMessage(ChatUtil.ilang("button.offsetblock.name" +

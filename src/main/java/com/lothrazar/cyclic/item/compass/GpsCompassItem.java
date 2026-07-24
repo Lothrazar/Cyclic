@@ -7,6 +7,8 @@ import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -43,7 +45,7 @@ public class GpsCompassItem extends ItemBaseCyclic {
     }
     var lookup = entity.level().registryAccess();
     ItemStackHandler handler = new ItemStackHandler(1);
-    handler.deserializeNBT(lookup, data.getCompound(GpsCompassCapability.NBT_KEY));
+    handler.deserialize(TagValueInput.create(ProblemReporter.DISCARDING, lookup, data.getCompound(GpsCompassCapability.NBT_KEY)));
     ItemStack cardStack = handler.getStackInSlot(0);
     if (cardStack.isEmpty()) {
       return Mth.positiveModulo(entity.tickCount / 20.0f, 1.0f);
