@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "cyclic:copper"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "cyclic:copper"
+      }
+    ]
+  }
+}

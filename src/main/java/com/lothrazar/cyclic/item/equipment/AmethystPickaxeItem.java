@@ -5,16 +5,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class AmethystPickaxeItem extends PickaxeItem {
+public class AmethystPickaxeItem extends Item {
 
-  public AmethystPickaxeItem(Tier t, int db, float attackspeed, Properties prop) {
-    super(t, prop.attributes(PickaxeItem.createAttributes(t, db, attackspeed)));
+  public AmethystPickaxeItem(ToolMaterial t, float db, float attackspeed, Properties prop) {
+    super(prop.pickaxe(t, db, attackspeed));
   }
 
   @Override

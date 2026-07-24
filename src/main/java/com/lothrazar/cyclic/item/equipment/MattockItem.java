@@ -7,11 +7,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -23,12 +22,16 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent;
 
-public class MattockItem extends DiggerItem {
+public class MattockItem extends Item {
 
   final int radius; //radius 2 is 5x5 area square
+  private final ToolMaterial material;
 
-  public MattockItem(Tiers tr, Properties builder, int radius) {
-    super(tr, DataTags.WITH_MATTOCK, builder);
+  public MattockItem(ToolMaterial tr, int durability, Properties builder, int radius) {
+    // NOTE: .tool(...) sets its own durability from the material, so the caller's
+    // intended durability must be (re-)applied after it, not baked into builder beforehand.
+    super(builder.tool(tr, DataTags.WITH_MATTOCK, 1.0F, -2.8F, 0.0F).durability(durability));
+    this.material = tr;
     this.radius = radius;
   }
 
@@ -55,7 +58,7 @@ public class MattockItem extends DiggerItem {
 
   @Override
   public float getDestroySpeed(ItemStack stack, BlockState state) {
-    if (this.getTier() == Tiers.STONE) {
+    if (this.material == ToolMaterial.STONE) {
       return Math.max(Items.STONE_PICKAXE.getDestroySpeed(stack, state), Items.STONE_SHOVEL.getDestroySpeed(stack, state));
     }
     return Math.max(Items.DIAMOND_PICKAXE.getDestroySpeed(stack, state), Items.DIAMOND_SHOVEL.getDestroySpeed(stack, state));

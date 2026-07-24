@@ -9,15 +9,15 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AmethystHoeItem extends HoeItem {
 
-  public AmethystHoeItem(Tier t, int db, float attackspeed, Properties prop) {
-    super(t, prop.attributes(HoeItem.createAttributes(t, db, attackspeed)));
+  public AmethystHoeItem(ToolMaterial t, float db, float attackspeed, Properties prop) {
+    super(t, db, attackspeed, prop);
   }
 
   @Override

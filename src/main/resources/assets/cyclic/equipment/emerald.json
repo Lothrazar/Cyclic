@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "cyclic:emerald"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "cyclic:emerald"
+      }
+    ]
+  }
+}

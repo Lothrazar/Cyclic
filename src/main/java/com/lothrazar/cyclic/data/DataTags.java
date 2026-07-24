@@ -42,6 +42,13 @@ public class DataTags {
   public static final TagKey<Item> ICACTUS = ItemTags.create(Identifier.parse("c:cactus"));
   public static final TagKey<Block> EXCAVATE_IGNORED = BlockTags.create(Identifier.parse("cyclic:ignored/excavate"));
   public static final TagKey<EntityType<?>> MAGICNET_BLOCKED = TagKey.create(Registries.ENTITY_TYPE, Identifier.parse("cyclic:magicnet_blocked"));
+  // repair item tags for custom ArmorMaterial/ToolMaterial (no vanilla equivalent exists for these materials)
+  public static final TagKey<Item> REPAIR_EMERALD = ItemTags.create(Identifier.parse("cyclic:repair/emerald"));
+  public static final TagKey<Item> REPAIR_GEM_OBSIDIAN = ItemTags.create(Identifier.parse("cyclic:repair/gem_obsidian"));
+  public static final TagKey<Item> REPAIR_GLOWING = ItemTags.create(Identifier.parse("cyclic:repair/glowing"));
+  public static final TagKey<Item> REPAIR_NETHERBRICK = ItemTags.create(Identifier.parse("cyclic:repair/netherbrick"));
+  public static final TagKey<Item> REPAIR_SANDSTONE = ItemTags.create(Identifier.parse("cyclic:repair/sandstone"));
+  public static final TagKey<Item> REPAIR_AMETHYST = ItemTags.create(Identifier.parse("cyclic:repair/amethyst"));
 
   public static void setup() {
     // do not delete:! this makes the mod get classloaded so the wrapper tags correctly get added to the registry early, before recipe testing

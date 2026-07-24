@@ -7,14 +7,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AmethystAxeItem extends AxeItem {
 
-  public AmethystAxeItem(Tier t, float f, float attackspeed, Properties prop) {
-    super(t, prop.attributes(AxeItem.createAttributes(t, f, attackspeed)));
+  public AmethystAxeItem(ToolMaterial t, float f, float attackspeed, Properties prop) {
+    super(t, f, attackspeed, prop);
   }
 
   @Override

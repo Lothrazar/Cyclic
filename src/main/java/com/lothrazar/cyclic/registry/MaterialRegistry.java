@@ -1,24 +1,19 @@
 package com.lothrazar.cyclic.registry;
 
-import java.util.List;
-import java.util.EnumMap;
+import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.data.DataTags;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorMaterials;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.SimpleTier;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.Util;
-import net.minecraft.world.item.ArmorMaterials;
 
 public class MaterialRegistry {
 
@@ -40,120 +35,100 @@ public class MaterialRegistry {
     Object b = ToolMats.EMERALD;
   }
 
-  public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, ModCyclic.MODID);
+  private static ResourceKey<EquipmentAsset> equipmentAsset(String name) {
+    return ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(ModCyclic.MODID, name));
+  }
+
+  private static Map<ArmorType, Integer> defense(int boots, int legs, int chest, int helm, int body) {
+    return Map.of(ArmorType.BOOTS, boots, ArmorType.LEGGINGS, legs, ArmorType.CHESTPLATE, chest, ArmorType.HELMET, helm, ArmorType.BODY, body);
+  }
 
   public static class ArmorMats {
-    public static final Holder<ArmorMaterial> EMERALD = ARMOR_MATERIALS.register("emerald", () -> new ArmorMaterial(
-        Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-            map.put(ArmorItem.Type.BOOTS, 4);
-            map.put(ArmorItem.Type.LEGGINGS, 7);
-            map.put(ArmorItem.Type.CHESTPLATE, 9);
-            map.put(ArmorItem.Type.HELMET, 4);
-            map.put(ArmorItem.Type.BODY, 11);
-        }),
-        25, // enchantment value (from ArmorMaterials.GOLD)
-        SoundRegistry.EQUIP_EMERALD,
-        () -> Ingredient.of(Items.EMERALD),
-        List.of(new ArmorMaterial.Layer(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "emerald"))),
-        3.0F, // toughness
-        (ArmorMaterials.DIAMOND.value().knockbackResistance() + ArmorMaterials.NETHERITE.value().knockbackResistance()) / 2.0F
-    ));
 
     // durability multipliers below mirror vanilla tiers: leather=5, gold=7, iron/chain=15, diamond=33, netherite=37
-    public static final Holder<ArmorMaterial> COPPER = ARMOR_MATERIALS.register("copper", () -> new ArmorMaterial(
-        Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-            map.put(ArmorItem.Type.BOOTS, 2);
-            map.put(ArmorItem.Type.LEGGINGS, 4);
-            map.put(ArmorItem.Type.CHESTPLATE, 5);
-            map.put(ArmorItem.Type.HELMET, 2);
-            map.put(ArmorItem.Type.BODY, 4);
-        }),
+    public static final ArmorMaterial EMERALD = new ArmorMaterial(
+        33, // durability multiplier, was previously applied per-item as ArmorItem.Type.X.getDurability(33)
+        defense(4, 7, 9, 4, 11),
+        25, // enchantment value (from ArmorMaterials.GOLD)
+        SoundRegistry.EQUIP_EMERALD,
+        3.0F, // toughness
+        (ArmorMaterials.DIAMOND.knockbackResistance() + ArmorMaterials.NETHERITE.knockbackResistance()) / 2.0F,
+        DataTags.REPAIR_EMERALD,
+        equipmentAsset("emerald"));
+
+    public static final ArmorMaterial COPPER = new ArmorMaterial(
+        10, // durability multiplier
+        defense(2, 4, 5, 2, 4),
         15, // enchantment value (between iron=9 and gold=25)
         SoundRegistry.EQUIP_EMERALD,
-        () -> Ingredient.of(Items.COPPER_INGOT),
-        List.of(new ArmorMaterial.Layer(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "copper"))),
         0.5F, // toughness (iron is 0)
-        ArmorMaterials.IRON.value().knockbackResistance()
-    ));
+        ArmorMaterials.IRON.knockbackResistance(),
+        ItemTags.REPAIRS_COPPER_ARMOR, // vanilla tag reused: fits exactly
+        equipmentAsset("copper"));
 
-    public static final Holder<ArmorMaterial> GEMOBSIDIAN = ARMOR_MATERIALS.register("gem_obsidian", () -> new ArmorMaterial(
-        Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-            map.put(ArmorItem.Type.BOOTS, 7);
-            map.put(ArmorItem.Type.LEGGINGS, 10);
-            map.put(ArmorItem.Type.CHESTPLATE, 11);
-            map.put(ArmorItem.Type.HELMET, 7);
-            map.put(ArmorItem.Type.BODY, 11);
-        }),
-        ArmorMaterials.GOLD.value().enchantmentValue() + 3,
+    public static final ArmorMaterial GEMOBSIDIAN = new ArmorMaterial(
+        37, // durability multiplier
+        defense(7, 10, 11, 7, 11),
+        ArmorMaterials.GOLD.enchantmentValue() + 3,
         SoundRegistry.EQUIP_EMERALD,
-        () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get()),
-        List.of(new ArmorMaterial.Layer(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "crystal"))),
         6.0F,
-        ArmorMaterials.NETHERITE.value().knockbackResistance()
-    ));
+        ArmorMaterials.NETHERITE.knockbackResistance(),
+        DataTags.REPAIR_GEM_OBSIDIAN,
+        equipmentAsset("gem_obsidian"));
 
-    public static final Holder<ArmorMaterial> GLOWING = ARMOR_MATERIALS.register("glowing", () -> {
-      var iron = ArmorMaterials.IRON.value();
-      return new ArmorMaterial(
-          iron.defense(),
-          iron.enchantmentValue() + 1,
-          SoundRegistry.EQUIP_EMERALD,
-          () -> Ingredient.of(ItemRegistry.GEM_AMBER.get()),
-          List.of(new ArmorMaterial.Layer(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "glowing"))),
-          iron.toughness(),
-          iron.knockbackResistance()
-      );
-    });
+    public static final ArmorMaterial GLOWING = new ArmorMaterial(
+        ArmorMaterials.IRON.durability(),
+        ArmorMaterials.IRON.defense(),
+        ArmorMaterials.IRON.enchantmentValue() + 1,
+        SoundRegistry.EQUIP_EMERALD,
+        ArmorMaterials.IRON.toughness(),
+        ArmorMaterials.IRON.knockbackResistance(),
+        DataTags.REPAIR_GLOWING,
+        equipmentAsset("glowing"));
   }
 
   public static class ToolMats {
-    public static final Tier NETHERBRICK = new SimpleTier(
+    public static final ToolMaterial NETHERBRICK = new ToolMaterial(
         BlockTags.INCORRECT_FOR_STONE_TOOL,
-        (Tiers.IRON.getUses() + Tiers.GOLD.getUses()) / 2,
-        (Tiers.IRON.getSpeed() + Tiers.GOLD.getSpeed()) / 2,
-        (Tiers.IRON.getAttackDamageBonus() + Tiers.GOLD.getAttackDamageBonus()) / 2,
-        Tiers.GOLD.getEnchantmentValue() + 2,
-        () -> Ingredient.of(Items.NETHER_BRICKS)
-    );
+        (ToolMaterial.IRON.durability() + ToolMaterial.GOLD.durability()) / 2,
+        (ToolMaterial.IRON.speed() + ToolMaterial.GOLD.speed()) / 2,
+        (ToolMaterial.IRON.attackDamageBonus() + ToolMaterial.GOLD.attackDamageBonus()) / 2,
+        ToolMaterial.GOLD.enchantmentValue() + 2,
+        DataTags.REPAIR_NETHERBRICK);
 
-    public static final Tier SANDSTONE = new SimpleTier(
+    public static final ToolMaterial SANDSTONE = new ToolMaterial(
         BlockTags.INCORRECT_FOR_STONE_TOOL,
-        Tiers.STONE.getUses() + 20, Tiers.STONE.getSpeed(),
-        (Tiers.WOOD.getAttackDamageBonus() + Tiers.STONE.getAttackDamageBonus()) / 2,
-        Tiers.IRON.getEnchantmentValue() + 2,
-        () -> Ingredient.of(Items.SANDSTONE)
-    );
+        ToolMaterial.STONE.durability() + 20, ToolMaterial.STONE.speed(),
+        (ToolMaterial.WOOD.attackDamageBonus() + ToolMaterial.STONE.attackDamageBonus()) / 2,
+        ToolMaterial.IRON.enchantmentValue() + 2,
+        DataTags.REPAIR_SANDSTONE);
 
-    public static final Tier COPPER = new SimpleTier(
+    public static final ToolMaterial COPPER = new ToolMaterial(
         BlockTags.INCORRECT_FOR_IRON_TOOL,
-        (Tiers.STONE.getUses() + Tiers.IRON.getUses()) / 2, 
-        (Tiers.STONE.getSpeed() + Tiers.IRON.getSpeed()) / 2,
-        (Tiers.STONE.getAttackDamageBonus() + Tiers.IRON.getAttackDamageBonus()) / 2,
-        Tiers.DIAMOND.getEnchantmentValue() + 2,
-        () -> Ingredient.of(Items.COPPER_INGOT)
-    );
+        (ToolMaterial.STONE.durability() + ToolMaterial.IRON.durability()) / 2,
+        (ToolMaterial.STONE.speed() + ToolMaterial.IRON.speed()) / 2,
+        (ToolMaterial.STONE.attackDamageBonus() + ToolMaterial.IRON.attackDamageBonus()) / 2,
+        ToolMaterial.DIAMOND.enchantmentValue() + 2,
+        ItemTags.COPPER_TOOL_MATERIALS); // vanilla tag reused: fits exactly
 
-    public static final Tier AMETHYST = new SimpleTier(
+    public static final ToolMaterial AMETHYST = new ToolMaterial(
         BlockTags.INCORRECT_FOR_IRON_TOOL,
-        Tiers.IRON.getUses() + 5, Tiers.IRON.getSpeed() + 0.2F, 
-        Tiers.IRON.getAttackDamageBonus() + 0.1F, Tiers.GOLD.getEnchantmentValue() * 2,
-        () -> Ingredient.of(Items.AMETHYST_SHARD)
-    );
+        ToolMaterial.IRON.durability() + 5, ToolMaterial.IRON.speed() + 0.2F,
+        ToolMaterial.IRON.attackDamageBonus() + 0.1F, ToolMaterial.GOLD.enchantmentValue() * 2,
+        DataTags.REPAIR_AMETHYST);
 
-    public static final Tier EMERALD = new SimpleTier(
+    public static final ToolMaterial EMERALD = new ToolMaterial(
         BlockTags.INCORRECT_FOR_DIAMOND_TOOL,
-        Tiers.DIAMOND.getUses() + Tiers.GOLD.getUses(), Tiers.DIAMOND.getSpeed() * 2, 
+        ToolMaterial.DIAMOND.durability() + ToolMaterial.GOLD.durability(), ToolMaterial.DIAMOND.speed() * 2,
         4.5f, // original used EMERALD_DMG config = 4.5F
-        Tiers.GOLD.getEnchantmentValue() + 1,
-        () -> Ingredient.of(Items.EMERALD)
-    );
+        ToolMaterial.GOLD.enchantmentValue() + 1,
+        DataTags.REPAIR_EMERALD);
 
-    public static final Tier GEMOBSIDIAN = new SimpleTier(
+    public static final ToolMaterial GEMOBSIDIAN = new ToolMaterial(
         BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
-        Tiers.DIAMOND.getUses() * 4, Tiers.DIAMOND.getSpeed() * 4, 
+        ToolMaterial.DIAMOND.durability() * 4, ToolMaterial.DIAMOND.speed() * 4,
         10.5f, // original used OBS_DMG config = 10.5F
-        Tiers.GOLD.getEnchantmentValue() + 1,
-        () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get())
-    );
+        ToolMaterial.GOLD.enchantmentValue() + 1,
+        DataTags.REPAIR_GEM_OBSIDIAN);
   }
 }

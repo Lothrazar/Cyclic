@@ -7,14 +7,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AmethystShovelItem extends ShovelItem {
 
-  public AmethystShovelItem(Tier t, float f, float attackspeed, Properties prop) {
-    super(t, prop.attributes(ShovelItem.createAttributes(t, f, attackspeed)));
+  public AmethystShovelItem(ToolMaterial t, float f, float attackspeed, Properties prop) {
+    super(t, f, attackspeed, prop);
   }
 
   @Override

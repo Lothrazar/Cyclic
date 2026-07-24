@@ -11,8 +11,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
@@ -45,7 +45,7 @@ public class DisarmEnchant {
     if (!canDisarm(livingTarget)) { return; }
     List<ItemStack> toDisarm = new ArrayList<>();
     livingTarget.getHandSlots().forEach(itemStack -> {
-      if (!(itemStack.getItem() instanceof SwordItem)) { return; }
+      if (!itemStack.is(ItemTags.SWORDS)) { return; }
       if (getChanceToDisarm(level) > user.level().getRandom().nextDouble()) {
         toDisarm.add(itemStack);
       }

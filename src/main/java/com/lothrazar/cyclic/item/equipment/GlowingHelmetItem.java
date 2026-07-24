@@ -16,22 +16,19 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.minecraft.core.Holder;
 
-public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
+public class GlowingHelmetItem extends Item implements IHasClickToggle {
 
   public static final String NBT_STATUS = "onoff";
 
-  public GlowingHelmetItem(Holder<ArmorMaterial> materialIn, ArmorItem.Type slot, Properties builderIn) {
-    super(materialIn, slot, builderIn);
+  public GlowingHelmetItem(Properties builderIn) {
+    super(builderIn);
   }
 
   @Override
@@ -70,7 +67,7 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
     if (!tags.contains(NBT_STATUS)) {
       return true;
     } //default for newlycrafted//legacy items
-    return tags.getInt(NBT_STATUS) == 1;
+    return tags.getIntOr(NBT_STATUS, 0) == 1;
   }
 
   //check the vanilla HEAD armor slot first, then fall back to Curios slots

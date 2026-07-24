@@ -40,7 +40,6 @@ public class ModCyclic {
 
   public ModCyclic(IEventBus bus, Dist dist, ModContainer container) {
 
-    MaterialRegistry.ARMOR_MATERIALS.register(bus);
     MaterialRegistry.setup();
     bus.addListener(EventRegistry::setup);
     bus.addListener(PacketRegistry::setup);

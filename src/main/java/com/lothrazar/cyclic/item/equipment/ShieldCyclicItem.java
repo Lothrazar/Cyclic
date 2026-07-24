@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import net.minecraft.core.dispenser.EquipmentDispenseItemBehavior;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
@@ -40,7 +41,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic implements Equipable {
   public ShieldCyclicItem(Properties properties, ShieldType type) {
     super(properties);
     this.type = type;
-    DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
+    DispenserBlock.registerBehavior(this, EquipmentDispenseItemBehavior.INSTANCE);
   }
 
   @Override
