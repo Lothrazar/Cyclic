@@ -6,11 +6,12 @@ import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.items.IItemHandler;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 
 public class ContainerLunchbox extends ContainerBase {
 
@@ -40,7 +41,7 @@ public class ContainerLunchbox extends ContainerBase {
     }
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-      IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+      IItemHandler h = CapabilityUtil.item(bag);
       if (h != null) {
         this.slotCount = h.getSlots();
         this.endInv = h.getSlots();
@@ -59,7 +60,7 @@ public class ContainerLunchbox extends ContainerBase {
   }
 
   @Override
-  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ContainerInput clickTypeIn, Player player) {
     if (!(slotId < 0 || slotId >= this.slots.size())) {
       if (this.slots.get(slotId).getItem().is(ItemRegistry.LUNCHBOX.get())) {
         //lock the bag in place by returning  

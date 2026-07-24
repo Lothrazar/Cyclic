@@ -11,6 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 import com.lothrazar.cyclic.render.SpinModelRenderer;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
@@ -176,9 +177,11 @@ public class ClientRegistryCyclic {
   };
 
   @SubscribeEvent
-  public static void onRegisterAdditionalModels(ModelEvent.RegisterAdditional event) {
-    event.register(SpinModelRenderer.SPRINKLER_SPIN);
-    event.register(SpinModelRenderer.FOUNTAIN_SPIN);
+  public static void onRegisterStandaloneModels(ModelEvent.RegisterStandalone event) {
+    event.register(SpinModelRenderer.SPRINKLER_SPIN,
+        SimpleUnbakedStandaloneModel.quadCollection(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "block/sprinkler_spin")));
+    event.register(SpinModelRenderer.FOUNTAIN_SPIN,
+        SimpleUnbakedStandaloneModel.quadCollection(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "block/experience_fountain_spin")));
   }
 
   @SubscribeEvent

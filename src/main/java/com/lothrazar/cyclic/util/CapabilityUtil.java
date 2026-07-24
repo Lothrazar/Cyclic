@@ -9,6 +9,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
 
 public class CapabilityUtil {
 
@@ -34,7 +35,11 @@ public class CapabilityUtil {
   }
 
   public static IEnergyStorage energy(ItemStack stack) {
-    return stack.getCapability(Capabilities.EnergyStorage.ITEM);
+    if (stack.isEmpty()) {
+      return null;
+    }
+    var handler = stack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(stack));
+    return handler == null ? null : IEnergyStorage.of(handler);
   }
 
   public static IEnergyStorage energy(Level level, BlockPos pos) {
@@ -46,7 +51,8 @@ public class CapabilityUtil {
     return handler == null ? 0 : handler.getEnergyStored();
   }
   public static IEnergyStorage energy(Level level, BlockPos pos, Direction dir) {
-    return  level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, dir);
+    var handler = level.getCapability(Capabilities.Energy.BLOCK, pos, dir);
+    return handler == null ? null : IEnergyStorage.of(handler);
   }
 
   public static IFluidHandler fluid(Level level, BlockPos pos ) {
@@ -58,11 +64,16 @@ public class CapabilityUtil {
   }
 
   public static IFluidHandler fluid(ItemStack stack) {
-    return stack.getCapability(Capabilities.FluidHandler.ITEM);
+    if (stack.isEmpty()) {
+      return null;
+    }
+    var handler = stack.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(stack));
+    return handler == null ? null : IFluidHandler.of(handler);
   }
 
   public static IFluidHandler fluid(Level level, BlockPos pos, Direction dir) {
-    return  level.getCapability(Capabilities.FluidHandler.BLOCK, pos, dir);
+    var handler = level.getCapability(Capabilities.Fluid.BLOCK, pos, dir);
+    return handler == null ? null : IFluidHandler.of(handler);
   }
 
   public static IItemHandler item(Level level, BlockPos pos) {
@@ -70,10 +81,15 @@ public class CapabilityUtil {
   }
 
   public static IItemHandler item(Level level, BlockPos pos, Direction dir) {
-    return level.getCapability(Capabilities.ItemHandler.BLOCK, pos, dir);
+    var handler = level.getCapability(Capabilities.Item.BLOCK, pos, dir);
+    return handler == null ? null : IItemHandler.of(handler);
   }
 
   public static IItemHandler item(ItemStack stack) {
-    return stack.getCapability(Capabilities.ItemHandler.ITEM);
+    if (stack.isEmpty()) {
+      return null;
+    }
+    var handler = stack.getCapability(Capabilities.Item.ITEM, ItemAccess.forStack(stack));
+    return handler == null ? null : IItemHandler.of(handler);
   }
 }

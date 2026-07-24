@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -63,7 +63,7 @@ public class EnderBookContainer extends ContainerBase {
   }
 
   @Override
-  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ContainerInput clickTypeIn, Player player) {
     if (!(slotId < 0 || slotId >= this.slots.size())) {
       ItemStack myBag = this.slots.get(slotId).getItem();
       if (myBag.getItem() instanceof EnderBookItem) {

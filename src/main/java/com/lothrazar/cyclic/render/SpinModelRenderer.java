@@ -2,48 +2,44 @@ package com.lothrazar.cyclic.render;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.QuadInstance;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.RandomSource;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.model.geometry.BakedQuad;
+import net.minecraft.client.resources.model.geometry.QuadCollection;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 
 public final class SpinModelRenderer {
 
-  public static final ModelResourceLocation SPRINKLER_SPIN = ModelResourceLocation.standalone(
-      Identifier.fromNamespaceAndPath(ModCyclic.MODID, "block/sprinkler_spin"));
-  public static final ModelResourceLocation FOUNTAIN_SPIN = ModelResourceLocation.standalone(
-      Identifier.fromNamespaceAndPath(ModCyclic.MODID, "block/experience_fountain_spin"));
-
-  private static final RandomSource RANDOM = RandomSource.create();
+  public static final StandaloneModelKey<QuadCollection> SPRINKLER_SPIN = new StandaloneModelKey<>(() -> ModCyclic.MODID + ":block/sprinkler_spin");
+  public static final StandaloneModelKey<QuadCollection> FOUNTAIN_SPIN = new StandaloneModelKey<>(() -> ModCyclic.MODID + ":block/experience_fountain_spin");
 
   private SpinModelRenderer() {}
 
-  public static void render(ModelResourceLocation key, float angleDeg, PoseStack matrix,
+  public static void render(StandaloneModelKey<QuadCollection> key, float angleDeg, PoseStack matrix,
       MultiBufferSource buffers, int light, int overlay) {
-    BakedModel model = Minecraft.getInstance().getModelManager().getModel(key);
+    QuadCollection model = Minecraft.getInstance().getModelManager().getStandaloneModel(key);
     if (model == null) {
       return;
     }
-    VertexConsumer vc = buffers.getBuffer(RenderType.cutout());
+    RenderType renderType = RenderTypes.itemCutout(TextureAtlas.LOCATION_BLOCKS);
+    VertexConsumer vc = buffers.getBuffer(renderType);
     matrix.pushPose();
     matrix.translate(0.5D, 0D, 0.5D);
     matrix.mulPose(Axis.YP.rotationDegrees(angleDeg));
     matrix.translate(-0.5D, 0D, -0.5D);
     PoseStack.Pose pose = matrix.last();
-    for (BakedQuad q : model.getQuads(null, null, RANDOM)) {
-      vc.putBulkData(pose, q, 1f, 1f, 1f, 1f, light, overlay);
-    }
-    for (Direction d : Direction.values()) {
-      for (BakedQuad q : model.getQuads(null, d, RANDOM)) {
-        vc.putBulkData(pose, q, 1f, 1f, 1f, 1f, light, overlay);
-      }
+    QuadInstance instance = new QuadInstance();
+    instance.setColor(-1);
+    instance.setLightCoords(light);
+    instance.setOverlayCoords(overlay);
+    for (BakedQuad q : model.getAll()) {
+      vc.putBakedQuad(pose, q, instance);
     }
     matrix.popPose();
   }

@@ -33,13 +33,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 
 public class ItemLunchbox extends ItemBaseCyclic {
 
@@ -57,8 +58,8 @@ public class ItemLunchbox extends ItemBaseCyclic {
   }
 
   @Override
-  public UseAnim getUseAnimation(ItemStack st) {
-    return UseAnim.EAT;
+  public ItemUseAnimation getUseAnimation(ItemStack st) {
+    return ItemUseAnimation.EAT;
   }
 
   // Show durability if our lunchbox has tagData, meaning it has or had food
@@ -92,7 +93,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
     if (!worldIn.isClientSide() && entityLiving instanceof Player player) { // && !player.isCrouching()
-      IItemHandler handler = stack.getCapability(Capabilities.ItemHandler.ITEM);
+      IItemHandler handler = CapabilityUtil.item(stack);
       if (handler != null) {
         int foundSlot = -1;
         ItemStack found = ItemStack.EMPTY;
@@ -151,7 +152,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
    *          instance that is doing the insert
    */
   public static void insertFoodIntoLunchbox(ItemStack lunchbox, ItemStack itemFoodMouse, ServerPlayer player) {
-    IItemHandler boxCap = lunchbox.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler boxCap = CapabilityUtil.item(lunchbox);
     if (boxCap == null) {
       return;
     }

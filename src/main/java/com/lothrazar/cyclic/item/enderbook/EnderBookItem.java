@@ -31,6 +31,7 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 
 public class EnderBookItem extends ItemBaseCyclic {
 
@@ -144,7 +145,7 @@ public class EnderBookItem extends ItemBaseCyclic {
   }
 
   private static BlockPosDim getLocation(ItemStack stack, int enderSlot) {
-    IItemHandler cap = stack.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler cap = CapabilityUtil.item(stack);
     if (cap != null) {
       return LocationGpsCard.getPosition(cap.getStackInSlot(enderSlot));
     }

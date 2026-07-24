@@ -18,7 +18,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ItemAbility;
 
 
-public class ShieldCyclicItem extends ItemBaseCyclic implements Equipable {
+public class ShieldCyclicItem extends ItemBaseCyclic {
 
   public static final Identifier BLOCKING = Identifier.parse("minecraft:blocking");
 
@@ -60,8 +60,8 @@ public class ShieldCyclicItem extends ItemBaseCyclic implements Equipable {
   }
 
   @Override
-  public UseAnim getUseAnimation(ItemStack stack) {
-    return UseAnim.BLOCK;
+  public ItemUseAnimation getUseAnimation(ItemStack stack) {
+    return ItemUseAnimation.BLOCK;
   }
 
   @Override
@@ -70,7 +70,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic implements Equipable {
   }
 
   @Override
-  public EquipmentSlot getEquipmentSlot() {
+  public EquipmentSlot getEquipmentSlot(ItemStack stack) {
     return EquipmentSlot.OFFHAND;
   }
 

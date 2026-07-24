@@ -34,6 +34,9 @@ import com.lothrazar.cyclic.item.enderbook.EnderBookCapability;
 import com.lothrazar.cyclic.item.compass.GpsCompassCapability;
 import com.lothrazar.cyclic.item.lunchbox.LunchboxCapability;
 import com.lothrazar.cyclic.item.storagebag.StorageBagCapability;
+import com.lothrazar.cyclic.capabilities.IEnergyStorageEnergyHandler;
+import com.lothrazar.cyclic.capabilities.IFluidHandlerResourceHandler;
+import com.lothrazar.cyclic.capabilities.IItemHandlerResourceHandler;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -47,62 +50,65 @@ public class CapabilityRegistry {
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         for (var type : TileRegistry.TILES.getEntries()) {
-            event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, type.get(), (be, side) -> {
+            event.registerBlockEntity(Capabilities.Item.BLOCK, type.get(), (be, side) -> {
                 if (be instanceof TileBlockEntityCyclic cyclic) {
-                    return cyclic.getItemHandler(side);
+                    var handler = cyclic.getItemHandler(side);
+                    return handler == null ? null : new IItemHandlerResourceHandler(handler);
                 }
                 return null;
             });
-            event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, type.get(), (be, side) -> {
+            event.registerBlockEntity(Capabilities.Fluid.BLOCK, type.get(), (be, side) -> {
                 if (be instanceof TileBlockEntityCyclic cyclic) {
-                    return cyclic.getFluidHandler(side);
+                    var handler = cyclic.getFluidHandler(side);
+                    return handler == null ? null : new IFluidHandlerResourceHandler(handler);
                 }
                 return null;
             });
-            event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, type.get(), (be, side) -> {
+            event.registerBlockEntity(Capabilities.Energy.BLOCK, type.get(), (be, side) -> {
                 if (be instanceof TileBlockEntityCyclic cyclic) {
-                    return cyclic.getEnergyHandler(side);
+                    var handler = cyclic.getEnergyHandler(side);
+                    return handler == null ? null : new IEnergyStorageEnergyHandler(handler);
                 }
                 return null;
             });
         }
         event.registerItem(
-            Capabilities.ItemHandler.ITEM,
-            (stack, ctx) -> new StorageBagCapability(stack),
+            Capabilities.Item.ITEM,
+            (stack, ctx) -> new IItemHandlerResourceHandler(new StorageBagCapability(stack)),
             ItemRegistry.STORAGE_BAG.get()
         );
         event.registerItem(
-            Capabilities.ItemHandler.ITEM,
-            (stack, ctx) -> new CraftingBagCapability(stack),
+            Capabilities.Item.ITEM,
+            (stack, ctx) -> new IItemHandlerResourceHandler(new CraftingBagCapability(stack)),
             ItemRegistry.CRAFTING_BAG.get()
         );
         event.registerItem(
-            Capabilities.ItemHandler.ITEM,
-            (stack, ctx) -> new FilterCardCapability(stack),
+            Capabilities.Item.ITEM,
+            (stack, ctx) -> new IItemHandlerResourceHandler(new FilterCardCapability(stack)),
             ItemRegistry.FILTER_DATA.get()
         );
         event.registerItem(
-            Capabilities.ItemHandler.ITEM,
-            (stack, ctx) -> new FluidFilterCardCapability(stack),
+            Capabilities.Item.ITEM,
+            (stack, ctx) -> new IItemHandlerResourceHandler(new FluidFilterCardCapability(stack)),
             ItemRegistry.FILTER_FLUID.get()
         );
         event.registerItem(
-            Capabilities.ItemHandler.ITEM,
-            (stack, ctx) -> new LunchboxCapability(stack),
+            Capabilities.Item.ITEM,
+            (stack, ctx) -> new IItemHandlerResourceHandler(new LunchboxCapability(stack)),
             ItemRegistry.LUNCHBOX.get()
         );
         event.registerItem(
-            Capabilities.ItemHandler.ITEM,
-            (stack, ctx) -> new GpsCompassCapability(stack),
+            Capabilities.Item.ITEM,
+            (stack, ctx) -> new IItemHandlerResourceHandler(new GpsCompassCapability(stack)),
             ItemRegistry.GPS_COMPASS.get()
         );
         event.registerItem(
-            Capabilities.ItemHandler.ITEM,
-            (stack, ctx) -> new EnderBookCapability(stack),
+            Capabilities.Item.ITEM,
+            (stack, ctx) -> new IItemHandlerResourceHandler(new EnderBookCapability(stack)),
             ItemRegistry.ENDER_BOOK.get()
         );
-        event.registerItem(Capabilities.FluidHandler.ITEM,
-            (stack, ctx) -> new FluidBucketWrapper(stack),
+        event.registerItem(Capabilities.Fluid.ITEM,
+            (stack, ctx) -> new IFluidHandlerResourceHandler(new FluidBucketWrapper(stack)),
             FluidBiomassHolder.BUCKET.get(),
             FluidHoneyHolder.BUCKET.get(),
             FluidMagmaHolder.BUCKET.get(),
@@ -117,49 +123,49 @@ public class CapabilityRegistry {
             FluidSculkHolder.BUCKET.get()
         );
         // Energy on BlockItem: persists into CUSTOM_DATA so place/break round-trips work
-        event.registerItem(Capabilities.EnergyStorage.ITEM,
-            (stack, ctx) -> new ItemEnergyCap(stack, TileBattery.MAX.get()),
+        event.registerItem(Capabilities.Energy.ITEM,
+            (stack, ctx) -> new IEnergyStorageEnergyHandler(new ItemEnergyCap(stack, TileBattery.MAX.get())),
             ItemRegistry.BATTERY.get());
-        event.registerItem(Capabilities.EnergyStorage.ITEM,
-            (stack, ctx) -> new ItemEnergyCap(stack, TileClayBattery.MAX.get()),
+        event.registerItem(Capabilities.Energy.ITEM,
+            (stack, ctx) -> new IEnergyStorageEnergyHandler(new ItemEnergyCap(stack, TileClayBattery.MAX.get())),
             ItemRegistry.BATTERY_CLAY.get());
         // Energy on handheld tools that consume RF per use
-        event.registerItem(Capabilities.EnergyStorage.ITEM,
-            (stack, ctx) -> new ItemEnergyCap(stack, WandMissileItem.MAX.get()),
+        event.registerItem(Capabilities.Energy.ITEM,
+            (stack, ctx) -> new IEnergyStorageEnergyHandler(new ItemEnergyCap(stack, WandMissileItem.MAX.get())),
             ItemRegistry.SCEPTER_MISSILE.get());
-        event.registerItem(Capabilities.EnergyStorage.ITEM,
-            (stack, ctx) -> new ItemEnergyCap(stack, WandHypnoItem.MAX.get()),
+        event.registerItem(Capabilities.Energy.ITEM,
+            (stack, ctx) -> new IEnergyStorageEnergyHandler(new ItemEnergyCap(stack, WandHypnoItem.MAX.get())),
             ItemRegistry.SCEPTER_HYPNO.get());
-        event.registerItem(Capabilities.EnergyStorage.ITEM,
-            (stack, ctx) -> new ItemEnergyCap(stack, ConfigRegistry.LaserItemEnergyMax.get()),
+        event.registerItem(Capabilities.Energy.ITEM,
+            (stack, ctx) -> new IEnergyStorageEnergyHandler(new ItemEnergyCap(stack, ConfigRegistry.LaserItemEnergyMax.get())),
             ItemRegistry.LASER_CANNON.get());
-        event.registerItem(Capabilities.EnergyStorage.ITEM,
-            (stack, ctx) -> new ItemEnergyCap(stack, BuilderItem.MAX.get()),
+        event.registerItem(Capabilities.Energy.ITEM,
+            (stack, ctx) -> new IEnergyStorageEnergyHandler(new ItemEnergyCap(stack, BuilderItem.MAX.get())),
             ItemRegistry.SCEPTER_BUILD.get(),
             ItemRegistry.SCEPTER_REPLACE.get(),
             ItemRegistry.SCEPTER_OFFSET.get());
-        event.registerItem(Capabilities.EnergyStorage.ITEM,
-            (stack, ctx) -> new ItemEnergyCap(stack, RandomizerItem.MAX.get()),
+        event.registerItem(Capabilities.Energy.ITEM,
+            (stack, ctx) -> new IEnergyStorageEnergyHandler(new ItemEnergyCap(stack, RandomizerItem.MAX.get())),
             ItemRegistry.SCEPTER_RANDOMIZE.get());
         // Fluid on BlockItem
-        event.registerItem(Capabilities.FluidHandler.ITEM,
-            (stack, ctx) -> new ItemFluidCap(stack, TileTank.CAPACITY),
+        event.registerItem(Capabilities.Fluid.ITEM,
+            (stack, ctx) -> new IFluidHandlerResourceHandler(new ItemFluidCap(stack, TileTank.CAPACITY)),
             ItemRegistry.TANK.get());
-        event.registerItem(Capabilities.FluidHandler.ITEM,
-            (stack, ctx) -> new ItemFluidCap(stack, TileCask.CAPACITY),
+        event.registerItem(Capabilities.Fluid.ITEM,
+            (stack, ctx) -> new IFluidHandlerResourceHandler(new ItemFluidCap(stack, TileCask.CAPACITY)),
             ItemRegistry.CASK.get());
-        event.registerItem(Capabilities.FluidHandler.ITEM,
-            (stack, ctx) -> new ItemFluidCap(stack, TileExpPylon.CAPACITY),
+        event.registerItem(Capabilities.Fluid.ITEM,
+            (stack, ctx) -> new IFluidHandlerResourceHandler(new ItemFluidCap(stack, TileExpPylon.CAPACITY)),
             ItemRegistry.EXPERIENCE_PYLON.get());
         // Inventory on BlockItem
         // Note: ender shelf uses a bespoke handler with extra serialized state (book caches, etc)
         // and persists its full handler NBT directly into CUSTOM_DATA via the block's
         // setPlacedBy/playerDestroy, so it doesn't get an item-level cap.
-        event.registerItem(Capabilities.ItemHandler.ITEM,
-            (stack, ctx) -> new ItemInventoryCap(stack, 9 * 9),
+        event.registerItem(Capabilities.Item.ITEM,
+            (stack, ctx) -> new IItemHandlerResourceHandler(new ItemInventoryCap(stack, 9 * 9)),
             ItemRegistry.CRATE.get());
-        event.registerItem(Capabilities.ItemHandler.ITEM,
-            (stack, ctx) -> new ItemInventoryCap(stack, EnderShelfItemHandler.ROWS),
+        event.registerItem(Capabilities.Item.ITEM,
+            (stack, ctx) -> new IItemHandlerResourceHandler(new ItemInventoryCap(stack, EnderShelfItemHandler.ROWS)),
             ItemRegistry.SHELF.get());
     }
 }

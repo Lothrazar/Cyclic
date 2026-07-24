@@ -21,8 +21,7 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
   private ButtonMachine btnZ;
 
   public ScreenLaser(ContainerLaser screenContainer, Inventory inv, Component titleIn) {
-    super(screenContainer, inv, titleIn);
-    this.imageHeight = 256;
+    super(screenContainer, inv, titleIn, 176, 256);
   }
 
   @Override

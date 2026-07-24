@@ -21,8 +21,7 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
   private ButtonMachineField btnRender;
 
   public ScreenFluidCollect(ContainerFluidCollect screenContainer, Inventory inv, Component titleIn) {
-    super(screenContainer, inv, titleIn);
-    this.imageHeight = 214;
+    super(screenContainer, inv, titleIn, 176, 214);
   }
 
   @Override

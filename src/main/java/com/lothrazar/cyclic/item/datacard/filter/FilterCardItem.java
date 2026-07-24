@@ -20,6 +20,7 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 
 public class FilterCardItem extends ItemBaseCyclic {
 
@@ -90,7 +91,7 @@ public class FilterCardItem extends ItemBaseCyclic {
     boolean isMatchingList = false;
     boolean isIgnoreList = getIsIgnoreList(filterStack);
     boolean isTagMatch = getIsTagMatch(filterStack);
-    IItemHandler myFilter = filterStack.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler myFilter = CapabilityUtil.item(filterStack);
     if (myFilter != null) {
       for (int i = 0; i < myFilter.getSlots(); i++) {
         ItemStack filterPtr = myFilter.getStackInSlot(i);

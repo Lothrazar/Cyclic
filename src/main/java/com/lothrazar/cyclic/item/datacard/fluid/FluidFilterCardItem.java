@@ -21,6 +21,8 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 
 /**
  * Fluid-side counterpart to FilterCardItem. Single bucket slot that defines
@@ -95,10 +97,10 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
     if (!(filterStack.getItem() instanceof FluidFilterCardItem)) {
       return FluidStack.EMPTY;
     }
-    IItemHandler myFilter = filterStack.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler myFilter = CapabilityUtil.item(filterStack);
     if (myFilter != null) {
       ItemStack bucket = myFilter.getStackInSlot(SLOT_FLUID);
-      IFluidHandlerItem fluidInStack = bucket.getCapability(Capabilities.FluidHandler.ITEM);
+      IFluidHandlerItem fluidInStack = FluidUtil.getFluidHandler(bucket).orElse(null);
       if (fluidInStack != null && fluidInStack.getFluidInTank(0) != null) {
         return fluidInStack.getFluidInTank(0);
       }
@@ -114,7 +116,7 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
     if (!(filterStack.getItem() instanceof FluidFilterCardItem)) {
       return true;
     }
-    IItemHandler handler = filterStack.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler handler = CapabilityUtil.item(filterStack);
     if (handler == null) {
       return true;
     }
@@ -126,7 +128,7 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
       if (bucket.isEmpty()) {
         continue;
       }
-      IFluidHandlerItem fluidCap = bucket.getCapability(Capabilities.FluidHandler.ITEM);
+      IFluidHandlerItem fluidCap = FluidUtil.getFluidHandler(bucket).orElse(null);
       if (fluidCap == null) {
         continue;
       }

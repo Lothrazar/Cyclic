@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 
 public class ContainerFilterCard extends ContainerBase {
@@ -60,7 +60,7 @@ public class ContainerFilterCard extends ContainerBase {
   }
 
   @Override
-  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ContainerInput clickTypeIn, Player player) {
     //filter slots are ghost-slots: don't go through the normal pickup/place path that would
     //consume from / give to the cursor. Just snapshot the cursor item type at count=1.
     if (slotId >= 0 && slotId < this.slotcount) {

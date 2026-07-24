@@ -20,8 +20,7 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
   private GuiSliderInteger heightslider;
 
   public ScreenItemCollector(ContainerItemCollector screenContainer, Inventory inv, Component titleIn) {
-    super(screenContainer, inv, titleIn);
-    this.imageHeight = 214;
+    super(screenContainer, inv, titleIn, 176, 214);
   }
 
   @Override

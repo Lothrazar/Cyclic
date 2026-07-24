@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerLevel;
 
 public class ShearsMaterial extends ShearsItem {
 
@@ -47,7 +48,9 @@ public class ShearsMaterial extends ShearsItem {
     if (blockState.getBlock() instanceof BeehiveBlock && blockState.getValue(BeehiveBlock.HONEY_LEVEL) >= 5) {
       //replicate the behavior of BeehiveBlock#onBlockActivated
       worldIn.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BEEHIVE_SHEAR, SoundSource.NEUTRAL, 1.0F, 1.0F);
-      BeehiveBlock.dropHoneycomb(worldIn, blockPos);
+      if (worldIn instanceof ServerLevel serverLevel) {
+        BeehiveBlock.dropHoneycomb(serverLevel, context.getItemInHand(), blockState, worldIn.getBlockEntity(blockPos), player, blockPos);
+      }
       worldIn.setBlockAndUpdate(blockPos, blockState.setValue(BeehiveBlock.HONEY_LEVEL, 0));
       ItemStackUtil.damageItem(player, context.getItemInHand());
       return InteractionResult.SUCCESS;

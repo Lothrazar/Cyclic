@@ -12,6 +12,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import net.neoforged.neoforge.fluids.FluidUtil;
 
 /**
  * Nine-slot capability backing FluidFilterCardItem. Each slot only accepts items
@@ -48,7 +49,7 @@ public class FluidFilterCardCapability extends ItemStackHandler {
       return true;
     }
     //only allow items that carry a fluid (any bucket-like item)
-    return stack.getCapability(Capabilities.FluidHandler.ITEM) != null;
+    return FluidUtil.getFluidHandler(stack).isPresent();
   }
 
   @Override
@@ -67,7 +68,7 @@ public class FluidFilterCardCapability extends ItemStackHandler {
         if (bucket.isEmpty()) {
           continue;
         }
-        IFluidHandlerItem fluidCap = bucket.getCapability(Capabilities.FluidHandler.ITEM);
+        IFluidHandlerItem fluidCap = FluidUtil.getFluidHandler(bucket).orElse(null);
         if (fluidCap == null) {
           continue;
         }

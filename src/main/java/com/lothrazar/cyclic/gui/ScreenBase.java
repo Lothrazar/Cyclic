@@ -25,6 +25,10 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
     super(screenContainer, inv, titleIn);
   }
 
+  public ScreenBase(T screenContainer, Inventory inv, Component titleIn, int imageWidth, int imageHeight) {
+    super(screenContainer, inv, titleIn, imageWidth, imageHeight);
+  }
+
   protected void drawBackground(GuiGraphicsExtractor ms, Identifier gui) {
     int relX = (this.width - this.imageWidth) / 2;
     int relY = (this.height - this.imageHeight) / 2;

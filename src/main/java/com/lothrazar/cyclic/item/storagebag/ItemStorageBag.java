@@ -33,7 +33,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -88,9 +88,10 @@ public class ItemStorageBag extends ItemBaseCyclic {
     if (mode == DepositMode.NOTHING) {
       return InteractionResult.PASS;
     }
-    ItemStackHandler handler = getInventory(bag);
+    IItemHandler handler = getInventory(bag);
     if (handler != null) {
-      IItemHandler teHandler = world.getCapability(Capabilities.ItemHandler.BLOCK, pos, face);
+      var teHandlerRes = world.getCapability(Capabilities.Item.BLOCK, pos, face);
+      IItemHandler teHandler = teHandlerRes == null ? null : IItemHandler.of(teHandlerRes);
       Set<Item> itemsInTargetInventory = new HashSet<>();
       if (teHandler != null) {
         for (int j = 0; j < teHandler.getSlots(); j++) {
@@ -155,7 +156,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   private void tryRefillHotbar(ItemStack bag, Player player) {
-    ItemStackHandler handler = getInventory(bag);
+    IItemHandler handler = getInventory(bag);
     if (handler == null) {
       return;
     }
@@ -176,7 +177,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   private boolean refillHotbar(ItemStack bag, Player player, int bagSlot, int invSlot) {
-    ItemStackHandler handler = getInventory(bag);
+    IItemHandler handler = getInventory(bag);
     boolean success = false;
     if (handler != null) {
       ItemStack extracted = handler.extractItem(bagSlot, 1, true);
@@ -185,21 +186,20 @@ public class ItemStorageBag extends ItemBaseCyclic {
     return success;
   }
 
-  private static ItemStackHandler getInventory(ItemStack bag) {
-    var handler = bag.getCapability(Capabilities.ItemHandler.ITEM);
-    return handler instanceof ItemStackHandler ish ? ish : null;
+  private static IItemHandler getInventory(ItemStack bag) {
+    return CapabilityUtil.item(bag);
   }
 
   public static ItemStack tryInsert(ItemStack bag, ItemStack stack) {
     AtomicReference<ItemStack> returnStack = new AtomicReference<>(stack.copy());
-    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM); if (h != null) {
+    IItemHandler h = CapabilityUtil.item(bag); if (h != null) {
       returnStack.set(ItemHandlerHelper.insertItem(h, stack, false));
     }
     return returnStack.get();
   }
 
   public static ItemStack tryFilteredInsert(ItemStack bag, ItemStack stack) {
-    if (bag.getCapability(Capabilities.ItemHandler.ITEM) != null && bagHasItem(bag, stack)) {
+    if (CapabilityUtil.item(bag) != null && bagHasItem(bag, stack)) {
       return tryInsert(bag, stack);
     }
     return stack;
@@ -207,7 +207,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   private static boolean bagHasItem(ItemStack bag, ItemStack stack) {
     AtomicBoolean hasItem = new AtomicBoolean(false);
-    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM); if (h != null) {
+    IItemHandler h = CapabilityUtil.item(bag); if (h != null) {
       for (int i = 0; i < h.getSlots(); i++) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           hasItem.set(true);
@@ -220,7 +220,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   //unused but possibly useful
   public static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
-    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM); if (h != null) {
+    IItemHandler h = CapabilityUtil.item(bag); if (h != null) {
       for (int i = 0; i < h.getSlots(); i++) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);
@@ -232,7 +232,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   private static int getLastSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
-    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM); if (h != null) {
+    IItemHandler h = CapabilityUtil.item(bag); if (h != null) {
       for (int i = h.getSlots() - 1; i >= 0; i--) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);

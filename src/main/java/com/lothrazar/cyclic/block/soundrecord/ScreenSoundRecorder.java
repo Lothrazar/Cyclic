@@ -13,8 +13,7 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
 
   public ScreenSoundRecorder(ContainerSoundRecorder screenContainer, Inventory inv, Component titleIn) {
-    super(screenContainer, inv, titleIn);
-    this.imageHeight = this.imageWidth = 256;
+    super(screenContainer, inv, titleIn, 256, 256);
   }
 
   @Override

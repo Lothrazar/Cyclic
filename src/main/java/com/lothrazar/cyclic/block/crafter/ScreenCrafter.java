@@ -40,8 +40,7 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   private TexturedProgress progress;
 
   public ScreenCrafter(ContainerCrafter screenContainer, Inventory inv, Component titleIn) {
-    super(screenContainer, inv, titleIn);
-    this.imageHeight = 256;
+    super(screenContainer, inv, titleIn, 176, 256);
   }
 
   @Override

@@ -6,12 +6,13 @@ import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.items.IItemHandler;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 
 public class ContainerStorageBag extends ContainerBase {
 
@@ -30,7 +31,7 @@ public class ContainerStorageBag extends ContainerBase {
     if (bag.isEmpty()) {
       this.bag = super.findBag(ItemRegistry.STORAGE_BAG.get());
     }
-    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler h = CapabilityUtil.item(bag);
     if (h != null) {
       this.slotCount = h.getSlots();
       this.endInv = h.getSlots();
@@ -58,12 +59,12 @@ public class ContainerStorageBag extends ContainerBase {
   }
 
   @Override
-  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ContainerInput clickTypeIn, Player player) {
     ItemStorageBag.setTimestamp(bag);
     if (!(slotId < 0 || slotId >= this.slots.size())) {
       if (this.slots.get(slotId).getItem().getItem() instanceof ItemStorageBag) {
         // if its a normal click with a Dye item, then update stack color
-        if (clickTypeIn == ClickType.PICKUP) {
+        if (clickTypeIn == ContainerInput.PICKUP) {
           ItemStack mouseStack = player.containerMenu.getCarried();
           if (mouseStack.getItem() instanceof DyeItem) {
             DyeItem dye = (DyeItem) mouseStack.getItem();

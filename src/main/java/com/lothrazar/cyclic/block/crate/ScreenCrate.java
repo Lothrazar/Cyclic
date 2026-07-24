@@ -9,8 +9,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class ScreenCrate extends ScreenBase<ContainerCrate> {
 
   public ScreenCrate(ContainerCrate screenContainer, Inventory inv, Component titleIn) {
-    super(screenContainer, inv, titleIn);
-    this.imageHeight = 256;
+    super(screenContainer, inv, titleIn, 176, 256);
   }
 
   @Override

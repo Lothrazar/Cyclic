@@ -8,9 +8,10 @@ import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidUtil;
 
 public class ContainerFluidFilterCard extends ContainerBase {
 
@@ -45,7 +46,7 @@ public class ContainerFluidFilterCard extends ContainerBase {
               return false;
             }
             //only accept items that expose a fluid handler capability (buckets, bottles, etc.)
-            return !stack.isEmpty() && stack.getCapability(Capabilities.FluidHandler.ITEM) != null;
+            return !stack.isEmpty() && FluidUtil.getFluidHandler(stack).isPresent();
           }
         });
       }
@@ -59,7 +60,7 @@ public class ContainerFluidFilterCard extends ContainerBase {
   }
 
   @Override
-  public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+  public void clicked(int slotId, int dragType, ContainerInput clickTypeIn, Player player) {
     //ghost behavior for the bucket slot - don't consume the player's bucket
     if (slotId >= 0 && slotId < this.slotcount) {
       ItemStack carried = player.containerMenu.getCarried().copy();
@@ -68,7 +69,7 @@ public class ContainerFluidFilterCard extends ContainerBase {
           return;
         }
         //reject items without a fluid handler so the slot stays meaningful
-        if (carried.getCapability(Capabilities.FluidHandler.ITEM) == null) {
+        if (FluidUtil.getFluidHandler(carried).isEmpty()) {
           return;
         }
         carried.setCount(1);

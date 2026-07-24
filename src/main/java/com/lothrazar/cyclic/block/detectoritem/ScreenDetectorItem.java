@@ -20,8 +20,7 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
   private ButtonMachineField btnRender;
 
   public ScreenDetectorItem(ContainerDetectorItem screenContainer, Inventory inv, Component titleIn) {
-    super(screenContainer, inv, titleIn);
-    this.imageHeight = 214;
+    super(screenContainer, inv, titleIn, 176, 214);
   }
 
   @Override

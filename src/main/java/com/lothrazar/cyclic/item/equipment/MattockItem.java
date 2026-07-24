@@ -20,7 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 public class MattockItem extends Item {
 
@@ -76,7 +76,7 @@ public class MattockItem extends Item {
     private static final ThreadLocal<Boolean> BUSY = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onBreakEvent(BreakEvent event) {
+    public void onBreakEvent(BreakBlockEvent event) {
       if (BUSY.get()) {
         return;
       }

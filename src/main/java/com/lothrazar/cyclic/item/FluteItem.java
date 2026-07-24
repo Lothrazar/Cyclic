@@ -65,7 +65,7 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
   public InteractionResult use(Level worldIn, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
     //    playerIn.startUsingItem(handIn);
-    if (!player.getCooldowns().isOnCooldown(this) &&
+    if (!player.getCooldowns().isOnCooldown(itemstack) &&
         itemstack.has(DataComponents.CUSTOM_DATA) && itemstack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(EntityMagicNetEmpty.NBT_ENTITYID)) {
       int id = itemstack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(UNIQUEMAGIC, 0);
       Entity found = worldIn.getEntity(id);
@@ -73,7 +73,7 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
         boolean success = EntityUtil.enderTeleportEvent(living, worldIn, player.blockPosition());
         if (success) {
           ChatUtil.addChatMessage(player, ChatUtil.lang("item.cyclic.flute_summoning.teleported"));
-          player.getCooldowns().addCooldown(this, CD);
+          player.getCooldowns().addCooldown(itemstack, CD);
           SoundUtil.playSound(player, SoundRegistry.HOVERING.get(), 0.5F);
         }
       }

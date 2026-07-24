@@ -37,6 +37,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 public class PacketEntityLaser implements CustomPacketPayload {
 
   public static final CustomPacketPayload.Type<PacketEntityLaser> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_entity_laser"));
@@ -66,7 +67,7 @@ public class PacketEntityLaser implements CustomPacketPayload {
       //validate also covers delay
       ItemStack stack = LaserItem.getIfHeld(sender);
       if (PacketEntityLaser.canShoot(sender, target, stack)) {
-        IEnergyStorage storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+        IEnergyStorage storage = CapabilityUtil.energy(stack);
         if (storage != null) {
           float dmg = message.crosshair ? ConfigRegistry.LaserItemDamageClose.get() : ConfigRegistry.LaserItemDamageFar.get();
           if (target.hurt(level.damageSources().indirectMagic(sender, sender), dmg)) {
@@ -89,7 +90,7 @@ public class PacketEntityLaser implements CustomPacketPayload {
     if (stack.isEmpty()) {
       return false;
     }
-    IEnergyStorage storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+    IEnergyStorage storage = CapabilityUtil.energy(stack);
     return (storage != null && storage.extractEnergy(ConfigRegistry.LaserItemEnergy.get(), true) == ConfigRegistry.LaserItemEnergy.get());
   }
 

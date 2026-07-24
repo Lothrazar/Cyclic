@@ -70,8 +70,8 @@ public class HarvestUtil {
         //harvest block with player context: better mod compatibility
         if (type == ScytheType.BRUSH && player.level() instanceof ServerLevel sl
             && EnchantmentHelper.getEnchantmentLevel(
-                sl.registryAccess().registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolderOrThrow(Enchantments.SILK_TOUCH),
+                sl.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
+                    .getOrThrow(Enchantments.SILK_TOUCH),
                 player) > 0) {
           //only brush needed silk override, tree leaves worked regardless
           ItemStackUtil.drop(world, posCurrent, blockState.getBlock());
@@ -141,8 +141,7 @@ public class HarvestUtil {
     //
     Item seed = null;
     if (blockState.getBlock() instanceof CropBlock) {
-      CropBlock crop = (CropBlock) blockState.getBlock();
-      ItemStack defaultSeedDrop = crop.getCloneItemStack(world, posCurrent, blockState);
+      ItemStack defaultSeedDrop = blockState.getCloneItemStack(world, posCurrent, true);
       if (!defaultSeedDrop.isEmpty()) {
         seed = defaultSeedDrop.getItem();
       }

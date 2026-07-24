@@ -5,11 +5,12 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 
 public class ContainerGpsCompass extends ContainerBase {
 
@@ -33,7 +34,7 @@ public class ContainerGpsCompass extends ContainerBase {
         }
       }
     }
-    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+    IItemHandler h = CapabilityUtil.item(bag);
     if (h != null) {
       this.endInv = 1;
       // single GPS card slot, centered
@@ -53,7 +54,7 @@ public class ContainerGpsCompass extends ContainerBase {
   }
 
   @Override
-  public void clicked(int slotId, int dragType, ClickType clickType, Player player) {
+  public void clicked(int slotId, int dragType, ContainerInput clickType, Player player) {
     // prevent placing the compass inside itself
     if (slotId >= 0 && slotId < this.slots.size()) {
       if (this.slots.get(slotId).getItem().is(ItemRegistry.GPS_COMPASS.get())) {

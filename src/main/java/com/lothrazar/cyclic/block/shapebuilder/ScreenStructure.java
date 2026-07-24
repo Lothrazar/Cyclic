@@ -25,8 +25,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
   private ButtonMachineField btnRender;
 
   public ScreenStructure(ContainerStructure screenContainer, Inventory inv, Component titleIn) {
-    super(screenContainer, inv, titleIn);
-    this.imageHeight = 256;
+    super(screenContainer, inv, titleIn, 176, 256);
   }
 
   @Override
