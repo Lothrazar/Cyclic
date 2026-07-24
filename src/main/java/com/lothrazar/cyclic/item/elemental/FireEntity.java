@@ -12,9 +12,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.phys.BlockHitResult;
@@ -30,7 +31,7 @@ public class FireEntity extends ThrowableItemProjectile {
   }
 
   public FireEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.FIRE_BOLT.get(), livingEntityIn, worldIn);
+    super(EntityRegistry.FIRE_BOLT.get(), livingEntityIn, worldIn, new ItemStack(ItemRegistry.FIREBALL_ORANGE.get()));
   }
 
   @Override
@@ -48,13 +49,13 @@ public class FireEntity extends ThrowableItemProjectile {
       Entity target = entityRayTrace.getEntity();
       var level = level();
       if (target.isAlive()) {
-        target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 6));
+        target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.getRandom(), 2, 6));
         if (!level.isClientSide() && target.isOnFire() == false
             && target instanceof LivingEntity) {
-          target.hurt(level.damageSources().inFire(), Mth.nextInt(level.random, 3, 5));
+          target.hurt(level.damageSources().inFire(), Mth.nextInt(level.getRandom(), 3, 5));
           LivingEntity living = (LivingEntity) target;
           living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, Const.TICKS_PER_SEC * 4, 1, false, false, false));
-          living.igniteForSeconds(Mth.nextInt(level.random, 1, 5));
+          living.igniteForSeconds(Mth.nextInt(level.getRandom(), 1, 5));
         }
       }
     }
@@ -65,12 +66,12 @@ public class FireEntity extends ThrowableItemProjectile {
       if (!level.isClientSide() && ray.getBlockPos() != null) {
         final int radius = 2;
         final BlockPos center = ray.getBlockPos().relative(ray.getDirection());
-        final int attempts = Mth.nextInt(level.random, 3, 6); //range similar to lightning default
+        final int attempts = Mth.nextInt(level.getRandom(), 3, 6); //range similar to lightning default
         for (int i = 0; i < attempts; i++) {
           BlockPos firePos = center.offset(
-              Mth.nextInt(level.random, -radius, radius),
-              Mth.nextInt(level.random, -1, 1),
-              Mth.nextInt(level.random, -radius, radius));
+              Mth.nextInt(level.getRandom(), -radius, radius),
+              Mth.nextInt(level.getRandom(), -1, 1),
+              Mth.nextInt(level.getRandom(), -radius, radius));
           if (level.isEmptyBlock(firePos) && BaseFireBlock.canBePlacedAt(level, firePos, ray.getDirection())) {
             level.setBlockAndUpdate(firePos, BaseFireBlock.getState(level, firePos));
           }

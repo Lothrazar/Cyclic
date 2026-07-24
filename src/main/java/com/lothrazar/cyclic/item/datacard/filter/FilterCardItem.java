@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.ChatFormatting;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -29,12 +31,12 @@ public class FilterCardItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     if (stack.has(DataComponents.CUSTOM_DATA)) {
       boolean isIgnore = getIsIgnoreList(stack);
       MutableComponent t = Component.translatable("cyclic.screen.filter." + isIgnore);
       t.withStyle(isIgnore ? ChatFormatting.DARK_GRAY : ChatFormatting.DARK_BLUE);
-      tooltip.add(t);
+      tooltip.accept(t);
       // caps arent synced from server very well
       CompoundTag stackTag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       if (stackTag.contains("itemCount")) {
@@ -42,14 +44,14 @@ public class FilterCardItem extends ItemBaseCyclic {
         if (itemCount > 0) {
           if (stackTag.contains("itemTooltip")) {
             String itemTooltip = stackTag.getStringOr("itemTooltip", "");
-            tooltip.add(Component.translatable(itemTooltip).withStyle(ChatFormatting.GRAY));
+            tooltip.accept(Component.translatable(itemTooltip).withStyle(ChatFormatting.GRAY));
           }
-          tooltip.add(Component.translatable("cyclic.screen.filter.item.count").append("" + itemCount).withStyle(ChatFormatting.GRAY));
+          tooltip.accept(Component.translatable("cyclic.screen.filter.item.count").append("" + itemCount).withStyle(ChatFormatting.GRAY));
         }
       }
     }
     else {
-      super.appendHoverText(stack, worldIn, tooltip, flagIn);
+      super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     }
   }
 

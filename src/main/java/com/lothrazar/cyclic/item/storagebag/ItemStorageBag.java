@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.item.storagebag;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,6 +27,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -112,26 +114,26 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack,  Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     CompoundTag nbt = getCustomData(stack);
     String pickupMode = nbt.getStringOr(PickupMode.NBT, "");
     String depositMode = nbt.getStringOr("deposit_mode", "");
     String refillMode = nbt.getStringOr("refill_mode", "");
     if (!pickupMode.equals("")) {
-      tooltip.add(Component.translatable("item.cyclic.storage_bag.tooltip.pickup",
+      tooltip.accept(Component.translatable("item.cyclic.storage_bag.tooltip.pickup",
           Component.translatable(String.format(
               pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
           .withStyle(ChatFormatting.GREEN));
     }
     if (!depositMode.equals("")) {
-      tooltip.add(Component.translatable("item.cyclic.storage_bag.tooltip.deposit",
+      tooltip.accept(Component.translatable("item.cyclic.storage_bag.tooltip.deposit",
           Component.translatable(String.format(
               depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
           .withStyle(ChatFormatting.BLUE));
     }
     if (!refillMode.equals("")) {
-      tooltip.add(Component.translatable("item.cyclic.storage_bag.tooltip.refill",
+      tooltip.accept(Component.translatable("item.cyclic.storage_bag.tooltip.refill",
           Component.translatable(String.format(
               refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
           .withStyle(ChatFormatting.RED));

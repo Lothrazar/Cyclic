@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.datacard.fluid;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -44,23 +46,23 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     if (stack.has(DataComponents.CUSTOM_DATA)) {
       boolean isIgnore = getIsIgnoreList(stack);
       MutableComponent t = Component.translatable("cyclic.screen.filter." + isIgnore);
       t.withStyle(isIgnore ? ChatFormatting.DARK_GRAY : ChatFormatting.DARK_BLUE);
-      tooltip.add(t);
+      tooltip.accept(t);
       CompoundTag stackTag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       int count = stackTag.getIntOr("fluidCount", 0);
       if (count > 0) {
         if (stackTag.contains("fluidTooltip")) {
-          tooltip.add(Component.translatable(stackTag.getString("fluidTooltip")).withStyle(ChatFormatting.AQUA));
+          tooltip.accept(Component.translatable(stackTag.getString("fluidTooltip")).withStyle(ChatFormatting.AQUA));
         }
-        tooltip.add(Component.translatable("cyclic.screen.filter.item.count").append("" + count).withStyle(ChatFormatting.AQUA));
+        tooltip.accept(Component.translatable("cyclic.screen.filter.item.count").append("" + count).withStyle(ChatFormatting.AQUA));
       }
     }
     else {
-      super.appendHoverText(stack, worldIn, tooltip, flagIn);
+      super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     }
   }
 

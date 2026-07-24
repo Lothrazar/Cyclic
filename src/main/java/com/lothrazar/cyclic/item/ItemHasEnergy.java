@@ -7,11 +7,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ItemHasEnergy extends ItemFlib {
 
@@ -35,12 +37,12 @@ public class ItemHasEnergy extends ItemFlib {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
 
     IEnergyStorage storage = CapabilityUtil.energy(stack);
     if (storage != null) {
-      tooltip.add(Component.translatable(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored()).withStyle(ChatFormatting.RED));
+      tooltip.accept(Component.translatable(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored()).withStyle(ChatFormatting.RED));
     }
   }
 

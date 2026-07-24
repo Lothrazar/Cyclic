@@ -12,7 +12,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -35,7 +35,7 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
   }
 
   public FishingEnderEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.ENDER_FISHING.get(), livingEntityIn, worldIn);
+    super(EntityRegistry.ENDER_FISHING.get(), livingEntityIn, worldIn, new ItemStack(ItemRegistry.ENDER_FISHING.get()));
   }
 
   @Override
@@ -68,7 +68,7 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
         //fish!
         if (!level.isClientSide()) {
           LootTable table;
-          if (level.random.nextDouble() < 0.10) { // 10% junk
+          if (level.getRandom().nextDouble() < 0.10) { // 10% junk
             table = level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING_JUNK);
           }
           else { // 90% fish (ignoring treasure tier)

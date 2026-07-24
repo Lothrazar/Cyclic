@@ -93,7 +93,7 @@ public interface BeamHolder {
       }
       else {
         if (currentSection == null
-            || (blockstate.getLightBlock(level, blockpos) >= 15 && !blockstate.is(Blocks.BEDROCK))) {
+            || (blockstate.getLightDampening() >= 15 && !blockstate.is(Blocks.BEDROCK))) {
           beamStuff.checkingBeamSections.clear();
           beamStuff.lastCheckY = surfaceHeight;
           break;

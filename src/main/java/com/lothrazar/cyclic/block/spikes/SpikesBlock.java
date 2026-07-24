@@ -17,6 +17,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jspecify.annotations.Nullable;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -128,7 +130,7 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
   }
 
   @Override
-  public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+  public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, @Nullable Orientation orientation, boolean isMoving) {
     if (state.getValue(ACTIVATED).booleanValue() == false && world.hasNeighborSignal(pos)) {
       world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, true));
       if (!world.isClientSide()) {
@@ -142,7 +144,7 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
         SoundUtil.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_OFF.get());
       }
     }
-    super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);
+    super.neighborChanged(state, world, pos, blockIn, orientation, isMoving);
   }
 
   @Override

@@ -26,7 +26,7 @@ package com.lothrazar.cyclic.item.animal;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.HorseFeedUtil;
 import com.lothrazar.library.core.IEntityInteractable;
-import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.animal.equine.Horse;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class ItemHorseLapisVariant extends ItemBaseCyclic implements IEntityInteractable {

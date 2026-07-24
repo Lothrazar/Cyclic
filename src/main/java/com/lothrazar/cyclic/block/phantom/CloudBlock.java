@@ -22,7 +22,7 @@ public class CloudBlock extends BlockCyclic {
 
   @Override
   @Deprecated
-  public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+  public int getLightDampening(BlockState state) {
     return 1;
   }
 

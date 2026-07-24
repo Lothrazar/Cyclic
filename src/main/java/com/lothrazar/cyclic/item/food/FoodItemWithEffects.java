@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.food;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -11,6 +12,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.alchemy.PotionContents;
 
 public class FoodItemWithEffects extends ItemBaseCyclic {
@@ -24,8 +26,8 @@ public class FoodItemWithEffects extends ItemBaseCyclic {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-    super.appendHoverText(stack, context, tooltip, flag);
+  public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flag) {
+    super.appendHoverText(stack, context, tooltipDisplay, tooltip, flag);
     FoodProperties food = stack.get(DataComponents.FOOD);
     if (food == null || food.effects().isEmpty()) {
       return;

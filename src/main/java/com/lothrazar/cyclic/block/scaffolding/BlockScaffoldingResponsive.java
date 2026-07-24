@@ -4,6 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jspecify.annotations.Nullable;
 
 public class BlockScaffoldingResponsive extends BlockScaffolding {
 
@@ -12,8 +14,8 @@ public class BlockScaffoldingResponsive extends BlockScaffolding {
   }
 
   @Override
-  public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-    super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
+  public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, @Nullable Orientation orientation, boolean isMoving) {
+    super.neighborChanged(state, worldIn, pos, blockIn, orientation, isMoving);
     if (blockIn == this) {
       worldIn.destroyBlock(pos, true);
     }

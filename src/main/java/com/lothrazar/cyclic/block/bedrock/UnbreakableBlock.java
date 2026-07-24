@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.bedrock;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.library.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -53,10 +54,18 @@ public class UnbreakableBlock extends BlockCyclic {
   }
 
   @Override
-  public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-    BlockState neighborState = worldIn.getBlockState(fromPos);
-    if (!isMoving && neighborState.hasProperty(BREAKABLE) && state.hasProperty(BREAKABLE)) {
-      setBreakable(state, worldIn, pos, neighborState.getValue(BREAKABLE));
+  public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn,
+      net.minecraft.world.level.redstone.Orientation orientation, boolean movedByPiston) {
+    if (movedByPiston || !state.hasProperty(BREAKABLE)) {
+      return;
+    }
+    // no single "fromPos" is provided anymore, so scan neighbors for the one that changed
+    for (Direction direction : Direction.values()) {
+      BlockState neighborState = worldIn.getBlockState(pos.relative(direction));
+      if (neighborState.hasProperty(BREAKABLE) && neighborState.getValue(BREAKABLE) != state.getValue(BREAKABLE)) {
+        setBreakable(state, worldIn, pos, neighborState.getValue(BREAKABLE));
+        break;
+      }
     }
   }
 

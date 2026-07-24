@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.library.data.RelativeShape;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.component.DataComponents;
@@ -35,29 +37,29 @@ public class ShapeCard extends ItemBaseCyclic {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext  worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
       MutableComponent t = Component.translatable(getDescriptionId() + ".count");
       t.append(shape.getCount() + "");
-      tooltip.add(t);
+      tooltip.accept(t);
       BlockState target = BuilderActionType.getBlockState(null, stack);
       String block = "scepter.cyclic.nothing";
       if (target != null) {
         block = target.getBlock().getDescriptionId();
       }
-      tooltip.add(Component.translatable(ChatFormatting.AQUA + ChatUtil.lang(block)));
+      tooltip.accept(Component.translatable(ChatFormatting.AQUA + ChatUtil.lang(block)));
       if (flagIn.isAdvanced()) {
         //        String side = "S: " + dim.getSide().toString().toUpperCase();
-        //        tooltip.add(new TranslationTextComponent(side));
+        //        tooltip.accept(new TranslationTextComponent(side));
         //        String sideF = "F: " + dim.getSidePlayerFacing().toString().toUpperCase();
-        //        tooltip.add(new TranslationTextComponent(sideF));
-        //        tooltip.add(new TranslationTextComponent("H: " + dim.getHitVec().toString()));
+        //        tooltip.accept(new TranslationTextComponent(sideF));
+        //        tooltip.accept(new TranslationTextComponent("H: " + dim.getHitVec().toString()));
       }
     }
     MutableComponent t = Component.translatable(getDescriptionId() + ".tooltip");
     t.withStyle(ChatFormatting.GRAY);
-    tooltip.add(t);
+    tooltip.accept(t);
     //    }
   }
 

@@ -20,10 +20,12 @@ public class GhostBlock extends BlockCyclic {
   }
 
   @Override
-  @Deprecated
-  public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-    //    this.onFallenUpon(null, pos, null, blastResistance);
-    return isPassable(worldIn, pos) ? 1 : 0;
+  public int getLightDampening(BlockState state) {
+    // getLightDampening is a pure function of BlockState now, so it can no longer check the
+    // live redstone signal the way isPassable(worldIn, pos) does; default to not dampening light
+    // (matches the "powered/passable" case) since the visual/collision shapes below still track
+    // the real live power state correctly.
+    return 0;
   }
 
   @Override

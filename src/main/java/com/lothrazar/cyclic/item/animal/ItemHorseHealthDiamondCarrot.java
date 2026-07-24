@@ -28,7 +28,7 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.HorseFeedUtil;
 import com.lothrazar.library.core.IEntityInteractable;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.animal.equine.Horse;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class ItemHorseHealthDiamondCarrot extends ItemBaseCyclic implements IEntityInteractable {

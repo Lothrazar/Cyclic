@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.random;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemHasEnergy;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.library.util.ChatUtil;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,10 +36,10 @@ public class RandomizerItem extends ItemHasEnergy {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     String msg = ChatFormatting.GREEN + ChatUtil.lang(BuilderActionType.getName(stack));
-    tooltip.add(Component.translatable(msg));
+    tooltip.accept(Component.translatable(msg));
   }
 
   @Override

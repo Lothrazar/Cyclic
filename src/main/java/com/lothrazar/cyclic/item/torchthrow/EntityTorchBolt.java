@@ -10,7 +10,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -31,7 +31,7 @@ public class EntityTorchBolt extends ThrowableItemProjectile {
   }
 
   public EntityTorchBolt(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.TORCH_BOLT.get(), livingEntityIn, worldIn);
+    super(EntityRegistry.TORCH_BOLT.get(), livingEntityIn, worldIn, new ItemStack(Items.TORCH));
   }
 
   @Override

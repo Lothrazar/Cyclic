@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CauldronBlock;
@@ -32,20 +34,20 @@ public class CarbonPaperItem extends ItemBaseCyclic {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     if (stack.has(DataComponents.CUSTOM_DATA)) {
       SignBlockEntity fakeSign = new SignBlockEntity(BlockPos.ZERO, Blocks.OAK_SIGN.defaultBlockState());
       fakeSign.loadWithComponents(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(), Minecraft.getInstance().level.registryAccess());
-      //      tooltip.add(Component.translatable("[" + fakeSign.getColor().getSerializedName() + "]"));
+      //      tooltip.accept(Component.translatable("[" + fakeSign.getColor().getSerializedName() + "]"));
       for (int i = 0; i < SignText.LINES; i++) {
         //        fakeSign.setText(line, p_212365_2_);
         SignText front = fakeSign.getFrontText();
         Component t = front.getMessages(false)[i];
         //        t.applyTextStyle(TextFormatting.fromColorIndex(fakeSign.getTextColor().get));
-        tooltip.add(t);
+        tooltip.accept(t);
       }
     }
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
   }
 
   @Override

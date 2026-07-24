@@ -13,6 +13,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jspecify.annotations.Nullable;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
@@ -24,7 +26,7 @@ public class FireplaceBlock extends BlockCyclic {
   }
 
   @Override
-  public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+  public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, @Nullable Orientation orientation, boolean isMoving) {
     boolean isPowered = worldIn.hasNeighborSignal(pos);
     BlockPos posFire = pos.relative(state.getValue(BlockStateProperties.FACING));
     if (worldIn.getBlockState(posFire).canOcclude()) {
@@ -44,7 +46,7 @@ public class FireplaceBlock extends BlockCyclic {
       }
     }
     worldIn.setBlockAndUpdate(pos, state.setValue(LIT, isPowered));
-    super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
+    super.neighborChanged(state, worldIn, pos, blockIn, orientation, isMoving);
   }
 
   private boolean setFire(Level worldIn, BlockPos pos, boolean extinguish) {

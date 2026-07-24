@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -33,14 +35,14 @@ public class SettingsCard extends ItemBaseCyclic {
 
   @Override
 //  @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Item.TooltipContext  worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     CompoundTag stackdata = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     if (stackdata.contains(NBT_ID)) {
       String tiledataID = stackdata.getStringOr(NBT_ID, "");
       MutableComponent t = Component.translatable("[" + tiledataID + "]");
       t.withStyle(ChatFormatting.DARK_GRAY);
-      tooltip.add(t);
+      tooltip.accept(t);
     }
   }
 

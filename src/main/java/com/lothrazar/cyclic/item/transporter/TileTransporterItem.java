@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.transporter;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
@@ -24,6 +25,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -119,14 +121,14 @@ public class TileTransporterItem extends ItemBaseCyclic {
 
   @OnlyIn(Dist.CLIENT)
   @Override
-  public void appendHoverText(ItemStack itemStack, Item.TooltipContext worldIn, List<Component> list, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack itemStack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> list, TooltipFlag flagIn) {
     if (itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null
         && itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(KEY_BLOCKNAME)) {
       String blockname = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(KEY_BLOCKNAME, "");
       if (blockname != null && blockname.length() > 0) {
         MutableComponent t = Component.translatable(ChatUtil.lang(blockname));
         t.withStyle(ChatFormatting.DARK_GREEN);
-        list.add(t);
+        list.accept(t);
       }
     }
   }

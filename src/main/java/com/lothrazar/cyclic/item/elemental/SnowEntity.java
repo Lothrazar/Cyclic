@@ -11,8 +11,9 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -31,7 +32,7 @@ public class SnowEntity extends ThrowableItemProjectile {
   }
 
   public SnowEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.SNOW_BOLT.get(), livingEntityIn, worldIn);
+    super(EntityRegistry.SNOW_BOLT.get(), livingEntityIn, worldIn, new ItemStack(Items.SNOWBALL));
   }
 
   @Override
@@ -49,8 +50,8 @@ public class SnowEntity extends ThrowableItemProjectile {
       Entity target = entityRayTrace.getEntity();
       var level = level();
       if (target.isAlive() && target instanceof LivingEntity) {
-        target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 5));
-        target.hurt(level.damageSources().dryOut(), Mth.nextInt(level.random, 2, 3));
+        target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.getRandom(), 2, 5));
+        target.hurt(level.damageSources().dryOut(), Mth.nextInt(level.getRandom(), 2, 3));
         LivingEntity living = (LivingEntity) target;
         living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, 60, 1, false, false, false));
 

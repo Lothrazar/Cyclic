@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.library.core.Const;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.minecraft.core.Holder;
 
@@ -33,13 +35,13 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    tooltip.add(Component.translatable(ChatUtil.lang(this.getDescriptionId() + ".tooltip")).withStyle(ChatFormatting.GRAY));
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+    tooltip.accept(Component.translatable(ChatUtil.lang(this.getDescriptionId() + ".tooltip")).withStyle(ChatFormatting.GRAY));
     String onoff = this.isOn(stack) ? "on" : "off";
     MutableComponent t = Component.translatable(ChatUtil.lang("item.cantoggle.tooltip.info") + " " + ChatUtil.lang("item.cantoggle.tooltip." + onoff));
     t.withStyle(ChatFormatting.DARK_GRAY);
-    tooltip.add(t);
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    tooltip.accept(t);
+    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
   }
 
   private static void addNightVision(Player player) {

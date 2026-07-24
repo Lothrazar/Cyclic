@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.tankcask;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -59,7 +61,7 @@ public class ItemBlockCask extends BlockItem {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Item.TooltipContext  worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     IFluidHandler storage = CapabilityUtil.fluid(stack); // stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
     if (storage != null) {
       FluidStack fs = storage.getFluidInTank(0);
@@ -69,11 +71,11 @@ public class ItemBlockCask extends BlockItem {
                 + " " + fs.getAmount()
                 + "/" + storage.getTankCapacity(0));
         t.withStyle(ChatFormatting.GRAY);
-        tooltip.add(t);
+        tooltip.accept(t);
         return;
       }
     }
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
   }
 
 }

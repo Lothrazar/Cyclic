@@ -2,55 +2,60 @@ package com.lothrazar.cyclic.block.conveyor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
 
-public class ConveyorItemRenderer<T extends Entity & ItemSupplier> extends EntityRenderer<ConveyorItemEntity> {
+public class ConveyorItemRenderer<T extends Entity & ItemSupplier> extends EntityRenderer<ConveyorItemEntity, ConveyorItemRenderer.State> {
 
-  private final ItemRenderer renderer;
+  private final ItemModelResolver itemModelResolver;
+
+  public static class State extends EntityRenderState {
+    ItemStackRenderState item = new ItemStackRenderState();
+  }
 
   public ConveyorItemRenderer(EntityRendererProvider.Context renderManager) {
     super(renderManager);
-    this.renderer = renderManager.getItemRenderer();
+    this.itemModelResolver = renderManager.getItemModelResolver();
     this.shadowRadius = 0.0F;
     this.shadowStrength = 0.0F;
   }
 
   @Override
-  public void render(ConveyorItemEntity entity, float entityYaw, float partialTicks, PoseStack ms, MultiBufferSource buffer, int packedLightIn) {
-    ms.pushPose();
-    ItemStack stack = entity.getItem();
-    BakedModel model = this.renderer.getModel(stack, entity.level(), null, entity.getId() + 1);
-    if (model.isGui3d()) {
-      // 3D block models (full blocks, slabs, pressure plates, etc.).
-      // Their FIXED transform is designed for item frames and compounds badly with a manual rotation.
-      // GROUND with no rotation shows them naturally; our renderer never calls the vanilla bob/spin
-      // logic so they remain still on the belt.
-      this.renderer.render(stack, ItemDisplayContext.GROUND, false, ms, buffer, packedLightIn, OverlayTexture.NO_OVERLAY, model);
-    } else {
-      // Flat 2D sprite items (ingots, swords, food, doors, etc.).
-      // FIXED shows the sprite face-on; rotating -90 around X tips it face-up on the belt.
-      ms.mulPose(Axis.XP.rotationDegrees(-90.0F));
-      this.renderer.render(stack, ItemDisplayContext.FIXED, false, ms, buffer, packedLightIn, OverlayTexture.NO_OVERLAY, model);
-    }
-    ms.popPose();
-    super.render(entity, entityYaw, partialTicks, ms, buffer, packedLightIn);
+  public State createRenderState() {
+    return new State();
   }
 
   @Override
-  public Identifier getTextureLocation(ConveyorItemEntity entity) {
-    return InventoryMenu.BLOCK_ATLAS;
+  public void extractRenderState(ConveyorItemEntity entity, State state, float partialTicks) {
+    super.extractRenderState(entity, state, partialTicks);
+    // FIXED so the sprite/model faces the camera before submit() decides on rotation based on
+    // whether the resolved model turned out to be a 3D block model or a flat 2D item sprite.
+    this.itemModelResolver.updateForNonLiving(state.item, entity.getItem(), ItemDisplayContext.FIXED, entity);
+  }
+
+  @Override
+  public void submit(State state, PoseStack ms, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    ms.pushPose();
+    boolean isGui3d = state.item.getModelBoundingBox().getZsize() > 0.1;
+    if (isGui3d) {
+      // 3D block models render naturally with no rotation; our renderer never calls the vanilla
+      // bob/spin logic so they remain still on the belt.
+    } else {
+      ms.mulPose(Axis.XP.rotationDegrees(-90.0F));
+    }
+    state.item.submit(ms, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
+    ms.popPose();
+    super.submit(state, ms, submitNodeCollector, camera);
   }
 
   @Override

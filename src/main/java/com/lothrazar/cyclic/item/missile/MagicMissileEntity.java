@@ -10,8 +10,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -32,7 +33,7 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
   }
 
   public MagicMissileEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.MAGIC_MISSILE.get(), livingEntityIn, worldIn);
+    super(EntityRegistry.MAGIC_MISSILE.get(), livingEntityIn, worldIn, new ItemStack(ItemRegistry.FIREBALL_ORANGE.get()));
   }
 
   @Override
@@ -96,7 +97,7 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
       if (target.isAlive()) {
         int min = WandMissileItem.DAMAGE_MIN.get();
         int max = Math.max(min, WandMissileItem.DAMAGE_MAX.get());
-        target.hurt(level().damageSources().thrown(this, owner), Mth.nextInt(level().random, min, max));
+        target.hurt(level().damageSources().thrown(this, owner), Mth.nextInt(level().getRandom(), min, max));
       }
     }
     this.remove(RemovalReason.DISCARDED);

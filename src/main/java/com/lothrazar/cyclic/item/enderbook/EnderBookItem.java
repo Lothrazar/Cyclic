@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.enderbook;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.library.core.Const;
@@ -25,6 +26,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -50,15 +52,15 @@ public class EnderBookItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     CompoundTag tag = getData(stack);
     if (tag.contains(ITEMCOUNT)) {
       int itemCount = tag.getIntOr(ITEMCOUNT, 0);
       MutableComponent t = Component.translatable("cyclic.screen.filter.item.count");
       t.append("" + itemCount);
       t.withStyle(ChatFormatting.GRAY);
-      tooltip.add(t);
+      tooltip.accept(t);
     }
   }
 

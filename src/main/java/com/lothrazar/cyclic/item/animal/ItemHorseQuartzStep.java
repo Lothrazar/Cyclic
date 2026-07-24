@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.util.HorseFeedUtil;
 import com.lothrazar.library.core.IEntityInteractable;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class ItemHorseQuartzStep extends ItemBaseCyclic implements IEntityInteractable {

@@ -7,8 +7,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 
@@ -19,7 +20,7 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
   }
 
   public EntityDungeonEye(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.DUNGEON.get(), livingEntityIn, worldIn);
+    super(EntityRegistry.DUNGEON.get(), livingEntityIn, worldIn, new ItemStack(ItemRegistry.SPAWNER_SEEKER.get()));
   }
 
   private static final double DISTLIMIT = 0.8;

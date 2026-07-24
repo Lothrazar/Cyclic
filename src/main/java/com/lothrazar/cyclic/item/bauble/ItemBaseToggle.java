@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.bauble;
 
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.core.IHasClickToggle;
 import net.minecraft.ChatFormatting;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.core.component.DataComponents;
@@ -38,11 +40,11 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     MutableComponent t = Component.translatable("item.cyclic.bauble.on." + this.isOn(stack));
     t.withStyle(ChatFormatting.DARK_GRAY);
-    tooltip.add(t);
+    tooltip.accept(t);
   }
 
   @Override

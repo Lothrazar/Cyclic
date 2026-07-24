@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.datacard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -35,20 +37,20 @@ public class BlockstateCard extends ItemBaseCyclic {
   }
 
   @Override
-  public void appendHoverText(ItemStack held, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack held, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     if (held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null && held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(STATESTAG)) {
       for (BlockStateMatcher m : getSavedStates(worldIn, held)) {
         BlockState st = m.getState();
         ChatFormatting c = m.isExactProperties() ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.DARK_PURPLE;
         String extra = m.isExactProperties() ? " [state]" : " [block]"; // star for not exact
-        tooltip.add(Component.translatable(st.getBlock().getDescriptionId()).append(extra).withStyle(c));
+        tooltip.accept(Component.translatable(st.getBlock().getDescriptionId()).append(extra).withStyle(c));
         if (m.isExactProperties() && Screen.hasShiftDown()) {
-          tooltip.add(Component.translatable(st.toString()).withStyle(ChatFormatting.DARK_GRAY));
+          tooltip.accept(Component.translatable(st.toString()).withStyle(ChatFormatting.DARK_GRAY));
         }
       }
     }
     else {
-      super.appendHoverText(held, worldIn, tooltip, flagIn);
+      super.appendHoverText(held, worldIn, tooltipDisplay, tooltip, flagIn);
     }
   }
 

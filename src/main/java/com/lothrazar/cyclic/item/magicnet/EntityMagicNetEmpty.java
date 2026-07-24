@@ -19,7 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -41,7 +41,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
   }
 
   public EntityMagicNetEmpty(Level worldIn, LivingEntity livingEntityIn) {
-    super(EntityRegistry.MOB_CONTAINER_EMPTY.get(), livingEntityIn, worldIn);
+    super(EntityRegistry.MOB_CONTAINER_EMPTY.get(), livingEntityIn, worldIn, new ItemStack(ItemRegistry.MOB_CONTAINER_EMPTY.get()));
   }
 
   @Override

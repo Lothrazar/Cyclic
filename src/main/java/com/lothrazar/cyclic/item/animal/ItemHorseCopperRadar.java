@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.HorseFeedUtil;
 import com.lothrazar.library.core.IEntityInteractable;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class ItemHorseCopperRadar extends ItemBaseCyclic implements IEntityInteractable {

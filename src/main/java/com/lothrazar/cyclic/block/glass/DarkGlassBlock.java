@@ -16,7 +16,7 @@ public class DarkGlassBlock extends BlockCyclic {
   }
 
   @Override
-  public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+  public int getLightDampening(BlockState state) {
     return 255; //zero is transparent fullyworld.getMaxLightLevel();
   }
 

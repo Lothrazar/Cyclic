@@ -14,7 +14,7 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.animal.horse.TraderLlama;
+import net.minecraft.world.entity.animal.equine.TraderLlama;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;

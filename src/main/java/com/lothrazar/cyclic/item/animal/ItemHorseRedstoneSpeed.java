@@ -29,7 +29,7 @@ import com.lothrazar.cyclic.util.HorseFeedUtil;
 import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.animal.equine.Horse;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class ItemHorseRedstoneSpeed extends ItemBaseCyclic implements IEntityInteractable {
