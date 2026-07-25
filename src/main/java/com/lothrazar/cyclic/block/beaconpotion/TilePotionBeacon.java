@@ -139,7 +139,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   @Override
   public void setLevel(Level p_155091_) {
     super.setLevel(p_155091_);
-    beamStuff.lastCheckY = p_155091_.getMinBuildHeight() - 1;
+    beamStuff.lastCheckY = p_155091_.getMinY() - 1;
   }
 
   @Override

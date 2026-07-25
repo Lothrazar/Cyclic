@@ -82,7 +82,7 @@ public class RandomizerItem extends ItemHasEnergy {
   public InteractionResult useOn(UseOnContext context) {
     Player player = context.getPlayer();
     ItemStack stack = context.getItemInHand();
-    if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+    if (player.getCooldowns().isOnCooldown(stack)) {
       return super.useOn(context);
     }
     BlockPos pos = context.getClickedPos();

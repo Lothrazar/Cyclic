@@ -46,7 +46,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
   }
 
   public static void onSuccess(LivingEntity liv) {
-    SoundUtil.playSound(liv, SoundEvents.GENERIC_DRINK);
+    SoundUtil.playSound(liv, SoundEvents.GENERIC_DRINK.value());
     ParticleUtil.spawnParticle(liv.level(), ParticleTypes.CRIT, liv.blockPosition(), 3);
     increment(liv, -1);
 
@@ -61,7 +61,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
   public void interactWith(PlayerInteractEvent.EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof AbstractHorse
-        && !event.getEntity().getCooldowns().isOnCooldown(this)) {
+        && !event.getEntity().getCooldowns().isOnCooldown(event.getItemStack())) {
       // lets go 
       AbstractHorse ahorse = (AbstractHorse) event.getTarget();
       if (event.getTarget() instanceof AbstractChestedHorse
@@ -71,7 +71,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
       }
       //do the thing 
       increment(ahorse, 1);
-      event.getEntity().getCooldowns().addCooldown(this, 1);
+      event.getEntity().getCooldowns().addCooldown(event.getItemStack(), 1);
       HorseFeedUtil.finishFeed(event, ahorse);
       int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
       ChatUtil.addChatMessage(event.getEntity(), ChatUtil.lang("item.cyclic.carrot_ender.count") + current);

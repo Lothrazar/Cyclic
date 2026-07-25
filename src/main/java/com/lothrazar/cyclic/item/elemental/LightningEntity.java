@@ -7,6 +7,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,15 +46,15 @@ public class LightningEntity extends ThrowableItemProjectile {
       if (target.isAlive()) {
         target.hurt(level().damageSources().thrown(this, this.getOwner()), 0);
         //        LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, target.getPosX(), target.getPosY(), target.getPosZ(), false);
-        LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level());
-        lightningboltentity.moveTo(target.getX(), target.getY(), target.getZ());
+        LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level(), EntitySpawnReason.TRIGGERED);
+        lightningboltentity.snapTo(target.getX(), target.getY(), target.getZ());
         level().addFreshEntity(lightningboltentity);
       }
     }
     else if (type == HitResult.Type.BLOCK) {
       //      BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
-      LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level());
-      lightningboltentity.moveTo(this.blockPosition().getX(), this.blockPosition().getY(), this.blockPosition().getZ());
+      LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level(), EntitySpawnReason.TRIGGERED);
+      lightningboltentity.snapTo(this.blockPosition().getX(), this.blockPosition().getY(), this.blockPosition().getZ());
       level().addFreshEntity(lightningboltentity);
     }
     this.remove(RemovalReason.DISCARDED);

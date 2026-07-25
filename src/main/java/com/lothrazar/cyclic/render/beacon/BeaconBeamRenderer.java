@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 
@@ -57,9 +57,9 @@ public final class BeaconBeamRenderer {
    */
   public static float[] argbToFloats(int argb) {
     return new float[] {
-        FastColor.ARGB32.red(argb) / 255.0F,
-        FastColor.ARGB32.green(argb) / 255.0F,
-        FastColor.ARGB32.blue(argb) / 255.0F
+        ARGB.red(argb) / 255.0F,
+        ARGB.green(argb) / 255.0F,
+        ARGB.blue(argb) / 255.0F
     };
   }
 

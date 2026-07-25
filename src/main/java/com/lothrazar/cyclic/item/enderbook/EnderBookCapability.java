@@ -23,7 +23,7 @@ public class EnderBookCapability extends ItemStackHandler {
     if (server != null) {
       CompoundTag data = bookStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       if (data.contains(NBT_KEY)) {
-        deserialize(TagValueInput.create(ProblemReporter.DISCARDING, server.registryAccess(), data.getCompound(NBT_KEY)));
+        deserialize(TagValueInput.create(ProblemReporter.DISCARDING, server.registryAccess(), data.getCompoundOrEmpty(NBT_KEY)));
       }
     }
   }

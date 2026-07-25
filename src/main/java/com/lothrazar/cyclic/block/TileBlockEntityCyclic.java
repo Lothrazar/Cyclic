@@ -26,11 +26,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -119,8 +116,8 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     }
     int start = 1;
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-    for (int i = start; i < fp.get().getInventory().items.size(); i++) {
-      ItemStack fpItem = fp.get().getInventory().items.get(i);
+    for (int i = start; i < fp.get().getInventory().getNonEquipmentItems().size(); i++) {
+      ItemStack fpItem = fp.get().getInventory().getNonEquipmentItems().get(i);
       if (fpItem.isEmpty()) {
         continue;
       }
@@ -134,7 +131,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
         toDrop.add(fpItem);
       }
       else {
-        fp.get().getInventory().items.set(i, fpItem);
+        fp.get().getInventory().getNonEquipmentItems().set(i, fpItem);
       }
     }
     if (dropItemsOnGround) {
@@ -200,7 +197,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     }
     try {
       fakePlayer.get().gameMode.handleBlockBreakAction(targetPos, ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,
-          facing, world.getMaxBuildHeight(), 0);
+          facing, world.getMaxY(), 0);
       return InteractionResult.SUCCESS;
     }
     catch (Exception e) {
@@ -265,16 +262,6 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     CompoundTag syncData = super.getUpdateTag(registries);
     syncData.merge(this.saveCustomOnly(registries));
     return syncData;
-  }
-
-  @Override
-  public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
-    if (pkt.getTag() != null) {
-      try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(this.problemPath(), ModCyclic.LOGGER)) {
-        this.loadAdditional(TagValueInput.create(reporter, registries, pkt.getTag()));
-      }
-    }
-    super.onDataPacket(net, pkt, registries);
   }
 
   @Override

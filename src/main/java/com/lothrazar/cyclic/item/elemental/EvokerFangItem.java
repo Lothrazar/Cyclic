@@ -19,7 +19,7 @@ public class EvokerFangItem extends ItemBaseCyclic {
   @Override
   public InteractionResult useOn(UseOnContext context) {
     Player player = context.getPlayer();
-    if (player.getCooldowns().isOnCooldown(this)) {
+    if (player.getCooldowns().isOnCooldown(context.getItemInHand())) {
       return super.useOn(context);
     }
     player.getCooldowns().addCooldown(context.getItemInHand(), COOLDOWN);

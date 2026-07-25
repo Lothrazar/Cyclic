@@ -38,7 +38,7 @@ public class ItemMobContainer extends ItemBaseCyclic {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     if (stack.has(DataComponents.CUSTOM_DATA)) {
-      MutableComponent t = Component.translatable(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID));
+      MutableComponent t = Component.translatable(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(EntityMagicNetEmpty.NBT_ENTITYID, ""));
       t.withStyle(ChatFormatting.GRAY);
       tooltip.accept(t);
     }

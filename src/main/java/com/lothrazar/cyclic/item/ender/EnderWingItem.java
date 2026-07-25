@@ -54,7 +54,7 @@ public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
   @Override
   public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (worldIn.isClientSide()
-        || playerIn.getCooldowns().isOnCooldown(this)) {
+        || playerIn.getCooldowns().isOnCooldown(playerIn.getItemInHand(handIn))) {
       return super.use(worldIn, playerIn, handIn);
     }
     attemptTeleport(worldIn, playerIn, playerIn.getItemInHand(handIn));
@@ -85,7 +85,7 @@ public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
     }
     BlockPos pos = BlockPos.containing(optional.get());
     ItemStackUtil.damageItem(playerIn, held);
-    playerIn.getCooldowns().addCooldown(this, ConfigRegistry.CHARM_HOME_COOLDOWN_SECONDS.get() * Const.TICKS_PER_SEC);
+    playerIn.getCooldowns().addCooldown(held, ConfigRegistry.CHARM_HOME_COOLDOWN_SECONDS.get() * Const.TICKS_PER_SEC);
     EntityUtil.enderTeleportEvent(playerIn, worldIn, pos);
     SoundUtil.playSound(playerIn, SoundRegistry.WARP_ECHO.get());
   }

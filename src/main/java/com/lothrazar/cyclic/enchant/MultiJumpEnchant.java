@@ -55,7 +55,7 @@ public class MultiJumpEnchant {
     if (feet.isEmpty() || player.isCrouching()) { return; }
     int level = EnchantUtil.getCurrentLevelTool(h, feet);
     if (level <= 0) { return; }
-    if (player.getCooldowns().isOnCooldown(feet.getItem())) { return; }
+    if (player.getCooldowns().isOnCooldown(feet)) { return; }
     if (Minecraft.getInstance().options.keyJump.isDown()
         && player.getY() < player.yOld && player.hasImpulse && !player.isInWater()) {
       int uses = feet.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBT_USES, 0);

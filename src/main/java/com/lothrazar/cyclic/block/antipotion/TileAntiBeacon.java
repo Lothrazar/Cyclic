@@ -54,7 +54,7 @@ public class TileAntiBeacon extends TileBlockEntityCyclic implements BeamHolder 
   @Override
   public void setLevel(Level newLevel) {
     super.setLevel(newLevel);
-    beamStuff.lastCheckY = newLevel.getMinBuildHeight() - 1;
+    beamStuff.lastCheckY = newLevel.getMinY() - 1;
   }
 
   @Override

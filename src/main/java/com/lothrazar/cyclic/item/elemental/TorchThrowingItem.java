@@ -24,7 +24,7 @@ public class TorchThrowingItem extends ItemBaseCyclic {
     if (!shooter.isCreative()) {
       shooter.getItemInHand(hand).shrink(1);
     }
-    if (!shooter.getCooldowns().isOnCooldown(this)) {
+    if (!shooter.getCooldowns().isOnCooldown(shooter.getItemInHand(hand))) {
       shooter.getCooldowns().addCooldown(new ItemStack(ItemRegistry.ENDER_TORCH.get()), 5);
       SoundUtil.playSound(shooter, SoundEvents.EGG_THROW);
     }

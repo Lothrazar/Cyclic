@@ -10,7 +10,7 @@ import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
@@ -33,10 +33,10 @@ public class WorldEventHandler {
 
   @SubscribeEvent
   public void onLivingSpawnEvent(FinalizeSpawnEvent event) {
-    MobSpawnType res = event.getSpawnType();
-    if (res == MobSpawnType.NATURAL ||
-        res == MobSpawnType.REINFORCEMENT ||
-        res == MobSpawnType.EVENT) {
+    EntitySpawnReason res = event.getSpawnType();
+    if (res == EntitySpawnReason.NATURAL ||
+        res == EntitySpawnReason.REINFORCEMENT ||
+        res == EntitySpawnReason.EVENT) {
       //for these event types only
       Integer radius = CandlePeaceBlock.RADIUS.get();
       Integer height = CandlePeaceBlock.HEIGHT.get();

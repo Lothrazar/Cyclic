@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.capabilities.item;
 import com.lothrazar.cyclic.util.RegistryHolder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
@@ -34,7 +35,8 @@ public class ItemFluidCap implements IFluidHandlerItem {
     if (!data.contains(KEY)) {
       return FluidStack.EMPTY;
     }
-    return FluidStack.parseOptional(registries, data.getCompound(KEY));
+    var ops = registries.createSerializationContext(NbtOps.INSTANCE);
+    return FluidStack.CODEC.parse(ops, data.getCompoundOrEmpty(KEY)).result().orElse(FluidStack.EMPTY);
   }
 
   private void write(FluidStack fs) {
@@ -47,7 +49,8 @@ public class ItemFluidCap implements IFluidHandlerItem {
       data.remove(KEY);
     }
     else {
-      Tag saved = fs.save(registries);
+      var ops = registries.createSerializationContext(NbtOps.INSTANCE);
+      Tag saved = FluidStack.CODEC.encodeStart(ops, fs).result().orElse(null);
       if (saved instanceof CompoundTag c) {
         data.put(KEY, c);
       }

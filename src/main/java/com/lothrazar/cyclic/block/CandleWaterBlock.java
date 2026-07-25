@@ -33,12 +33,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -122,12 +122,12 @@ public class CandleWaterBlock extends BlockCyclic {
     if (monster == null || !world.isEmptyBlock(posTarget)) {
       return;
     }
-    monster.moveTo(x, y, z, world.getRandom().nextFloat() * 360.0F, 0.0F);
+    monster.snapTo(x, y, z, world.getRandom().nextFloat() * 360.0F, 0.0F);
     //null means not from a spawner 
     ///https://gist.github.com/ChampionAsh5357/163a75e87599d19ee6b4b879821953e8
     // null means cancelled
-    SpawnGroupData canSpawn = EventHooks.finalizeMobSpawn(monster, world, world.getCurrentDifficultyAt(posTarget), MobSpawnType.SPAWNER, null);
-    if (canSpawn == null || !monster.checkSpawnRules(world, MobSpawnType.SPAWNER)) {
+    SpawnGroupData canSpawn = EventHooks.finalizeMobSpawn(monster, world, world.getCurrentDifficultyAt(posTarget), EntitySpawnReason.SPAWNER, null);
+    if (canSpawn == null || !monster.checkSpawnRules(world, EntitySpawnReason.SPAWNER)) {
       afterSpawnFailure(world, pos);
     }
     else if (world.addFreshEntity(monster)) {
@@ -139,14 +139,14 @@ public class CandleWaterBlock extends BlockCyclic {
     world.scheduleTick(pos, this, TICK_RATE.get());
   }
 
-  private void afterSpawnSuccess(Mob monster, Level world, BlockPos pos, RandomSource rand) {
-    //    monster.finalizeSpawn(world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
-    EventHooks.finalizeMobSpawn(monster, world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null);
+  private void afterSpawnSuccess(Mob monster, ServerLevel world, BlockPos pos, RandomSource rand) {
+    //    monster.finalizeSpawn(world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), EntitySpawnReason.SPAWNER, null, null);
+    EventHooks.finalizeMobSpawn(monster, world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), EntitySpawnReason.SPAWNER, null);
     world.scheduleTick(pos, this, TICK_RATE.get());
   }
 
   private Mob findMonsterToSpawn(Level world, BlockPos pos, RandomSource rand) {
-    WeightedRandomList<MobSpawnSettings.SpawnerData> spawners = world.getBiome(pos).value().getMobSettings().getMobs(type);
+    WeightedList<MobSpawnSettings.SpawnerData> spawners = world.getBiome(pos).value().getMobSettings().getMobs(type);
     if (spawners.isEmpty()) {
       return null;
     }
@@ -156,7 +156,7 @@ public class CandleWaterBlock extends BlockCyclic {
       return null;
     }
     Mob monster = null;
-    Entity ent = spawner.type.create(world);
+    Entity ent = spawner.type().create(world, EntitySpawnReason.SPAWNER);
     if (ent instanceof Mob) {
       monster = (Mob) ent;
     }

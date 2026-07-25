@@ -5,7 +5,7 @@ import java.util.List;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.Blocks;
@@ -53,7 +53,7 @@ public interface BeamHolder {
    *  - color blocks now implement {@link BeaconBeamBlock} (vanilla's
    *    {@code BlockState#getBeaconColorMultiplier} was removed),
    *  - {@link Section} stores ARGB ints instead
-   *    of {@code float[3]}; mixing uses {@link FastColor.ARGB32#average}.
+   *    of {@code float[3]}; mixing uses {@link ARGB#average}.
    *
    * For the beam to form without requiring stained glass on top, the beacon
    * block itself implements {@link BeaconBeamBlock} (returning white).
@@ -85,7 +85,7 @@ public interface BeamHolder {
             currentSection.increaseHeight();
           }
           else {
-            int blended = FastColor.ARGB32.average(currentSection.getColor(), beamColor);
+            int blended = ARGB.average(currentSection.getColor(), beamColor);
             currentSection = new Section(blended);
             beamStuff.checkingBeamSections.add(currentSection);
           }
@@ -109,7 +109,7 @@ public interface BeamHolder {
       }
     }
     if (beamStuff.lastCheckY >= surfaceHeight) {
-      beamStuff.lastCheckY = level.getMinBuildHeight() - 1;
+      beamStuff.lastCheckY = level.getMinY() - 1;
       beamStuff.beamSections = beamStuff.checkingBeamSections;
     }
   }

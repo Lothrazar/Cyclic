@@ -73,10 +73,10 @@ public class LeverRemote extends ItemBaseCyclic {
   public InteractionResult useOn(UseOnContext context) {
     Player player = context.getPlayer();
     Level world = context.getLevel();
-    if (player.getCooldowns().isOnCooldown(this)) {
+    ItemStack stack = player.getItemInHand(context.getHand());
+    if (player.getCooldowns().isOnCooldown(stack)) {
       return super.useOn(context);
     }
-    ItemStack stack = player.getItemInHand(context.getHand());
     BlockPos pos = context.getClickedPos();
     if (world.getBlockState(pos).getBlock() instanceof LeverBlock) {
       TagDataUtil.setItemStackBlockPos(stack, pos);

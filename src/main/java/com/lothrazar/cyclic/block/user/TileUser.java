@@ -96,10 +96,11 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
       // are not getting decremented causing any item with one to not function correctly.
       var cooldowns = fakePlayer.get().getCooldowns();
       TileBlockEntityCyclic.tryEquipItem(inventory, fakePlayer, 0, InteractionHand.MAIN_HAND);
-      var item = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getItem();
+      var itemStack = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND);
+      var item = itemStack.getItem();
       var oldItem = item.asItem();
-      if (cooldowns.isOnCooldown(item)) {
-        cooldowns.removeCooldown(item);
+      if (cooldowns.isOnCooldown(itemStack)) {
+        cooldowns.removeCooldown(itemStack);
       }
       BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
       if (entities) {

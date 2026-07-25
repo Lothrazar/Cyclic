@@ -23,7 +23,7 @@ public class GpsCompassCapability extends ItemStackHandler {
     if (lookup != null) {
       CompoundTag data = compassStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       if (data.contains(NBT_KEY)) {
-        deserialize(TagValueInput.create(ProblemReporter.DISCARDING, lookup, data.getCompound(NBT_KEY)));
+        deserialize(TagValueInput.create(ProblemReporter.DISCARDING, lookup, data.getCompoundOrEmpty(NBT_KEY)));
       }
     }
   }

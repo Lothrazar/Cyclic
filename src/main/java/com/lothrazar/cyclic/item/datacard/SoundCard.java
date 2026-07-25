@@ -29,13 +29,13 @@ public class SoundCard extends ItemBaseCyclic {
   public InteractionResult useOn(UseOnContext context) {
 
     Player player = context.getPlayer();
-    if (player.getCooldowns().isOnCooldown(this)) {
+    ItemStack stack = context.getItemInHand();
+    if (player.getCooldowns().isOnCooldown(stack)) {
       return InteractionResult.PASS;
     }
-    ItemStack stack = context.getItemInHand();
     if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(SOUND_ID)) {
       //assume sound is valid
-      player.getCooldowns().addCooldown(this, 10);
+      player.getCooldowns().addCooldown(stack, 10);
       player.swing(context.getHand());
       //actually play it
       String sid = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(SOUND_ID, "");
@@ -48,7 +48,7 @@ public class SoundCard extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(SOUND_ID)) {
-      tooltip.accept(Component.translatable(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(SOUND_ID)).withStyle(ChatFormatting.GOLD));
+      tooltip.accept(Component.translatable(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(SOUND_ID, "")).withStyle(ChatFormatting.GOLD));
     }
   }
 

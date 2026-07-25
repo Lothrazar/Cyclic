@@ -47,6 +47,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -91,8 +92,8 @@ public class ItemEventHandler {
     ItemStack shield = event.getEntity().getUseItem();
     if (shield.getItem() instanceof ShieldCyclicItem shieldItem) {
       if (event.getEntity() instanceof Player playerIn) {
-        if (playerIn.getCooldowns().isOnCooldown(shield.getItem())) {
-          SoundUtil.playSound(playerIn, SoundEvents.SHIELD_BREAK);
+        if (playerIn.getCooldowns().isOnCooldown(shield)) {
+          SoundUtil.playSound(playerIn, SoundEvents.SHIELD_BREAK.value());
           event.setCanceled(true);
           return;
         }
@@ -177,8 +178,8 @@ public class ItemEventHandler {
           target.setGlowingTag(true);
           BlockPos p = target.blockPosition();
           // lightning? 
-          LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
-          lightningboltentity.moveTo(p.getX(), p.getY(), p.getZ());
+          LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world, EntitySpawnReason.TRIGGERED);
+          lightningboltentity.snapTo(p.getX(), p.getY(), p.getZ());
           world.addFreshEntity(lightningboltentity);
           ItemStackUtil.damageItem(ply, find);
         }
@@ -231,7 +232,7 @@ public class ItemEventHandler {
   public void onEntityDamage(LivingDamageEvent.Pre event) {
     DamageSource src = event.getSource();
     if (event.getEntity() instanceof AbstractHorse horse) {
-      if (horse.getPersistentData().getBoolean(ItemHorseNetheriteFire.NBT_KEY)
+      if (horse.getPersistentData().getBooleanOr(ItemHorseNetheriteFire.NBT_KEY, false)
           && (src.is(DamageTypes.LAVA) || src.is(DamageTypes.IN_FIRE) || src.is(DamageTypes.ON_FIRE) || src.is(DamageTypes.HOT_FLOOR)
               || src.is(DamageTypes.FIREBALL) || src.is(DamageTypes.UNATTRIBUTED_FIREBALL)
               || src.is(DamageTypes.LIGHTNING_BOLT))) {
@@ -239,7 +240,7 @@ public class ItemEventHandler {
         horse.clearFire();
         return;
       }
-      if (horse.getPersistentData().getBoolean(ItemHorsePrismarineWater.NBT_KEY)
+      if (horse.getPersistentData().getBooleanOr(ItemHorsePrismarineWater.NBT_KEY, false)
           && src.is(DamageTypes.DROWN)) {
         event.setNewDamage(0);
         return;
@@ -352,7 +353,7 @@ public class ItemEventHandler {
     if (!(event.getEntity() instanceof AbstractHorse horse)) {
       return;
     }
-    boolean prismarine = horse.getPersistentData().getBoolean(ItemHorsePrismarineWater.NBT_KEY);
+    boolean prismarine = horse.getPersistentData().getBooleanOr(ItemHorsePrismarineWater.NBT_KEY, false);
     if (prismarine && horse.isInWater()) {
       if (horse.getAirSupply() < horse.getMaxAirSupply()) {
         horse.setAirSupply(horse.getMaxAirSupply());
@@ -373,11 +374,11 @@ public class ItemEventHandler {
       }
     }
     if (horse.isOnFire()
-        && horse.getPersistentData().getBoolean(ItemHorseNetheriteFire.NBT_KEY)) {
+        && horse.getPersistentData().getBooleanOr(ItemHorseNetheriteFire.NBT_KEY, false)) {
       horse.clearFire();
     }
     // Copper: mob radar — glow nearby hostile mobs while horse is ridden
-    if (horse.getPersistentData().getBoolean(ItemHorseCopperRadar.NBT_KEY)
+    if (horse.getPersistentData().getBooleanOr(ItemHorseCopperRadar.NBT_KEY, false)
         && horse.isVehicle()
         && !horse.level().isClientSide()
         && horse.tickCount % Const.TICKS_PER_SEC == 0) {
@@ -509,7 +510,7 @@ public class ItemEventHandler {
     }
     if (event.getEntityBeingMounted() instanceof AbstractHorse horse
         && event.getEntityMounting() instanceof Player
-        && horse.getPersistentData().getBoolean(ItemHorsePrismarineWater.NBT_KEY)
+        && horse.getPersistentData().getBooleanOr(ItemHorsePrismarineWater.NBT_KEY, false)
         && horse.isInWater()) {
       event.setCanceled(true);
     }

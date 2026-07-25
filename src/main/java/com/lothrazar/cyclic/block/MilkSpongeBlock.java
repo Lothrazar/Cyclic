@@ -31,7 +31,7 @@ public class MilkSpongeBlock extends BlockCyclic {
     for (LivingEntity e : all) {
       if (!e.getActiveEffects().isEmpty()) {
         e.removeAllEffects();
-        SoundUtil.playSound(e, SoundEvents.GENERIC_DRINK);
+        SoundUtil.playSound(e, SoundEvents.GENERIC_DRINK.value());
       }
     }
   }

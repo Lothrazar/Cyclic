@@ -23,7 +23,7 @@ public class ContainerLunchbox extends ContainerBase {
     super(MenuTypeRegistry.LUNCHBOX.get(), i);
     if (player.getMainHandItem().getItem() instanceof ItemLunchbox) {
       this.bag = player.getMainHandItem();
-      this.slot = player.getInventory().selected;
+      this.slot = player.getInventory().getSelectedSlot();
     }
     else if (player.getOffhandItem().getItem() instanceof ItemLunchbox) {
       this.bag = player.getOffhandItem();

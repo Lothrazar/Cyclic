@@ -206,7 +206,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     // Some items (such as Mattock) use the position of the player relative to the block to determine mining behavior
     // Place the fake player just behind the block
     Direction facing = getBlockState().getValue(BlockStateProperties.FACING);
-    player.moveTo(
+    player.snapTo(
         targetPos.getX() - facing.getStepX() + 0.5,
         targetPos.getY() - facing.getStepY() + 0.5 - player.getEyeHeight(),
         targetPos.getZ() - facing.getStepZ() + 0.5

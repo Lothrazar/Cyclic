@@ -48,12 +48,12 @@ public class WandHypnoItem extends ItemHasEnergy {
       final int cost = COST.get();
       if (storage != null && storage.extractEnergy(cost, true) == cost) {
         storage.extractEnergy(cost, false);
-        fireHypnoAggression(world, player);
+        fireHypnoAggression(world, player, stack);
       }
     }
   }
 
-  private void fireHypnoAggression(Level world, Player player) {
+  private void fireHypnoAggression(Level world, Player player, ItemStack stack) {
     BlockPos p = player.blockPosition();
     final int r = RANGE.get();
     List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - r, p.getY() - r, p.getZ() - r, p.getX() + r, p.getY() + r, p.getZ() + r));
@@ -86,7 +86,7 @@ public class WandHypnoItem extends ItemHasEnergy {
       ChatUtil.sendStatusMessage(player, "wand.result.notargets");
     }
     else {
-      player.getCooldowns().addCooldown(this, 60);
+      player.getCooldowns().addCooldown(stack, 60);
     }
   }
 }

@@ -45,7 +45,7 @@ public class GpsCompassItem extends ItemBaseCyclic {
     }
     var lookup = entity.level().registryAccess();
     ItemStackHandler handler = new ItemStackHandler(1);
-    handler.deserialize(TagValueInput.create(ProblemReporter.DISCARDING, lookup, data.getCompound(GpsCompassCapability.NBT_KEY)));
+    handler.deserialize(TagValueInput.create(ProblemReporter.DISCARDING, lookup, data.getCompoundOrEmpty(GpsCompassCapability.NBT_KEY)));
     ItemStack cardStack = handler.getStackInSlot(0);
     if (cardStack.isEmpty()) {
       return Mth.positiveModulo(entity.tickCount / 20.0f, 1.0f);

@@ -19,7 +19,7 @@ public class ItemHorseNetheriteFire extends ItemBaseCyclic implements IEntityInt
   public void interactWith(PlayerInteractEvent.EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof AbstractHorse ahorse
-        && !ahorse.getPersistentData().getBoolean(NBT_KEY)) {
+        && !ahorse.getPersistentData().getBooleanOr(NBT_KEY, false)) {
       ahorse.getPersistentData().putBoolean(NBT_KEY, true);
       HorseFeedUtil.finishFeed(event, ahorse);
     }

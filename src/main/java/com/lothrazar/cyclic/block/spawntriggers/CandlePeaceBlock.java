@@ -13,7 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.animal.equine.TraderLlama;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.npc.WanderingTrader;
@@ -69,7 +69,7 @@ public class CandlePeaceBlock extends BlockCyclic {
    * 
    * or as a bonus nuke wandering traders too
    */
-  public static boolean isBad(LivingEntity mob, MobSpawnType res) {
+  public static boolean isBad(LivingEntity mob, EntitySpawnReason res) {
     MobCategory type = mob.getClassification(false);
     if (mob instanceof Enemy ||
         !type.isFriendly() || // basically only MONSTER is friendly

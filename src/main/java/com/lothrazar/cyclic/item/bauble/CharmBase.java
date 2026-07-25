@@ -104,7 +104,7 @@ public abstract class CharmBase extends ItemBaseToggle {
     if (this.witherProt && living.hasEffect(MobEffects.WITHER)) {
       living.removeEffectNoUpdate(MobEffects.WITHER);
       ItemStackUtil.damageItem(living, stack);
-      SoundUtil.playSound(entityIn, SoundEvents.GENERIC_DRINK);
+      SoundUtil.playSound(entityIn, SoundEvents.GENERIC_DRINK.value());
     }
   }
 
@@ -112,7 +112,7 @@ public abstract class CharmBase extends ItemBaseToggle {
     if (this.poisonProt && living.hasEffect(MobEffects.POISON)) {
       living.removeEffectNoUpdate(MobEffects.POISON);
       ItemStackUtil.damageItem(living, stack);
-      SoundUtil.playSound(entityIn, SoundEvents.GENERIC_DRINK);
+      SoundUtil.playSound(entityIn, SoundEvents.GENERIC_DRINK.value());
     }
   }
 

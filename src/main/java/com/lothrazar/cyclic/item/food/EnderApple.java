@@ -65,10 +65,10 @@ public class EnderApple extends ItemBaseCyclic {
       return super.finishUsingItem(stack, worldIn, entityLiving);
     }
     Player player = (Player) entityLiving;
-    if (player.getCooldowns().isOnCooldown(this)) {
+    if (player.getCooldowns().isOnCooldown(stack)) {
       return super.finishUsingItem(stack, worldIn, entityLiving);
     }
-    player.getCooldowns().addCooldown(this, COOLDOWN);
+    player.getCooldowns().addCooldown(stack, COOLDOWN);
     if (worldIn instanceof ServerLevel serverlevel) {
       Map<String, Integer> distanceStructNames = new HashMap<>();
       try {

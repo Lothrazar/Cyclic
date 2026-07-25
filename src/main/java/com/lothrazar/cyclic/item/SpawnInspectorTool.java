@@ -6,7 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.Weighted;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -49,24 +50,25 @@ public class SpawnInspectorTool extends ItemBaseCyclic {
   public InteractionResult useOn(UseOnContext context) {
     BlockPos pos = context.getClickedPos();
     Level world = context.getLevel();
-    if (context.getPlayer().getCooldowns().isOnCooldown(this)) {
+    if (context.getPlayer().getCooldowns().isOnCooldown(context.getItemInHand())) {
       return InteractionResult.PASS;
     }
-    context.getPlayer().getCooldowns().addCooldown(this, 10);
+    context.getPlayer().getCooldowns().addCooldown(context.getItemInHand(), 10);
     //    EntityClassification classif = context.getPlayer().isCrouching() ? EntityClassification.CREATURE : EntityClassification.MONSTER;
     for (MobCategory classif : MobCategory.values()) {
       //      UtilChat.addChatMessage(context.getPlayer(), new StringTextComponent(classif.getName()).mergeStyle(TextFormatting.DARK_PURPLE));
-      WeightedRandomList<MobSpawnSettings.SpawnerData> list = context.getLevel().getBiome(pos).value().getMobSettings().getMobs(classif);
-      //lop on abobe 
-      for (MobSpawnSettings.SpawnerData spawnerInfo : list.unwrap()) {
+      WeightedList<MobSpawnSettings.SpawnerData> list = context.getLevel().getBiome(pos).value().getMobSettings().getMobs(classif);
+      //lop on abobe
+      for (Weighted<MobSpawnSettings.SpawnerData> weightedSpawner : list.unwrap()) {
+        MobSpawnSettings.SpawnerData spawnerInfo = weightedSpawner.value();
         //        int weight = mobspawninfo$spawners.itemWeight;
         MutableComponent str = Component.literal("[" + classif.getName() + "] ");
-        BlockPos top = getTopSolidOrLiquidBlock(world, spawnerInfo.type, pos.getX(), pos.getZ());
+        BlockPos top = getTopSolidOrLiquidBlock(world, spawnerInfo.type(), pos.getX(), pos.getZ());
         if (true) { // NaturalSpawner.isSpawnPositionOk simplified
-          str.append(Component.translatable(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.BLUE));
+          str.append(Component.translatable(spawnerInfo.type().getDescription().getString()).withStyle(ChatFormatting.BLUE));
         }
         else {
-          str.append(Component.translatable(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.RED));
+          str.append(Component.translatable(spawnerInfo.type().getDescription().getString()).withStyle(ChatFormatting.RED));
         }
         ChatUtil.addServerChatMessage(context.getPlayer(), str);
       }

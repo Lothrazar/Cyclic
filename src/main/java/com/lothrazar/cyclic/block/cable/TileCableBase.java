@@ -78,7 +78,9 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
 
   @Override
   public void loadAdditional(ValueInput input) {
-    this.loadFacade(input);
+    CompoundTag facadeTag = new CompoundTag();
+    input.read(NBT_FACADE, CompoundTag.CODEC).ifPresent(t -> facadeTag.put(NBT_FACADE, t));
+    this.loadFacade(facadeTag);
     if (this.isEnergyCable) {
       for (Direction f : Direction.values()) {
         mapIncomingEnergy.put(f, input.getIntOr(f.getSerializedName() + "_incenergy", 0));
@@ -110,7 +112,11 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
   }
   @Override
   public void saveAdditional(ValueOutput output) {
-    this.saveFacade(output);
+    CompoundTag facadeTag = new CompoundTag();
+    this.saveFacade(facadeTag);
+    if (facadeTag.contains(NBT_FACADE)) {
+      output.store(NBT_FACADE, CompoundTag.CODEC, facadeTag.getCompoundOrEmpty(NBT_FACADE));
+    }
     if (this.isEnergyCable) {
       for (Direction f : Direction.values()) {
         output.putInt(f.getSerializedName() + "_incenergy", mapIncomingEnergy.get(f));

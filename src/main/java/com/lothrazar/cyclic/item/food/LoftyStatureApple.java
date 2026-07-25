@@ -28,7 +28,7 @@ public class LoftyStatureApple extends ItemBaseCyclic {
       return super.finishUsingItem(stack, worldIn, entityLiving);
     }
     Player player = (Player) entityLiving;
-    if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+    if (player.getCooldowns().isOnCooldown(stack)) {
       return super.finishUsingItem(stack, worldIn, entityLiving);
     }
     player.getCooldowns().addCooldown(stack, 40); // 2seconds

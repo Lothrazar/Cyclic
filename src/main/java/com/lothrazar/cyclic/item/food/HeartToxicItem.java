@@ -26,7 +26,7 @@ public class HeartToxicItem extends ItemBaseCyclic {
 
   @Override
   public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    if (playerIn.getCooldowns().isOnCooldown(this)) {
+    if (playerIn.getCooldowns().isOnCooldown(playerIn.getItemInHand(handIn))) {
       return super.use(worldIn, playerIn, handIn);
     }
     AttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
@@ -40,7 +40,7 @@ public class HeartToxicItem extends ItemBaseCyclic {
     else {
       addedHealth = (oldHealthModifier == null) ? -2.0D : oldHealthModifier.amount() - 2.0D;
       //actually DO the eating of the thing
-      playerIn.getCooldowns().addCooldown(this, COOLDOWN);
+      playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn), COOLDOWN);
       playerIn.getItemInHand(handIn).shrink(1);
       SoundUtil.playSound(playerIn, SoundRegistry.FILL.get());
       playerIn.getFoodData().eat(3, 1);

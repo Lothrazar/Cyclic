@@ -48,7 +48,7 @@ public class OreProspector extends ItemBaseCyclic {
     Player player = context.getPlayer();
     InteractionHand hand = context.getHand();
     ItemStack held = player.getMainHandItem();
-    if (player.getCooldowns().isOnCooldown(held.getItem())) {
+    if (player.getCooldowns().isOnCooldown(held)) {
       return InteractionResult.PASS;
     }
     player.getCooldowns().addCooldown(held, CD);

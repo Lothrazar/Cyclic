@@ -46,7 +46,7 @@ public class FluidEnderHolder {
             if (!ent.level().isClientSide() && ent.tickCount % 40 == 0) {
               for (int i = 0; i < 16; i++) {
                 double x = ent.getX() + (ent.level().getRandom().nextDouble() - 0.5) * 16;
-                double y = Mth.clamp(ent.getY() + (double) (ent.level().getRandom().nextInt(16) - 8), ent.level().getMinBuildHeight(), ent.level().getMaxBuildHeight());
+                double y = Mth.clamp(ent.getY() + (double) (ent.level().getRandom().nextInt(16) - 8), ent.level().getMinY(), ent.level().getMaxY());
                 double z = ent.getZ() + (ent.level().getRandom().nextDouble() - 0.5) * 16;
                 if (ent.randomTeleport(x, y, z, true)) {
                   break;

@@ -35,7 +35,7 @@ public class LastStandEnchant {
         EnchantUtil.holder(EnchantRegistry.STAND, event.getEntity()), event.getEntity(), EquipmentSlot.LEGS);
     if (level > 0 && event.getEntity().getHealth() - event.getOriginalDamage() <= 0 && event.getEntity() instanceof ServerPlayer player) {
       int cooldownTicks = COOLDOWN == null ? 20 : COOLDOWN.get();
-      if (cooldownTicks > 0 && player.getCooldowns().isOnCooldown(player.getItemBySlot(EquipmentSlot.LEGS).getItem())) {
+      if (cooldownTicks > 0 && player.getCooldowns().isOnCooldown(player.getItemBySlot(EquipmentSlot.LEGS))) {
         return;
       }
       final int xpCost = Math.max(1, (COST == null ? 50 : COST.get()) / level);

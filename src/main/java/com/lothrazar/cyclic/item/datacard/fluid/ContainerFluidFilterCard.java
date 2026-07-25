@@ -26,7 +26,7 @@ public class ContainerFluidFilterCard extends ContainerBase {
     this.endInv = 9;
     if (player.getMainHandItem().getItem() instanceof FluidFilterCardItem) {
       this.bag = player.getMainHandItem();
-      this.slot = player.getInventory().selected;
+      this.slot = player.getInventory().getSelectedSlot();
     }
     else if (player.getOffhandItem().getItem() instanceof FluidFilterCardItem) {
       this.bag = player.getOffhandItem();

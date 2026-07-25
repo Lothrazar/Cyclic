@@ -58,7 +58,7 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
       int count = stackTag.getIntOr("fluidCount", 0);
       if (count > 0) {
         if (stackTag.contains("fluidTooltip")) {
-          tooltip.accept(Component.translatable(stackTag.getString("fluidTooltip")).withStyle(ChatFormatting.AQUA));
+          tooltip.accept(Component.translatable(stackTag.getStringOr("fluidTooltip", "")).withStyle(ChatFormatting.AQUA));
         }
         tooltip.accept(Component.translatable("cyclic.screen.filter.item.count").append("" + count).withStyle(ChatFormatting.AQUA));
       }

@@ -100,7 +100,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
         //just go left to right and eat in order
         for (int i = 0; i < handler.getSlots(); i++) {
           ItemStack test = handler.getStackInSlot(i);
-          if (test.has(DataComponents.FOOD) && !player.getCooldowns().isOnCooldown(test.getItem())) {
+          if (test.has(DataComponents.FOOD) && !player.getCooldowns().isOnCooldown(test)) {
             found = test;
             foundSlot = i;
             break;

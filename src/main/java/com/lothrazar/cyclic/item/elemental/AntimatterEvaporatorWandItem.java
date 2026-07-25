@@ -138,7 +138,7 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
   }
 
   public static void toggleMode(Player player, ItemStack stack) {
-    if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+    if (player.getCooldowns().isOnCooldown(stack)) {
       return;
     }
     EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getIntOr(NBT_MODE, 0)];

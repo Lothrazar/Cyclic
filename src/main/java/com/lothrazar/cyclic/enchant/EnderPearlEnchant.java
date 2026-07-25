@@ -38,7 +38,7 @@ public class EnderPearlEnchant {
     if (level <= 0) { return; }
     int adjustedCooldown = COOLDOWN / level;
     Player player = event.getEntity();
-    if (player.getCooldowns().isOnCooldown(stack.getItem())) { return; }
+    if (player.getCooldowns().isOnCooldown(stack)) { return; }
     ThrownEnderpearl pearl = new ThrownEnderpearl(world, player);
     Vec3 lookVector = player.getLookAngle();
     pearl.shoot(lookVector.x(), lookVector.y(), lookVector.z(), VELOCITY, INNACCURACY);

@@ -46,7 +46,7 @@ public class StructureCard extends ItemBaseCyclic {
     super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     if (stack.has(DataComponents.CUSTOM_DATA)) {
       MutableComponent t = Component.translatable(
-          stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(NBTSTRUCTURE));
+          stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(NBTSTRUCTURE, ""));
       t.withStyle(ChatFormatting.GRAY);
       tooltip.accept(t);
     }

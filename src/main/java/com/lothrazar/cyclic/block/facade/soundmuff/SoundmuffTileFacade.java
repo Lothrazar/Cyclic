@@ -8,8 +8,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SoundmuffTileFacade extends TileBlockEntityCyclic implements ITileFacade {
@@ -25,22 +23,20 @@ public class SoundmuffTileFacade extends TileBlockEntityCyclic implements ITileF
   }
 
   @Override
-  public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,HolderLookup.Provider registries) {
-    if (pkt.getTag().contains(NBT_FACADE)) {
-      this.loadAdditional(pkt.getTag(), registries);
-      super.onDataPacket(net, pkt,registries);
-    }
-  }
-
-  @Override
   public void loadAdditional(ValueInput input) {
-    this.loadFacade(input);
+    CompoundTag facadeTag = new CompoundTag();
+    input.read(NBT_FACADE, CompoundTag.CODEC).ifPresent(t -> facadeTag.put(NBT_FACADE, t));
+    this.loadFacade(facadeTag);
     super.loadAdditional(input);
   }
 
   @Override
   public void saveAdditional(ValueOutput output) {
-    this.saveFacade(output);
+    CompoundTag facadeTag = new CompoundTag();
+    this.saveFacade(facadeTag);
+    if (facadeTag.contains(NBT_FACADE)) {
+      output.store(NBT_FACADE, CompoundTag.CODEC, facadeTag.getCompoundOrEmpty(NBT_FACADE));
+    }
     super.saveAdditional(output);
   }
 

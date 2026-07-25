@@ -33,7 +33,7 @@ public class StepEnchant {
       AttributesUtil.enableStepHeight(player);
     }
     else {
-      if (player.getPersistentData().contains(NBT_ON) && player.getPersistentData().getBoolean(NBT_ON)) {
+      if (player.getPersistentData().getBooleanOr(NBT_ON, false)) {
         AttributesUtil.disableStepHeight(player);
         player.getPersistentData().putBoolean(NBT_ON, false);
       }

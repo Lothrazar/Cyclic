@@ -27,7 +27,7 @@ public class ItemInventoryCap extends ItemStackHandler {
     if (registries != null) {
       CompoundTag data = host.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       if (data.contains(KEY)) {
-        deserialize(TagValueInput.create(ProblemReporter.DISCARDING, registries, data.getCompound(KEY)));
+        deserialize(TagValueInput.create(ProblemReporter.DISCARDING, registries, data.getCompoundOrEmpty(KEY)));
       }
     }
   }

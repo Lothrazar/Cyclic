@@ -92,7 +92,7 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(FLUTENAME)) {
-      tooltip.accept(Component.translatable(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(FLUTENAME)).withStyle(ChatFormatting.LIGHT_PURPLE));
+      tooltip.accept(Component.translatable(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getStringOr(FLUTENAME, "")).withStyle(ChatFormatting.LIGHT_PURPLE));
     }
   }
 
@@ -101,13 +101,13 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
     Entity target = event.getTarget();
     Player player = event.getEntity();
     if (event.getItemStack().getItem() == this
-        && !player.getCooldowns().isOnCooldown(this)
+        && !player.getCooldowns().isOnCooldown(event.getItemStack())
         && EntityUtil.haveSameDimension(target, player)) {
       String id = EntityType.getKey(target.getType()).toString();
       CustomData.update(DataComponents.CUSTOM_DATA, event.getItemStack(), t -> t.putString(FLUTENAME, target.getDisplayName().getString()));
       CustomData.update(DataComponents.CUSTOM_DATA, event.getItemStack(), t -> t.putString(EntityMagicNetEmpty.NBT_ENTITYID, id));
       CustomData.update(DataComponents.CUSTOM_DATA, event.getItemStack(), t -> t.putInt(UNIQUEMAGIC, target.getId()));
-      player.getCooldowns().addCooldown(this, CD);
+      player.getCooldowns().addCooldown(event.getItemStack(), CD);
       player.swing(event.getHand());
       ChatUtil.addChatMessage(player, "item.cyclic.flute_summoning.saved");
       SoundUtil.playSound(player, SoundRegistry.BASS_ECHO.get(), 0.5F);

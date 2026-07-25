@@ -8,7 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -29,10 +29,10 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
     if (event.getItemStack().getItem() != this
         || !(event.getTarget() instanceof Horse horseOld)
         || !(event.getLevel() instanceof ServerLevel serverLevel)
-        || event.getEntity().getCooldowns().isOnCooldown(this)) {
+        || event.getEntity().getCooldowns().isOnCooldown(event.getItemStack())) {
       return;
     }
-    ZombieHorse zombieNew = EntityType.ZOMBIE_HORSE.spawn(serverLevel, (ItemStack) null, null, event.getPos(), MobSpawnType.NATURAL, false, false);
+    ZombieHorse zombieNew = EntityType.ZOMBIE_HORSE.spawn(serverLevel, (ItemStack) null, null, event.getPos(), EntitySpawnReason.NATURAL, false, false);
     if (zombieNew == null) {
       return;
     }
@@ -57,7 +57,7 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
       zombieNew.setCustomName(horseOld.getCustomName());
     }
     horseOld.remove(Entity.RemovalReason.DISCARDED);
-    event.getEntity().getCooldowns().addCooldown(this, 10);
+    event.getEntity().getCooldowns().addCooldown(event.getItemStack(), 10);
     event.getItemStack().shrink(1);
     event.setCanceled(true);
     event.setCancellationResult(InteractionResult.SUCCESS);

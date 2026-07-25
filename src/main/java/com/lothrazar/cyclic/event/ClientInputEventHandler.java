@@ -39,9 +39,9 @@ public class ClientInputEventHandler {
     if (player.isCrouching() && player.getMainHandItem().getItem() == ItemRegistry.ENDER_BOOK.get()) {
       //
       event.setCanceled(true);
-      if (!player.getCooldowns().isOnCooldown(ItemRegistry.ENDER_BOOK.get())) {
+      if (!player.getCooldowns().isOnCooldown(player.getMainHandItem())) {
         boolean isDown = event.getScrollDeltaY() < 0;
-        ClientPacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
+        ClientPacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().getSelectedSlot(), isDown));
       }
     }
   }

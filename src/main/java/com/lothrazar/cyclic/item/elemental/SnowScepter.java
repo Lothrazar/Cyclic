@@ -21,7 +21,7 @@ public class SnowScepter extends ItemBaseCyclic {
   @Override
   public InteractionResult use(Level world, Player player, InteractionHand handIn) {
     ItemStack stack = player.getItemInHand(handIn);
-    if (player.getCooldowns().isOnCooldown(this)) {
+    if (player.getCooldowns().isOnCooldown(stack)) {
       return super.use(world, player, handIn);
     }
     shootMe(world, player, new SnowEntity(player, world), 0, ItemBaseCyclic.VELOCITY_MAX);

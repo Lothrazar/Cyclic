@@ -19,7 +19,7 @@ public class LightningScepter extends ItemBaseCyclic {
   @Override
   public InteractionResult use(Level worldIn, Player player, InteractionHand handIn) {
     ItemStack stack = player.getItemInHand(handIn);
-    if (player.getCooldowns().isOnCooldown(this)) {
+    if (player.getCooldowns().isOnCooldown(stack)) {
       return super.use(worldIn, player, handIn);
     }
     shootMe(worldIn, player, new LightningEntity(player, worldIn), 0, ItemBaseCyclic.VELOCITY_MAX);

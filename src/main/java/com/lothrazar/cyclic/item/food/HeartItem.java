@@ -26,7 +26,7 @@ public class HeartItem extends ItemBaseCyclic {
 
   @Override
   public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    if (playerIn.getCooldowns().isOnCooldown(this)) {
+    if (playerIn.getCooldowns().isOnCooldown(playerIn.getItemInHand(handIn))) {
       return super.use(worldIn, playerIn, handIn);
     }
     playerIn.getFoodData().eat(1, 4);
@@ -35,7 +35,7 @@ public class HeartItem extends ItemBaseCyclic {
       //get attribute modif by id
       AttributesUtil.updateAttrModifierBy(Attributes.MAX_HEALTH, AttributesUtil.DEFAULT_ID, playerIn, 2);
       //finish up
-      playerIn.getCooldowns().addCooldown(this, COOLDOWN);
+      playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn), COOLDOWN);
       playerIn.getItemInHand(handIn).shrink(1);
       SoundUtil.playSound(playerIn, SoundRegistry.FILL.get());
     }

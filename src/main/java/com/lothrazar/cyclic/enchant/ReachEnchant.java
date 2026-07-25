@@ -55,7 +55,7 @@ public class ReachEnchant {
       turnReachOn(player, level);
     }
     else {
-      if (player.getPersistentData().contains(NBT_REACH_ON) && player.getPersistentData().getBoolean(NBT_REACH_ON)) {
+      if (player.getPersistentData().getBooleanOr(NBT_REACH_ON, false)) {
         turnReachOff(player);
       }
     }
