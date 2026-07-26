@@ -5,7 +5,7 @@ import com.lothrazar.library.util.EnchantUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.EventPriority;
@@ -36,8 +36,9 @@ public class BeekeeperEnchant {
       if (level > 0) {
         event.setCanceled(true);
         bee.setAggressive(false);
-        bee.setRemainingPersistentAngerTime(0);
-        bee.setPersistentAngerTarget(null);
+        // 26.1: NeutralMob#setRemainingPersistentAngerTime(int) removed - stopBeingAngry() is the direct
+        // "no longer angry" replacement (clears the end time AND the persistent anger target in one call)
+        bee.stopBeingAngry();
       }
     }
   }

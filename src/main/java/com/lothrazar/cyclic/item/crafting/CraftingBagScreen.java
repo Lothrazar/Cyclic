@@ -44,7 +44,7 @@ public class CraftingBagScreen extends ScreenBase<CraftingBagContainer> {
 
   @Override
   protected void extractLabels(GuiGraphicsExtractor ms, int mouseX, int mouseY) {
-    super.renderLabels(ms, mouseX, mouseY);
+    super.extractLabels(ms, mouseX, mouseY);
     this.drawButtonTooltips(ms, mouseX, mouseY);
   }
 

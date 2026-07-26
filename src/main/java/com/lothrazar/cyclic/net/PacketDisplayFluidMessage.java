@@ -45,7 +45,10 @@ public class PacketDisplayFluidMessage implements CustomPacketPayload {
       }
       var player = ctx.player();
       if (player != null) {
-        player.displayClientMessage(Component.translatable(message.translationKey), true);
+        // 26.1: Player#displayClientMessage(Component, boolean) removed - actionBar=true case is now
+        // Player#sendOverlayMessage(Component) (LocalPlayer routes it to the HUD directly, matching
+        // vanilla's own BedBlock#useWithoutItem usage of the same method).
+        player.sendOverlayMessage(Component.translatable(message.translationKey));
       }
     });
   }

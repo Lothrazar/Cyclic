@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.RegistryHolder;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -377,7 +376,6 @@ public class ClientRegistryCyclic {
   // 26.1: RegisterColorHandlersEvent.Item is gone - item colors are fully data-driven now via
   // assets/cyclic/items/*.json "tints" arrays. This just registers the tint source *types*;
   // per-item layer assignment happens in the JSON (see LunchboxOverlayTintSource/StorageBagBodyTintSource).
-  @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void registerItemColors(RegisterColorHandlersEvent.ItemTintSources event) {
     event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "lunchbox_overlay"), LunchboxOverlayTintSource.MAP_CODEC);
@@ -390,7 +388,6 @@ public class ClientRegistryCyclic {
     // source for MOB_CONTAINER for now; its layer1/layer2 textures will render untinted until this lands.
   }
 
-  @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
     event.registerEntityRenderer(EntityRegistry.SNOW_BOLT.get(), ThrownItemRenderer::new);

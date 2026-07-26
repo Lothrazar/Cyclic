@@ -100,7 +100,8 @@ public class FilterCardItem extends ItemBaseCyclic {
           //does it match
           if (isTagMatch) {
             //share any item tag with filter entry
-            if (filterPtr.getTags().anyMatch(itemTarget::is)) {
+            // 26.1: ItemStack#getTags() removed - tags now live on the Item's own registry Holder
+            if (filterPtr.getItem().builtInRegistryHolder().tags().anyMatch(itemTarget::is)) {
               isMatchingList = true;
               break;
             }

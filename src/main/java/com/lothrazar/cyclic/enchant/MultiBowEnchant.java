@@ -35,7 +35,9 @@ public class MultiBowEnchant {
     var lookup = worldIn.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
     int j = EnchantmentHelper.getTagEnchantmentLevel(lookup.getOrThrow(Enchantments.POWER), stackBow);
     if (j > 0) {
-      abstractarrowentity.setBaseDamage(abstractarrowentity.getBaseDamage() + j * 0.5D + 0.5D);
+      // 26.1: AbstractArrow#getBaseDamage() removed (no getter, setBaseDamage(double) still exists) -
+      // baseDamage field made public via accesstransformer.cfg to read the current value.
+      abstractarrowentity.setBaseDamage(abstractarrowentity.baseDamage + j * 0.5D + 0.5D);
     }
 
     worldIn.addFreshEntity(abstractarrowentity);

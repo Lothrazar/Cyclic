@@ -37,11 +37,11 @@ public class FluidMagmaHolder {
   public static final DeferredHolder<Fluid, ConfigurableFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing",
       () -> new ConfigurableFlowingFluid.Flowing(makeProperties(), 2, 7));
 
-  public static final DeferredBlock<MagmaFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new MagmaFluidBlock(STILL, Block.Properties.of().liquid().strength(100.0F).lightLevel(s -> FluidRegistry.LIGHT_LEVELMAGMA).noLootTable()));
+  public static final DeferredBlock<MagmaFluidBlock> BLOCK = BlockRegistry.BLOCKS.registerBlock(ID + "_block",
+      props -> new MagmaFluidBlock(STILL, props.liquid().strength(100.0F).lightLevel(s -> FluidRegistry.LIGHT_LEVELMAGMA).noLootTable()));
 
-  public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",
-      () -> new BucketItemFlib(STILL.get()));
+  public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.registerItem(ID + "_bucket",
+      props -> new BucketItemFlib(STILL.get(), props));
 
   private static BaseFlowingFluid.Properties makeProperties() {
     return new BaseFlowingFluid.Properties(TYPE, STILL, FLOWING)

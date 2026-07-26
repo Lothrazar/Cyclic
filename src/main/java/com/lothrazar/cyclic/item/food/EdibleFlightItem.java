@@ -1,8 +1,11 @@
 package com.lothrazar.cyclic.item.food;
 
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class EdibleFlightItem extends FoodItemWithEffects {
@@ -12,8 +15,19 @@ public class EdibleFlightItem extends FoodItemWithEffects {
   public EdibleFlightItem(Properties properties) {
     super(properties.rarity(Rarity.RARE).food(new FoodProperties.Builder()
         .nutrition(1).saturationModifier(0).alwaysEdible()
-        // Supplier is lazy so TICKS.get() resolves at eat-time, after config has loaded.
-        .effect(() -> FoodItemWithEffects.silent(PotionEffectRegistry.FLIGHT, TICKS.get(), 0), 1)
         .build()));
+  }
+
+  // 26.1: FoodProperties.Builder#effect(Supplier<MobEffectInstance>, float) is gone - effects moved onto
+  // the immutable Consumable component (baked at registration time, no lazy Supplier possible anymore).
+  // TICKS.get() must still resolve after config load, not at registration time, so apply it here instead
+  // (finishUsingItem already runs long after the game/config is fully loaded).
+  @Override
+  public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+    ItemStack result = super.finishUsingItem(stack, level, entity);
+    if (!level.isClientSide()) {
+      entity.addEffect(FoodItemWithEffects.silent(PotionEffectRegistry.FLIGHT, TICKS.get(), 0));
+    }
+    return result;
   }
 }

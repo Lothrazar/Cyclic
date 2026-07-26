@@ -106,7 +106,8 @@ public class RenderStructure implements BlockEntityRenderer<TileStructure, Rende
     if (state.getRenderShape() != RenderShape.MODEL) {
       return;
     }
-    VertexConsumer consumer = ibuffer.getBuffer(Sheets.translucentCullBlockSheet());
+    // 26.1: Sheets.translucentCullBlockSheet() renamed to translucentBlockSheet()
+    VertexConsumer consumer = ibuffer.getBuffer(Sheets.translucentBlockSheet());
     BlockAndTintGetter btg = level instanceof BlockAndTintGetter g ? g : BlockAndTintGetter.EMPTY;
     BlockStateModelSet modelSet = Minecraft.getInstance().getModelManager().getBlockStateModelSet();
     BlockStateModel model = modelSet.get(state);

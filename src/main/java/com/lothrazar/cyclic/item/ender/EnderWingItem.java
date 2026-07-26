@@ -65,11 +65,13 @@ public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
     if (!(playerIn instanceof ServerPlayer serverPlayerEntity)) {
       return;
     }
-    if (serverPlayerEntity.getRespawnPosition() == null) {
+    // 26.1: ServerPlayer#getRespawnPosition()/getRespawnDimension() removed - respawn data is now bundled into a RespawnConfig record
+    var respawnConfig = serverPlayerEntity.getRespawnConfig();
+    if (respawnConfig == null) {
       ChatUtil.sendStatusMessage(playerIn, "command.cyclic.home.none");
       return;
     }
-    ResourceKey<Level> spawnWorldKey = serverPlayerEntity.getRespawnDimension();
+    ResourceKey<Level> spawnWorldKey = respawnConfig.respawnData().dimension();
     if (spawnWorldKey == Level.NETHER && worldIn.dimension() != Level.NETHER) {
       ChatUtil.sendStatusMessage(playerIn, "command.cyclic.home.nether");
       return;

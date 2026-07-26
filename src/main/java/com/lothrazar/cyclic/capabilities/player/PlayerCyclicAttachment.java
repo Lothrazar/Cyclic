@@ -3,11 +3,14 @@ package com.lothrazar.cyclic.capabilities.player;
 import java.util.ArrayList;
 import java.util.List;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class PlayerCyclicAttachment {
 
-  public static final Codec<PlayerCyclicAttachment> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+  // 26.1: AttachmentType.Builder#serialize now wants a MapCodec, not a plain Codec - use
+  // RecordCodecBuilder.mapCodec(...) instead of .create(...) (record fields are already map-shaped).
+  public static final MapCodec<PlayerCyclicAttachment> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
       Codec.BOOL.optionalFieldOf("stepHeight", false).forGetter(a -> a.stepHeight),
       Codec.BOOL.optionalFieldOf("stepHeightForceOff", false).forGetter(a -> a.stepHeightForceOff),
       Codec.STRING.listOf().optionalFieldOf("todoTasks", List.of()).forGetter(a -> a.todoTasks)

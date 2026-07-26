@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -30,7 +29,8 @@ public class BlockFanSlab extends BlockCyclic implements SimpleWaterloggedBlock 
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-  public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
+  // 26.1: DirectionProperty class removed - BlockStateProperties.HORIZONTAL_FACING is a plain EnumProperty<Direction> now
+  public static final EnumProperty<Direction> HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
   public static final EnumProperty<AttachFace> FACE = BlockStateProperties.ATTACH_FACE;
   //
   protected static final VoxelShape AABB_CEILING_X_ON = Block.box(0.0D, 15.0D, 0.0D,

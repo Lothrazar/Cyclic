@@ -62,7 +62,9 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
 
   @Override
   public void extractRenderState(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
-    super.renderBackground(ms, mouseX, mouseY, partialTicks);
+    // 26.1: Screen#renderBackground renamed to extractBackground, but the framework's own
+    // extractRenderStateWithTooltipAndSubtitles driver already calls extractBackground before
+    // extractRenderState runs - calling it again here would double-render it, so just drop the call.
     super.extractRenderState(ms, mouseX, mouseY, partialTicks);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
   }

@@ -19,7 +19,9 @@ public class CommandGetHome {
      * -- the location of their bed, if they've set the respawn point with a bed
      *
      * -- the location of their Respawn Anchor in the Nether */
-    BlockPos respawnPos = player.getRespawnPosition();
+    // 26.1: ServerPlayer#getRespawnPosition() removed - respawn data is now bundled into a RespawnConfig record
+    var respawnConfig = player.getRespawnConfig();
+    BlockPos respawnPos = respawnConfig == null ? null : respawnConfig.respawnData().pos();
     if (respawnPos != null) {
       ChatUtil.sendFeedback(ctx, ChatUtil.lang("command.cyclic.gethome.yours") + " " + ChatUtil.blockPosToString(respawnPos));
     }

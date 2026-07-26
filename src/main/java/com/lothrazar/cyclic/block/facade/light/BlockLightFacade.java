@@ -28,10 +28,12 @@ public class BlockLightFacade extends BlockCyclic implements IBlockFacade {
     builder.add(IBlockFacade.HAS_FACADE);
   }
 
+  // 26.1: RenderShape shrank to just INVISIBLE/MODEL (ENTITYBLOCK_ANIMATED removed) - INVISIBLE is the
+  // direct replacement (skip the static model, let the facade's BER draw the camouflaged look instead).
   @Override
   public RenderShape getRenderShape(BlockState state) {
     if (state.getValue(IBlockFacade.HAS_FACADE)) {
-      return RenderShape.ENTITYBLOCK_ANIMATED;
+      return RenderShape.INVISIBLE;
     }
     return RenderShape.MODEL;
   }

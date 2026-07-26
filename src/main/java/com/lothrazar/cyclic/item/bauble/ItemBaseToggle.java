@@ -13,8 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -39,7 +37,6 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     MutableComponent t = Component.translatable("item.cyclic.bauble.on." + this.isOn(stack));
@@ -74,7 +71,6 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public boolean isFoil(ItemStack stack) {
     return isOn(stack);
   }

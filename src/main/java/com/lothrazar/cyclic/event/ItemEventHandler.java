@@ -73,8 +73,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
@@ -94,7 +92,9 @@ public class ItemEventHandler {
       if (event.getEntity() instanceof Player playerIn) {
         if (playerIn.getCooldowns().isOnCooldown(shield)) {
           SoundUtil.playSound(playerIn, SoundEvents.SHIELD_BREAK.value());
-          event.setCanceled(true);
+          // 26.1: LivingShieldBlockEvent#setCanceled removed - setBlocked(false) is the direct replacement
+          // ("same impact as if the shield was not eligible to block", per the event's own javadoc)
+          event.setBlocked(false);
           return;
         }
         // shieldItem.onShieldBlock(event, playerIn); // removed
@@ -167,8 +167,10 @@ public class ItemEventHandler {
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.QUIVER_DMG.get());
       if (!find.isEmpty() && arrow instanceof AbstractArrow) {
         AbstractArrow arroww = (AbstractArrow) arrow;
-        double boost = arroww.getBaseDamage() / 2;
-        arroww.setBaseDamage(arroww.getBaseDamage() + boost);
+        // 26.1: AbstractArrow#getBaseDamage() removed (no getter at all, setBaseDamage(double) still
+        // exists) - baseDamage field made public via accesstransformer.cfg to read the current value.
+        double boost = arroww.baseDamage / 2;
+        arroww.setBaseDamage(arroww.baseDamage + boost);
         ItemStackUtil.damageItem(ply, find);
       }
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.QUIVER_LIT.get());
@@ -614,7 +616,6 @@ public class ItemEventHandler {
     event.setCanceled(true);
   }
 
-  @OnlyIn(Dist.CLIENT)
   private void onHitFacadeClient(PlayerInteractEvent.LeftClickBlock event, Player player, ItemStack held, Block block) {
     //pick the block, write to tags, and send to server
     boolean pickFluids = false;

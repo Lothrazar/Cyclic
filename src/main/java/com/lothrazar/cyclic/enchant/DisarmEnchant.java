@@ -44,7 +44,8 @@ public class DisarmEnchant {
     if (level <= 0) { return; }
     if (!canDisarm(livingTarget)) { return; }
     List<ItemStack> toDisarm = new ArrayList<>();
-    livingTarget.getHandSlots().forEach(itemStack -> {
+    // 26.1: LivingEntity#getHandSlots() removed entirely - main hand + offhand cover the same 2 slots
+    List.of(livingTarget.getMainHandItem(), livingTarget.getOffhandItem()).forEach(itemStack -> {
       if (!itemStack.is(ItemTags.SWORDS)) { return; }
       if (getChanceToDisarm(level) > user.level().getRandom().nextDouble()) {
         toDisarm.add(itemStack);

@@ -35,8 +35,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.ChestType;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
 
@@ -121,7 +119,6 @@ public class TileTransporterItem extends ItemBaseCyclic {
     return true;
   }
 
-  @OnlyIn(Dist.CLIENT)
   @Override
   public void appendHoverText(ItemStack itemStack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> list, TooltipFlag flagIn) {
     if (itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null
@@ -136,7 +133,6 @@ public class TileTransporterItem extends ItemBaseCyclic {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public boolean isFoil(ItemStack stack) {
     return stack.has(DataComponents.CUSTOM_DATA);
   }

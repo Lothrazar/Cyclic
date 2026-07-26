@@ -60,7 +60,7 @@ public class PacketStorageBagScreen implements CustomPacketPayload {
         if (0 <= message.slot && message.slot < player.getInventory().getContainerSize()) {
           serverStack = player.getInventory().getItem(message.slot);
         }
-        String key = message.nbtKey.getAsString();
+        String key = message.nbtKey.value();
         if (!serverStack.isEmpty()
             && serverStack.getItem() == ItemRegistry.STORAGE_BAG.get()
             && (key.equals(RefillMode.NBT) || key.equals(DepositMode.NBT) || key.equals(PickupMode.NBT))) {
@@ -125,31 +125,31 @@ public class PacketStorageBagScreen implements CustomPacketPayload {
     buffer.writeInt(message.slot);
     buffer.writeByte(message.type);
     ItemStack.STREAM_CODEC.encode(buffer, message.stack);
-    buffer.writeUtf(message.nbtKey.getAsString());
+    buffer.writeUtf(message.nbtKey.value());
     switch (message.type) {
       case 1: //Byte
-        buffer.writeByte(((ByteTag) message.nbtValue).getAsByte());
+        buffer.writeByte(((ByteTag) message.nbtValue).value());
       break;
       case 2: //Short
-        buffer.writeShort(((ShortTag) message.nbtValue).getAsShort());
+        buffer.writeShort(((ShortTag) message.nbtValue).value());
       break;
       case 3: //Int
-        buffer.writeInt(((IntTag) message.nbtValue).getAsInt());
+        buffer.writeInt(((IntTag) message.nbtValue).value());
       break;
       case 4: //Long
-        buffer.writeLong(((LongTag) message.nbtValue).getAsLong());
+        buffer.writeLong(((LongTag) message.nbtValue).value());
       break;
       case 5: //Float
-        buffer.writeFloat(((FloatTag) message.nbtValue).getAsFloat());
+        buffer.writeFloat(((FloatTag) message.nbtValue).value());
       break;
       case 6: //Double
-        buffer.writeDouble(((DoubleTag) message.nbtValue).getAsDouble());
+        buffer.writeDouble(((DoubleTag) message.nbtValue).value());
       break;
       case 7: //ByteArray
         buffer.writeByteArray(((ByteArrayTag) message.nbtValue).getAsByteArray());
       break;
       case 8: //String
-        buffer.writeUtf(((StringTag) message.nbtValue).getAsString());
+        buffer.writeUtf(((StringTag) message.nbtValue).value());
       break;
       case 9: //List... not sure of best way to handle this one since there's no constructor/setter. Look at other implementations?
         buffer.writeUtf("There could have been a list here, if I knew how to process it.");

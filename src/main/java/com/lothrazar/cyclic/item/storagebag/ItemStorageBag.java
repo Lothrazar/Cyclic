@@ -102,11 +102,15 @@ public class ItemStorageBag extends ItemBaseCyclic {
       }
       for (int i = 0; i < handler.getSlots(); i++) {
         ItemStack stack = handler.getStackInSlot(i);
-        ItemStack remaining = stack.copy();
         if (!stack.isEmpty()) {
           if (mode == DepositMode.DUMP || (mode == DepositMode.MERGE && itemsInTargetInventory.contains(stack.getItem()))) {
-            remaining = ItemHandlerHelper.insertItem(teHandler, stack, false);
-            handler.setStackInSlot(i, remaining);
+            ItemStack remaining = ItemHandlerHelper.insertItem(teHandler, stack, false);
+            // 26.1: CapabilityUtil.item(...) now returns a plain (non-modifiable) IItemHandler bridge -
+            // no more setStackInSlot. Extract exactly the amount that was actually deposited instead.
+            int consumed = stack.getCount() - remaining.getCount();
+            if (consumed > 0) {
+              handler.extractItem(i, consumed, false);
+            }
           }
         }
       }
@@ -265,7 +269,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   private static RefillMode getRefillMode(ItemStack stack) {
-    String mode = getCustomData(stack).getAsString();
+    // was missing the key + Optional-wrap fix applied to the sibling getDepositMode() above
+    String mode = getCustomData(stack).getStringOr(RefillMode.NBT, "");
     for (int i = 0; i < RefillMode.values().length; i++) {
       if (mode.equals(RefillMode.values()[i].getSerializedName())) {
         return RefillMode.values()[i];

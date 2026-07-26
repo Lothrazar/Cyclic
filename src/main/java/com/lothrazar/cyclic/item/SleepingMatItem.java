@@ -24,10 +24,13 @@ public class SleepingMatItem extends ItemBaseCyclic {
   public InteractionResult use(Level worldIn, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
     BlockPos pos = player.blockPosition();
-    if (!worldIn.isDay()) {
+    // 26.1: Level#isDay() renamed isBrightOutside(); BedSleepingProblem#getMessage() is now the record
+    // accessor message(); Player#displayClientMessage removed, use sendOverlayMessage (same as vanilla's
+    // own BedBlock#useWithoutItem).
+    if (!worldIn.isBrightOutside()) {
       trySleep(player, pos, itemstack).ifLeft((bsp) -> {
-        if (bsp != null && bsp.getMessage() != null) {
-          player.displayClientMessage(bsp.getMessage(), true);
+        if (bsp != null && bsp.message() != null) {
+          player.sendOverlayMessage(bsp.message());
         }
       });
     }
@@ -43,7 +46,9 @@ public class SleepingMatItem extends ItemBaseCyclic {
       }
       boolean isoverworld = world.dimension() == Level.OVERWORLD;
       if (!isoverworld) {
-        return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_HERE);
+        // 26.1: NOT_POSSIBLE_HERE constant removed from BedSleepingProblem (only TOO_FAR_AWAY/OBSTRUCTED/
+        // OTHER_PROBLEM/NOT_SAFE remain) - OTHER_PROBLEM (no message) is the closest generic fallback.
+        return Either.left(Player.BedSleepingProblem.OTHER_PROBLEM);
       }
 
       player.startSleeping(at);

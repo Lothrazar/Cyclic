@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class EnderEyeReuseItem extends ItemBaseCyclic {
 
@@ -35,7 +36,8 @@ public class EnderEyeReuseItem extends ItemBaseCyclic {
         double posY = player.getY();
         double posZ = player.getZ();
         EyeOfEnderEntityNodrop eyeofenderentity = new EyeOfEnderEntityNodrop(worldIn, posX, posY + player.getBbHeight() / 2.0F, posZ);
-        eyeofenderentity.signalTo(closestBlockPos);
+        // 26.1: EyeOfEnder#signalTo now takes a Vec3, not a BlockPos (matches vanilla EnderEyeItem's own usage)
+        eyeofenderentity.signalTo(Vec3.atLowerCornerOf(closestBlockPos));
         worldIn.addFreshEntity(eyeofenderentity);
         if (player instanceof ServerPlayer) {
           CriteriaTriggers.USED_ENDER_EYE.trigger((ServerPlayer) player, closestBlockPos);

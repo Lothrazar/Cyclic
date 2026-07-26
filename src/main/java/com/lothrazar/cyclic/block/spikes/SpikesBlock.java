@@ -113,8 +113,8 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
           }
         break;
         case 3:
-          if (!living.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-            living.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, CURSE_TIME, 2, false, false, false));
+          if (!living.hasEffect(MobEffects.MINING_FATIGUE)) {
+            living.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, CURSE_TIME, 2, false, false, false));
           }
         break;
         case 4:

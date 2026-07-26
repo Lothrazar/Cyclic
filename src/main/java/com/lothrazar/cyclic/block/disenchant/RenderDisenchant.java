@@ -4,10 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.BookModel;
+import net.minecraft.client.model.object.book.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -77,9 +77,12 @@ public class RenderDisenchant implements BlockEntityRenderer<TileDisenchant, Ren
     float pageR = Mth.frac(flip + 0.75F) * 1.6F - 0.3F;
     pageL = Mth.clamp(pageL, 0.0F, 1.0F);
     pageR = Mth.clamp(pageR, 0.0F, 1.0F);
-    this.bookModel.setupAnim(time, pageL, pageR, 0.2F);
+    // 26.1: BookModel#setupAnim now takes a State record - State.forAnimation(time, pageL, pageR, open)
+    // is the exact 4-arg drop-in replacement (confirmed against vanilla's own EnchantTableRenderer usage).
+    this.bookModel.setupAnim(BookModel.State.forAnimation(time, pageL, pageR, 0.2F));
     MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-    VertexConsumer vc = BOOK_LOCATION.buffer(this.sprites, buffer, RenderType::entitySolid);
+    // 26.1: RenderType.entitySolid(...) static factory moved onto the new RenderTypes class
+    VertexConsumer vc = BOOK_LOCATION.buffer(this.sprites, buffer, RenderTypes::entitySolid);
     this.bookModel.renderToBuffer(pose, vc, state.lightCoords, 0);
     buffer.endBatch();
     pose.popPose();

@@ -63,10 +63,12 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     energy.draw(ms, menu.tile.getEnergy());
     this.drawSlot(ms, 8, 34);
     int x = leftPos + 29, y = topPos + 16;
-    this.text(ms, menu.tile.getTimerDisplay(), x, y);
+    // was mis-renamed by an earlier drawString->text sweep; ScreenBase's own drawString(...) helper is
+    // the one actually declared here, not GuiGraphicsExtractor#text
+    this.drawString(ms, menu.tile.getTimerDisplay(), x, y);
     for (String s : menu.tile.getPotionDisplay()) {
       y += 10;
-      this.text(ms, s, x, y);
+      this.drawString(ms, s, x, y);
     }
   }
 }

@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.SoundUtil;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -105,10 +105,14 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(IBlockFacade.HAS_FACADE, false));
   }
 
+  // 26.1: RenderShape shrank to just INVISIBLE/MODEL (ENTITYBLOCK_ANIMATED removed). RenderShape only
+  // gates the static baked model - the BlockEntityRenderer still runs regardless - so INVISIBLE (skip the
+  // plain cable's static model, let the facade's BER draw the camouflaged look instead) is the direct
+  // replacement for the old ENTITYBLOCK_ANIMATED case here.
   @Override
   public RenderShape getRenderShape(BlockState state) {
     if (state.getValue(IBlockFacade.HAS_FACADE)) {
-      return RenderShape.ENTITYBLOCK_ANIMATED;
+      return RenderShape.INVISIBLE;
     }
     return RenderShape.MODEL;
   }

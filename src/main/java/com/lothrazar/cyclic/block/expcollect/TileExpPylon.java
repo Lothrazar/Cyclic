@@ -155,7 +155,8 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
       ExperienceOrb myOrb = list.get(level.getRandom().nextInt(list.size()));
       int addMeXp = myOrb.getValue();
       if (getStoredXp() + addMeXp <= tank.getCapacity()) {
-        myOrb.value = 0;
+        // 26.1: ExperienceOrb#value field is private now - use the public setValue() accessor
+        myOrb.setValue(0);
         // myOrb.setPosition(this.pos.getX(), this.pos.getY(), this.pos.getZ());
         myOrb.remove(Entity.RemovalReason.DISCARDED);
         int addMeFluid = addMeXp * FLUID_PER_EXP;

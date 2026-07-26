@@ -27,8 +27,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.world.item.component.CustomData;
 
 
@@ -118,7 +116,6 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
     tooltip.accept(getModeTooltip(stack).withStyle(ChatFormatting.AQUA));
@@ -145,7 +142,8 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     CustomData.EMPTY.copyTag().putInt(NBT_MODE, mode.getNext().ordinal());
     player.getCooldowns().addCooldown(stack, COOLDOWN);
     if (player.level().isClientSide()) {
-      player.displayClientMessage(getModeTooltip(stack), true);
+      // 26.1: Player#displayClientMessage(Component, boolean) removed - actionBar=true -> sendOverlayMessage
+      player.sendOverlayMessage(getModeTooltip(stack));
       SoundUtil.playSound(player, SoundRegistry.TOOL_MODE.get());
     }
   }

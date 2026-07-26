@@ -17,7 +17,9 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
@@ -67,7 +69,10 @@ public class ClientInputEventHandler {
               && mc.player != null
               && mc.player.containerMenu != null) {
             ItemStack maybeFood = mc.player.containerMenu.getCarried();
-            boolean isEdible=maybeFood.getFoodProperties(mc.player)!=null;
+            // 26.1: ItemStack#getFoodProperties(LivingEntity) removed - read DataComponents.FOOD directly
+            // and replicate the same canEat(canAlwaysEat) hunger-aware check it used to do internally.
+            FoodProperties maybeFoodProps = maybeFood.get(DataComponents.FOOD);
+            boolean isEdible = maybeFoodProps != null && mc.player.canEat(maybeFoodProps.canAlwaysEat());
             if (isEdible) {
               // inserting food must be done onMouse Released event
               // this is important. opening screens is on the other event

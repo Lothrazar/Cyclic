@@ -37,6 +37,15 @@ sourceSets.main.resources {
     exclude("src/generated/**/.cache") // datagen cache files
 }
 
+// 26.1: no synced CraftTweaker build exists for this Minecraft version yet (crafttweaker_version is
+// commented out above) - exclude the CraftTweaker compat package from compilation rather than porting
+// code against a dependency that isn't there. Same pattern already used in PlainGrinder. Re-add this
+// after any future sync_tmpl.py run for Cyclic (that script overwrites build.gradle wholesale from tmpl/),
+// and remove once a 26.1 CraftTweaker build is available and the dependency above is uncommented.
+sourceSets.main.java {
+    exclude 'com/lothrazar/cyclic/compat/crafttweaker/**'
+}
+
 
 
 repositories {

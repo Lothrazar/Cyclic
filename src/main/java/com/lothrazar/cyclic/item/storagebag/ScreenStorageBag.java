@@ -106,6 +106,14 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
       this.setTooltip(Tooltip.create(defaultTooltip));
     }
 
+    // 26.1: vanilla Button is abstract now (extractContents has no default impl unless built via
+    // Button.builder()/Button.Plain) - mirror Button.Plain's own default-sprite/default-label rendering.
+    @Override
+    protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+      this.extractDefaultSprite(graphics);
+      this.extractDefaultLabel(graphics.textRendererForWidget(this, GuiGraphicsExtractor.HoveredTextEffects.NONE));
+    }
+
     @Override
     public void onPress(net.minecraft.client.input.InputWithModifiers input) {
       super.onPress(input);
@@ -122,8 +130,8 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
       this.titles.add(title);
       this.tooltips.add(tooltip);
       this.nbtValues.add(nbtValue);
-      if (this.nbt.get(nbtKey.getAsString()) != null &&
-          this.nbt.get(nbtKey.getAsString()).equals(nbtValue)) {
+      if (this.nbt.get(nbtKey.value()) != null &&
+          this.nbt.get(nbtKey.value()).equals(nbtValue)) {
         this.index = this.nbtValues.indexOf(nbtValue);
         this.setMessage(this.titles.get(index));
         this.setTooltip(Tooltip.create(this.tooltips.get(index)));

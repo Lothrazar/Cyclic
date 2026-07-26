@@ -45,7 +45,7 @@ public class ScreenFluidFilterCard extends ScreenBase<ContainerFluidFilterCard> 
 
   @Override
   protected void extractLabels(GuiGraphicsExtractor ms, int mouseX, int mouseY) {
-    super.renderLabels(ms, mouseX, mouseY);
+    super.extractLabels(ms, mouseX, mouseY);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     boolean filter = screenContainer.bag != null && FluidFilterCardItem.getIsIgnoreList(screenContainer.bag);
     btnType.setTextureId(filter ? TextureEnum.RENDER_HIDE : TextureEnum.RENDER_SHOW);

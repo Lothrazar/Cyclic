@@ -19,8 +19,6 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.Nullable;
 
@@ -30,7 +28,6 @@ import org.jspecify.annotations.Nullable;
  * {@code net.minecraft.client.renderer.special.ShieldSpecialRenderer}. This mirrors that class, but swaps
  * in one of Cyclic's own base/no-pattern {@link SpriteId} pairs instead of the vanilla shield texture.
  */
-@OnlyIn(Dist.CLIENT)
 public class ShieldMaterialSpecialRenderer implements SpecialModelRenderer<DataComponentMap> {
 
   private final SpriteGetter sprites;
@@ -77,7 +74,6 @@ public class ShieldMaterialSpecialRenderer implements SpecialModelRenderer<DataC
     return new ShieldMaterialSpecialRenderer(context.sprites(), new ShieldModel(context.entityModelSet().bakeLayer(ModelLayers.SHIELD)), base, baseNoPattern);
   }
 
-  @OnlyIn(Dist.CLIENT)
   public record WoodUnbaked() implements SpecialModelRenderer.Unbaked<DataComponentMap> {
     public static final WoodUnbaked INSTANCE = new WoodUnbaked();
     public static final MapCodec<WoodUnbaked> MAP_CODEC = MapCodec.unit(INSTANCE);
@@ -93,7 +89,6 @@ public class ShieldMaterialSpecialRenderer implements SpecialModelRenderer<DataC
     }
   }
 
-  @OnlyIn(Dist.CLIENT)
   public record LeatherUnbaked() implements SpecialModelRenderer.Unbaked<DataComponentMap> {
     public static final LeatherUnbaked INSTANCE = new LeatherUnbaked();
     public static final MapCodec<LeatherUnbaked> MAP_CODEC = MapCodec.unit(INSTANCE);
@@ -109,7 +104,6 @@ public class ShieldMaterialSpecialRenderer implements SpecialModelRenderer<DataC
     }
   }
 
-  @OnlyIn(Dist.CLIENT)
   public record FlintUnbaked() implements SpecialModelRenderer.Unbaked<DataComponentMap> {
     public static final FlintUnbaked INSTANCE = new FlintUnbaked();
     public static final MapCodec<FlintUnbaked> MAP_CODEC = MapCodec.unit(INSTANCE);
@@ -125,7 +119,6 @@ public class ShieldMaterialSpecialRenderer implements SpecialModelRenderer<DataC
     }
   }
 
-  @OnlyIn(Dist.CLIENT)
   public record BoneUnbaked() implements SpecialModelRenderer.Unbaked<DataComponentMap> {
     public static final BoneUnbaked INSTANCE = new BoneUnbaked();
     public static final MapCodec<BoneUnbaked> MAP_CODEC = MapCodec.unit(INSTANCE);
@@ -141,7 +134,6 @@ public class ShieldMaterialSpecialRenderer implements SpecialModelRenderer<DataC
     }
   }
 
-  @OnlyIn(Dist.CLIENT)
   public record ObsidianUnbaked() implements SpecialModelRenderer.Unbaked<DataComponentMap> {
     public static final ObsidianUnbaked INSTANCE = new ObsidianUnbaked();
     public static final MapCodec<ObsidianUnbaked> MAP_CODEC = MapCodec.unit(INSTANCE);

@@ -34,7 +34,9 @@ public class HorseCarrotOverlay {
    * extra-area handlers so their sidebars don't overlap the panel.
    */
   public static Rect2i getPanelBounds(HorseInventoryScreen screen) {
-    AbstractHorse horse = screen.horse;
+    // 26.1: HorseInventoryScreen no longer stores the horse itself - it only lives on the menu's
+    // AbstractMountInventoryMenu#mount field now (made public via accesstransformer.cfg).
+    AbstractHorse horse = (AbstractHorse) screen.getMenu().mount;
     if (horse == null) {
       return null;
     }
@@ -59,7 +61,7 @@ public class HorseCarrotOverlay {
     if (!(event.getScreen() instanceof HorseInventoryScreen horseScreen)) {
       return;
     }
-    AbstractHorse horse = horseScreen.horse;
+    AbstractHorse horse = (AbstractHorse) horseScreen.getMenu().mount;
     if (horse == null) {
       return;
     }
@@ -79,9 +81,10 @@ public class HorseCarrotOverlay {
       Entry e = entries.get(i);
       int x = panelX;
       int y = panelY + i * rowH;
-      g.renderItem(e.stack, x, y);
+      // 26.1: GuiGraphicsExtractor#renderItem/renderItemDecorations renamed to item/itemDecorations
+      g.item(e.stack, x, y);
       if (e.count > 1) {
-        g.renderItemDecorations(Minecraft.getInstance().font, e.stack, x, y, String.valueOf(e.count));
+        g.itemDecorations(Minecraft.getInstance().font, e.stack, x, y, String.valueOf(e.count));
       }
       if (mouseX >= x && mouseX < x + ICON_SIZE && mouseY >= y && mouseY < y + ICON_SIZE) {
         hovered = e;

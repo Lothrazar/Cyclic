@@ -22,7 +22,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.storage.TagValueInput;
 
 public class SettingsCard extends ItemBaseCyclic {
 
@@ -93,7 +95,8 @@ public class SettingsCard extends ItemBaseCyclic {
           stackdata.remove(NBT_SETSAVED);
           stackdata.remove(NBT_ID);
           tiledata = tiledata.merge(stackdata);
-          tile.loadCustomOnly(tiledata, player.level().registryAccess());
+          // 26.1: BlockEntity#loadCustomOnly now takes a single ValueInput - bridge the raw CompoundTag through TagValueInput
+          tile.loadCustomOnly(TagValueInput.create(ProblemReporter.DISCARDING, player.level().registryAccess(), tiledata));
           ChatUtil.addChatMessage(player, getDescriptionId() + ".written");
         }
       }

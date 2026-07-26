@@ -40,8 +40,8 @@ public class FluidEnderHolder {
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> STILL = FluidRegistry.FLUID.register(ID, () -> new BaseFlowingFluid.Source(makeProperties()));
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new BaseFlowingFluid.Flowing(makeProperties()));
 
-  public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollision().strength(100.0F).lightLevel(s -> LIGHT_LEVEL).noLootTable(),
+  public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.registerBlock(ID + "_block",
+      props -> new GenericFluidBlock(STILL, props.liquid().replaceable().noCollision().strength(100.0F).lightLevel(s -> LIGHT_LEVEL).noLootTable(),
           List.of(ent -> {
             if (!ent.level().isClientSide() && ent.tickCount % 40 == 0) {
               for (int i = 0; i < 16; i++) {
@@ -55,8 +55,8 @@ public class FluidEnderHolder {
             }
           })));
 
-  public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",
-      () -> new BucketItemFlib(STILL.get()));
+  public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.registerItem(ID + "_bucket",
+      props -> new BucketItemFlib(STILL.get(), props));
 
   private static BaseFlowingFluid.Properties makeProperties() {
     return new BaseFlowingFluid.Properties(TYPE, STILL, FLOWING)

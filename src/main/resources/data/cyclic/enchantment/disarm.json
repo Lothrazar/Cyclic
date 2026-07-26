@@ -1,7 +1,7 @@
 {
   "description": { "translate": "enchantment.cyclic.disarm" },
-  "supported_items": "#minecraft:enchantable/sword",
-  "primary_items": "#minecraft:enchantable/sword",
+  "supported_items": "#minecraft:enchantable/melee_weapon",
+  "primary_items": "#minecraft:enchantable/melee_weapon",
   "weight": 5,
   "max_level": 3,
   "min_cost": { "base": 5, "per_level_above_first": 10 },

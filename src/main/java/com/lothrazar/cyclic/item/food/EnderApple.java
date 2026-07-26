@@ -42,12 +42,15 @@ public class EnderApple extends ItemBaseCyclic {
   //does pos exist in biome
   //    RegistryAccess.BUILTIN.get().registryOrThrow(Registry.BIOME_REGISTRY).getOrCreateTag(yourBiomeTagKey).contains(level.getBiome(pos))
   public Pair<BlockPos, Holder<Structure>> findNearestPair(ServerLevel sl, TagKey<Structure> p_215012_, BlockPos p_215013_, int p_215014_, boolean p_215015_) {
-    //getLevelSettings() -> worldGenOptions
-    if (!sl.getServer().getWorldData().worldGenOptions().generateStructures()) {
+    // 26.1: WorldData#worldGenOptions() removed - same flag now via MinecraftServer#getWorldGenSettings()
+    // .options().generateStructures() (matches ServerLevel's own internal usage of this exact check).
+    if (!sl.getServer().getWorldGenSettings().options().generateStructures()) {
       return null;
     }
     else {
-      Optional<HolderSet.Named<Structure>> optional = sl.registryAccess().registryOrThrow(Registries.STRUCTURE).getTag(p_215012_);
+      // 26.1: RegistryAccess#registryOrThrow removed - use lookupOrThrow(ResourceKey) instead; and
+      // Registry/HolderLookup.RegistryLookup#getTag(TagKey) renamed to get(TagKey)
+      Optional<HolderSet.Named<Structure>> optional = sl.registryAccess().lookupOrThrow(Registries.STRUCTURE).get(p_215012_);
       if (optional.isEmpty()) {
         return null;
       }
@@ -82,7 +85,8 @@ public class EnderApple extends ItemBaseCyclic {
             //add to ze frekni map yo
             double distance = LevelWorldUtil.distanceBetweenHorizontal(blockpos.getFirst(), entityLiving.blockPosition());
             Holder<Structure> holder = blockpos.getSecond();
-            String name = holder.unwrapKey().map(k -> k.location().toString()).orElse(holder.toString());
+            // 26.1: ResourceKey#location() renamed to identifier()
+            String name = holder.unwrapKey().map(k -> k.identifier().toString()).orElse(holder.toString());
             distanceStructNames.put(name, (int) distance);
           }
         }

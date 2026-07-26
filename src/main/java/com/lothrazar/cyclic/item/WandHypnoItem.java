@@ -8,6 +8,7 @@ import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Mob;
@@ -78,7 +79,8 @@ public class WandHypnoItem extends ItemHasEnergy {
 
         cur.setLastHurtMob(curTarget);
         cur.setTarget(curTarget); // this leads to forge hook onLivingSetAttackTarget
-        ParticleUtil.spawnParticle(world, ParticleTypes.DRAGON_BREATH, cur.blockPosition(), 15);
+        // 26.1: DRAGON_BREATH is now a ParticleType<PowerParticleOption>, not directly usable as ParticleOptions
+        ParticleUtil.spawnParticle(world, PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0F), cur.blockPosition(), 15);
         targeted++;
       }
     }

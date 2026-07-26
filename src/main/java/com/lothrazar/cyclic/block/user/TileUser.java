@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Inventory;
@@ -100,7 +101,8 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
       var item = itemStack.getItem();
       var oldItem = item.asItem();
       if (cooldowns.isOnCooldown(itemStack)) {
-        cooldowns.removeCooldown(itemStack);
+        // 26.1: ItemCooldowns#removeCooldown now takes the cooldown-group Identifier, not the ItemStack directly
+        cooldowns.removeCooldown(cooldowns.getCooldownGroup(itemStack));
       }
       BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
       if (entities) {
@@ -148,7 +150,8 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
         fakePlayer.get().attack(entityFound);
       }
       else { // interact 
-        InteractionResult res = fakePlayer.get().interactOn(entityFound, InteractionHand.MAIN_HAND);
+        // 26.1: Player#interactOn gained a required Vec3 hit-location param - no precise hit point here, use the entity's own position
+        InteractionResult res = fakePlayer.get().interactOn(entityFound, InteractionHand.MAIN_HAND, entityFound.position());
 
       }
     });

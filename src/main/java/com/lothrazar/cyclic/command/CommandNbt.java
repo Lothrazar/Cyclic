@@ -27,7 +27,8 @@ public class CommandNbt {
   public static int executePrintTags(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     ItemStack held = player.getMainHandItem();
-    for (TagKey<Item> tag : held.getTags().collect(Collectors.toList())) {
+    // 26.1: ItemStack#getTags() removed - tags now live on the Item's own registry Holder
+    for (TagKey<Item> tag : held.getItem().builtInRegistryHolder().tags().collect(Collectors.toList())) {
       ChatUtil.sendFeedback(ctx, tag.toString());
     }
     return 0;

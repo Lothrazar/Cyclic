@@ -9,11 +9,11 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.FluidModel;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -176,7 +176,9 @@ public class FluidHelpers {
   }
 
   public static TextureAtlasSprite getSprite(Identifier spriteLocation) {
-    return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(spriteLocation);
+    // 26.1: Minecraft#getTextureAtlas(Identifier) removed - sprites are looked up via AtlasManager#get(SpriteId)
+    // now (InventoryMenu.BLOCK_ATLAS renamed/moved to TextureAtlas.LOCATION_BLOCKS for the atlas id itself).
+    return Minecraft.getInstance().getAtlasManager().get(new net.minecraft.client.resources.model.sprite.SpriteId(TextureAtlas.LOCATION_BLOCKS, spriteLocation));
   }
 
   public static Model3D getFluidModel(FluidStack fluid, int stage) {

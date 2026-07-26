@@ -42,7 +42,8 @@ public class LocationGpsCard extends ItemBaseCyclic {
     BlockPosDim dim = getPosition(stack);
     if (dim != null) {
       tooltip.accept(Component.translatable(dim.toString()).withStyle(ChatFormatting.GRAY));
-      if (Screen.hasShiftDown()) {
+      // 26.1: Screen.hasShiftDown() static helper removed - use TooltipFlag's own hasShiftDown() instead
+      if (flagIn.hasShiftDown()) {
         String side = "S: " + dim.getSide().toString().toUpperCase();
         tooltip.accept(Component.translatable(side).withStyle(ChatFormatting.GRAY));
         if (!dim.getHitVec().equals(Vec3.ZERO)) {
@@ -100,10 +101,11 @@ public class LocationGpsCard extends ItemBaseCyclic {
     try {
       dim.setSidePlayerFacing(Direction.values()[tag.getIntOr(NBT_SIDE + "facing", 0)]);
       dim.setSide(Direction.values()[tag.getIntOr(NBT_SIDE, 0)]);
+      // "hity"/"hitz" were missed by the getDouble->getDoubleOr sweep applied to "hitx" right above
       Vec3 vec = new Vec3(
           tag.getDoubleOr("hitx", 0d),
-          tag.getDouble("hity"),
-          tag.getDouble("hitz"));
+          tag.getDoubleOr("hity", 0d),
+          tag.getDoubleOr("hitz", 0d));
       dim.setHitVec(vec);
     }
     catch (Exception e) {

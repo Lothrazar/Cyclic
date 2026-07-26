@@ -117,7 +117,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
       ItemEnchantments chantsIn = stackIn.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
       if (!chantsIn.isEmpty()) {
         var entry = chantsIn.entrySet().iterator().next();
-        this.enchantmentIdCache[slot] = entry.getKey().unwrapKey().map(k -> k.location().toString()).orElse("");
+        this.enchantmentIdCache[slot] = entry.getKey().unwrapKey().map(k -> k.identifier().toString()).orElse("");
         nameCache[slot] = Enchantment.getFullname(entry.getKey(), entry.getIntValue()).getString();
       }
     }
@@ -142,7 +142,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     //
     if (this.enchantmentIdCache[slot] != null && !this.enchantmentIdCache[slot].isEmpty()) {
       var entry = chantsIn.entrySet().iterator().next();
-      boolean match = this.enchantmentIdCache[slot].equals(entry.getKey().unwrapKey().map(k -> k.location().toString()).orElse(""));
+      boolean match = this.enchantmentIdCache[slot].equals(entry.getKey().unwrapKey().map(k -> k.identifier().toString()).orElse(""));
       return match;
     }
     //else no cache, old way

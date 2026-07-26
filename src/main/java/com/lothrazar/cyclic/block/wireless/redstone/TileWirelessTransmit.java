@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.data.BlockPosDim;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -67,12 +68,8 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
   @Override
   public void loadAdditional(ValueInput input) {
     inventory.deserialize(input.childOrEmpty(NBTINV));
-    if (input.hasUUID(REDSTONE_ID)) {
-      this.id = input.getUUID(REDSTONE_ID);
-    }
-    else {
-      this.id = UUID.randomUUID();
-    }
+    // 26.1: ValueInput#hasUUID/getUUID removed - use the generic read(name, Codec) escape hatch with UUIDUtil.CODEC
+    this.id = input.read(REDSTONE_ID, UUIDUtil.CODEC).orElseGet(UUID::randomUUID);
     super.loadAdditional(input);
   }
 
@@ -82,7 +79,8 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
     if (this.id == null) {
       this.id = UUID.randomUUID();
     }
-    output.putUUID(REDSTONE_ID, id);
+    // 26.1: ValueOutput#putUUID removed - use the generic store(name, Codec, value) escape hatch
+    output.store(REDSTONE_ID, UUIDUtil.CODEC, id);
     super.saveAdditional(output);
   }
 

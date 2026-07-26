@@ -39,7 +39,9 @@ public class AirAntiGravity extends ItemBaseToggle {
     if (isAirBorne && player.getDeltaMovement().y < 0) { //player.isSneaking() &&
       double y = (player.isCrouching()) ? DOWNWARD_SPEED_SNEAKING : 0;
       player.setDeltaMovement(player.getDeltaMovement().x, y, player.getDeltaMovement().z);
-      player.hasImpulse = false;
+      // 26.1: Entity#hasImpulse field removed entirely, no replacement - was defensively clearing the
+      // impulse flag after a manual setDeltaMovement() so vanilla wouldn't re-sync/fight the override.
+      // player.hasImpulse = false;
       //if we set onGround->true all the time, it blocks fwd movement anywya
       player.setOnGround(true);
       // (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking

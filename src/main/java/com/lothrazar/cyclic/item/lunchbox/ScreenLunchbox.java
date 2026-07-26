@@ -7,8 +7,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 
 public class ScreenLunchbox extends ScreenBase<ContainerLunchbox> {
@@ -51,7 +53,10 @@ public class ScreenLunchbox extends ScreenBase<ContainerLunchbox> {
     }
     if (mc.player != null && mc.screen instanceof AbstractContainerScreen<?> && !(mc.screen instanceof CreativeModeInventoryScreen)) {
       ItemStack carried = mc.player.containerMenu.getCarried();
-      if (!carried.isEmpty() && carried.getFoodProperties(mc.player) != null) {
+      // 26.1: ItemStack#getFoodProperties(LivingEntity) removed - read DataComponents.FOOD directly and
+      // replicate the same canEat(canAlwaysEat) hunger-aware check it used to do internally.
+      FoodProperties food = carried.get(DataComponents.FOOD);
+      if (!carried.isEmpty() && food != null && mc.player.canEat(food.canAlwaysEat())) {
         return true;
       }
     }

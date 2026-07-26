@@ -71,7 +71,9 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
     int x = 38, y = 12;
     for (int i = 0; i < TileSoundRecorder.MAX_SOUNDS; i++) {
       String s = menu.tile.getFieldString(i);
-      this.text(ms, s, x, y);
+      // was mis-renamed by an earlier drawString->text sweep; ScreenBase's own drawString(...) helper is
+      // the one actually declared here, not GuiGraphicsExtractor#text
+      this.drawString(ms, s, x, y);
       y += 16;
     }
   }

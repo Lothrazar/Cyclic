@@ -44,7 +44,8 @@ public class BlockstateCard extends ItemBaseCyclic {
         ChatFormatting c = m.isExactProperties() ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.DARK_PURPLE;
         String extra = m.isExactProperties() ? " [state]" : " [block]"; // star for not exact
         tooltip.accept(Component.translatable(st.getBlock().getDescriptionId()).append(extra).withStyle(c));
-        if (m.isExactProperties() && Screen.hasShiftDown()) {
+        // 26.1: Screen.hasShiftDown() static helper removed - use TooltipFlag's own hasShiftDown() instead
+        if (m.isExactProperties() && flagIn.hasShiftDown()) {
           tooltip.accept(Component.translatable(st.toString()).withStyle(ChatFormatting.DARK_GRAY));
         }
       }

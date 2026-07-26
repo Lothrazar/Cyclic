@@ -37,11 +37,11 @@ public class FluidSlimeHolder {
   public static final DeferredHolder<Fluid, ConfigurableFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing",
       () -> new ConfigurableFlowingFluid.Flowing(makeProperties(), 3, 7));
 
-  public static final DeferredBlock<SlimeFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new SlimeFluidBlock(STILL, Block.Properties.of().liquid().strength(100.0F).noLootTable()));
+  public static final DeferredBlock<SlimeFluidBlock> BLOCK = BlockRegistry.BLOCKS.registerBlock(ID + "_block",
+      props -> new SlimeFluidBlock(STILL, props.liquid().strength(100.0F).noLootTable()));
 
-  public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",
-      () -> new BucketItemFlib(STILL.get()));
+  public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.registerItem(ID + "_bucket",
+      props -> new BucketItemFlib(STILL.get(), props));
 
   private static BaseFlowingFluid.Properties makeProperties() {
     return new BaseFlowingFluid.Properties(TYPE, STILL, FLOWING)

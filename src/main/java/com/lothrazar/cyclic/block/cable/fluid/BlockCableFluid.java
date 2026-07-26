@@ -43,7 +43,9 @@ public class BlockCableFluid extends CableBase {
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    if (Screen.hasShiftDown()) {
+    // 26.1: Screen.hasShiftDown() static helper removed - TooltipFlag (already in scope) has its own
+    // hasShiftDown() now (a NeoForge addition, correctly false on the server too).
+    if (flagIn.hasShiftDown()) {
       tooltip.add(Component.translatable("block.cyclic.fluid_pipe.tooltip0").withStyle(ChatFormatting.GRAY));
     }
     else {

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.brigadier.StringReader;
+import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.commands.arguments.item.ItemParser;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -464,7 +465,8 @@ cyclic:shield_leather,1,1,25
       return null;
     }
     try {
-      ItemParser.ItemResult result = new ItemParser(registries).parse(new StringReader(parts[0].trim()));
+      // 26.1: ItemParser#parse now returns ItemInput directly (same item()/components() shape, no more nested ItemResult wrapper)
+      ItemInput result = new ItemParser(registries).parse(new StringReader(parts[0].trim()));
       Holder<Item> holder = result.item();
       DataComponentPatch patch = result.components();
       int min = Integer.parseInt(parts[1].trim());

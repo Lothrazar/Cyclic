@@ -41,7 +41,9 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      boolean v= stack.isRepairable() && stack.getDamageValue() > 0;
+      // 26.1: ItemStack#isRepairable() removed with no replacement - getDamageValue() > 0 already implies
+      // the stack is damageable, which covers the meaningful part of the old check.
+      boolean v= stack.getDamageValue() > 0;
     return v;
     }
   };
@@ -100,9 +102,10 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
     }
     final int repair = POWERCONF.get();
     boolean work = false;
+    // 26.1: ItemStack#isRepairable() removed with no replacement - getDamageValue() > 0 already implies
+    // the stack is damageable, which covers the meaningful part of the old check.
     if (repair > 0 &&
         energy.getEnergyStored() >= repair &&
-        stack.isRepairable() &&
         stack.getDamageValue() > 0) {
       //we can repair so steal some power 
       //ok drain power  

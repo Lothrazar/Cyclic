@@ -45,7 +45,9 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.isRepairable() && stack.getDamageValue() > 0;
+      // 26.1: ItemStack#isRepairable() removed with no replacement - getDamageValue() > 0 already implies
+      // the stack is damageable, which covers the meaningful part of the old check.
+      return stack.getDamageValue() > 0;
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
@@ -89,9 +91,10 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
     }
     final int repair = FLUIDCOST.get(); // fluid
     boolean work = false;
+    // 26.1: ItemStack#isRepairable() removed with no replacement - getDamageValue() > 0 already implies
+    // the stack is damageable, which covers the meaningful part of the old check.
     if (tank != null &&
         tank.getFluidAmount() >= repair &&
-        stack.isRepairable() &&
         stack.getDamageValue() > 0) {
       //we can repair so steal some power 
       //ok drain power  

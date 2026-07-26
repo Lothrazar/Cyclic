@@ -38,10 +38,10 @@ public class FluidXpJuiceHolder {
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> STILL = FluidRegistry.FLUID.register(ID, () -> new BaseFlowingFluid.Source(makeProperties()));
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new BaseFlowingFluid.Flowing(makeProperties()));
 
-  public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollision().strength(100.0F).lightLevel(s -> 15).noLootTable(), List.of()));
+  public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.registerBlock(ID + "_block",
+      props -> new GenericFluidBlock(STILL, props.liquid().replaceable().noCollision().strength(100.0F).lightLevel(s -> 15).noLootTable(), List.of()));
 
-  public static DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket", () -> new BucketItemFlib(STILL.get()));
+  public static DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.registerItem(ID + "_bucket", props -> new BucketItemFlib(STILL.get(), props));
 
   private static BaseFlowingFluid.Properties makeProperties() {
     return new BaseFlowingFluid.Properties(TYPE, STILL, FLOWING)

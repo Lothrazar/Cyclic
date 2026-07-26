@@ -166,7 +166,8 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     TileBlockEntityCyclic.tryEquipItem(inventory, fakePlayer, 0, InteractionHand.OFF_HAND);
     if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
       ItemStack tool = new ItemStack(Items.DIAMOND_AXE);
-      tool.enchant(level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(Enchantments.FORTUNE), 3);
+      // 26.1: RegistryAccess#registryOrThrow/Registry#getHolderOrThrow removed - lookupOrThrow(...).getOrThrow(...) is the replacement
+      tool.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 3);
       TileBlockEntityCyclic.tryEquipItem(tool, fakePlayer, InteractionHand.MAIN_HAND);
     }
   }

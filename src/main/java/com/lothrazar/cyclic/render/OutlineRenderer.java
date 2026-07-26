@@ -46,35 +46,39 @@ import java.util.Map;
 // was event.EventRender in 1.20
 public class OutlineRenderer {
 
-  @SubscribeEvent
-  public void onCustomizeDebugText(CustomizeGuiOverlayEvent.DebugText event) {
-    //Build scepter feature : render selected blockstate in cross hair
-    Player player = Minecraft.getInstance().player;
-    var level = player.level();
-    Minecraft mc = Minecraft.getInstance();
-    ItemStack itemStackHeld = BuilderItem.getIfHeld(player);
-    if (itemStackHeld.getItem() instanceof BuilderItem) {
-      //
-      BlockState targetState = BuilderActionType.getBlockState(level, itemStackHeld);
-      if (targetState != null) {
-        //ok still 
-        RenderUtil.drawStack(event.getGuiGraphics(), new ItemStack(targetState.getBlock()));
-        int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
-        if (slot < 0) {
-          //nothing found
-          int width = mc.getWindow().getGuiScaledWidth();
-          int height = mc.getWindow().getGuiScaledHeight();
-          RenderUtil.drawString(event.getGuiGraphics(), "" + 0, width / 2 + 16, height / 2 + 12);
-        }
-      }
-    }
-  }
+  // 26.1: CustomizeGuiOverlayEvent.DebugText is gone entirely - the F3 debug screen is now a data-driven
+  // "entry system" (RegisterDebugEntriesEvent + DebugScreenEntry), which doesn't offer the same direct
+  // "draw whatever you want onto the debug GuiGraphics" hook this used. Real research gap (would need a
+  // DebugScreenEntry rewrite, not a mechanical rename) - kept commented, not deleted, per user direction.
+  // @SubscribeEvent
+  // public void onCustomizeDebugText(CustomizeGuiOverlayEvent.DebugText event) {
+  //   //Build scepter feature : render selected blockstate in cross hair
+  //   Player player = Minecraft.getInstance().player;
+  //   var level = player.level();
+  //   Minecraft mc = Minecraft.getInstance();
+  //   ItemStack itemStackHeld = BuilderItem.getIfHeld(player);
+  //   if (itemStackHeld.getItem() instanceof BuilderItem) {
+  //     //
+  //     BlockState targetState = BuilderActionType.getBlockState(level, itemStackHeld);
+  //     if (targetState != null) {
+  //       //ok still
+  //       RenderUtil.drawStack(event.getGuiGraphics(), new ItemStack(targetState.getBlock()));
+  //       int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
+  //       if (slot < 0) {
+  //         //nothing found
+  //         int width = mc.getWindow().getGuiScaledWidth();
+  //         int height = mc.getWindow().getGuiScaledHeight();
+  //         RenderUtil.drawString(event.getGuiGraphics(), "" + 0, width / 2 + 16, height / 2 + 12);
+  //       }
+  //     }
+  //   }
+  // }
 
   @SubscribeEvent
-  public void onRenderWorldLast(RenderLevelStageEvent event) {
-    if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_ENTITIES) { // was AFTER_SOLID_BLOCKS / AFTER_TRANSLUCENT_BLOCKS / AFTER_PARTICLES - testing the very last stage
-      return; //send it
-    }
+  // 26.1: RenderLevelStageEvent is abstract now, dispatched as one subclass per stage instead of a single
+  // class + Stage enum + getStage() check - subscribing to .AfterLevel (the last stage to fire, matching
+  // this handler's original "testing the very last stage" intent) replaces the old getStage() filter.
+  public void onRenderWorldLast(RenderLevelStageEvent.AfterLevel event) {
     Minecraft mc = Minecraft.getInstance();
     Player player = mc.player;
     if (player == null) {
@@ -167,7 +171,7 @@ public class OutlineRenderer {
     if (renderCubes.keySet().size() > 0) {
       float scale = 1;
       PoseStack matrix = event.getPoseStack();
-      Vec3 view = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+      Vec3 view = Minecraft.getInstance().gameRenderer.getMainCamera().position();
       RenderBlockUtils.renderColourCubes(matrix, view, renderCubes, scale, alpha);
     }
     /****************** end rendering cubes. start laser beam render ********************/
@@ -191,7 +195,7 @@ public class OutlineRenderer {
       float lb = laserColor.getBlue() / 255f;
       if (mc.crosshairPickEntity != null) {
         //Render and Shoot. closerange version
-        RenderEntityToBlockLaser.renderLaser(event, player, mc.getTimer().getGameTimeDeltaPartialTick(false), stack, InteractionHand.MAIN_HAND, 18, -0.02F, lr, lg, lb);
+        RenderEntityToBlockLaser.renderLaser(event, player, mc.getDeltaTracker().getGameTimeDeltaPartialTick(false), stack, InteractionHand.MAIN_HAND, 18, -0.02F, lr, lg, lb);
         if (world.getGameTime() % 4 == 0) {
           ClientPacketDistributor.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
           SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
@@ -219,7 +223,7 @@ public class OutlineRenderer {
             BlockHitResult miss = mc.level.clip(new ClipContext(cameraEyePosition, entityHitResultLocation, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, mc.player));
             if (miss.getType() != HitResult.Type.BLOCK) {
               //  dont shoot thru walls
-              RenderEntityToBlockLaser.renderLaser(event, player, mc.getTimer().getGameTimeDeltaPartialTick(false), stack, InteractionHand.MAIN_HAND, lr, lg, lb);
+              RenderEntityToBlockLaser.renderLaser(event, player, mc.getDeltaTracker().getGameTimeDeltaPartialTick(false), stack, InteractionHand.MAIN_HAND, lr, lg, lb);
               if (world.getGameTime() % 4 == 0) {
                 ClientPacketDistributor.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
                 SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
@@ -230,7 +234,7 @@ public class OutlineRenderer {
         else {
           //we missed. Do we render on a miss?
           if (ConfigRegistry.LaserRenderMisses.get()) {
-            RenderEntityToBlockLaser.renderLaser(event, player, mc.getTimer().getGameTimeDeltaPartialTick(false), stack, InteractionHand.MAIN_HAND, lr, lg, lb);
+            RenderEntityToBlockLaser.renderLaser(event, player, mc.getDeltaTracker().getGameTimeDeltaPartialTick(false), stack, InteractionHand.MAIN_HAND, lr, lg, lb);
           }
           else { //if we dont render the miss, show a message for better user experience
             ChatUtil.sendStatusMessage(player, "item.cyclic.laser_cannon.notarget");

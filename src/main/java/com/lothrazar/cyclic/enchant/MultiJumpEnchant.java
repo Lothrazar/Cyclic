@@ -14,7 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -41,7 +41,9 @@ public class MultiJumpEnchant {
     Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.LAUNCH, p);
     ItemStack armorStack = EnchantUtil.getFirstArmorStackWithEnchant(h, p);
     if (armorStack.isEmpty()) { return; }
-    if ((p.hasImpulse == false || p.onGround()) && armorStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBT_USES, 0) > 0) {
+    // 26.1: Entity#hasImpulse field removed entirely (no replacement) - onGround() alone covers the
+    // "jump sequence is over, reset uses" intent this used to help gate.
+    if (p.onGround() && armorStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBT_USES, 0) > 0) {
       armorStack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, d -> { CompoundTag t = d.copyTag(); t.putInt(NBT_USES, 0); return CustomData.of(t); });
     }
   }
@@ -56,8 +58,10 @@ public class MultiJumpEnchant {
     int level = EnchantUtil.getCurrentLevelTool(h, feet);
     if (level <= 0) { return; }
     if (player.getCooldowns().isOnCooldown(feet)) { return; }
+    // 26.1: Entity#hasImpulse field removed entirely (no replacement) - falling (getY() < yOld) + not in
+    // water is sufficient gating without it.
     if (Minecraft.getInstance().options.keyJump.isDown()
-        && player.getY() < player.yOld && player.hasImpulse && !player.isInWater()) {
+        && player.getY() < player.yOld && !player.isInWater()) {
       int uses = feet.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBT_USES, 0);
       player.fallDistance = 0;
       float angle = (player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0) ? 90 : ROTATIONPITCH;

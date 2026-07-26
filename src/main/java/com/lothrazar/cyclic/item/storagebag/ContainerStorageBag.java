@@ -4,9 +4,11 @@ import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.library.core.Const;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -66,9 +68,10 @@ public class ContainerStorageBag extends ContainerBase {
         // if its a normal click with a Dye item, then update stack color
         if (clickTypeIn == ContainerInput.PICKUP) {
           ItemStack mouseStack = player.containerMenu.getCarried();
-          if (mouseStack.getItem() instanceof DyeItem) {
-            DyeItem dye = (DyeItem) mouseStack.getItem();
-            ItemStorageBag.setColour(slots.get(slotId).getItem(), dye.getDyeColor());
+          // 26.1: DyeItem#getDyeColor() removed - color is now a per-stack DataComponents.DYE component
+          DyeColor dye = mouseStack.get(DataComponents.DYE);
+          if (mouseStack.getItem() instanceof DyeItem && dye != null) {
+            ItemStorageBag.setColour(slots.get(slotId).getItem(), dye);
           }
         }
         //lock the bag in place by returning  

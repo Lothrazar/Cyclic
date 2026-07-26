@@ -23,6 +23,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -110,7 +112,11 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       this.status = status;
       if (status == UncraftStatusEnum.MATCH) {
         //pay cost
-        inputSlots.extractItem(0, match.value().getResultItem(level.registryAccess()).getCount(), false);
+        // 26.1: Recipe#getResultItem removed; findMatchingRecipe() already only returns RecipeType.CRAFTING
+        // matches, so match.value() is always a CraftingRecipe here - assemble(CraftingInput.EMPTY) is
+        // safe since standard crafting recipes ignore the actual input (same pattern as UtilPackager/TilePackager).
+        int resultCount = match.value() instanceof CraftingRecipe cr ? cr.assemble(CraftingInput.EMPTY).getCount() : 0;
+        inputSlots.extractItem(0, resultCount, false);
         energy.extractEnergy(cost, false);
       }
     }
@@ -210,7 +216,12 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     if (recipe == null) {
       return false;
     }
-    var recipeResultItem = recipe.value().getResultItem(level.registryAccess());
+    // 26.1: Recipe#getResultItem removed; the caller (findMatchingRecipe) already only passes
+    // RecipeType.CRAFTING matches, so recipe.value() is always a CraftingRecipe here.
+    if (!(recipe.value() instanceof CraftingRecipe craftingRecipe)) {
+      return false;
+    }
+    var recipeResultItem = craftingRecipe.assemble(CraftingInput.EMPTY);
     if (recipeResultItem.isEmpty() ||
         recipeResultItem.getItem() != stack.getItem() ||
         recipeResultItem.getCount() > stack.getCount()) {
@@ -218,7 +229,8 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     }
     //check config
     List<String> recipes = (List<String>) TileUncraft.IGNORE_RECIPES.get();
-    if (StringParseUtil.isInList(recipes, recipe.id())) {
+    // 26.1: RecipeHolder#id() now returns ResourceKey<Recipe<?>>, not a raw Identifier
+    if (StringParseUtil.isInList(recipes, recipe.id().identifier())) {
       //check the RECIPE id list
       return false;
     }

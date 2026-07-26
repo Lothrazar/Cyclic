@@ -8,12 +8,14 @@ import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainerProvider;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -39,8 +41,8 @@ public class PacketItemGui implements CustomPacketPayload {
   public PacketItemGui(FriendlyByteBuf buf) {
     this.slot = buf.readInt();
     Identifier rl = buf.readIdentifier();
-    Item read = BuiltInRegistries.ITEM.get(rl);
-    this.item = read == null ? Items.AIR : read;
+    // 26.1: Registry#get(Identifier) now returns Optional<Holder.Reference<T>>, not a raw nullable value
+    this.item = BuiltInRegistries.ITEM.get(rl).map(net.minecraft.core.Holder.Reference::value).orElse(Items.AIR);
   }
 
   public void write(FriendlyByteBuf buf) {
@@ -65,7 +67,9 @@ public class PacketItemGui implements CustomPacketPayload {
         if (itemFoodMouse.isEmpty()) {
           player.openMenu(new ContainerProviderLunchbox(), buf -> buf.writeInt(message.slot));
         }
-        else if (itemFoodMouse.getFoodProperties(player) != null) {
+        // 26.1: ItemStack#getFoodProperties(LivingEntity) removed - read DataComponents.FOOD directly and
+        // replicate the same canEat(canAlwaysEat) hunger-aware check it used to do internally.
+        else if (itemFoodMouse.get(DataComponents.FOOD) instanceof FoodProperties fp && player.canEat(fp.canAlwaysEat())) {
           ItemStack lunchbox = player.getInventory().getItem(message.slot);
           ItemLunchbox.insertFoodIntoLunchbox(lunchbox, itemFoodMouse, player);
         }

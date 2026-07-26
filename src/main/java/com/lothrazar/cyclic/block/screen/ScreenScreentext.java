@@ -80,6 +80,7 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
   @Override
   public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_PLAIN);
-    this.txtString.render(ms, mouseX, mouseY, partialTicks);
+    // 26.1: Renderable#render renamed to extractRenderState
+    this.txtString.extractRenderState(ms, mouseX, mouseY, partialTicks);
   }
 }

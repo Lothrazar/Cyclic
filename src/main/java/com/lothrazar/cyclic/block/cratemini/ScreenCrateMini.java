@@ -25,7 +25,7 @@ public class ScreenCrateMini extends ScreenBase<ContainerCrateMini> {
 
   @Override
   protected void extractLabels(GuiGraphicsExtractor ms, int mouseX, int mouseY) {
-    super.renderLabels(ms, mouseX, mouseY);
+    super.extractLabels(ms, mouseX, mouseY);
   }
 
   @Override

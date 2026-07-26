@@ -30,7 +30,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 public class ExcavationEnchant {
 
@@ -47,7 +47,8 @@ public class ExcavationEnchant {
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
-  public void onBreakEvent(BreakEvent event) {
+  // 26.1: BlockEvent.BreakEvent moved out to its own top-level class, BreakBlockEvent, in a new subpackage
+  public void onBreakEvent(BreakBlockEvent event) {
     if (!isEnabled()) { return; }
     LevelAccessor world = event.getLevel();
     Player player = event.getPlayer();

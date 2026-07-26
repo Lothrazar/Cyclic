@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -241,10 +242,9 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
       return InteractionResult.SUCCESS;
     }
     Item heldItem = heldStack.getItem();
-    if (heldItem instanceof DyeItem) {
-      //
-      DyeItem dye = (DyeItem) heldItem;
-      DyeColor newc = dye.getDyeColor();
+    // 26.1: DyeItem#getDyeColor() removed - color is now a per-stack DataComponents.DYE component
+    DyeColor newc = heldStack.get(DataComponents.DYE);
+    if (heldItem instanceof DyeItem && newc != null) {
       world.setBlockAndUpdate(pos, state.setValue(COLOUR, newc));
       //
       this.setConnectedColour(world, pos, newc, 0);
