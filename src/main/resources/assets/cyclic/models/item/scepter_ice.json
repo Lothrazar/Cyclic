@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
+		"particle": "#0",
 		"0": "minecraft:block/blue_ice",
 		"1": "minecraft:block/gold_block",
 		"2": "minecraft:block/nether_bricks"

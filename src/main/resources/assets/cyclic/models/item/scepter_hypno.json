@@ -1,5 +1,6 @@
 {
     "textures": {
+		"particle": "#1",
 		"0":"minecraft:block/lapis_block",
 		"1":"minecraft:block/gold_block",
 		"2":"minecraft:block/piston_bottom",

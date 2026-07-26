@@ -1,5 +1,6 @@
 {
     "textures": {
+        "particle": "#0",
         "2": "minecraft:block/stone",
         "1": "minecraft:block/obsidian"
     },

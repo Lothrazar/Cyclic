@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
+		"particle": "#0",
 		"0": "cyclic:item/charm/torch"
 	},
 	"elements": [

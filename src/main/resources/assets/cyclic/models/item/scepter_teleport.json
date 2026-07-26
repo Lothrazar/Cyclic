@@ -1,6 +1,7 @@
 ﻿{
 	"credit": "Made with Blockbench",
 	"textures": {
+		"particle": "#all",
 		"all": "cyclic:item/scepter_teleport"
 	},
 	"elements": [

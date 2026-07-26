@@ -37,11 +37,9 @@ sourceSets.main.resources {
     exclude("src/generated/**/.cache") // datagen cache files
 }
 
-// 26.1: no synced CraftTweaker build exists for this Minecraft version yet (crafttweaker_version is
-// commented out above) - exclude the CraftTweaker compat package from compilation rather than porting
-// code against a dependency that isn't there. Same pattern already used in PlainGrinder. Re-add this
-// after any future sync_tmpl.py run for Cyclic (that script overwrites build.gradle wholesale from tmpl/),
-// and remove once a 26.1 CraftTweaker build is available and the dependency above is uncommented.
+// No 26.1 CraftTweaker build exists yet (crafttweaker_version is commented out below) - exclude the
+// compat package so its ~150 cascading "package does not exist" errors don't block compilation.
+// This is regenerated from tmpl/build.gradle by sync_tmpl.py, so re-add if a future sync wipes it.
 sourceSets.main.java {
     exclude 'com/lothrazar/cyclic/compat/crafttweaker/**'
 }
@@ -291,7 +289,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-    options.compilerArgs += ['-Xmaxerrs', '20000']
+    options.compilerArgs += ['-Xmaxerrs', '20000'] // javac hides anything past 100 errors by default - this mod is big enough to need the full list
 }
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.

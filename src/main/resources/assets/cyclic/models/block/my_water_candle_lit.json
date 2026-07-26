@@ -2,6 +2,7 @@
 	"credit": "Made with Blockbench @INooBTooMuch https://github.com/Lothrazar/Cyclic/issues/2182",
 	"parent": "block/block",
 	"textures": {
+		"particle": "#sides",
 		"holder": "cyclic:block/machine/water_candle_holder",
 		"2": "cyclic:block/machine/water_candle",
   	  	"centerwater": "cyclic:block/water_fake",

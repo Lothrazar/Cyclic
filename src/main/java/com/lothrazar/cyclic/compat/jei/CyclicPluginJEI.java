@@ -36,6 +36,7 @@ import net.minecraft.client.gui.screens.inventory.HorseInventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -78,10 +79,18 @@ public class CyclicPluginJEI implements IModPlugin {
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.CRUSHER.get()), CrusherRecipeCategory.TYPE);
   }
 
+  // Full Recipe objects are no longer synced to the client at all (only recipe-book display data is,
+  // via ClientRecipeContainer). Reading the local integrated server's RecipeManager directly is the only
+  // way to get real recipe instances here; this only works in singleplayer/LAN-hosted worlds, so a
+  // JEI-connected dedicated-server client simply won't see these categories populated.
   @Override
   public void registerRecipes(IRecipeRegistration registry) {
     ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
-    RecipeManager rm = world.getServer().getRecipeManager();
+    MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
+    if (server == null) {
+      return;
+    }
+    RecipeManager rm = server.getRecipeManager();
     // 26.1: RecipeManager#getAllRecipesFor(RecipeType<T>) removed - use recipeMap().byType(type) instead
     // (returns a Collection, not a List, so JEI's List-typed addRecipes needs an explicit .stream().toList()).
     registry.addRecipes(RecipeTypes.CRAFTING, rm.recipeMap().byType(RecipeType.CRAFTING).stream().toList());

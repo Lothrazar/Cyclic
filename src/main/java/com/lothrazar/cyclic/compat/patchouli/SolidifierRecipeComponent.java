@@ -13,6 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -46,7 +47,14 @@ public class SolidifierRecipeComponent implements ICustomComponent {
     if (rl == null) {
       return;
     }
-    resolvedRecipe = level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE, rl))
+    // Full Recipe objects are no longer synced to the client; reading the local integrated
+    // server's RecipeManager is the only way to get a real instance here (dedicated-server
+    // connections simply won't resolve this recipe).
+    MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
+    if (server == null) {
+      return;
+    }
+    resolvedRecipe = server.getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE, rl))
         .filter(h -> h.value() instanceof RecipeSolidifier)
         .map(h -> (RecipeSolidifier) h.value())
         .orElse(null);

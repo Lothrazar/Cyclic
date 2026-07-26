@@ -1,16 +1,17 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
+		"particle": "#1",
 		"1": "minecraft:block/obsidian",
 		"2": "minecraft:block/cobblestone",
-		"wa": "cyclic:item/wand/wa",
-		"wb": "cyclic:item/wand/wb",
-		"na": "cyclic:item/wand/na",
-		"nb": "cyclic:item/wand/nb",
-		"ea": "cyclic:item/wand/ea",
-		"eb": "cyclic:item/wand/eb",
-		"sa": "cyclic:item/wand/sa",
-		"sb": "cyclic:item/wand/sb"
+		"wa": "cyclic:block/wand/wa",
+		"wb": "cyclic:block/wand/wb",
+		"na": "cyclic:block/wand/na",
+		"nb": "cyclic:block/wand/nb",
+		"ea": "cyclic:block/wand/ea",
+		"eb": "cyclic:block/wand/eb",
+		"sa": "cyclic:block/wand/sa",
+		"sb": "cyclic:block/wand/sb"
 	},
 	"elements": [
 		{

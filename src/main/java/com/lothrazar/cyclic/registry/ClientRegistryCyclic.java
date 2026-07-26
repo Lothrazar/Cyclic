@@ -52,6 +52,7 @@ import com.lothrazar.cyclic.block.wireless.fluid.RenderWirelessFluid;
 import com.lothrazar.cyclic.block.wireless.item.RenderWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.item.compass.GpsCompassItem;
+import com.lothrazar.cyclic.item.compass.GpsCompassAngleProperty;
 import com.lothrazar.cyclic.item.compass.ScreenGpsCompass;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.lunchbox.LunchboxOverlayTintSource;
@@ -63,6 +64,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.client.player.LocalPlayer;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
+import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
 import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
 import net.neoforged.neoforge.client.fluid.FluidTintSources;
 import net.minecraft.client.renderer.block.FluidModel;
@@ -306,6 +308,13 @@ public class ClientRegistryCyclic {
     event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "shield_obsidian"), ShieldMaterialSpecialRenderer.ObsidianUnbaked.MAP_CODEC);
   }
 
+  // GPS compass angle predicate moved off the removed ItemProperties/ItemPropertyFunction system
+  // (see the commented-out initCompass() above) and onto a registered custom minecraft:range_dispatch
+  // property, consumed by assets/cyclic/items/compass_gps.json.
+  @SubscribeEvent
+  public static void onRegisterRangeSelectItemModelProperty(RegisterRangeSelectItemModelPropertyEvent event) {
+    event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "gps_angle"), GpsCompassAngleProperty.MAP_CODEC);
+  }
 
   @SubscribeEvent
   public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {

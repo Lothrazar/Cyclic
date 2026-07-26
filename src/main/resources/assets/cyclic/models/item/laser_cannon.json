@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
+		"particle": "#side",
 		"beam": "cyclic:item/rainbow/beam",
 		"side": "cyclic:item/rainbow/side",
 		"top": "cyclic:item/rainbow/top",
