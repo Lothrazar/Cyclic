@@ -21,7 +21,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -76,10 +76,10 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeHolder<Recipe
   }
 
   @Override
-  public void draw(RecipeHolder<RecipeMelter> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<RecipeMelter> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor ms, double mouseX, double mouseY) {
     gui.draw(ms, 0, 0);
     var recipe = recipeHolder.value();
-    ms.drawString(font, recipe.getEnergy().getRfPertick() + " RF/t", 58, 9, FONT);
+    ms.text(font, recipe.getEnergy().getRfPertick() + " RF/t", 58, 9, FONT);
     bar.draw(ms, recipe.getEnergy().getEnergyTotal());
     progress.draw(ms, 0);
     bar.renderHoveredToolTip(ms, (int) mouseX, (int) mouseY, recipe.getEnergy().getEnergyTotal());

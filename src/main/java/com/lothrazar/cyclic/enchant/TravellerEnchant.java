@@ -8,7 +8,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ElytraItem;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
@@ -51,7 +50,9 @@ public class TravellerEnchant {
       if (entity.fallDistance <= 8) {
         event.setNewDamage (0.1F);
       }
-      else if (entity.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ElytraItem) {
+      // 26.1: ElytraItem class removed - gliding is now a data-component check (DataComponents.GLIDER +
+      // matching Equippable slot), see LivingEntity#canGlideUsing(ItemStack, EquipmentSlot).
+      else if (LivingEntity.canGlideUsing(entity.getItemBySlot(EquipmentSlot.CHEST), EquipmentSlot.CHEST)) {
         if (event.getOriginalDamage()  > entity.getHealth() - 0.5F) {
           event.setNewDamage (entity.getHealth() - 1F);
           ParticleUtil.spawnParticle(entity.level(), ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, entity.blockPosition(), 4);

@@ -183,7 +183,8 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
         boolean harvested = fakePlayer.gameMode.destroyBlock(targetPos);
         if (!harvested) {
           //removedByPlayer
-          harvested = level.getBlockState(targetPos).onDestroyedByPlayer(level, targetPos, fakePlayer, true, level.getFluidState(targetPos));
+          // 26.1: onDestroyedByPlayer gained a new ItemStack tool param between the player and willHarvest bool
+          harvested = level.getBlockState(targetPos).onDestroyedByPlayer(level, targetPos, fakePlayer, fakePlayer.getMainHandItem(), true, level.getFluidState(targetPos));
 
         }
         if (harvested) {

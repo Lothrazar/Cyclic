@@ -2,15 +2,17 @@ package com.lothrazar.cyclic.compat.patchouli;
 
 import java.util.function.UnaryOperator;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.FluidRenderMap;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import vazkii.patchouli.api.IComponentRenderContext;
 import vazkii.patchouli.api.ICustomComponent;
@@ -42,14 +44,14 @@ public class MelterRecipeComponent implements ICustomComponent {
     if (rl == null) {
       return;
     }
-    resolvedRecipe = level.getServer().getRecipeManager().byKey(rl)
+    resolvedRecipe = level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE, rl))
         .filter(h -> h.value() instanceof RecipeMelter)
         .map(h -> (RecipeMelter) h.value())
         .orElse(null);
   }
 
   @Override
-  public void render(GuiGraphics graphics, IComponentRenderContext ctx, float partialTicks, int mouseX, int mouseY) {
+  public void extractRenderState(GuiGraphicsExtractor graphics, IComponentRenderContext ctx, float partialTicks, int mouseX, int mouseY) {
     if (resolvedRecipe == null) {
       return;
     }
@@ -60,7 +62,7 @@ public class MelterRecipeComponent implements ICustomComponent {
     int itemX = cx - 26;
     int fluidX = cx + 10;
     ctx.renderIngredient(graphics, itemX, y, mouseX, mouseY, resolvedRecipe.at(0));
-    graphics.drawString(font, "->", itemX + 18, y + 4, 0xFF404040, false);
+    graphics.text(font, "->", itemX + 18, y + 4, 0xFF404040, false);
     FluidStack outFluid = resolvedRecipe.getRecipeFluid();
     renderFluidSlot(graphics, fluidX, y, outFluid);
     // row 2: fluid name centered
@@ -69,31 +71,22 @@ public class MelterRecipeComponent implements ICustomComponent {
     if (!outFluid.isEmpty()) {
       String name = outFluid.getHoverName().getString();
       String amount = "x" + outFluid.getAmount() + "mB";
-      graphics.drawString(font, name, cx - font.width(name) / 2, y + 22, 0xFF404040, false);
-      graphics.drawString(font, amount, cx - font.width(amount) / 2, y + 32, 0xFF404040, false);
+      graphics.text(font, name, cx - font.width(name) / 2, y + 22, 0xFF404040, false);
+      graphics.text(font, amount, cx - font.width(amount) / 2, y + 32, 0xFF404040, false);
     }
     int rfpt = resolvedRecipe.getEnergy().getRfPertick();
     int total = resolvedRecipe.getEnergy().getEnergyTotal();
     String energy = rfpt + " RF/t  " + total + " RF";
-    graphics.drawString(font, energy, cx - font.width(energy) / 2, y + 43, 0xFF404040, false);
+    graphics.text(font, energy, cx - font.width(energy) / 2, y + 43, 0xFF404040, false);
   }
 
-  private void renderFluidSlot(GuiGraphics graphics, int fx, int fy, FluidStack fluid) {
+  private void renderFluidSlot(GuiGraphicsExtractor graphics, int fx, int fy, FluidStack fluid) {
     graphics.fill(fx - 1, fy - 1, fx + 17, fy + 17, 0xFF808080);
     graphics.fill(fx, fy, fx + 16, fy + 16, 0xFF303030);
     if (!fluid.isEmpty()) {
       var sprite = FluidRenderMap.getFluidTexture(fluid, FluidRenderMap.FluidFlow.STILL);
-      int tint = IClientFluidTypeExtensions.of(fluid.getFluid()).getTintColor(fluid);
-      float a = ((tint >> 24) & 0xFF) / 255f;
-      float r = ((tint >> 16) & 0xFF) / 255f;
-      float g = ((tint >> 8) & 0xFF) / 255f;
-      float b = (tint & 0xFF) / 255f;
-      if (a == 0f) {
-        a = 1f;
-      }
-      RenderSystem.setShaderColor(r, g, b, a);
-      graphics.blit(fx, fy, 0, 16, 16, sprite);
-      RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+      int tint = FluidHelpers.getColorFromFluid(fluid);
+      graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, fx, fy, 16, 16, tint);
     }
   }
 }

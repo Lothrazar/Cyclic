@@ -82,14 +82,16 @@ public class CyclicPluginJEI implements IModPlugin {
   public void registerRecipes(IRecipeRegistration registry) {
     ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
     RecipeManager rm = world.getServer().getRecipeManager();
-    registry.addRecipes(RecipeTypes.CRAFTING, rm.getAllRecipesFor(RecipeType.CRAFTING));
-    registry.addRecipes(MelterRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.MELTER.get()));
-    registry.addRecipes(SolidifierRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.SOLID.get()));
-    registry.addRecipes(GenitemRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get()));
-    registry.addRecipes(GenfluidRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get()));
-    registry.addRecipes(CrusherRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.CRUSHER.get()));
+    // 26.1: RecipeManager#getAllRecipesFor(RecipeType<T>) removed - use recipeMap().byType(type) instead
+    // (returns a Collection, not a List, so JEI's List-typed addRecipes needs an explicit .stream().toList()).
+    registry.addRecipes(RecipeTypes.CRAFTING, rm.recipeMap().byType(RecipeType.CRAFTING).stream().toList());
+    registry.addRecipes(MelterRecipeCategory.TYPE, rm.recipeMap().byType(CyclicRecipeType.MELTER.get()).stream().toList());
+    registry.addRecipes(SolidifierRecipeCategory.TYPE, rm.recipeMap().byType(CyclicRecipeType.SOLID.get()).stream().toList());
+    registry.addRecipes(GenitemRecipeCategory.TYPE, rm.recipeMap().byType(CyclicRecipeType.GENERATOR_ITEM.get()).stream().toList());
+    registry.addRecipes(GenfluidRecipeCategory.TYPE, rm.recipeMap().byType(CyclicRecipeType.GENERATOR_FLUID.get()).stream().toList());
+    registry.addRecipes(CrusherRecipeCategory.TYPE, rm.recipeMap().byType(CyclicRecipeType.CRUSHER.get()).stream().toList());
     registry.addRecipes(PackagerRecipeCategory.TYPE,
-        rm.getAllRecipesFor(RecipeType.CRAFTING).stream()
+        rm.recipeMap().byType(RecipeType.CRAFTING).stream()
           .filter(h -> UtilPackager.isRecipeValid(h.value(), world.registryAccess()))
           .toList());
     for (var item : ItemRegistry.ITEMS.getEntries()) {

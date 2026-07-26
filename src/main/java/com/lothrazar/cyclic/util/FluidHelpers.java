@@ -8,6 +8,7 @@ import com.lothrazar.library.render.FluidRenderMap.FluidFlow;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +23,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidUtil;
@@ -49,7 +49,12 @@ public class FluidHelpers {
    */
   public static int getColorFromFluid(FluidStack fstack) {
     if (fstack != null && !fstack.isEmpty()) {
-      return IClientFluidTypeExtensions.of(fstack.getFluid()).getTintColor(fstack);
+      // 26.1: IClientFluidTypeExtensions#getTintColor removed - fluid tint is now purely part of the
+      // FluidModel baked via RegisterFluidModelsEvent (see ClientRegistryCyclic#registerFluidModel),
+      // queried at runtime through the client's FluidStateModelSet instead.
+      FluidModel model = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fstack.getFluid().defaultFluidState());
+      net.neoforged.neoforge.client.fluid.FluidTintSource tint = model.fluidTintSource();
+      return tint != null ? tint.colorAsStack(fstack) : 0xFFFFFFFF;
     }
     return COLOUR_DEFAULT;
   }
@@ -180,7 +185,10 @@ public class FluidHelpers {
     }
     Model3D model = new Model3D();
     model.setTexture(FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL));
-    if (IClientFluidTypeExtensions.of(fluid.getFluid()).getStillTexture(fluid) != null) {
+    // 26.1: IClientFluidTypeExtensions#getStillTexture removed (fluid textures are now purely part of
+    // the FluidModel data - see getColorFromFluid above); this was just a "does this fluid have a real
+    // texture" guard, which is always true for a non-empty stack now that there's no other way to check.
+    if (!fluid.isEmpty()) {
       double sideSpacing = 0.00625;
       double belowSpacing = 0.0625 / 4;
       model.minX = sideSpacing;

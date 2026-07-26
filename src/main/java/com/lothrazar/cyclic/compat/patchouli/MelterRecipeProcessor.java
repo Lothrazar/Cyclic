@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.compat.patchouli;
 
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
@@ -17,7 +19,7 @@ public class MelterRecipeProcessor implements IComponentProcessor {
     recipeId = variables.get("recipe", level.registryAccess()).asString();
     Identifier rl = Identifier.tryParse(recipeId);
     if (rl != null) {
-      recipe = level.getServer().getRecipeManager().byKey(rl)
+      recipe = level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE, rl))
           .filter(h -> h.value() instanceof RecipeMelter)
           .map(h -> (RecipeMelter) h.value())
           .orElse(null);

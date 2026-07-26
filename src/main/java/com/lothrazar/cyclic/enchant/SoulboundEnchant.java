@@ -9,7 +9,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -70,11 +72,13 @@ public class SoulboundEnchant {
     for (int i = 0; i < inv.getContainerSize(); i++) {
       addIfSoulbound(holder, inv.getItem(i), i, provider, pending);
     }
-    for (int i = 0; i < inv.armor.size(); i++) {
-      addIfSoulbound(holder, inv.armor.get(i), 36 + i, provider, pending);
-    }
-    if (!inv.offhand.isEmpty()) {
-      addIfSoulbound(holder, inv.offhand.get(0), 40, provider, pending);
+    // 26.1: Inventory#armor/#offhand fields are gone - equipment now lives on the entity itself, keyed by
+    // EquipmentSlot. Inventory.EQUIPMENT_SLOT_MAPPING (public) maps slots 36-39 to armor, 40 to offhand.
+    for (int i = 36; i <= 40; i++) {
+      EquipmentSlot slot = Inventory.EQUIPMENT_SLOT_MAPPING.get(i);
+      if (slot != null) {
+        addIfSoulbound(holder, player.getItemBySlot(slot), i, provider, pending);
+      }
     }
     if (!pending.isEmpty()) {
       PENDING.put(player.getUUID(), pending);
@@ -85,7 +89,11 @@ public class SoulboundEnchant {
     if (stack.isEmpty() || EnchantmentHelper.getItemEnchantmentLevel(holder, stack) <= 0) {
       return;
     }
-    Tag itemTag = stack.copy().save(provider);
+    // 26.1: ItemStack#save(Provider) removed - purely Codec-based now, bridged to raw Tag storage
+    Tag itemTag = ItemStack.CODEC.encodeStart(provider.createSerializationContext(NbtOps.INSTANCE), stack.copy()).result().orElse(null);
+    if (itemTag == null) {
+      return;
+    }
     if (itemTag instanceof CompoundTag itemCtag) {
       CompoundTag entry = new CompoundTag();
       entry.put(NBT_ITEM, itemCtag);
@@ -142,7 +150,8 @@ public class SoulboundEnchant {
       if (!(entryTag instanceof CompoundTag entry)) {
         continue;
       }
-      ItemStack saved = ItemStack.parse(provider, entry.get(NBT_ITEM)).orElse(ItemStack.EMPTY);
+      // 26.1: ItemStack.parse(Provider, Tag) removed - purely Codec-based now
+      ItemStack saved = ItemStack.CODEC.parse(provider.createSerializationContext(NbtOps.INSTANCE), entry.get(NBT_ITEM)).result().orElse(ItemStack.EMPTY);
       if (saved.isEmpty()) {
         continue;
       }
@@ -153,19 +162,18 @@ public class SoulboundEnchant {
       int slot = entry.getIntOr(NBT_SLOT, 0);
       if (slot >= 0) {
         Inventory inv = respawned.getInventory();
+        // 26.1: Inventory#armor/#offhand fields are gone - use Inventory.EQUIPMENT_SLOT_MAPPING + the
+        // entity's own getItemBySlot/setItemSlot for slots 36-40 (armor + offhand), same as onLivingDeath above.
+        EquipmentSlot eqSlot = slot >= 36 && slot <= 40 ? Inventory.EQUIPMENT_SLOT_MAPPING.get(slot) : null;
         boolean canUseSlot = slot < inv.getContainerSize()
             ? inv.getItem(slot).isEmpty()
-            : slot < 40 ? inv.armor.get(slot - 36).isEmpty()
-            : slot == 40 && inv.offhand.get(0).isEmpty();
+            : eqSlot != null && respawned.getItemBySlot(eqSlot).isEmpty();
         if (canUseSlot) {
           if (slot < inv.getContainerSize()) {
             inv.setItem(slot, saved);
           }
-          else if (slot < 40) {
-            inv.armor.set(slot - 36, saved);
-          }
-          else {
-            inv.offhand.set(0, saved);
+          else if (eqSlot != null) {
+            respawned.setItemSlot(eqSlot, saved);
           }
           continue;
         }

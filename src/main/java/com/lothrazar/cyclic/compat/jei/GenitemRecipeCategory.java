@@ -14,7 +14,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -59,13 +59,13 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
   }
 
   @Override
-  public void draw(RecipeHolder<RecipeGeneratorItem> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<RecipeGeneratorItem> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor ms, double mouseX, double mouseY) {
     gui.draw(ms, 0, 0);
     var recipe = recipeHolder.value();
     var font = Minecraft.getInstance().font;
-    ms.drawString(font, recipe.getTicks() + " t", 60, 0, FONT);
-    ms.drawString(font, recipe.getRfPertick() + " RF/t", 60, 10, FONT);
-    ms.drawString(font, recipe.getEnergyTotal() + " RF", 60, 20, FONT);
+    ms.text(font, recipe.getTicks() + " t", 60, 0, FONT);
+    ms.text(font, recipe.getRfPertick() + " RF/t", 60, 10, FONT);
+    ms.text(font, recipe.getEnergyTotal() + " RF", 60, 20, FONT);
   }
 
   @Override

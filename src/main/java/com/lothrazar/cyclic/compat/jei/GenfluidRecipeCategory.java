@@ -16,7 +16,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -62,14 +62,14 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeHolder<Reci
   }
 
   @Override
-  public void draw(RecipeHolder<RecipeGeneratorFluid> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<RecipeGeneratorFluid> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor ms, double mouseX, double mouseY) {
     gui.draw(ms, 0, 0);
     var recipe = recipeHolder.value();
     var font = Minecraft.getInstance().font;
-    ms.drawString(font, recipe.getTicks() + " t", 60, 0, FONT);
-    ms.drawString(font, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
-    ms.drawString(font, recipe.getRfTotal() + " RF", 60, 20, FONT);
-    //ms.drawString(font, recipe.fluidIng.getAmount() + " mB", 60, 30, FONT);
+    ms.text(font, recipe.getTicks() + " t", 60, 0, FONT);
+    ms.text(font, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
+    ms.text(font, recipe.getRfTotal() + " RF", 60, 20, FONT);
+    //ms.text(font, recipe.fluidIng.getAmount() + " mB", 60, 30, FONT);
   }
 
   @Override

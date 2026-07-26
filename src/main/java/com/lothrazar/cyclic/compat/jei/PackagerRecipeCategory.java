@@ -16,13 +16,13 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class PackagerRecipeCategory implements IRecipeCategory<RecipeHolder<CraftingRecipe>> {
@@ -65,7 +65,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<RecipeHolder<Craf
   }
 
   @Override
-  public void draw(RecipeHolder<CraftingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<CraftingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor ms, double mouseX, double mouseY) {
     gui.draw(ms, 0, 0);
   }
 
@@ -77,18 +77,23 @@ public class PackagerRecipeCategory implements IRecipeCategory<RecipeHolder<Craf
   @Override
   public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<CraftingRecipe> recipeHolder, IFocusGroup focuses) {
     CraftingRecipe recipe = recipeHolder.value();
-    if (recipe.getIngredients().size() == 0) {
+    // 26.1: Recipe#getIngredients()/getResultItem(HolderLookup.Provider) removed from the interface -
+    // getIngredients() -> placementInfo().ingredients(); getResultItem() has no universal replacement,
+    // but vanilla CraftingRecipe#assemble(CraftingInput) ignores the actual input for standard recipes,
+    // so assemble(CraftingInput.EMPTY) is a safe stand-in for "give me a representative result" here.
+    List<Ingredient> ingredients = recipe.placementInfo().ingredients();
+    if (ingredients.isEmpty()) {
       return;
     }
     int sz = 0; // recipe.getIngredients().size();
-    for (Ingredient wtf : recipe.getIngredients()) {
-      if (wtf != Ingredient.EMPTY && wtf.getItems().length > 0) {
+    for (Ingredient wtf : ingredients) {
+      if (!wtf.isEmpty()) {
         sz++;
       }
     }
     List<ItemStack> haxor = new ArrayList<>();
-    Ingredient ingredientKey = recipe.getIngredients().get(0);
-    for (ItemStack st : ingredientKey.getItems()) {
+    Ingredient ingredientKey = ingredients.get(0);
+    for (ItemStack st : ingredientKey.items().map(ItemStack::new).toList()) {
       if (st.isEmpty()) {
         continue;
       }
@@ -97,6 +102,6 @@ public class PackagerRecipeCategory implements IRecipeCategory<RecipeHolder<Craf
       haxor.add(cpy);
     }
     builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(VanillaTypes.ITEM_STACK, haxor);
-    builder.addSlot(RecipeIngredientRole.OUTPUT, 69, 8).addItemStack(recipe.getResultItem(instance.level.registryAccess()));
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 69, 8).addItemStack(recipe.assemble(CraftingInput.EMPTY));
   }
 }

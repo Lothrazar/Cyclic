@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
-import org.joml.Vector4f;
+import org.joml.Vector3f;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.ScreenBase;
@@ -11,7 +11,6 @@ import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.gui.FluidBar;
 import com.lothrazar.library.gui.TexturedProgress;
 import com.lothrazar.library.util.ChatUtil;
-import com.mojang.math.Axis;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -57,15 +56,17 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     energy.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getEnergy());
     progress.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
     btnRedstone.onValueUpdate(menu.tile);
+    // 26.1: GuiGraphicsExtractor#pose() is now a 2D Matrix3x2fStack (was a 3D PoseStack) -
+    // pushPose/popPose/mulPose(Quaternionf) -> pushMatrix/popMatrix/rotate(radians), translate takes (x,y).
     var pose = gg.pose();
-    pose.pushPose();
-    pose.translate(this.width / 2, this.height / 2, 0);
-    pose.mulPose(Axis.ZP.rotationDegrees(-90));
-    pose.translate(-this.width / 2, -this.height / 2, 0);
-    Vector4f vec = new Vector4f(mouseX, mouseY, 0, 1);
-    // 
-    vec = pose.last().pose().transform(vec);
-    pose.popPose(); //Look, it's a bit hacky, but it gets the job done.  Rotation Math!
+    pose.pushMatrix();
+    pose.translate(this.width / 2f, this.height / 2f);
+    pose.rotate((float) Math.toRadians(-90));
+    pose.translate(-this.width / 2f, -this.height / 2f);
+    Vector3f vec = new Vector3f(mouseX, mouseY, 1);
+    //
+    vec = pose.transform(vec);
+    pose.popMatrix(); //Look, it's a bit hacky, but it gets the job done.  Rotation Math!
     if (fluid.isMouseover((int) vec.x(), (int) vec.y())) {
       fluid.renderTooltip(gg, mouseX, mouseY, menu.tile.getFluid());
     }
@@ -87,11 +88,11 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     progress.max = menu.tile.getField(TileGeneratorFluid.Fields.BURNMAX.ordinal());
     progress.draw(gg, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
     var pose = gg.pose();
-    pose.pushPose();
-    pose.translate(this.width / 2, this.height / 2, 0);
-    pose.mulPose(Axis.ZP.rotationDegrees(90));
-    pose.translate(-this.width / 2, -this.height / 2, 0);
+    pose.pushMatrix();
+    pose.translate(this.width / 2f, this.height / 2f);
+    pose.rotate((float) Math.toRadians(90));
+    pose.translate(-this.width / 2f, -this.height / 2f);
     fluid.draw(gg, menu.tile.getFluid());
-    pose.popPose();
+    pose.popMatrix();
   }
 }

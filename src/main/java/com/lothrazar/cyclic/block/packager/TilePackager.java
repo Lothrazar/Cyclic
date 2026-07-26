@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -96,9 +97,11 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
     if (recipe == null) {
       return;
     }
-    if (outputSlots.insertItem(0, recipe.getResultItem(level.registryAccess()).copy(), true).isEmpty()) {
+    // 26.1: Recipe#getResultItem removed - assemble(CraftingInput.EMPTY) is a safe stand-in since
+    // CraftingRecipe#assemble ignores the actual input for standard recipes (same pattern as UtilPackager).
+    if (outputSlots.insertItem(0, recipe.assemble(CraftingInput.EMPTY).copy(), true).isEmpty()) {
       final int total = UtilPackager.getIngredientsInRecipe(recipe);
-      final ItemStack output = recipe.getResultItem(level.registryAccess()).copy();
+      final ItemStack output = recipe.assemble(CraftingInput.EMPTY).copy();
       inputSlots.extractItem(0, total, false);
       outputSlots.insertItem(0, output, false);
       energy.extractEnergy(POWERCONF.get(), false);

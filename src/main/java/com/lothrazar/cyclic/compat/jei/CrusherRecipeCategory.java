@@ -17,7 +17,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -69,20 +69,20 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
   }
 
   @Override
-  public void draw(RecipeHolder<RecipeCrusher> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<RecipeCrusher> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor ms, double mouseX, double mouseY) {
     gui.draw(ms, 0, 0);
     var recipe = recipeHolder.value();
     int x = 78;
     if (recipe.energy.getTicks() < 40) {
-      ms.drawString(font, recipe.energy.getTicks() + " t", x, 6, FONT);
+      ms.text(font, recipe.energy.getTicks() + " t", x, 6, FONT);
     }
     else {
       int sec = recipe.energy.getTicks() / 20;
-      ms.drawString(font, sec + " s", x, 6, FONT);
+      ms.text(font, sec + " s", x, 6, FONT);
     }
-    ms.drawString(font, recipe.energy.getRfPertick() + " RF/t", x, 16, FONT);
+    ms.text(font, recipe.energy.getRfPertick() + " RF/t", x, 16, FONT);
     if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {
-      ms.drawString(font, recipe.randOutput.percent + "%", 56, 36, FONT);
+      ms.text(font, recipe.randOutput.percent + "%", 56, 36, FONT);
     }
     bar.draw(ms, recipe.energy.getEnergyTotal());
     bar.renderHoveredToolTip(ms, (int) mouseX, (int) mouseY, recipe.energy.getEnergyTotal());

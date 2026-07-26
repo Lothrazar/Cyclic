@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "cyclic:item/storage_bag",
+    "tints": [
+      { "type": "minecraft:constant", "value": -1 },
+      { "type": "cyclic:storage_bag_body" },
+      { "type": "minecraft:constant", "value": -1 }
+    ]
+  }
+}

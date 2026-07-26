@@ -63,7 +63,8 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic implements MenuPro
   }
 
   private void tryConsumeFuel() {
-    if (this.level.isDay() && this.level.canSeeSkyFromBelowWater(this.getBlockPos().above())) {
+    // 26.1: Level#isDay() removed, renamed to isBrightOutside() (same skyDarken<4 check)
+    if (this.level.isBrightOutside() && this.level.canSeeSkyFromBelowWater(this.getBlockPos().above())) {
       setLitProperty(true);
       int receive = BlockGeneratorSolar.ENERGY_GENERATE.get();
       if (this.level.isThundering()) {

@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.RegistryHolder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -15,7 +14,7 @@ import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneMod
 import com.lothrazar.cyclic.render.SpinModelRenderer;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.minecraft.client.gui.LayeredDraw;
+import net.neoforged.neoforge.client.gui.GuiLayer;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import com.lothrazar.cyclic.ModCyclic;
  import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
@@ -56,19 +55,13 @@ import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.item.compass.GpsCompassItem;
 import com.lothrazar.cyclic.item.compass.ScreenGpsCompass;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
+import com.lothrazar.cyclic.item.lunchbox.LunchboxOverlayTintSource;
 import com.lothrazar.cyclic.item.lunchbox.ScreenLunchbox;
-import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
-import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
+import com.lothrazar.cyclic.item.storagebag.StorageBagBodyTintSource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
@@ -158,7 +151,7 @@ public class ClientRegistryCyclic {
   /**
    *
    */
-  public static final LayeredDraw.Layer ENERGY_HUD_LAYER = (guiGraphics, deltaTracker) -> {
+  public static final GuiLayer ENERGY_HUD_LAYER = (guiGraphics, deltaTracker) -> {
     if (!ClientConfigCyclic.ENERGY_HUD.get()) {
       return;
     }
@@ -171,7 +164,7 @@ public class ClientRegistryCyclic {
       int y = 10;
       int colour = 0xFF0000;
 //      if (x >= 0 && y >= 0) {
-        guiGraphics.drawString(Minecraft.getInstance().font, toDisplay, x, y, colour);
+        guiGraphics.text(Minecraft.getInstance().font, toDisplay, x, y, colour);
 //      }
     }
   };
@@ -226,8 +219,9 @@ public class ClientRegistryCyclic {
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {
-    initShields();
-    initCompass();
+    // initShields(); // 26.1: ItemProperties/ItemPropertyFunction removed; shield blocking predicate
+    // superseded by the JSON condition/SpecialModelRenderer system (see initShields() below, kept commented for reference)
+    // initCompass(); // 26.1: same removal; GPS compass angle predicate needs a range_dispatch item model JSON instead (see initCompass() below)
     //provide a client-side HolderLookup.Provider for item caps that serialize component-aware
     //payloads (FluidStack, ItemStack handlers) so tooltips work over dedicated-server connections.
     initClientRegistries();
@@ -246,23 +240,30 @@ public class ClientRegistryCyclic {
       return null;
     };
   }
-  @SuppressWarnings("deprecation")
-  private static void initShields() {
-    //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
-    ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
-    ItemProperties.register(ItemRegistry.SHIELD_WOOD.get(), ShieldCyclicItem.BLOCKING, blockFn);
-    ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(), ShieldCyclicItem.BLOCKING, blockFn);
-    ItemProperties.register(ItemRegistry.SHIELD_FLINT.get(), ShieldCyclicItem.BLOCKING, blockFn);
-    ItemProperties.register(ItemRegistry.SHIELD_BONE.get(), ShieldCyclicItem.BLOCKING, blockFn);
-    ItemProperties.register(ItemRegistry.SHIELD_OBSIDIAN.get(), ShieldCyclicItem.BLOCKING, blockFn);
-  }
+  // 26.1: ItemProperties/ItemPropertyFunction (net.minecraft.client.renderer.item) removed entirely.
+  // Shield blocking predicate is now handled by the JSON condition/SpecialModelRenderer system instead
+  // (see assets/cyclic/items/shield_*.json, ShieldMaterialSpecialRenderer, onRegisterSpecialModelRenderer above).
+  // Kept commented (not deleted) per user direction - review/remove once confirmed unneeded.
+  // @SuppressWarnings("deprecation")
+  // private static void initShields() {
+  //   //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
+  //   ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
+  //   ItemProperties.register(ItemRegistry.SHIELD_WOOD.get(), ShieldCyclicItem.BLOCKING, blockFn);
+  //   ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(), ShieldCyclicItem.BLOCKING, blockFn);
+  //   ItemProperties.register(ItemRegistry.SHIELD_FLINT.get(), ShieldCyclicItem.BLOCKING, blockFn);
+  //   ItemProperties.register(ItemRegistry.SHIELD_BONE.get(), ShieldCyclicItem.BLOCKING, blockFn);
+  //   ItemProperties.register(ItemRegistry.SHIELD_OBSIDIAN.get(), ShieldCyclicItem.BLOCKING, blockFn);
+  // }
 
-  @SuppressWarnings("deprecation")
-  private static void initCompass() {
-    ItemPropertyFunction compassFn = (stack, level, entity, seed) -> GpsCompassItem.getAngle(stack, entity);
-    ItemProperties.register(ItemRegistry.GPS_COMPASS.get(),
-        Identifier.fromNamespaceAndPath("minecraft", "angle"), compassFn);
-  }
+  // 26.1: same ItemProperties removal. GPS compass angle predicate still needs a rewrite onto a
+  // minecraft:range_dispatch item model JSON node (see compass_gps.json follow-up in the port plan) -
+  // this Java registration call can't exist anymore regardless. Kept commented per user direction.
+  // @SuppressWarnings("deprecation")
+  // private static void initCompass() {
+  //   ItemPropertyFunction compassFn = (stack, level, entity, seed) -> GpsCompassItem.getAngle(stack, entity);
+  //   ItemProperties.register(ItemRegistry.GPS_COMPASS.get(),
+  //       Identifier.fromNamespaceAndPath("minecraft", "angle"), compassFn);
+  // }
 
   // IClientFluidTypeExtensions#getStillTexture/getFlowingTexture/getTintColor are gone in 26.1 - fluid
   // still/flow sprites + tint now register as a FluidModel.Unbaked via RegisterFluidModelsEvent instead.
@@ -373,38 +374,20 @@ public class ClientRegistryCyclic {
     event.register(MenuTypeRegistry.GPS_COMPASS.get(), ScreenGpsCompass::new);
   }
 
+  // 26.1: RegisterColorHandlersEvent.Item is gone - item colors are fully data-driven now via
+  // assets/cyclic/items/*.json "tints" arrays. This just registers the tint source *types*;
+  // per-item layer assignment happens in the JSON (see LunchboxOverlayTintSource/StorageBagBodyTintSource).
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
-  public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-    event.register((stack, tintIndex) -> {
-      if (tintIndex == 0) { //layer zero is outline, ignore this 
-        return 0xFFFFFFFF;
-      }
-      //layer 1 is overlay  
-      return ScreenLunchbox.getColour(stack);
-    }, ItemRegistry.LUNCHBOX.get());
-    //
-    event.register((stack, tintIndex) -> {
-      //layer 0 = outline, layer 2 = string overlay; only tint layer 1 (bag body)
-      if (tintIndex != 1) {
-        return 0xFFFFFFFF;
-      }
-      return ItemStorageBag.getColour(stack);
-    }, ItemRegistry.STORAGE_BAG.get());
-    //
-    event.register((stack, tintIndex) -> {
-      if (stack.has(DataComponents.CUSTOM_DATA) && tintIndex > 0) {
-        //what entity is inside
-        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(Identifier.parse(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
-        //pull the colours from the egg
-        for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
-          if (spawneggitem.getType(spawneggitem.getDefaultInstance()) == thing) {
-            return 0xFF000000 | spawneggitem.getColor(tintIndex - 1);
-          }
-        }
-      }
-      return 0xFFFFFFFF;
-    }, ItemRegistry.MOB_CONTAINER.get());
+  public static void registerItemColors(RegisterColorHandlersEvent.ItemTintSources event) {
+    event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "lunchbox_overlay"), LunchboxOverlayTintSource.MAP_CODEC);
+    event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "storage_bag_body"), StorageBagBodyTintSource.MAP_CODEC);
+    // MOB_CONTAINER (magic net) used to steal its overlay color from the captured entity's spawn egg
+    // via spawneggitem.getColor(...) - SpawnEggItem has no color API left at all in 26.1 (colors are now
+    // purely JSON-tint-driven per egg item, confirmed by reading SpawnEggItem.java fully). Reusing an
+    // egg's color at runtime would need our own entity-type->color table (no clean API to read another
+    // item's JSON tint at runtime) - not yet researched, flagging as follow-up. Not registering a tint
+    // source for MOB_CONTAINER for now; its layer1/layer2 textures will render untinted until this lands.
   }
 
   @OnlyIn(Dist.CLIENT)

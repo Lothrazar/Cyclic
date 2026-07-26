@@ -5,15 +5,16 @@ import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.FluidRenderMap;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import vazkii.patchouli.api.IComponentRenderContext;
 import vazkii.patchouli.api.ICustomComponent;
@@ -45,14 +46,14 @@ public class SolidifierRecipeComponent implements ICustomComponent {
     if (rl == null) {
       return;
     }
-    resolvedRecipe = level.getServer().getRecipeManager().byKey(rl)
+    resolvedRecipe = level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE, rl))
         .filter(h -> h.value() instanceof RecipeSolidifier)
         .map(h -> (RecipeSolidifier) h.value())
         .orElse(null);
   }
 
   @Override
-  public void render(GuiGraphics graphics, IComponentRenderContext ctx, float partialTicks, int mouseX, int mouseY) {
+  public void extractRenderState(GuiGraphicsExtractor graphics, IComponentRenderContext ctx, float partialTicks, int mouseX, int mouseY) {
     if (resolvedRecipe == null) {
       return;
     }
@@ -62,31 +63,22 @@ public class SolidifierRecipeComponent implements ICustomComponent {
     ctx.renderIngredient(graphics, x + 22, y + 27, mouseX, mouseY, resolvedRecipe.at(0));
     ctx.renderIngredient(graphics, x + 22, y + 45, mouseX, mouseY, resolvedRecipe.at(1));
     ctx.renderIngredient(graphics, x + 22, y + 63, mouseX, mouseY, resolvedRecipe.at(2));
-    graphics.drawString(font, "->", x + 42, y + 48, 0xFF404040, false);
+    graphics.text(font, "->", x + 42, y + 48, 0xFF404040, false);
     ctx.renderItemStack(graphics, x + 58, y + 45, mouseX, mouseY, resolvedRecipe.result);
     int rfpt = resolvedRecipe.getEnergy().getRfPertick();
     int total = resolvedRecipe.getEnergy().getEnergyTotal();
     int mB = resolvedRecipe.getAmount();
-    graphics.drawString(font, rfpt + " RF/t  " + total + " RF", x, y + 85, 0xFF404040, false);
-    graphics.drawString(font, resolvedRecipe.getRecipeFluid().getHoverName().getString() + " x" + mB + "mB", x, y + 94, 0xFF404040, false);
+    graphics.text(font, rfpt + " RF/t  " + total + " RF", x, y + 85, 0xFF404040, false);
+    graphics.text(font, resolvedRecipe.getRecipeFluid().getHoverName().getString() + " x" + mB + "mB", x, y + 94, 0xFF404040, false);
   }
 
-  private void renderFluidSlot(GuiGraphics graphics, int fx, int fy, FluidStack fluid) {
+  private void renderFluidSlot(GuiGraphicsExtractor graphics, int fx, int fy, FluidStack fluid) {
     graphics.fill(fx - 1, fy - 1, fx + 17, fy + 17, 0xFF808080);
     graphics.fill(fx, fy, fx + 16, fy + 16, 0xFF303030);
     if (!fluid.isEmpty()) {
       var sprite = FluidRenderMap.getFluidTexture(fluid, FluidRenderMap.FluidFlow.STILL);
-      int tint = IClientFluidTypeExtensions.of(fluid.getFluid()).getTintColor(fluid);
-      float a = ((tint >> 24) & 0xFF) / 255f;
-      float r = ((tint >> 16) & 0xFF) / 255f;
-      float g = ((tint >> 8) & 0xFF) / 255f;
-      float b = (tint & 0xFF) / 255f;
-      if (a == 0f) {
-        a = 1f;
-      }
-      RenderSystem.setShaderColor(r, g, b, a);
-      graphics.blit(fx, fy, 0, 16, 16, sprite);
-      RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+      int tint = FluidHelpers.getColorFromFluid(fluid);
+      graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, fx, fy, 16, 16, tint);
     }
   }
 
