@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +32,7 @@ public class BlockPlacer extends BlockCyclic {
   }
 
   @Override
-  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos) {
+  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos, Direction direction) {
     return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
   }
 

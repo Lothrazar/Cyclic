@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -15,7 +15,8 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -28,12 +29,14 @@ public class RenderDisenchant implements BlockEntityRenderer<TileDisenchant, Ren
     float partialTick;
   }
 
-  private static final Material BOOK_LOCATION = new Material(TextureAtlas.LOCATION_BLOCKS,
+  private static final SpriteId BOOK_LOCATION = new SpriteId(TextureAtlas.LOCATION_BLOCKS,
       Identifier.withDefaultNamespace("entity/enchanting_table_book"));
   private final BookModel bookModel;
+  private final SpriteGetter sprites;
 
   public RenderDisenchant(BlockEntityRendererProvider.Context ctx) {
     this.bookModel = new BookModel(ctx.bakeLayer(ModelLayers.BOOK));
+    this.sprites = ctx.sprites();
   }
 
   @Override
@@ -76,7 +79,7 @@ public class RenderDisenchant implements BlockEntityRenderer<TileDisenchant, Ren
     pageR = Mth.clamp(pageR, 0.0F, 1.0F);
     this.bookModel.setupAnim(time, pageL, pageR, 0.2F);
     MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-    VertexConsumer vc = BOOK_LOCATION.buffer(buffer, RenderType::entitySolid);
+    VertexConsumer vc = BOOK_LOCATION.buffer(this.sprites, buffer, RenderType::entitySolid);
     this.bookModel.renderToBuffer(pose, vc, state.lightCoords, 0);
     buffer.endBatch();
     pose.popPose();

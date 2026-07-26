@@ -71,6 +71,6 @@ public enum BuilderActionType {
     if (!wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(NBTBLOCKSTATE)) {
       return null;
     }
-    return NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getCompoundOrEmpty(NBTBLOCKSTATE));
+    return NbtUtils.readBlockState(BuiltInRegistries.BLOCK, wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getCompoundOrEmpty(NBTBLOCKSTATE));
   }
 }

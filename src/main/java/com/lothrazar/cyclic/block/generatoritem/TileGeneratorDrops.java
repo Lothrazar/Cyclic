@@ -106,7 +106,7 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
       return;
     }
     currentRecipe = null;
-    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get());
+    var recipes = level.getServer().getRecipeManager().recipeMap().byType(CyclicRecipeType.GENERATOR_ITEM.get());
     for (var holder : recipes) {
       RecipeGeneratorItem rec = holder.value();
       if (rec.matches(input, level)) {

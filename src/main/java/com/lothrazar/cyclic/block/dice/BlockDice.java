@@ -6,11 +6,13 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.BlockstatesUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -41,7 +43,7 @@ public class BlockDice extends BlockCyclic {
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndLightGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
@@ -51,7 +53,7 @@ public class BlockDice extends BlockCyclic {
   }
 
   @Override
-  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos) {
+  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos, Direction direction) {
     BlockEntity tile = level.getBlockEntity(pos);
     if (tile instanceof TileDice) {
       return ((TileDice) tile).getComparatorSignal();

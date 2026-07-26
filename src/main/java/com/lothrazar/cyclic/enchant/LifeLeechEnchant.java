@@ -27,7 +27,7 @@ public class LifeLeechEnchant {
     if (level > 0) {
       int restore = (int) Math.max(Math.ceil(target.getMaxHealth() / 5), 4);
       int min = level;
-      restore = attacker.getCommandSenderWorld().random.nextInt(restore + 1) + min;
+      restore = attacker.level().getRandom().nextInt(restore + 1) + min;
       if (restore > 0 && attacker.getHealth() < attacker.getMaxHealth()) {
         attacker.heal(restore);
       }

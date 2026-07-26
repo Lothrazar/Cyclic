@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -46,7 +47,7 @@ public class CommandHome {
   private static void set(ServerPlayer sp, ResourceKey<Level> resourceKey, BlockPos blockPosition) {
     //respawn anchor uses ,false, true)
     //setspawn command uses true, false)
-    sp.setRespawnPosition(resourceKey, blockPosition, 0, true, false);
+    sp.setRespawnPosition(new ServerPlayer.RespawnConfig(LevelData.RespawnData.of(resourceKey, blockPosition, 0, 0), true), false);
   }
 
   public static int executeSaveHome(CommandContext<CommandSourceStack> x, Collection<ServerPlayer> players) {

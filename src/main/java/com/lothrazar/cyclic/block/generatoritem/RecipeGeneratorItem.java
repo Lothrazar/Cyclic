@@ -9,7 +9,10 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -17,6 +20,18 @@ import net.minecraft.world.level.Level;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class RecipeGeneratorItem implements Recipe<RecipeInput> {
+
+  public static final MapCodec<RecipeGeneratorItem> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+      Ingredient.CODEC.fieldOf("fuel").forGetter(r -> r.at(0)),
+      EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> new EnergyIngredient(r.getRfPertick(), r.getTicks()))
+  ).apply(instance, RecipeGeneratorItem::new));
+  public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorItem> STREAM_CODEC = StreamCodec.composite(
+      Ingredient.CONTENTS_STREAM_CODEC, r -> r.at(0),
+      EnergyIngredient.STREAM_CODEC, r -> new EnergyIngredient(r.getRfPertick(), r.getTicks()),
+      RecipeGeneratorItem::new
+  );
+
+  public static final RecipeSerializer<RecipeGeneratorItem> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private final EnergyIngredient energy;
@@ -32,12 +47,11 @@ public class RecipeGeneratorItem implements Recipe<RecipeInput> {
   }
 
   @Override
-  public ItemStack assemble(RecipeInput inv, HolderLookup.Provider ra) {
+  public ItemStack assemble(RecipeInput inv) {
     return ItemStack.EMPTY;
   }
 
-  @Override
-  public boolean canCraftInDimensions(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
     return true;
   }
 
@@ -57,41 +71,59 @@ public class RecipeGeneratorItem implements Recipe<RecipeInput> {
   }
 
   public boolean matches(ItemStack current, Ingredient ing) {
-    if (ing == Ingredient.EMPTY) {
+    if (ing.isEmpty()) {
       return current.isEmpty();
     }
     if (current.isEmpty()) {
-      return ing == Ingredient.EMPTY;
+      return ing.isEmpty();
     }
     return ing.test(current);
   }
 
   public ItemStack[] ingredientAt(int slot) {
-    return at(slot).getItems();
+    return at(slot).items().map(ItemStack::new).toArray(ItemStack[]::new);
   }
 
   public Ingredient at(int slot) {
     return ingredients.get(slot);
   }
 
-  @Override
-  public NonNullList<Ingredient> getIngredients() {
+    public NonNullList<Ingredient> getIngredients() {
     return ingredients;
   }
 
-  @Override
   public ItemStack getResultItem(HolderLookup.Provider ra) {
     return ItemStack.EMPTY;
   }
 
   @Override
-  public RecipeType<?> getType() {
+  public RecipeType<RecipeGeneratorItem> getType() {
     return CyclicRecipeType.GENERATOR_ITEM.get();
   }
 
   @Override
-  public RecipeSerializer<?> getSerializer() {
+  public RecipeSerializer<RecipeGeneratorItem> getSerializer() {
     return CyclicRecipeType.GENERATOR_ITEM_S.get();
+  }
+
+  @Override
+  public boolean showNotification() {
+    return true;
+  }
+
+  @Override
+  public String group() {
+    return "";
+  }
+
+  @Override
+  public PlacementInfo placementInfo() {
+    return PlacementInfo.NOT_PLACEABLE;
+  }
+
+  @Override
+  public RecipeBookCategory recipeBookCategory() {
+    return RecipeBookCategories.CRAFTING_MISC;
   }
 
   public int getTicks() {
@@ -104,28 +136,5 @@ public class RecipeGeneratorItem implements Recipe<RecipeInput> {
 
   public int getEnergyTotal() {
     return this.getRfPertick() * this.getTicks();
-  }
-
-  public static class SerializeGenerateItem implements RecipeSerializer<RecipeGeneratorItem> {
-
-    public static final MapCodec<RecipeGeneratorItem> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-        Ingredient.CODEC.fieldOf("fuel").forGetter(r -> r.at(0)),
-        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> new EnergyIngredient(r.getRfPertick(), r.getTicks()))
-    ).apply(instance, RecipeGeneratorItem::new));
-    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorItem> STREAM_CODEC = StreamCodec.composite(
-        Ingredient.CONTENTS_STREAM_CODEC, r -> r.at(0),
-        EnergyIngredient.STREAM_CODEC, r -> new EnergyIngredient(r.getRfPertick(), r.getTicks()),
-        RecipeGeneratorItem::new
-    );
-
-    @Override
-    public MapCodec<RecipeGeneratorItem> codec() {
-      return CODEC;
-    }
-
-    @Override
-    public StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorItem> streamCodec() {
-      return STREAM_CODEC;
-    }
   }
 }

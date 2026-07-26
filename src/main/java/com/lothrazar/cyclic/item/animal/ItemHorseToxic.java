@@ -4,11 +4,12 @@ import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -41,13 +42,14 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
     if (horseOld.isBaby()) {
       zombieNew.setBaby(true);
     }
-    if (horseOld.isTamed() && event.getEntity().getUUID().equals(horseOld.getOwnerUUID())) {
+    EntityReference<net.minecraft.world.entity.LivingEntity> ownerRef = horseOld.getOwnerReference();
+    if (horseOld.isTamed() && ownerRef != null && event.getEntity().getUUID().equals(ownerRef.getUUID())) {
       zombieNew.tameWithName(event.getEntity());
     }
     if (horseOld.isSaddled()) {
       // copy the real saddle item in case its modded
       ItemStack saddle = horseOld.getInventory().getItem(0).copy();
-      zombieNew.equipSaddle(saddle, SoundSource.PLAYERS);
+      zombieNew.setItemSlot(EquipmentSlot.SADDLE, saddle);
     }
     ItemStack body = horseOld.getBodyArmorItem();
     if (!body.isEmpty()) {

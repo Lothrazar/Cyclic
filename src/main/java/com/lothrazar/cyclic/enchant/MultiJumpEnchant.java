@@ -41,7 +41,7 @@ public class MultiJumpEnchant {
     Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.LAUNCH, p);
     ItemStack armorStack = EnchantUtil.getFirstArmorStackWithEnchant(h, p);
     if (armorStack.isEmpty()) { return; }
-    if ((p.hasImpulse == false || p.onGround()) && armorStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(NBT_USES) > 0) {
+    if ((p.hasImpulse == false || p.onGround()) && armorStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBT_USES, 0) > 0) {
       armorStack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, d -> { CompoundTag t = d.copyTag(); t.putInt(NBT_USES, 0); return CustomData.of(t); });
     }
   }
@@ -62,7 +62,7 @@ public class MultiJumpEnchant {
       player.fallDistance = 0;
       float angle = (player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0) ? 90 : ROTATIONPITCH;
       EntityUtil.launch(player, angle, POWER);
-      ParticleUtil.spawnParticle(player.getCommandSenderWorld(), ParticleTypes.CRIT, player.blockPosition(), 7);
+      ParticleUtil.spawnParticle(player.level(), ParticleTypes.CRIT, player.blockPosition(), 7);
       uses++;
       if (uses >= level) {
         if (!feet.isEmpty()) EntityUtil.setCooldownItem(player, feet.getItem(), COOLDOWN);

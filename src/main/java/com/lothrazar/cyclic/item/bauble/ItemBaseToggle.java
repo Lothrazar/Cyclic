@@ -60,7 +60,7 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
   public void toggle(Player player, ItemStack held) {
     CustomData customData = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
     CompoundTag tag = customData.copyTag();
-    tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
+    tag.putInt(NBT_STATUS, (tag.getIntOr(NBT_STATUS, 0) + 1) % 2);
     held.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
   }
 
@@ -70,7 +70,7 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
     if (customData.isEmpty() || !customData.copyTag().contains(NBT_STATUS)) {
       return true; // Default to ON for newly crafted items
     }
-    return customData.copyTag().getInt(NBT_STATUS) == 0; // 0 is ON, 1 is OFF
+    return customData.copyTag().getIntOr(NBT_STATUS, 0) == 0; // 0 is ON, 1 is OFF
   }
 
   @Override

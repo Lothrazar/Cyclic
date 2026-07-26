@@ -36,7 +36,7 @@ public class BlockFluidHopper extends BlockCyclic {
   }
 
   @Override
-  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos) {
+  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos, Direction direction) {
     return calcRedstoneFromFluid(level.getBlockEntity(pos));
   }
 

@@ -65,10 +65,10 @@ public class PacketSyncHorseCarrots implements CustomPacketPayload {
     if (d.getBooleanOr(ItemHorsePrismarineWater.NBT_KEY, false)) { flags |= FLAG_PRISMARINE; }
     return new PacketSyncHorseCarrots(
         horse.getId(),
-        d.getInt(ItemHorseRedstoneSpeed.NBT_COUNT),
-        d.getInt(ItemHorseHealthDiamondCarrot.NBT_COUNT),
-        d.getInt(ItemHorseEmeraldJump.NBT_COUNT),
-        d.getInt(ItemHorseEnder.NBT_KEYACTIVE),
+        d.getIntOr(ItemHorseRedstoneSpeed.NBT_COUNT, 0),
+        d.getIntOr(ItemHorseHealthDiamondCarrot.NBT_COUNT, 0),
+        d.getIntOr(ItemHorseEmeraldJump.NBT_COUNT, 0),
+        d.getIntOr(ItemHorseEnder.NBT_KEYACTIVE, 0),
         flags);
   }
 

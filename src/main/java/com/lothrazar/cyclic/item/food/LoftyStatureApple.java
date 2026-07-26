@@ -40,11 +40,6 @@ public class LoftyStatureApple extends ItemBaseCyclic {
     return super.finishUsingItem(stack, worldIn, entityLiving);
   }
 
-  @Override
-  public SoundEvent getEatingSound() {
-    return SoundRegistry.STEP_HEIGHT_UP.get();
-  }
-
   public static void onUpdate(Player player) {
     if (player.level().isClientSide()) {
       return;

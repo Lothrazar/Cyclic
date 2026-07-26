@@ -9,6 +9,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -32,7 +33,7 @@ public class BlockScaffolding extends BlockCyclic {
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndLightGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
@@ -49,7 +50,7 @@ public class BlockScaffolding extends BlockCyclic {
   }
 
   @Override
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (!(entityIn instanceof LivingEntity)) {
       return;
     }

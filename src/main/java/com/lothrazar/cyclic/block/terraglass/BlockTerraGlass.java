@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -34,7 +35,7 @@ public class BlockTerraGlass extends BlockCyclic {
   }
 
   @Override
-  public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+  public boolean propagatesSkylightDown(BlockState state) {
     return true;
   }
 
@@ -44,7 +45,7 @@ public class BlockTerraGlass extends BlockCyclic {
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndLightGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 

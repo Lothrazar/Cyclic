@@ -49,7 +49,7 @@ public class ItemHorseHealthDiamondCarrot extends ItemBaseCyclic implements IEnt
       float mh = (float) ahorse.getAttribute(Attributes.MAX_HEALTH).getValue();
       if (mh < 2 * ItemHorseHealthDiamondCarrot.HEARTS_MAX) { // 20 hearts == 40 health points
         ahorse.getAttribute(Attributes.MAX_HEALTH).setBaseValue(mh + 2);
-        ahorse.getPersistentData().putInt(NBT_COUNT, ahorse.getPersistentData().getInt(NBT_COUNT) + 1);
+        ahorse.getPersistentData().putInt(NBT_COUNT, ahorse.getPersistentData().getIntOr(NBT_COUNT, 0) + 1);
         HorseFeedUtil.finishFeed(event, ahorse);
       }
     }

@@ -28,8 +28,8 @@ public class PotionRegistry {
   public static final DeferredHolder<Potion, Potion> FLIGHT = POTIONS.register("flight", () -> new Potion(ModCyclic.MODID + "_flight", new MobEffectInstance(PotionEffectRegistry.FLIGHT, normal)));
   public static final DeferredHolder<Potion, Potion> FROST_WALKER = POTIONS.register("frost_walker", () -> new Potion(ModCyclic.MODID + "_frost_walker", new MobEffectInstance(PotionEffectRegistry.FROST_WALKER, normal)));
   public static final DeferredHolder<Potion, Potion> GRAVITY = POTIONS.register("gravity", () -> new Potion(ModCyclic.MODID + "_gravity", new MobEffectInstance(PotionEffectRegistry.GRAVITY, normal)));
-  public static final DeferredHolder<Potion, Potion> HASTE = POTIONS.register("haste", () -> new Potion(ModCyclic.MODID + "_haste", new MobEffectInstance(MobEffects.DIG_SPEED, normal)));
-  public static final DeferredHolder<Potion, Potion> HASTE_STRONG = POTIONS.register("strong_haste", () -> new Potion(ModCyclic.MODID + "_strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, smal, 1, false, false, false)));
+  public static final DeferredHolder<Potion, Potion> HASTE = POTIONS.register("haste", () -> new Potion(ModCyclic.MODID + "_haste", new MobEffectInstance(MobEffects.HASTE, normal)));
+  public static final DeferredHolder<Potion, Potion> HASTE_STRONG = POTIONS.register("strong_haste", () -> new Potion(ModCyclic.MODID + "_strong_haste", new MobEffectInstance(MobEffects.HASTE, smal, 1, false, false, false)));
   public static final DeferredHolder<Potion, Potion> HUNGER = POTIONS.register("hunger", () -> new Potion(ModCyclic.MODID + "_hunger", new MobEffectInstance(MobEffects.HUNGER, normal)));
   public static final DeferredHolder<Potion, Potion> LEVITATION = POTIONS.register("levitation", () -> new Potion(ModCyclic.MODID + "_levitation", new MobEffectInstance(MobEffects.LEVITATION, smal)));
   public static final DeferredHolder<Potion, Potion> MAGNETIC = POTIONS.register("magnetic", () -> new Potion(ModCyclic.MODID + "_magnetic", new MobEffectInstance(PotionEffectRegistry.MAGNETIC, normal)));
@@ -38,7 +38,7 @@ public class PotionRegistry {
   // gives the effect a red HUD tint as a warning; the chorus_spectral item tooltip spells it out further.
   public static final DeferredHolder<Potion, Potion> NOCLIP = POTIONS.register("noclip", () -> new Potion(ModCyclic.MODID + "_noclip", new MobEffectInstance(PotionEffectRegistry.NOCLIP, smal)));
   public static final DeferredHolder<Potion, Potion> REACH_DISTANCE = POTIONS.register("reach_distance", () -> new Potion(ModCyclic.MODID + "_reach_distance", new MobEffectInstance(PotionEffectRegistry.REACH_DISTANCE, normal)));
-  public static final DeferredHolder<Potion, Potion> RESISTANCE = POTIONS.register("resistance", () -> new Potion(ModCyclic.MODID + "_resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, smal)));
+  public static final DeferredHolder<Potion, Potion> RESISTANCE = POTIONS.register("resistance", () -> new Potion(ModCyclic.MODID + "_resistance", new MobEffectInstance(MobEffects.RESISTANCE, smal)));
   public static final DeferredHolder<Potion, Potion> STUN = POTIONS.register("stun", () -> new Potion(ModCyclic.MODID + "_stun", new MobEffectInstance(PotionEffectRegistry.STUN, smal)));
   public static final DeferredHolder<Potion, Potion> SWIMSPEED = POTIONS.register("swimspeed", () -> new Potion(ModCyclic.MODID + "_swimspeed", new MobEffectInstance(PotionEffectRegistry.SWIMSPEED, normal)));
   public static final DeferredHolder<Potion, Potion> STRONG_HUNGER = POTIONS.register("strong_hunger", () -> new Potion(ModCyclic.MODID + "_strong_hunger", new MobEffectInstance(MobEffects.HUNGER, smal, 1, false, false, false)));

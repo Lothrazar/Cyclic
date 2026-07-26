@@ -65,7 +65,7 @@ public class PacketChestSack implements CustomPacketPayload {
     ctx.enqueueWork(() -> {
       ServerPlayer player = (ServerPlayer) ctx.player();
       BlockPos position = message.pos;
-      Level world = player.getCommandSenderWorld();
+      Level world = player.level();
       BlockEntity tile = world.getBlockEntity(position);
       TileTransporterEmptyItem.gatherTileEntity(position, player, world, tile);
     });

@@ -140,7 +140,7 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider, 
       return;
     }
     currentRecipe = null;
-    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER.get());
+    var recipes = level.getServer().getRecipeManager().recipeMap().byType(CyclicRecipeType.CRUSHER.get());
     for (var holder : recipes) {
       RecipeCrusher rec = holder.value();
       if (rec.matches(input, level)) {

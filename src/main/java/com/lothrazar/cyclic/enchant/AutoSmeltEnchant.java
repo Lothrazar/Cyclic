@@ -31,18 +31,19 @@ public class AutoSmeltEnchant {
     public static final Supplier<MapCodec<EnchantAutoSmeltModifier>> MAP_CODEC =
         Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, EnchantAutoSmeltModifier::new)));
 
-    public EnchantAutoSmeltModifier(LootItemCondition[] conditionsIn) {
-      super(conditionsIn);
+    public EnchantAutoSmeltModifier(LootItemCondition[] conditionsIn, int priority) {
+      super(conditionsIn, priority);
     }
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> originalLoot, LootContext context) {
       ObjectArrayList<ItemStack> newLoot = new ObjectArrayList<>();
       originalLoot.forEach((stack) -> {
-        Optional<RecipeHolder<SmeltingRecipe>> optional = context.getLevel().getRecipeManager()
-            .getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(stack), context.getLevel());
+        SingleRecipeInput recipeInput = new SingleRecipeInput(stack);
+        Optional<RecipeHolder<SmeltingRecipe>> optional = context.getLevel().getServer().getRecipeManager()
+            .getRecipeFor(RecipeType.SMELTING, recipeInput, context.getLevel());
         if (optional.isPresent()) {
-          ItemStack smeltedItemStack = optional.get().value().getResultItem(context.getLevel().registryAccess());
+          ItemStack smeltedItemStack = optional.get().value().assemble(recipeInput);
           if (!smeltedItemStack.isEmpty()) {
             newLoot.add(smeltedItemStack.copyWithCount(stack.getCount() * smeltedItemStack.getCount()));
           }

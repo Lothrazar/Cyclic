@@ -56,7 +56,7 @@ public class PacketTileData implements CustomPacketPayload {
   public static void handle(PacketTileData message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> {
       ServerPlayer player = (ServerPlayer) ctx.player();
-      Level world = player.getCommandSenderWorld();
+      Level world = player.level();
       BlockEntity tile = world.getBlockEntity(message.pos);
       if (tile instanceof TileBlockEntityCyclic) {
         TileBlockEntityCyclic base = (TileBlockEntityCyclic) tile;
@@ -79,7 +79,7 @@ public class PacketTileData implements CustomPacketPayload {
     p.field = buf.readInt();
     p.value = buf.readInt();
     CompoundTag tags = buf.readNbt();
-    p.pos = new BlockPos(tags.getIntOr("x", 0), tags.getInt("y"), tags.getInt("z"));
+    p.pos = new BlockPos(tags.getIntOr("x", 0), tags.getIntOr("y", 0), tags.getIntOr("z", 0));
     p.autoIncrement = buf.readBoolean();
     return p;
   }

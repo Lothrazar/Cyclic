@@ -12,6 +12,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
@@ -48,8 +49,8 @@ public class BlockCableBundled extends CableBase {
   }
 
   @Override
-  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
+  protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel worldIn, BlockPos pos, boolean movedByPiston) {
+    if (true) {
       TileCableBundled tile = (TileCableBundled) worldIn.getBlockEntity(pos);
       if (tile != null) {
         // drop filterz
@@ -62,7 +63,7 @@ public class BlockCableBundled extends CableBase {
       }
       worldIn.updateNeighbourForOutputSignal(pos, this);
     }
-    super.onRemove(state, worldIn, pos, newState, isMoving);
+    super.affectNeighborsAfterRemoval(state, worldIn, pos, movedByPiston);
   }
 
   @Override

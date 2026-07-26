@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.hoppergold;
 import com.lothrazar.cyclic.block.hopper.BlockSimpleHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,7 +24,7 @@ public class BlockGoldHopper extends BlockSimpleHopper {
   }
 
   @Override
-  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos) {
+  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos, Direction direction) {
     return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
   }
 

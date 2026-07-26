@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -42,8 +43,8 @@ public class BlockWirelessTransmit extends BlockCyclic {
   }
 
   @Override // was onReplaced
-  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
+  protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel worldIn, BlockPos pos, boolean movedByPiston) {
+    if (true) {
       TileWirelessTransmit tileentity = (TileWirelessTransmit) worldIn.getBlockEntity(pos);
       if (tileentity != null) {
         for (int i = 0; i < tileentity.inventory.getSlots(); ++i) {
@@ -51,7 +52,7 @@ public class BlockWirelessTransmit extends BlockCyclic {
           Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.inventory.getStackInSlot(i));
         }
       }
-      super.onRemove(state, worldIn, pos, newState, isMoving);
+      super.affectNeighborsAfterRemoval(state, worldIn, pos, movedByPiston);
     }
   }
 }

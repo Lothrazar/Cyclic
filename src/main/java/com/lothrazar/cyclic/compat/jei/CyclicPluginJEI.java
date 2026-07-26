@@ -81,7 +81,7 @@ public class CyclicPluginJEI implements IModPlugin {
   @Override
   public void registerRecipes(IRecipeRegistration registry) {
     ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
-    RecipeManager rm = world.getRecipeManager();
+    RecipeManager rm = world.getServer().getRecipeManager();
     registry.addRecipes(RecipeTypes.CRAFTING, rm.getAllRecipesFor(RecipeType.CRAFTING));
     registry.addRecipes(MelterRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.MELTER.get()));
     registry.addRecipes(SolidifierRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.SOLID.get()));

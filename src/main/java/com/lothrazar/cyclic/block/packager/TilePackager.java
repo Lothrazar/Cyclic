@@ -57,7 +57,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
     if (level == null) {
       return false;
     }
-    return UtilPackager.isItemStackValid(level.getRecipeManager(), level.registryAccess(), stack);
+    return UtilPackager.isItemStackValid(level.getServer().getRecipeManager(), level.registryAccess(), stack);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePackager e) {
@@ -92,7 +92,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
     if (level == null) {
       return;
     }
-    final CraftingRecipe recipe = UtilPackager.getRecipeForItemStack(level.getRecipeManager(), level.registryAccess(), stack);
+    final CraftingRecipe recipe = UtilPackager.getRecipeForItemStack(level.getServer().getRecipeManager(), level.registryAccess(), stack);
     if (recipe == null) {
       return;
     }

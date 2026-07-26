@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,8 +31,8 @@ public class BlockWorkbench extends BlockCyclic {
   }
 
   @Override // was onReplaced
-  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
+  protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel worldIn, BlockPos pos, boolean movedByPiston) {
+    if (true) {
       TileWorkbench tileentity = (TileWorkbench) worldIn.getBlockEntity(pos);
       if (tileentity != null) {
         for (int i = 0; i < tileentity.inventory.getSlots(); ++i) {
@@ -39,7 +40,7 @@ public class BlockWorkbench extends BlockCyclic {
           Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.inventory.getStackInSlot(i));
         }
       }
-      super.onRemove(state, worldIn, pos, newState, isMoving);
+      super.affectNeighborsAfterRemoval(state, worldIn, pos, movedByPiston);
     }
   }
 }

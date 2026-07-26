@@ -38,7 +38,7 @@ public class FluidHoneyHolder {
 
   public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
       () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollision().strength(100.0F).noLootTable(),
-          List.of(ent -> ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0, false, false, false)))));
+          List.of(ent -> ent.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 0, false, false, false)))));
 
   public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",
       () -> new BucketItemFlib(STILL.get()));

@@ -59,7 +59,7 @@ public class PacketRecordSound implements CustomPacketPayload {
   public static PacketRecordSound decode(RegistryFriendlyByteBuf buf) {
     String s = buf.readUtf();
     CompoundTag tags = buf.readNbt();
-    return new PacketRecordSound(s, new BlockPos(tags.getIntOr("x", 0), tags.getInt("y"), tags.getInt("z")));
+    return new PacketRecordSound(s, new BlockPos(tags.getIntOr("x", 0), tags.getIntOr("y", 0), tags.getIntOr("z", 0)));
   }
 
   public static void encode(RegistryFriendlyByteBuf buf, PacketRecordSound msg) {

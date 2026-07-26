@@ -44,7 +44,7 @@ public class LaunchBlock extends BlockCyclic {
   }
 
   @Override
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (sneakPlayerAvoid && entity instanceof Player && entity.isCrouching()) {
       if (worldIn.isClientSide() && entity instanceof Player) {
         ClientPacketDistributor.sendToServer(new PacketPlayerFalldamage());

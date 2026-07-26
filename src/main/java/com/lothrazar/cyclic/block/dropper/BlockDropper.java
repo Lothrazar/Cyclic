@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -48,8 +49,8 @@ public class BlockDropper extends BlockCyclic {
   }
 
   @Override
-  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
+  protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel worldIn, BlockPos pos, boolean movedByPiston) {
+    if (true) {
       TileDropper tileentity = (TileDropper) worldIn.getBlockEntity(pos);
       if (tileentity != null && tileentity.gpsSlots != null) {
         for (int s = 0; s < tileentity.gpsSlots.getSlots(); s++) {
@@ -57,6 +58,6 @@ public class BlockDropper extends BlockCyclic {
         }
       }
     }
-    super.onRemove(state, worldIn, pos, newState, isMoving);
+    super.affectNeighborsAfterRemoval(state, worldIn, pos, movedByPiston);
   }
 }

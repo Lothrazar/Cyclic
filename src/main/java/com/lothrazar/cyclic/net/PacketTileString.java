@@ -43,7 +43,7 @@ public class PacketTileString implements CustomPacketPayload {
   public static void handle(PacketTileString message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> {
       ServerPlayer player = (ServerPlayer) ctx.player();
-      Level world = player.getCommandSenderWorld();
+      Level world = player.level();
       BlockEntity tile = world.getBlockEntity(message.pos);
       if (tile instanceof TileBlockEntityCyclic) {
         TileBlockEntityCyclic base = (TileBlockEntityCyclic) tile;
@@ -59,7 +59,7 @@ public class PacketTileString implements CustomPacketPayload {
     PacketTileString p = new PacketTileString();
     p.field = buf.readInt();
     CompoundTag tags = buf.readNbt();
-    p.pos = new BlockPos(tags.getIntOr("x", 0), tags.getInt("y"), tags.getInt("z"));
+    p.pos = new BlockPos(tags.getIntOr("x", 0), tags.getIntOr("y", 0), tags.getIntOr("z", 0));
     //something in vanilla or forge marks this as CLIENT ONLY. unless i give it a max length
     p.value = buf.readUtf(32767);
     return p;

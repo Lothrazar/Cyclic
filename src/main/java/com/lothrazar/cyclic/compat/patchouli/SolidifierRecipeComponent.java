@@ -45,7 +45,7 @@ public class SolidifierRecipeComponent implements ICustomComponent {
     if (rl == null) {
       return;
     }
-    resolvedRecipe = level.getRecipeManager().byKey(rl)
+    resolvedRecipe = level.getServer().getRecipeManager().byKey(rl)
         .filter(h -> h.value() instanceof RecipeSolidifier)
         .map(h -> (RecipeSolidifier) h.value())
         .orElse(null);

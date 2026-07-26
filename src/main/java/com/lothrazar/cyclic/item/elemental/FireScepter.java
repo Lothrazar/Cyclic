@@ -39,9 +39,9 @@ public class FireScepter extends ItemBaseCyclic {
   }
 
   @Override
-  public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entity, int chargeTimer) {
+  public boolean releaseUsing(ItemStack stack, Level worldIn, LivingEntity entity, int chargeTimer) {
     if (entity instanceof Player == false) {
-      return;
+      return false;
     }
     Player player = (Player) entity;
     int charge = this.getUseDuration(stack, entity) - chargeTimer;
@@ -53,5 +53,6 @@ public class FireScepter extends ItemBaseCyclic {
     player.getCooldowns().addCooldown(stack, COOLDOWN);
     ItemStackUtil.damageItem(player, stack);
     SoundUtil.playSound(player, SoundRegistry.FIREBALL_STAFF_LAUNCH.get());
+    return true;
   }
 }

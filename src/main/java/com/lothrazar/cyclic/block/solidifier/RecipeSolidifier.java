@@ -13,7 +13,10 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -21,6 +24,22 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
+
+  public static final MapCodec<RecipeSolidifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+      Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.getIngredients()),
+      SizedFluidIngredient.CODEC.fieldOf("mix").forGetter(r -> r.fluidIngredient),
+      ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
+      EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
+  ).apply(instance, (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.of(), ingredients.toArray(new Ingredient[0])), fluid, result, energy)));
+  public static final StreamCodec<RegistryFriendlyByteBuf, RecipeSolidifier> STREAM_CODEC = StreamCodec.composite(
+      Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.getIngredients(),
+      SizedFluidIngredient.STREAM_CODEC, r -> r.fluidIngredient,
+      ItemStack.OPTIONAL_STREAM_CODEC, r -> r.result,
+      EnergyIngredient.STREAM_CODEC, r -> r.getEnergy(),
+      (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.of(), ingredients.toArray(new Ingredient[0])), fluid, result, energy)
+  );
+
+  public static final RecipeSerializer<RecipeSolidifier> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
   public ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
@@ -32,7 +51,7 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
     ingredients = NonNullList.create();
     ingredients.addAll(inList);
     while (ingredients.size() < 3) {
-      ingredients.add(Ingredient.EMPTY);
+      ingredients.add(Ingredient.of());
     }
     if (ingredients.size() > 3) {
       throw new IllegalArgumentException("Solidifier recipe must have at most three ingredients");
@@ -42,12 +61,12 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
   }
 
   public FluidStack getRecipeFluid() {
-    FluidStack[] stacks = fluidIngredient.getFluids();
-    return stacks.length == 0 ? FluidStack.EMPTY : stacks[0];
+    var matches = fluidIngredient.ingredient().fluids();
+    return matches.isEmpty() ? FluidStack.EMPTY : new FluidStack(matches.get(0), fluidIngredient.amount());
   }
 
   public List<FluidStack> getMatchingFluids() {
-    return List.of(fluidIngredient.getFluids());
+    return fluidIngredient.ingredient().fluids().stream().map(h -> new FluidStack(h, fluidIngredient.amount())).toList();
   }
 
   public int getAmount() {
@@ -60,12 +79,11 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
   }
 
   @Override
-  public ItemStack assemble(SolidifierRecipeInput inv, HolderLookup.Provider ra) {
+  public ItemStack assemble(SolidifierRecipeInput inv) {
     return result.copy();
   }
 
-  @Override
-  public boolean canCraftInDimensions(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
     return true;
   }
 
@@ -113,54 +131,45 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
     return matchingSlots.contains(0) && matchingSlots.contains(1) && matchingSlots.contains(2);
   }
 
-  @Override
-  public NonNullList<Ingredient> getIngredients() {
+    public NonNullList<Ingredient> getIngredients() {
     return ingredients;
   }
 
   public ItemStack[] ingredientAt(int slot) {
-    return at(slot).getItems();
+    return at(slot).items().map(ItemStack::new).toArray(ItemStack[]::new);
   }
 
-  @Override
   public ItemStack getResultItem(HolderLookup.Provider ra) {
     return result.copy();
   }
 
   @Override
-  public RecipeType<?> getType() {
+  public RecipeType<RecipeSolidifier> getType() {
     return CyclicRecipeType.SOLID.get();
   }
 
   @Override
-  public RecipeSerializer<?> getSerializer() {
+  public RecipeSerializer<RecipeSolidifier> getSerializer() {
     return CyclicRecipeType.SOLID_S.get();
   }
 
-  public static class SerializeSolidifier implements RecipeSerializer<RecipeSolidifier> {
+  @Override
+  public boolean showNotification() {
+    return true;
+  }
 
-    public static final MapCodec<RecipeSolidifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-        Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.getIngredients()),
-        SizedFluidIngredient.FLAT_CODEC.fieldOf("mix").forGetter(r -> r.fluidIngredient),
-        ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
-        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
-    ).apply(instance, (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, result, energy)));
-    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeSolidifier> STREAM_CODEC = StreamCodec.composite(
-        Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.getIngredients(),
-        SizedFluidIngredient.STREAM_CODEC, r -> r.fluidIngredient,
-        ItemStack.OPTIONAL_STREAM_CODEC, r -> r.result,
-        EnergyIngredient.STREAM_CODEC, r -> r.getEnergy(),
-        (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, result, energy)
-    );
+  @Override
+  public String group() {
+    return "";
+  }
 
-    @Override
-    public MapCodec<RecipeSolidifier> codec() {
-      return CODEC;
-    }
+  @Override
+  public PlacementInfo placementInfo() {
+    return PlacementInfo.NOT_PLACEABLE;
+  }
 
-    @Override
-    public StreamCodec<RegistryFriendlyByteBuf, RecipeSolidifier> streamCodec() {
-      return STREAM_CODEC;
-    }
+  @Override
+  public RecipeBookCategory recipeBookCategory() {
+    return RecipeBookCategories.CRAFTING_MISC;
   }
 }

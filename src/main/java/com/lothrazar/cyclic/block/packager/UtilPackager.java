@@ -35,11 +35,11 @@ public class UtilPackager {
   public static int getIngredientsInRecipe(final CraftingRecipe recipe) {
     return ingredientsInRecipeCache.computeIfAbsent(recipe, k -> {
       int count = 0;
-      for (final Ingredient ingredient : recipe.getIngredients()) {
-        if (ingredient == Ingredient.EMPTY) {
+      for (final Ingredient ingredient : recipe.placementInfo().ingredients()) {
+        if (ingredient.isEmpty()) {
           continue;
         }
-        final ItemStack[] matchingStacks = ingredient.getItems();
+        final ItemStack[] matchingStacks = ingredient.items().map(ItemStack::new).toArray(ItemStack[]::new);
         if (matchingStacks.length == 0) {
           continue;
         }
@@ -76,18 +76,18 @@ public class UtilPackager {
 
   public static boolean isRecipeValid(final CraftingRecipe recipe, RegistryAccess ra) {
     return recipeValidCache.computeIfAbsent(recipe, k -> {
-      final ItemStack recipeOutput = recipe.getResultItem(ra);
+      final ItemStack recipeOutput = recipe.assemble(CraftingInput.EMPTY);
       if (recipeOutput.getMaxStackSize() == 1 || recipeOutput.getCount() != 1) {
         return false;
       }
       Ingredient mainIngredient = null;
       ItemStack mainIngredientStack = null;
       int count = 0;
-      for (final Ingredient ingredient : recipe.getIngredients()) {
-        if (ingredient == Ingredient.EMPTY) {
+      for (final Ingredient ingredient : recipe.placementInfo().ingredients()) {
+        if (ingredient.isEmpty()) {
           continue;
         }
-        final ItemStack[] matchingStacks = ingredient.getItems(); //.getMatchingStacks();
+        final ItemStack[] matchingStacks = ingredient.items().map(ItemStack::new).toArray(ItemStack[]::new); //.getMatchingStacks();
         if (matchingStacks.length == 0) {
           continue;
         }
@@ -112,20 +112,20 @@ public class UtilPackager {
   }
 
   public static void buildRecipeCaches(final RecipeManager recipeManager, RegistryAccess ra) {
-    recipeLoop: for (final RecipeHolder<CraftingRecipe> r : recipeManager.getAllRecipesFor(RecipeType.CRAFTING)) {
+    recipeLoop: for (final RecipeHolder<CraftingRecipe> r : recipeManager.recipeMap().byType(RecipeType.CRAFTING)) {
       CraftingRecipe recipe = r.value();
-      final ItemStack recipeOutput = recipe.getResultItem(ra);
+      final ItemStack recipeOutput = recipe.assemble(CraftingInput.EMPTY);
       if (recipeOutput.getMaxStackSize() == 1 || recipeOutput.getCount() != 1) {
         continue;
       }
       Ingredient mainIngredient = null;
       ItemStack mainIngredientStack = null;
       int count = 0;
-      for (final Ingredient ingredient : recipe.getIngredients()) {
-        if (ingredient == Ingredient.EMPTY) {
+      for (final Ingredient ingredient : recipe.placementInfo().ingredients()) {
+        if (ingredient.isEmpty()) {
           continue;
         }
-        final ItemStack[] matchingStacks = ingredient.getItems();
+        final ItemStack[] matchingStacks = ingredient.items().map(ItemStack::new).toArray(ItemStack[]::new);
         if (matchingStacks.length != 1) {
           recipeValidCache.put(recipe, false);
           continue recipeLoop;

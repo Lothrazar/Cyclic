@@ -116,7 +116,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
   }
 
   private ArrayList<Fluid> indexFluidsFromRecipes() {
-    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
+    var recipes = level.getServer().getRecipeManager().recipeMap().byType(CyclicRecipeType.GENERATOR_FLUID.get());
     ArrayList<Fluid> fluids = new ArrayList<>();
     for (var holder : recipes) {
       RecipeGeneratorFluid recipe = holder.value();
@@ -133,7 +133,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
       return;
     }
     currentRecipe = null;
-    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
+    var recipes = level.getServer().getRecipeManager().recipeMap().byType(CyclicRecipeType.GENERATOR_FLUID.get());
     for (var holder : recipes) {
       RecipeGeneratorFluid rec = holder.value();
       if (rec.matches(input, level)) {

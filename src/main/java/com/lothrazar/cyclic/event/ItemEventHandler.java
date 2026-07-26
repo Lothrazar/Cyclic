@@ -369,8 +369,8 @@ public class ItemEventHandler {
     }
     // Prismarine: rain runner — speed boost while it's raining
     if (prismarine && horse.level().isRaining() && horse.level().canSeeSky(horse.blockPosition())) {
-      if (!horse.hasEffect(MobEffects.MOVEMENT_SPEED)) {
-        horse.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 0, false, false, false));
+      if (!horse.hasEffect(MobEffects.SPEED)) {
+        horse.addEffect(new MobEffectInstance(MobEffects.SPEED, 40, 0, false, false, false));
       }
     }
     if (horse.isOnFire()
@@ -392,7 +392,7 @@ public class ItemEventHandler {
   private void tryItemHorseEnder(EntityTickEvent.Pre event) {
     if(event.getEntity() instanceof LivingEntity liv)
     if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
-        && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
+        && liv.getPersistentData().getIntOr(ItemHorseEnder.NBT_KEYACTIVE, 0) > 0) {
       // 
       if (liv.isInWater()
           
@@ -417,7 +417,7 @@ public class ItemEventHandler {
       if (liv.getHealth() < 6
           && !liv.hasEffect(MobEffects.ABSORPTION)) {
         liv.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, Const.TICKS_PER_SEC * 60, 4, false, false, false));
-        liv.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, Const.TICKS_PER_SEC * 60, 4, false, false, false));
+        liv.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, Const.TICKS_PER_SEC * 60, 4, false, false, false));
         ItemHorseEnder.onSuccess(liv);
       }
     }
@@ -528,7 +528,7 @@ public class ItemEventHandler {
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     Player player = event.getEntity();
     ItemStack held = player.getItemInHand(event.getHand());
-    Level world = player.getCommandSenderWorld();
+    Level world = player.level();
     BlockState target = world.getBlockState(event.getPos());
     if (player.isCrouching()
         && target.getBlock() instanceof IBlockFacade) {

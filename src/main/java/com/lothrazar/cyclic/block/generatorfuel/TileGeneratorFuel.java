@@ -40,7 +40,7 @@ public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProv
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getBurnTime(RecipeType.SMELTING) > 0;// ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0;
+      return stack.getBurnTime(RecipeType.SMELTING, getLevel().fuelValues()) > 0;// ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0;
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(0);
@@ -90,13 +90,14 @@ public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProv
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
     final int factor = 1;
-    int burnTimeTicks = factor * stack.getBurnTime(RecipeType.SMELTING); //ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
+    int burnTimeTicks = factor * stack.getBurnTime(RecipeType.SMELTING, getLevel().fuelValues()); //ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
     if (burnTimeTicks > 0) {
       // BURN IT
       this.burnTimeMax = burnTimeTicks;
       this.burnTime = this.burnTimeMax;
-      if (stack.getCount() == 1 && stack.hasCraftingRemainingItem()) {
-        inputSlots.setStackInSlot(0, stack.getCraftingRemainingItem().copy());
+      net.minecraft.world.item.ItemStackTemplate remainderTemplate = stack.getItem().getCraftingRemainder(stack);
+      if (stack.getCount() == 1 && remainderTemplate != null) {
+        inputSlots.setStackInSlot(0, remainderTemplate.create());
       }
       else {
         stack.shrink(1);

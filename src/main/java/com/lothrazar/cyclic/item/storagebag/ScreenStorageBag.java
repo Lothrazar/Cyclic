@@ -74,13 +74,6 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   }
 
   @Override
-  public void render(GuiGraphicsExtractor gg, int mouseX, int mouseY, float partialTicks) {
-    super.renderBackground(gg, mouseX, mouseY, partialTicks);
-    super.render(gg, mouseX, mouseY, partialTicks);
-    this.renderTooltip(gg, mouseX, mouseY);
-  }
-
-  @Override
   protected void extractLabels(GuiGraphicsExtractor gg, int x, int y) {}
 
   @Override
@@ -114,8 +107,8 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     }
 
     @Override
-    public void onPress() {
-      super.onPress();
+    public void onPress(net.minecraft.client.input.InputWithModifiers input) {
+      super.onPress(input);
       if (++index >= nbtValues.size()) {
         index = 0;
       }

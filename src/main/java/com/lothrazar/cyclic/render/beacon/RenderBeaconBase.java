@@ -29,7 +29,7 @@ import org.jspecify.annotations.Nullable;
 public abstract class RenderBeaconBase<T extends BlockEntity & BeamHolder> implements BlockEntityRenderer<T, RenderBeaconBase.State> {
 
   public static class State extends BlockEntityRenderState {
-    T blockEntity;
+    BlockEntity blockEntity;
     float animationTime;
     List<BeaconBeamOwner.Section> sections;
   }

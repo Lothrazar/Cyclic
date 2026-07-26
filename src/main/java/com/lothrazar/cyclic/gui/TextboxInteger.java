@@ -6,6 +6,8 @@ import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.cyclic.net.PacketTileData;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
@@ -36,11 +38,11 @@ public class TextboxInteger extends EditBox implements IHasTooltip {
   }
 
   @Override
-  public boolean keyPressed(int key, int mx, int my) {
-    if (key == KEY_BACKSPACE || key == KEY_DELETE) {
+  public boolean keyPressed(KeyEvent event) {
+    if (event.key() == KEY_BACKSPACE || event.key() == KEY_DELETE) {
       saveValue();
     }
-    return super.keyPressed(key, mx, my);
+    return super.keyPressed(event);
   }
 
   private void saveValue() {
@@ -48,11 +50,11 @@ public class TextboxInteger extends EditBox implements IHasTooltip {
   }
 
   @Override
-  public boolean charTyped(char chr, int p) {
-    if (!Character.isDigit(chr)) {
+  public boolean charTyped(CharacterEvent event) {
+    if (!Character.isDigit(event.codepoint())) {
       return false;
     }
-    boolean worked = super.charTyped(chr, p);
+    boolean worked = super.charTyped(event);
     if (worked) {
       saveValue();
     }

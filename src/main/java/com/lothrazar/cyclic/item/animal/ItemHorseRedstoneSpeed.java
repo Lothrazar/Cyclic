@@ -51,7 +51,7 @@ public class ItemHorseRedstoneSpeed extends ItemBaseCyclic implements IEntityInt
       double newSpeed = speed + SPEED_AMT;
       if (EntityUtil.getSpeedTranslated(newSpeed) < SPEED_MAX) {
         ahorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
-        ahorse.getPersistentData().putInt(NBT_COUNT, ahorse.getPersistentData().getInt(NBT_COUNT) + 1);
+        ahorse.getPersistentData().putInt(NBT_COUNT, ahorse.getPersistentData().getIntOr(NBT_COUNT, 0) + 1);
         HorseFeedUtil.finishFeed(event, ahorse);
       }
     }

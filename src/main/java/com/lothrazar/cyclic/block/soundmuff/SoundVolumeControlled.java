@@ -26,8 +26,8 @@ public class SoundVolumeControlled implements SoundInstance {
   }
 
   @Override
-  public Identifier getLocation() {
-    return sound.getLocation();
+  public Identifier getIdentifier() {
+    return sound.getIdentifier();
   }
 
   @Override

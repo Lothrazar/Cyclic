@@ -45,7 +45,9 @@ public class LaserItem extends ItemHasEnergy {
   }
 
   @Override
-  public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {}
+  public boolean releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {
+    return false;
+  }
 
   public static void resetStackDamageCool(ItemStack lasercannon, long gametime) {
     CustomData.EMPTY.copyTag().putLong("damagecooldown", gametime);

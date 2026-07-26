@@ -4,8 +4,10 @@ import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
@@ -19,7 +21,7 @@ public class AirAntiGravity extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
+  public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity,  EquipmentSlot slot) {
     if (!this.canUse(stack)) {
       return;
     }

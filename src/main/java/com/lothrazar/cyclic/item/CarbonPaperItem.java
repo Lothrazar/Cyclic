@@ -23,7 +23,9 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.storage.TagValueInput;
 
 
 public class CarbonPaperItem extends ItemBaseCyclic {
@@ -37,7 +39,8 @@ public class CarbonPaperItem extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
     if (stack.has(DataComponents.CUSTOM_DATA)) {
       SignBlockEntity fakeSign = new SignBlockEntity(BlockPos.ZERO, Blocks.OAK_SIGN.defaultBlockState());
-      fakeSign.loadWithComponents(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(), Minecraft.getInstance().level.registryAccess());
+      fakeSign.loadWithComponents(TagValueInput.create(ProblemReporter.DISCARDING, Minecraft.getInstance().level.registryAccess(),
+          stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag()));
       //      tooltip.accept(Component.translatable("[" + fakeSign.getColor().getSerializedName() + "]"));
       for (int i = 0; i < SignText.LINES; i++) {
         //        fakeSign.setText(line, p_212365_2_);
@@ -74,7 +77,8 @@ public class CarbonPaperItem extends ItemBaseCyclic {
       if (held.has(DataComponents.CUSTOM_DATA)) {
         //write to fake sign to parse nbt internally
         SignBlockEntity fakeSign = new SignBlockEntity(context.getClickedPos(), Blocks.OAK_SIGN.defaultBlockState());
-        fakeSign.loadWithComponents(held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(), context.getLevel().registryAccess());
+        fakeSign.loadWithComponents(TagValueInput.create(ProblemReporter.DISCARDING, context.getLevel().registryAccess(),
+            held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag()));
         //        sign.setColor(fakeSign.getColor());
         for (int i = 0; i <= 3; i++) {
           //          UtilChat.addChatMessage(player, fakeSign.getText(i).toString());

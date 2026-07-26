@@ -31,8 +31,8 @@ public class LootInjectModifier extends LootModifier {
   public static final Supplier<MapCodec<LootInjectModifier>> MAP_CODEC =
       Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, LootInjectModifier::new)));
 
-  public LootInjectModifier(LootItemCondition[] conditionsIn) {
-    super(conditionsIn);
+  public LootInjectModifier(LootItemCondition[] conditionsIn, int priority) {
+    super(conditionsIn, priority);
   }
 
   @Override

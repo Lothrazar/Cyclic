@@ -33,7 +33,7 @@ public class CloudBlock extends BlockCyclic {
   }
 
   @Override
-  public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+  public boolean propagatesSkylightDown(BlockState state) {
     return true;
   }
 
@@ -44,13 +44,13 @@ public class CloudBlock extends BlockCyclic {
   }
 
   @Override
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (!worldIn.isClientSide() && entityIn instanceof LivingEntity) {
       LivingEntity e = (LivingEntity) entityIn;
       MobEffectInstance eff = new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 5, false, false, false);
 
       e.addEffect(eff);
-      eff = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 5, false, false, false);
+      eff = new MobEffectInstance(MobEffects.SLOWNESS, 20, 5, false, false, false);
 
       e.addEffect(eff);
     }

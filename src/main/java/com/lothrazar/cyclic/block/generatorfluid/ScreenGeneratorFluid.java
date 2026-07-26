@@ -52,10 +52,8 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
   }
 
   @Override
-  public void render(GuiGraphicsExtractor gg, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(gg, mouseX, mouseY, partialTicks);
-    super.render(gg, mouseX, mouseY, partialTicks);
-    this.renderTooltip(gg, mouseX, mouseY);
+  public void extractRenderState(GuiGraphicsExtractor gg, int mouseX, int mouseY, float partialTicks) {
+    super.extractRenderState(gg, mouseX, mouseY, partialTicks);
     energy.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getEnergy());
     progress.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
     btnRedstone.onValueUpdate(menu.tile);

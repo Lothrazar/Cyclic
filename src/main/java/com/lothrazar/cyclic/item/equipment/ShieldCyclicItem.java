@@ -39,34 +39,25 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
    * @param properties
    */
   public ShieldCyclicItem(Properties properties, ShieldType type) {
-    super(properties);
+    super(applyRepairMaterial(properties, type));
     this.type = type;
     DispenserBlock.registerBehavior(this, EquipmentDispenseItemBehavior.INSTANCE);
   }
 
-  @Override
-  public boolean isValidRepairItem(ItemStack stackShield, ItemStack stackIngredient) {
-    if (type == ShieldType.WOOD)
-      return stackIngredient.is(Items.STICK);
-    if (type == ShieldType.LEATHER)
-      return stackIngredient.is(Items.LEATHER);
-    if (type == ShieldType.BONE)
-      return stackIngredient.is(Items.BONE);
-    if (type == ShieldType.OBSIDIAN)
-      return stackIngredient.is(Blocks.OBSIDIAN.asItem());
-    if (type == ShieldType.FLINT)
-      return stackIngredient.is(ItemTags.STONE_TOOL_MATERIALS);
-    return false;
+  //isValidRepairItem is gone - repair matching is now configured on Item.Properties via .repairable(...)
+  private static Properties applyRepairMaterial(Properties properties, ShieldType type) {
+    return switch (type) {
+      case WOOD -> properties.repairable(Items.STICK);
+      case LEATHER -> properties.repairable(Items.LEATHER);
+      case BONE -> properties.repairable(Items.BONE);
+      case OBSIDIAN -> properties.repairable(Blocks.OBSIDIAN.asItem());
+      case FLINT -> properties.repairable(ItemTags.STONE_TOOL_MATERIALS);
+    };
   }
 
   @Override
   public ItemUseAnimation getUseAnimation(ItemStack stack) {
     return ItemUseAnimation.BLOCK;
-  }
-
-  @Override
-  public boolean canPerformAction(ItemStack stack, ItemAbility itemAbility) {
-    return ItemAbilities.DEFAULT_SHIELD_ACTIONS.contains(itemAbility);
   }
 
   @Override

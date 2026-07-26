@@ -18,7 +18,7 @@ public class EnderPearlReuse extends ItemBaseCyclic {
   @Override
   public InteractionResult use(Level world, Player player, InteractionHand handIn) {
     ItemStack stack = player.getItemInHand(handIn);
-    ThrownEnderpearl ent = new ThrownEnderpearl(world, player);
+    ThrownEnderpearl ent = new ThrownEnderpearl(world, player, stack);
     shootMe(world, player, ent, 0, ItemBaseCyclic.VELOCITY_MAX);
     world.addFreshEntity(ent);
     player.getCooldowns().addCooldown(stack, 10);

@@ -80,7 +80,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
       return 0;
     }
     float max = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr("count_max", 0);
-    float current = max - stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt("count_empty");
+    float current = max - stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr("count_empty", 0);
     return (max == 0) ? 0 : Math.round(13.0F * current / max);
     //    }
     //    return super.getBarWidth(stack);

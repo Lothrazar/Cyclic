@@ -69,12 +69,12 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import com.lothrazar.cyclic.render.ShieldBlockEntityWithoutLevelRenderer;
+import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
+import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
+import net.neoforged.neoforge.client.fluid.FluidTintSources;
+import net.minecraft.client.renderer.block.FluidModel;
+import com.lothrazar.cyclic.render.ShieldMaterialSpecialRenderer;
 import com.lothrazar.cyclic.fluid.FluidAmethystHolder;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.fluid.FluidChocolateHolder;
@@ -264,77 +264,46 @@ public class ClientRegistryCyclic {
         Identifier.fromNamespaceAndPath("minecraft", "angle"), compassFn);
   }
 
+  // IClientFluidTypeExtensions#getStillTexture/getFlowingTexture/getTintColor are gone in 26.1 - fluid
+  // still/flow sprites + tint now register as a FluidModel.Unbaked via RegisterFluidModelsEvent instead.
   // the | 0xFF000000 is to force max alpha
   @SubscribeEvent
-  public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidXpJuiceHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidXpJuiceHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidXpJuiceHolder.COLOR | 0xFF000000; }
-    }, FluidXpJuiceHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidMagmaHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidMagmaHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidMagmaHolder.COLOR | 0xFF000000; }
-    }, FluidMagmaHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidSlimeHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidSlimeHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidSlimeHolder.COLOR | 0xFF000000; }
-    }, FluidSlimeHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidWaxHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidWaxHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidWaxHolder.COLOR | 0xFF000000; }
-    }, FluidWaxHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidBiomassHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidBiomassHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidBiomassHolder.COLOR | 0xFF000000; }
-    }, FluidBiomassHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidHoneyHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidHoneyHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidHoneyHolder.COLOR | 0xFF000000; }
-    }, FluidHoneyHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidChocolateHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidChocolateHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidChocolateHolder.COLOR | 0xFF000000; }
-    }, FluidChocolateHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidRedstoneHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidRedstoneHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidRedstoneHolder.COLOR | 0xFF000000; }
-    }, FluidRedstoneHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidEnderHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidEnderHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidEnderHolder.COLOR | 0xFF000000; }
-    }, FluidEnderHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidGlowstoneHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidGlowstoneHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidGlowstoneHolder.COLOR | 0xFF000000; }
-    }, FluidGlowstoneHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidAmethystHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidAmethystHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidAmethystHolder.COLOR | 0xFF000000; }
-    }, FluidAmethystHolder.TYPE.get());
-    event.registerFluidType(new IClientFluidTypeExtensions() {
-      @Override public Identifier getStillTexture() { return FluidSculkHolder.FLUID_STILL; }
-      @Override public Identifier getFlowingTexture() { return FluidSculkHolder.FLUID_FLOW; }
-      @Override public int getTintColor() { return FluidSculkHolder.COLOR | 0xFF000000; }
-    }, FluidSculkHolder.TYPE.get());
-    IClientItemExtensions shieldExt = new IClientItemExtensions() {
-      @Override
-      public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-        return ShieldBlockEntityWithoutLevelRenderer.instance;
-      }
-    };
-    event.registerItem(shieldExt, ItemRegistry.SHIELD_WOOD.get(), ItemRegistry.SHIELD_LEATHER.get(),
-        ItemRegistry.SHIELD_FLINT.get(), ItemRegistry.SHIELD_BONE.get(), ItemRegistry.SHIELD_OBSIDIAN.get());
+  public static void onRegisterFluidModels(RegisterFluidModelsEvent event) {
+    registerFluidModel(event, FluidXpJuiceHolder.FLUID_STILL, FluidXpJuiceHolder.FLUID_FLOW, FluidXpJuiceHolder.COLOR, FluidXpJuiceHolder.STILL, FluidXpJuiceHolder.FLOWING);
+    registerFluidModel(event, FluidMagmaHolder.FLUID_STILL, FluidMagmaHolder.FLUID_FLOW, FluidMagmaHolder.COLOR, FluidMagmaHolder.STILL, FluidMagmaHolder.FLOWING);
+    registerFluidModel(event, FluidSlimeHolder.FLUID_STILL, FluidSlimeHolder.FLUID_FLOW, FluidSlimeHolder.COLOR, FluidSlimeHolder.STILL, FluidSlimeHolder.FLOWING);
+    registerFluidModel(event, FluidWaxHolder.FLUID_STILL, FluidWaxHolder.FLUID_FLOW, FluidWaxHolder.COLOR, FluidWaxHolder.STILL, FluidWaxHolder.FLOWING);
+    registerFluidModel(event, FluidBiomassHolder.FLUID_STILL, FluidBiomassHolder.FLUID_FLOW, FluidBiomassHolder.COLOR, FluidBiomassHolder.STILL, FluidBiomassHolder.FLOWING);
+    registerFluidModel(event, FluidHoneyHolder.FLUID_STILL, FluidHoneyHolder.FLUID_FLOW, FluidHoneyHolder.COLOR, FluidHoneyHolder.STILL, FluidHoneyHolder.FLOWING);
+    registerFluidModel(event, FluidChocolateHolder.FLUID_STILL, FluidChocolateHolder.FLUID_FLOW, FluidChocolateHolder.COLOR, FluidChocolateHolder.STILL, FluidChocolateHolder.FLOWING);
+    registerFluidModel(event, FluidRedstoneHolder.FLUID_STILL, FluidRedstoneHolder.FLUID_FLOW, FluidRedstoneHolder.COLOR, FluidRedstoneHolder.STILL, FluidRedstoneHolder.FLOWING);
+    registerFluidModel(event, FluidEnderHolder.FLUID_STILL, FluidEnderHolder.FLUID_FLOW, FluidEnderHolder.COLOR, FluidEnderHolder.STILL, FluidEnderHolder.FLOWING);
+    registerFluidModel(event, FluidGlowstoneHolder.FLUID_STILL, FluidGlowstoneHolder.FLUID_FLOW, FluidGlowstoneHolder.COLOR, FluidGlowstoneHolder.STILL, FluidGlowstoneHolder.FLOWING);
+    registerFluidModel(event, FluidAmethystHolder.FLUID_STILL, FluidAmethystHolder.FLUID_FLOW, FluidAmethystHolder.COLOR, FluidAmethystHolder.STILL, FluidAmethystHolder.FLOWING);
+    registerFluidModel(event, FluidSculkHolder.FLUID_STILL, FluidSculkHolder.FLUID_FLOW, FluidSculkHolder.COLOR, FluidSculkHolder.STILL, FluidSculkHolder.FLOWING);
+  }
+
+  private static void registerFluidModel(RegisterFluidModelsEvent event, Identifier stillTexture, Identifier flowTexture, int color,
+      java.util.function.Supplier<? extends net.minecraft.world.level.material.Fluid> stillFluid,
+      java.util.function.Supplier<? extends net.minecraft.world.level.material.Fluid> flowingFluid) {
+    FluidModel.Unbaked model = new FluidModel.Unbaked(
+        new net.minecraft.client.resources.model.sprite.Material(stillTexture, false),
+        new net.minecraft.client.resources.model.sprite.Material(flowTexture, false),
+        null,
+        FluidTintSources.constant(color | 0xFF000000));
+    event.register(model, stillFluid, flowingFluid);
+  }
+
+  // shield item-in-hand/GUI rendering moved off IClientItemExtensions#getCustomRenderer() (BlockEntityWithoutLevelRenderer
+  // is gone in 26.1) and onto the item model definition JSON ("minecraft:special" + a registered SpecialModelRenderer type),
+  // see assets/cyclic/items/shield_*.json and ShieldMaterialSpecialRenderer
+  @SubscribeEvent
+  public static void onRegisterSpecialModelRenderer(RegisterSpecialModelRendererEvent event) {
+    event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "shield_wood"), ShieldMaterialSpecialRenderer.WoodUnbaked.MAP_CODEC);
+    event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "shield_leather"), ShieldMaterialSpecialRenderer.LeatherUnbaked.MAP_CODEC);
+    event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "shield_flint"), ShieldMaterialSpecialRenderer.FlintUnbaked.MAP_CODEC);
+    event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "shield_bone"), ShieldMaterialSpecialRenderer.BoneUnbaked.MAP_CODEC);
+    event.register(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "shield_obsidian"), ShieldMaterialSpecialRenderer.ObsidianUnbaked.MAP_CODEC);
   }
 
 

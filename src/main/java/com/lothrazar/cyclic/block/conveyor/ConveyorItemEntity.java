@@ -30,7 +30,7 @@ public class ConveyorItemEntity extends ItemEntity {
 
 
   @Override
-  public float getSpin(float partialTicks) {
+  public float getVisualRotationYInDegrees() {
     return 0.0F;
   }
 

@@ -7,7 +7,9 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -41,7 +43,7 @@ public class BlockWirelessItem extends BlockCyclic {
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndLightGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
@@ -56,8 +58,8 @@ public class BlockWirelessItem extends BlockCyclic {
   }
 
   @Override // was onReplaced
-  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
+  protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel worldIn, BlockPos pos, boolean movedByPiston) {
+    if (true) {
       TileWirelessItem tileentity = (TileWirelessItem) worldIn.getBlockEntity(pos);
       if (tileentity != null) {
         for (int i = 0; i < tileentity.gpsSlots.getSlots(); ++i) {
@@ -65,7 +67,7 @@ public class BlockWirelessItem extends BlockCyclic {
           Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.gpsSlots.getStackInSlot(i));
         }
       }
-      super.onRemove(state, worldIn, pos, newState, isMoving);
+      super.affectNeighborsAfterRemoval(state, worldIn, pos, movedByPiston);
     }
   }
 }

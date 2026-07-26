@@ -44,6 +44,6 @@ public class StirrupsReverseItem extends ItemBaseCyclic {
       playerIn.removeVehicle();
       return InteractionResult.SUCCESS;
     }
-    return target.startRiding(playerIn, true) ? InteractionResult.SUCCESS : super.interactLivingEntity(stack, playerIn, target, hand);
+    return target.startRiding(playerIn, true, true) ? InteractionResult.SUCCESS : super.interactLivingEntity(stack, playerIn, target, hand);
   }
 }

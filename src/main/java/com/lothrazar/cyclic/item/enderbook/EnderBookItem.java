@@ -20,6 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -41,7 +42,7 @@ public class EnderBookItem extends ItemBaseCyclic {
   private static final String TELEPORT_COUNTDOWN = "TeleportCountdown";
 
   public EnderBookItem(Properties properties) {
-    super(properties);
+    super(properties.repairable(Items.ENDER_PEARL));
   }
 
   private static CompoundTag getData(ItemStack stack) {
@@ -95,7 +96,7 @@ public class EnderBookItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn,  EquipmentSlot slot) {
     CompoundTag tag = getData(stack);
     if (!tag.contains(TELEPORT_COUNTDOWN) || !(entityIn instanceof LivingEntity)) {
       return;
@@ -133,10 +134,6 @@ public class EnderBookItem extends ItemBaseCyclic {
     setData(stack, tag);
   }
 
-  @Override
-  public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-    return repair.getItem() == Items.ENDER_PEARL;
-  }
 
   public static void cancelTeleport(ItemStack stack) {
     CompoundTag tag = getData(stack);

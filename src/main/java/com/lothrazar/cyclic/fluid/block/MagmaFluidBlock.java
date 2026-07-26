@@ -19,13 +19,13 @@ public class MagmaFluidBlock extends PartialHeightFluidBlock {
 
   @SuppressWarnings("deprecation")
   @Override
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (entityIn instanceof LivingEntity ent && !ent.isOnFire() && !ent.fireImmune()) {
       int level = EnchantUtil.getCurrentArmorLevel(EnchantUtil.holder(Enchantments.FIRE_PROTECTION, ent), ent);
       if (level < 4) {
         ent.igniteForSeconds(Mth.floor(worldIn.getRandom().nextDouble() * 10));
       }
     }
-    super.entityInside(state, worldIn, pos, entityIn);
+    super.entityInside(state, worldIn, pos, entityIn, effectApplier, isPrecise);
   }
 }

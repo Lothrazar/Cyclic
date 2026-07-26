@@ -73,7 +73,7 @@ public class PacketSwapBlock implements CustomPacketPayload {
         return;
       }
       BuildStyle buildStyle = ((BuilderItem) itemStackHeld.getItem()).style;
-      Level world = player.getCommandSenderWorld();
+      Level world = player.level();
       IEnergyStorage storage = CapabilityUtil.energy(itemStackHeld);
       final int cost = BuilderItem.COST.get();
       if (storage == null || storage.extractEnergy(cost, true) < cost) {

@@ -11,11 +11,13 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -49,16 +51,16 @@ public class TeleporterWandItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn,  EquipmentSlot slot) {
     if (entityIn instanceof Player && stack.isDamaged() && stack.getDamageValue() >= TICK_REPAIR) {
       this.tryRepairWith(stack, (Player) entityIn, Items.ENDER_PEARL);
     }
   }
 
   @Override
-  public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {
+  public boolean releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {
     if (!(entity instanceof Player)) {
-      return;
+      return false;
     }
     float percentageCharged = getChargedPercent(stack, chargeTimer, entity);
     if (percentageCharged >= 0.98) { //full charge with a bit of buffer room
@@ -69,14 +71,16 @@ public class TeleporterWandItem extends ItemBaseCyclic {
         Direction face = blockRayTraceResult.getDirection();
         BlockPos newPos = blockRayTraceResult.getBlockPos().relative(face);
         BlockPos oldPos = player.blockPosition();
-        if (EntityUtil.enderTeleportEvent(player, world, newPos)) { // && player.getPosition() != currentPlayerPos    
+        if (EntityUtil.enderTeleportEvent(player, world, newPos)) { // && player.getPosition() != currentPlayerPos
           ItemStackUtil.damageItem(player, stack);
           if (world.isClientSide()) {
             ParticleUtil.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
             SoundUtil.playSound(player, SoundRegistry.WARP_ECHO.get());
           }
+          return true;
         }
       }
     }
+    return false;
   }
 }

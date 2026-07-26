@@ -171,7 +171,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
       return false;
     }
     boolean cardEmpty = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() == null
-        || !stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBoolean(RelativeShape.VALID_SHAPE);
+        || !stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBooleanOr(RelativeShape.VALID_SHAPE, false);
     BlockPos invA = getTarget(SLOT_A);
     BlockPos invB = getTarget(SLOT_B);
     boolean hasTargets = invA != null && invB != null;

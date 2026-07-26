@@ -73,7 +73,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
       increment(ahorse, 1);
       event.getEntity().getCooldowns().addCooldown(event.getItemStack(), 1);
       HorseFeedUtil.finishFeed(event, ahorse);
-      int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
+      int current = ahorse.getPersistentData().getIntOr(NBT_KEYACTIVE, 0);
       ChatUtil.addChatMessage(event.getEntity(), ChatUtil.lang("item.cyclic.carrot_ender.count") + current);
 
     }

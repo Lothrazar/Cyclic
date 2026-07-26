@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -31,7 +32,7 @@ public class BlockTeleport extends BlockCyclic {
   }
 
   @Override
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (entity instanceof ServerPlayer == false) {
       return;
     }
@@ -48,7 +49,8 @@ public class BlockTeleport extends BlockCyclic {
       if (pay == 0 || sim == pay) {
         tile.energy.extractEnergy(pay, false);
         //tp now
-        player.teleportTo(dimpos.getTargetLevel(worldIn),dimpos.getX(),dimpos.getY(),dimpos.getZ(),player.getYRot(),player.getXRot());
+        player.teleportTo(dimpos.getTargetLevel(worldIn), dimpos.getX(), dimpos.getY(), dimpos.getZ(),
+            java.util.Set.of(), player.getYRot(), player.getXRot(), true);
 
       }
     }
@@ -65,7 +67,7 @@ public class BlockTeleport extends BlockCyclic {
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndLightGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 

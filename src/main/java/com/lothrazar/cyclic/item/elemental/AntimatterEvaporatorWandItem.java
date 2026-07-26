@@ -125,9 +125,9 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void onCraftedBy(ItemStack stack, Level worldIn, Player playerIn) {
+  public void onCraftedBy(ItemStack stack, Player playerIn) {
     CustomData.EMPTY.copyTag().putInt(NBT_MODE, EvaporateMode.WATER.ordinal());
-    super.onCraftedBy(stack, worldIn, playerIn);
+    super.onCraftedBy(stack, playerIn);
   }
 
   private static MutableComponent getModeTooltip(ItemStack stack) {

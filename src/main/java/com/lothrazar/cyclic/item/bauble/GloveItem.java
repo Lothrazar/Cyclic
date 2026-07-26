@@ -6,8 +6,10 @@ import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
 public class GloveItem extends ItemBaseToggle {
@@ -19,7 +21,7 @@ public class GloveItem extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn,  EquipmentSlot slot) {
     //so
     if (!this.isOn(stack)) {
       return;
@@ -28,7 +30,7 @@ public class GloveItem extends ItemBaseToggle {
       Player player = (Player) entityIn;
       ItemStackUtil.damageItemRandomly(player, stack);
       if (player.horizontalCollision) {
-        Level world = player.getCommandSenderWorld();
+        Level world = player.level();
         EntityUtil.tryMakeEntityClimb(world, player, CLIMB_SPEED);
         ItemStackUtil.damageItem(player, stack);
         if (worldIn.getGameTime() % Const.TICKS_PER_SEC == 0) {

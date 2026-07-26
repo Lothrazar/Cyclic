@@ -33,16 +33,16 @@ public class SlimeFluidBlock extends GenericFluidBlock {
   }
 
   @Override
-  public void fallOn(Level worldIn, BlockState state, BlockPos pos, Entity entityIn, float fallDistance) {
+  public void fallOn(Level worldIn, BlockState state, BlockPos pos, Entity entityIn, double fallDistance) {
     if (entityIn.isSuppressingBounce()) {
       super.fallOn(worldIn, state, pos, entityIn, fallDistance);
     }
   }
 
   @Override
-  public void updateEntityAfterFallOn(BlockGetter worldIn, Entity entityIn) {
+  public void updateEntityMovementAfterFallOn(BlockGetter worldIn, Entity entityIn) {
     if (entityIn.isSuppressingBounce()) {
-      super.updateEntityAfterFallOn(worldIn, entityIn);
+      super.updateEntityMovementAfterFallOn(worldIn, entityIn);
     }
     else {
       this.collision(entityIn);

@@ -37,15 +37,17 @@ public class SlingshotItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {
+  public boolean releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {
     int charge = this.getUseDuration(stack, entity) - chargeTimer;
     float percentageCharged = BowItem.getPowerForTime(charge); //never zero, its from [0.03,1];
     if (percentageCharged < 0.1) {
-      return; //not enough force to go with any realistic path 
+      return false; //not enough force to go with any realistic path
     }
     if (entity instanceof Player player) {
       shootMe(world, player, new StoneEntity(entity, world), 0, percentageCharged * ItemBaseCyclic.VELOCITY_MAX);
       ItemStackUtil.damageItem(player, stack);
+      return true;
     }
+    return false;
   }
 }

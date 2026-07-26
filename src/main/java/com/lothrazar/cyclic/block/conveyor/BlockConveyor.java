@@ -220,7 +220,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
   }
 
   @Override
-  public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+  public boolean propagatesSkylightDown(BlockState state) {
     return state.getValue(TYPE).isVertical();
   }
 
@@ -350,11 +350,11 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
   }
 
   @Override
-  public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+  public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (!world.isClientSide()) {
       TileConveyor.makeEntitiesTravel(entity, state, pos, world);
     }
-    super.entityInside(state, world, pos, entity);
+    super.entityInside(state, world, pos, entity, effectApplier, isPrecise);
   }
 
   @Override

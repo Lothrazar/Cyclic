@@ -36,7 +36,7 @@ public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInter
     double newAmount = (old == null) ? JUMP_AMT : old.amount() + JUMP_AMT;
     jump.removeModifier(MODIFIER_ID);
     jump.addPermanentModifier(new AttributeModifier(MODIFIER_ID, newAmount, AttributeModifier.Operation.ADD_VALUE));
-    ahorse.getPersistentData().putInt(NBT_COUNT, ahorse.getPersistentData().getInt(NBT_COUNT) + 1);
+    ahorse.getPersistentData().putInt(NBT_COUNT, ahorse.getPersistentData().getIntOr(NBT_COUNT, 0) + 1);
     HorseFeedUtil.finishFeed(event, ahorse);
   }
 }

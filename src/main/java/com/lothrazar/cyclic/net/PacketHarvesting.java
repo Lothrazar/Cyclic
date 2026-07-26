@@ -57,7 +57,7 @@ public class PacketHarvesting implements CustomPacketPayload {
 
   public static PacketHarvesting decode(RegistryFriendlyByteBuf buf) {
     CompoundTag tags = buf.readNbt();
-    return new PacketHarvesting(new BlockPos(tags.getIntOr("x", 0), tags.getInt("y"), tags.getInt("z")), buf.readInt());
+    return new PacketHarvesting(new BlockPos(tags.getIntOr("x", 0), tags.getIntOr("y", 0), tags.getIntOr("z", 0)), buf.readInt());
   }
 
   public static void encode(RegistryFriendlyByteBuf buf, PacketHarvesting msg) {

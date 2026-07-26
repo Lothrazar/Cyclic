@@ -88,10 +88,10 @@ public class MembraneBlock extends BlockCyclic {
       LivingEntity player = (Player) entityIn;
       if (player.isSprinting()) {
         //zscaler
-        MobEffectInstance eff = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 4 * Const.TICKS_PER_SEC, 5, false, false, true);
+        MobEffectInstance eff = new MobEffectInstance(MobEffects.SPEED, 4 * Const.TICKS_PER_SEC, 5, false, false, true);
 
         player.addEffect(eff);
-        eff = new MobEffectInstance(MobEffects.JUMP, 4 * Const.TICKS_PER_SEC, 5, false, false, true);
+        eff = new MobEffectInstance(MobEffects.JUMP_BOOST, 4 * Const.TICKS_PER_SEC, 5, false, false, true);
 
         player.addEffect(eff);
       }
@@ -99,7 +99,7 @@ public class MembraneBlock extends BlockCyclic {
   }
 
   @Override
-  public void fallOn(Level worldIn, BlockState state, BlockPos pos, Entity entityIn, float fallDistance) {
+  public void fallOn(Level worldIn, BlockState state, BlockPos pos, Entity entityIn, double fallDistance) {
     fallDistance = 0;
     super.fallOn(worldIn, state, pos, entityIn, fallDistance);
   }

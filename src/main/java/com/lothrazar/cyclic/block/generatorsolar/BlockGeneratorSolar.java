@@ -37,7 +37,7 @@ public class BlockGeneratorSolar extends BlockCyclic {
   }
 
   @Override
-  public VoxelShape getOcclusionShape(BlockState state, BlockGetter worldIn, BlockPos pos) {
+  protected VoxelShape getOcclusionShape(BlockState state) {
     return Shapes.block();
   }
 

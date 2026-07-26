@@ -10,13 +10,13 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.animal.equine.TraderLlama;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.npc.WanderingTrader;
+import net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -85,12 +85,12 @@ public class CandlePeaceBlock extends BlockCyclic {
   }
 
   @Override
-  public ItemInteractionResult useItemOn(ItemStack st, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+  public InteractionResult useItemOn(ItemStack st, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
     boolean old = state.getValue(LIT);
     world.setBlockAndUpdate(pos, state.setValue(LIT, !old));
     SoundUtil.playSound(world, pos, old ? SoundEvents.FIRE_EXTINGUISH : SoundEvents.FIRE_AMBIENT);
     ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
-    return ItemInteractionResult.SUCCESS;
+    return InteractionResult.SUCCESS;
   }
 
   @Override

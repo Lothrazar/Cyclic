@@ -10,7 +10,7 @@ import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -49,16 +49,16 @@ public class BlockFluidTank extends BlockCyclic {
   }
 
   @Override
-  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos) {
+  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos, Direction direction) {
     return calcRedstoneFromFluid(level.getBlockEntity(pos));
   }
 
   @Override
-  public ItemInteractionResult useItemOn(ItemStack st, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+  public InteractionResult useItemOn(ItemStack st, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     if (!player.isCrouching() && player.getMainHandItem().getItem() == this.asItem()
         && (hit.getDirection() == Direction.UP || hit.getDirection() == Direction.DOWN)) {
       //pass to allow quick building up and down
-      return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+      return InteractionResult.PASS;
     }
     return super.useItemOn(st,state, world, pos, player, hand, hit);
   }
@@ -89,7 +89,7 @@ public class BlockFluidTank extends BlockCyclic {
   }
 
   @Override
-  public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+  protected boolean propagatesSkylightDown(BlockState state) {
     return true;
   }
 
@@ -104,7 +104,7 @@ public class BlockFluidTank extends BlockCyclic {
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, net.minecraft.world.level.BlockAndLightGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
@@ -115,7 +115,7 @@ public class BlockFluidTank extends BlockCyclic {
   }
 
   @Override
-  public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+  public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
     ItemStack tankStack = new ItemStack(this);
     if (level.getBlockEntity(pos) instanceof TileTank ttank) {
       IFluidHandler fluidInStack = CapabilityUtil.fluid(tankStack);

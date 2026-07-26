@@ -141,8 +141,13 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
       setPreviewSlot(ItemStack.EMPTY);
     }
     else {
-      //recipes not null and it matches  
-      ItemStack recipeOutput = lastValidRecipe.value().getResultItem(level.registryAccess()).copy();
+      //recipes not null and it matches
+      CraftingInput craftingInput = CraftingInput.of(3, 3, java.util.List.of(
+          craftMatrix.getItem(0), craftMatrix.getItem(1), craftMatrix.getItem(2),
+          craftMatrix.getItem(3), craftMatrix.getItem(4), craftMatrix.getItem(5),
+          craftMatrix.getItem(6), craftMatrix.getItem(7), craftMatrix.getItem(8)
+      ));
+      ItemStack recipeOutput = lastValidRecipe.value().assemble(craftingInput).copy();
       setPreviewSlot(recipeOutput);
       //if we have space for the output, then go ahead
       if (hasFreeSpace(outHandler, recipeOutput)) {
@@ -161,11 +166,6 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
           //get the result item
           depositOutput(recipeOutput, outHandler);
           //stuff like empty buckets happen down here
-          CraftingInput craftingInput = CraftingInput.of(3, 3, java.util.List.of(
-        craftMatrix.getItem(0), craftMatrix.getItem(1), craftMatrix.getItem(2),
-        craftMatrix.getItem(3), craftMatrix.getItem(4), craftMatrix.getItem(5),
-        craftMatrix.getItem(6), craftMatrix.getItem(7), craftMatrix.getItem(8)
-    ));
           NonNullList<ItemStack> rem = lastValidRecipe.value().getRemainingItems(craftingInput);
           for (int i = 0; i < rem.size(); ++i) {
             ItemStack s = rem.get(i);
@@ -240,7 +240,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
 
   private boolean doCraft(RecipeHolder<CraftingRecipe> lastValidRecipe) {
     HashMap<Integer, List<ItemStack>> putbackStacks = new HashMap<>();
-    for (Ingredient ingredient : lastValidRecipe.value().getIngredients()) {
+    for (Ingredient ingredient : lastValidRecipe.value().placementInfo().ingredients()) {
       if (ingredient.isEmpty()) {
         continue;
       }
@@ -286,7 +286,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
         craftMatrix.getItem(3), craftMatrix.getItem(4), craftMatrix.getItem(5),
         craftMatrix.getItem(6), craftMatrix.getItem(7), craftMatrix.getItem(8)
     ));
-    java.util.List<RecipeHolder<CraftingRecipe>> recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
+    java.util.Collection<RecipeHolder<CraftingRecipe>> recipes = level.getServer().getRecipeManager().recipeMap().byType(RecipeType.CRAFTING);
     for (RecipeHolder<CraftingRecipe> rec : recipes) {
       if (rec.value().matches(craftingInput, level)) {
         return rec;

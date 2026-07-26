@@ -63,7 +63,7 @@ public class PacketScythe implements CustomPacketPayload {
   public static void handle(PacketScythe message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> {
       ServerPlayer player = (ServerPlayer) ctx.player();
-      Level world = player.getCommandSenderWorld();
+      Level world = player.level();
       List<BlockPos> shape = ScytheType.getShape(message.pos, message.radius);
       for (BlockPos posCurrent : shape) {
         HarvestUtil.harvestByScytheType(world, player, posCurrent, message.type);

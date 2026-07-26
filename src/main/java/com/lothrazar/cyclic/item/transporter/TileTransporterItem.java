@@ -13,6 +13,7 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -78,12 +79,13 @@ public class TileTransporterItem extends ItemBaseCyclic {
   private boolean placeStoredTileEntity(Player player, ItemStack heldChestSack, BlockPos pos) {
     CompoundTag itemData = heldChestSack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     Identifier res =   Identifier.parse(itemData.getStringOr(KEY_BLOCKID, ""));
-    Block block = BuiltInRegistries.BLOCK.get(res);
-    if (block == null) {
+    java.util.Optional<Holder.Reference<Block>> blockRef = BuiltInRegistries.BLOCK.get(res);
+    if (blockRef.isEmpty()) {
       heldChestSack = ItemStack.EMPTY;
       ChatUtil.addChatMessage(player, "Invalid block id " + res);
       return false;
     }
+    Block block = blockRef.get().value();
     BlockState toPlace = NbtUtils.readBlockState(player.level().holderLookup(Registries.BLOCK), itemData.getCompoundOrEmpty(KEY_BLOCKSTATE));
     if (ConfigRegistry.OVERRIDE_TRANSPORTER_SINGLETON.get()) {
       if (toPlace.hasProperty(BlockStateProperties.CHEST_TYPE)
@@ -92,7 +94,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
       }
     }
     //maybe get from player direction or offset face, but instead rely on that from saved data
-    Level world = player.getCommandSenderWorld();
+    Level world = player.level();
     try {
       world.setBlockAndUpdate(pos, toPlace);
       BlockEntity tile = world.getBlockEntity(pos);
@@ -101,7 +103,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
         tileData.putInt("x", pos.getX());
         tileData.putInt("y", pos.getY());
         tileData.putInt("z", pos.getZ());
-        tile.loadWithComponents(tileData, world.registryAccess()); // can cause errors in 3rd party mod
+        tile.loadWithComponents(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING, world.registryAccess(), tileData)); // can cause errors in 3rd party mod
         //example at extracells.tileentity.TileEntityFluidFiller.func_145839_a(TileEntityFluidFiller.java:302) ~
         tile.setChanged();
         world.blockEntityChanged(pos);

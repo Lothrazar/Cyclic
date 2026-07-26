@@ -55,7 +55,7 @@ public class PacketRandomize implements CustomPacketPayload {
     ctx.enqueueWork(() -> {
       var player = ctx.player();
 
-      Level world = player.getCommandSenderWorld();
+      Level world = player.level();
       ItemStack held = player.getItemInHand(message.hand);
       IEnergyStorage storage = CapabilityUtil.energy(held);
       final int cost = RandomizerItem.COST.get();

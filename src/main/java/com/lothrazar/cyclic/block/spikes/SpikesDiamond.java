@@ -28,7 +28,7 @@ public class SpikesDiamond extends SpikesBlock {
   }
 
   @Override
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (entity instanceof LivingEntity && state.getValue(ACTIVATED) && worldIn instanceof ServerLevel) {
       //attck from fake player
       TileDiamondSpikes tile = (TileDiamondSpikes) worldIn.getBlockEntity(pos);

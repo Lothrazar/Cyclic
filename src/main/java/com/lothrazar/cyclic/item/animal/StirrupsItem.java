@@ -44,6 +44,6 @@ public class StirrupsItem extends ItemBaseCyclic {
     //      playerIn.dismount();
     //      return ActionResultType.SUCCESS;
     //    }
-    return playerIn.startRiding(target, true) ? InteractionResult.SUCCESS : super.interactLivingEntity(stack, playerIn, target, hand);
+    return playerIn.startRiding(target, true, true) ? InteractionResult.SUCCESS : super.interactLivingEntity(stack, playerIn, target, hand);
   }
 }

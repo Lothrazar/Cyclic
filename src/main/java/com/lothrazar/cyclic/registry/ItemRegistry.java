@@ -120,6 +120,7 @@ import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
 import com.lothrazar.cyclic.registry.MaterialRegistry.ToolMats;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
@@ -143,7 +144,7 @@ public class ItemRegistry {
   public static final DeferredItem<Item> GEM_AMBER = ITEMS.register("gem_amber", () -> new GemstoneItem(new Item.Properties()));
   public static final DeferredItem<Item> APPLE_HONEY = ITEMS.register("apple_honey", () -> new ItemBaseCyclic(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT * 4).saturationModifier(APPLESATUR * 4).build())));
   public static final DeferredItem<Item> APPLE_LOFTY_STATURE = ITEMS.register("apple_lofty_stature", () -> new LoftyStatureApple(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT).saturationModifier(0).alwaysEdible()
-      .build())));
+      .build(), Consumable.builder().sound(SoundRegistry.STEP_HEIGHT_UP).build())));
   public static final DeferredItem<Item> APPLE_CHORUS = ITEMS.register("apple_chorus", () -> new FoodItemWithEffects(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT).saturationModifier(APPLESATUR)
       .effect(() -> FoodItemWithEffects.silent(MobEffects.LEVITATION, LARGEPOTIONDUR, 1), 1)
       .effect(() -> FoodItemWithEffects.silent(MobEffects.RESISTANCE, LARGEPOTIONDUR, 0), 1)

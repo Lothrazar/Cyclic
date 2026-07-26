@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
@@ -25,7 +26,7 @@ public class BlockShearing extends BlockCyclic {
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndLightGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
@@ -35,15 +36,15 @@ public class BlockShearing extends BlockCyclic {
   }
 
   @Override
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (entityIn instanceof IShearable sheep) {
       //do it
 //      IForgeShearable sheep = (IForgeShearable) entityIn;
-      if (sheep.isShearable(null,ItemStack.EMPTY, worldIn, pos)) {
+      if (sheep.isShearable(null,ItemStack.EMPTY, worldIn, pos) && worldIn instanceof net.minecraft.server.level.ServerLevel serverLevel) {
         List<ItemStack> drops = sheep.onSheared(null, ItemStack.EMPTY, worldIn, pos); //, worldIn.random.nextInt(3)
         drops.forEach(d -> {
           RandomSource rand = worldIn.getRandom();
-          ItemEntity ent = entityIn.spawnAtLocation(d, 1.0F);
+          ItemEntity ent = entityIn.spawnAtLocation(serverLevel, d, 1.0F);
           ent.setDeltaMovement(ent.getDeltaMovement().add((rand.nextFloat() - rand.nextFloat()) * 0.1F, rand.nextFloat() * 0.05F, (rand.nextFloat() - rand.nextFloat()) * 0.1F));
         });
       }

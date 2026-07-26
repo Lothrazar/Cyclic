@@ -152,11 +152,12 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private UncraftStatusEnum uncraftRecipe(Recipe<?> match) {
-    List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient -> Arrays.stream(ingredient.getItems())
-        .filter(stack -> !stack.hasCraftingRemainingItem())
-        .findAny()
-        .map(Stream::of)
-        .orElseGet(Stream::empty))
+    List<ItemStack> result = match.placementInfo().ingredients().stream()
+        .flatMap(ingredient -> ingredient.items().map(net.minecraft.world.item.ItemStack::new)
+            .filter(stack -> stack.getItem().getCraftingRemainder(stack) == null)
+            .findAny()
+            .map(Stream::of)
+            .orElseGet(Stream::empty))
         .collect(Collectors.toList());
     if (result.isEmpty()) {
       return UncraftStatusEnum.NORECIPE;

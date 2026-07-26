@@ -9,6 +9,7 @@ import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.*;
@@ -80,7 +81,7 @@ public class BlockCyclic extends EntityBlockFlib {
 
 //  protected ItemInteractionResult useItemOn(ItemStack p_316304_, BlockState p_316362_, Level p_316459_, BlockPos p_316366_, Player p_316132_, InteractionHand p_316595_, BlockHitResult p_316140_) {
   @Override
-  public ItemInteractionResult useItemOn(ItemStack st, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+  public InteractionResult useItemOn(ItemStack st, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     if (hasFluidInteract) {
       if (!level.isClientSide()) {
         BlockEntity tankHere = level.getBlockEntity(pos);
@@ -106,7 +107,7 @@ public class BlockCyclic extends EntityBlockFlib {
         }
       }
       if (FluidUtil.getFluidHandler(player.getMainHandItem()).isPresent()) { // reverted to how 1.16.5 does it fix sapphys bug
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
       }
     }
     if (this.hasGui) {
@@ -120,7 +121,7 @@ public class BlockCyclic extends EntityBlockFlib {
           throw new IllegalStateException("Our named container provider is missing!");
         }
       }
-      return ItemInteractionResult.SUCCESS;
+      return InteractionResult.SUCCESS;
     }
     return super.useItemOn(st,state, level, pos, player, hand, hit);
   }
@@ -153,22 +154,20 @@ public class BlockCyclic extends EntityBlockFlib {
 
   @SuppressWarnings("deprecation")
   @Override
-  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
-      // Read inventory directly from the tile - at this point the block state has already
-      // changed to newState, so level.getCapability() finds no provider (air has none) and
-      // returns null. The block entity is still present until super.onRemove removes it.
-      if (worldIn.getBlockEntity(pos) instanceof TileBlockEntityCyclic tile) {
-        IItemHandler items = tile.getItemHandler(null);
-        if (items != null) {
-          for (int i = 0; i < items.getSlots(); ++i) {
-            Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
-          }
-          worldIn.updateNeighbourForOutputSignal(pos, this);
+  protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel worldIn, BlockPos pos, boolean movedByPiston) {
+    // Read inventory directly from the tile - at this point the block state has already
+    // changed to the replacement state, so level.getCapability() finds no provider (air has none) and
+    // returns null. The block entity is still present until this method returns.
+    if (worldIn.getBlockEntity(pos) instanceof TileBlockEntityCyclic tile) {
+      IItemHandler items = tile.getItemHandler(null);
+      if (items != null) {
+        for (int i = 0; i < items.getSlots(); ++i) {
+          Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
         }
+        worldIn.updateNeighbourForOutputSignal(pos, this);
       }
-      super.onRemove(state, worldIn, pos, newState, isMoving);
     }
+    super.affectNeighborsAfterRemoval(state, worldIn, pos, movedByPiston);
   }
 
   //for comparators that dont use item inventories

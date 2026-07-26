@@ -58,10 +58,10 @@ public class BlockstateCard extends ItemBaseCyclic {
     List<BlockStateMatcher> st = new ArrayList<>();
     if (held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null && held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(STATESTAG)) {
       //get it
-      ListTag stateTags = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getList(STATESTAG, 10);
+      ListTag stateTags = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getListOrEmpty(STATESTAG);
       for (int i = 0; i < stateTags.size(); ++i) {
         CompoundTag currTag = stateTags.getCompoundOrEmpty(i);
-        BlockState stateFound = NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), currTag);
+        BlockState stateFound = NbtUtils.readBlockState(BuiltInRegistries.BLOCK, currTag);
         if (stateFound != null && !stateFound.isAir()) {
           BlockStateMatcher matcher = new BlockStateMatcher();
           matcher.setState(stateFound);
@@ -101,7 +101,7 @@ public class BlockstateCard extends ItemBaseCyclic {
     ListTag stateTags = null;
     if (held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(STATESTAG)) {
       //get it
-      stateTags = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getList(STATESTAG, 10);
+      stateTags = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getListOrEmpty(STATESTAG);
     }
     else {
       stateTags = new ListTag();

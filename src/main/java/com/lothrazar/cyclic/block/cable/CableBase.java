@@ -14,7 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -132,7 +132,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
   }
 
   @Override
-  public ItemInteractionResult useItemOn(ItemStack st,BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+  public InteractionResult useItemOn(ItemStack st,BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
     if (handIn != InteractionHand.MAIN_HAND) {
       return super.useItemOn(st, state, world, pos, player, handIn, hit);
     }
@@ -153,13 +153,13 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
             ((ServerPlayer) player).openMenu((MenuProvider) tileEntity, tileEntity.getBlockPos());
           }
         }
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
       }
-      return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+      return InteractionResult.PASS;
     }
     rotateFromWrench(state, world, pos, player, hit);
     player.swing(handIn);
-    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    return InteractionResult.PASS;
   }
 
   public static void crouchClick(PlayerInteractEvent.RightClickBlock event, BlockState state) {

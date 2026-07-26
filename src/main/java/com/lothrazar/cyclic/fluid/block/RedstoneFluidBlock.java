@@ -4,6 +4,7 @@ import com.lothrazar.library.fluid.GenericFluidBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
@@ -22,12 +23,12 @@ public class RedstoneFluidBlock extends GenericFluidBlock {
   }
 
   @Override
-  public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-    if (!newState.is(this)) {
+  protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+    if (true) {
       level.updateNeighborsAt(pos, this);
       level.updateNeighborsAt(pos.above(), this);
     }
-    super.onRemove(state, level, pos, newState, movedByPiston);
+    super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
   }
 
   @Override

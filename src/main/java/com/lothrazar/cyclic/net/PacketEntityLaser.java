@@ -28,7 +28,7 @@ import com.lothrazar.cyclic.item.LaserItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -62,7 +62,7 @@ public class PacketEntityLaser implements CustomPacketPayload {
   public static void handle(PacketEntityLaser message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> {
       ServerPlayer sender = (ServerPlayer) ctx.player();
-      Level level = sender.level();
+      ServerLevel level = sender.level();
       Entity target = level.getEntity(message.entityId);
       //validate also covers delay
       ItemStack stack = LaserItem.getIfHeld(sender);
@@ -70,7 +70,7 @@ public class PacketEntityLaser implements CustomPacketPayload {
         IEnergyStorage storage = CapabilityUtil.energy(stack);
         if (storage != null) {
           float dmg = message.crosshair ? ConfigRegistry.LaserItemDamageClose.get() : ConfigRegistry.LaserItemDamageFar.get();
-          if (target.hurt(level.damageSources().indirectMagic(sender, sender), dmg)) {
+          if (target.hurtServer(level, level.damageSources().indirectMagic(sender, sender), dmg)) {
             //DRAIN RF ETC 
             LaserItem.resetStackDamageCool(stack, level.getGameTime());
             storage.extractEnergy(ConfigRegistry.LaserItemEnergy.get(), false);

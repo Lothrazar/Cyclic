@@ -9,12 +9,12 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -60,11 +60,11 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
   }
 
   @Override
-  public ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+  public InteractionResult useItemOn(ItemStack heldItem, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     //right-click with an item also opens the filter menu (parallels every other GUI block)
     if (!player.isCrouching()) {
       openFilterMenu(world, pos, player);
-      return ItemInteractionResult.SUCCESS;
+      return InteractionResult.SUCCESS;
     }
     return super.useItemOn(heldItem, state, world, pos, player, hand, hit);
   }
@@ -81,7 +81,7 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndLightGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 

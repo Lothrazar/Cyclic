@@ -42,7 +42,7 @@ public class BlockSoundRecorder extends BlockCyclic {
   @SubscribeEvent
   public void onPlaySound(PlaySoundEvent event) {
     ClientLevel clientWorld = Minecraft.getInstance().level;
-    if (event.getSound() == null || event.getSound().getLocation() == null || event.getSound() instanceof TickableSoundInstance || clientWorld == null) {
+    if (event.getSound() == null || event.getSound().getIdentifier() == null || event.getSound() instanceof TickableSoundInstance || clientWorld == null) {
       return;
     } //long term/repeating/music
     final boolean isPowered = false; // if im NOT powered, im running
@@ -50,7 +50,7 @@ public class BlockSoundRecorder extends BlockCyclic {
         new BlockPos((int) event.getSound().getX(), (int) event.getSound().getY(), (int) event.getSound().getZ()), this,
         ConfigRegistry.RECORDER_RADIUS.get(), isPowered);
     for (BlockPos nearby : blocks) {
-      String sid = event.getSound().getLocation().toString();
+      String sid = event.getSound().getIdentifier().toString();
       ClientPacketDistributor.sendToServer(new PacketRecordSound(sid, nearby));
       //hack save to client. otherwise have to hard sync or reload world
       BlockEntity tile = clientWorld.getBlockEntity(nearby);

@@ -62,10 +62,10 @@ public class LeverRemote extends ItemBaseCyclic {
     boolean success = trigger(stack, worldIn, playerIn);
     if (success) {
       playerIn.swing(hand);
-      return new InteractionResult(InteractionResult.SUCCESS, stack);
+      return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
     }
     else {
-      return new InteractionResult(InteractionResult.FAIL, stack);
+      return InteractionResult.FAIL;
     }
   }
 

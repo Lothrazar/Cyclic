@@ -8,11 +8,12 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -51,27 +52,32 @@ public class BlockEnderCtrl extends BlockCyclic {
   }
 
   @Override
-  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+  protected void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+    super.onPlace(state, worldIn, pos, oldState, movedByPiston);
+    // same-block state-property transition (e.g. shelf flag toggling off) - onRemove used to also fire for
+    // this case, now only onPlace does, since affectNeighborsAfterRemoval is guaranteed block-changed only
+    boolean wasShelf = EnderShelfHelper.isShelf(oldState);
     boolean isCurrentlyShelf = EnderShelfHelper.isShelf(state);
-    boolean isNewShelf = EnderShelfHelper.isShelf(newState);
     TileEnderCtrl ctrl = (TileEnderCtrl) worldIn.getBlockEntity(pos);
-    if (isCurrentlyShelf && !isNewShelf && ctrl != null) {
+    if (wasShelf && !isCurrentlyShelf && ctrl != null) {
       //trigger controller reindex
       ctrl.setAndSort(EnderShelfHelper.findConnectedShelves(worldIn, pos, ctrl.getCurrentFacing()));
-    }
-    if (state.getBlock() != newState.getBlock()) {
-      worldIn.removeBlockEntity(pos);
-      worldIn.updateNeighbourForOutputSignal(pos, this);
     }
   }
 
   @Override
-  public ItemInteractionResult useItemOn(ItemStack st,BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+  protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel worldIn, BlockPos pos, boolean movedByPiston) {
+    worldIn.removeBlockEntity(pos);
+    worldIn.updateNeighbourForOutputSignal(pos, this);
+  }
+
+  @Override
+  public InteractionResult useItemOn(ItemStack st,BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     ItemStack heldItem = player.getMainHandItem();
     if (false && heldItem.isEmpty()) {
       //if your hand is empty, dont process if its the OFF hand
       //otherwise: main hand inserts, off hand takes out right away
-      return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+      return InteractionResult.PASS;
     }
     if (heldItem.is(DataTags.WRENCH)) {
       TileEnderCtrl contrl = (TileEnderCtrl) world.getBlockEntity(pos);
@@ -84,7 +90,7 @@ public class BlockEnderCtrl extends BlockCyclic {
         }
       }
       player.swing(InteractionHand.MAIN_HAND);
-      return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+      return InteractionResult.PASS;
     }
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
       if (!world.isClientSide()) {
@@ -95,8 +101,8 @@ public class BlockEnderCtrl extends BlockCyclic {
           player.swing(InteractionHand.MAIN_HAND);
         }
       }
-      return ItemInteractionResult.CONSUME;
+      return InteractionResult.CONSUME;
     }
-    return ItemInteractionResult.CONSUME;
+    return InteractionResult.CONSUME;
   }
 }

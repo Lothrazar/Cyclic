@@ -20,7 +20,7 @@ public class SculkFluidBlock extends GenericFluidBlock {
   }
 
   @Override
-  public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+  public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (entity instanceof Player player && entity.tickCount % Const.TICKS_PER_SEC == 0) {
       if (level.isClientSide()) {
         if (level.getRandom().nextDouble() < 0.10 && ClientConfigCyclic.SCULK_FLUID_XP_SOUND.get()) {
@@ -33,6 +33,6 @@ public class SculkFluidBlock extends GenericFluidBlock {
         }
       }
     }
-    super.entityInside(state, level, pos, entity);
+    super.entityInside(state, level, pos, entity, effectApplier, isPrecise);
   }
 }

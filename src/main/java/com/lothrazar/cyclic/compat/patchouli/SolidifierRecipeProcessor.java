@@ -17,7 +17,7 @@ public class SolidifierRecipeProcessor implements IComponentProcessor {
     recipeId = variables.get("recipe", level.registryAccess()).asString();
     Identifier rl = Identifier.tryParse(recipeId);
     if (rl != null) {
-      recipe = level.getRecipeManager().byKey(rl)
+      recipe = level.getServer().getRecipeManager().byKey(rl)
           .filter(h -> h.value() instanceof RecipeSolidifier)
           .map(h -> (RecipeSolidifier) h.value())
           .orElse(null);

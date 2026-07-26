@@ -189,7 +189,9 @@ public class BoomerangEntity extends ThrowableItemProjectile {
           boomerangThrown = ItemStack.EMPTY;
         }
         else {
-          owner.spawnAtLocation(boomerangThrown, 0.5F);
+          if (level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+            owner.spawnAtLocation(serverLevel, boomerangThrown, 0.5F);
+          }
           boomerangThrown = ItemStack.EMPTY;
         }
       }
@@ -252,7 +254,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     //      world.destroyBlock(mop.getPos(), false);
     //    }
     if (mop.getDirection() != Direction.UP
-        && block.isFaceSturdy(this.getCommandSenderWorld(), mop.getBlockPos(), mop.getDirection())) {
+        && block.isFaceSturdy(this.level(), mop.getBlockPos(), mop.getDirection())) {
       //ok return 
       this.setIsReturning();
     }
@@ -276,10 +278,10 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         }
       break;
       case DAMAGE:
-        if (entityHit instanceof LivingEntity) {
+        if (entityHit instanceof LivingEntity && level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
           LivingEntity live = (LivingEntity) entityHit;
           float damage = Mth.nextFloat(level().getRandom(), ConfigRegistry.BOOMERANG_DAMAGE_MIN.get().floatValue(), ConfigRegistry.BOOMERANG_DAMAGE_MAX.get().floatValue());
-          boolean attackSucc = live.hurt(level().damageSources().thrown(this, owner), damage);
+          boolean attackSucc = live.hurtServer(serverLevel, level().damageSources().thrown(this, owner), damage);
           if (attackSucc && live.isAlive() == false) {
             //           ("killed one");
           }

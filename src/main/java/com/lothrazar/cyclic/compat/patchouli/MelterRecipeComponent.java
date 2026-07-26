@@ -42,7 +42,7 @@ public class MelterRecipeComponent implements ICustomComponent {
     if (rl == null) {
       return;
     }
-    resolvedRecipe = level.getRecipeManager().byKey(rl)
+    resolvedRecipe = level.getServer().getRecipeManager().byKey(rl)
         .filter(h -> h.value() instanceof RecipeMelter)
         .map(h -> (RecipeMelter) h.value())
         .orElse(null);

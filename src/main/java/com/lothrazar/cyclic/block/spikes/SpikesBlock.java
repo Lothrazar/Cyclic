@@ -73,7 +73,7 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
 
   @Override
   @Deprecated
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
     if (entity instanceof LivingEntity && state.getValue(ACTIVATED)) {
       //extra effects
       switch (this.type) {
@@ -98,8 +98,8 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
       LivingEntity living = (LivingEntity) entity;
       switch (worldIn.getRandom().nextInt(4)) { //[0,3] if nextInt(4) given 
         case 0:
-          if (!living.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) {
-            living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, CURSE_TIME, 2, false, false, false));
+          if (!living.hasEffect(MobEffects.SLOWNESS)) {
+            living.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, CURSE_TIME, 2, false, false, false));
           }
         break;
         case 1:
@@ -148,7 +148,7 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
   }
 
   @Override
-  public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+  public boolean propagatesSkylightDown(BlockState state) {
     return true;
   }
 
