@@ -1,7 +1,7 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    "#c:slimeballs"
+    "#c:slime_balls"
   ],
   "energy": {
     "rfpertick": 500,

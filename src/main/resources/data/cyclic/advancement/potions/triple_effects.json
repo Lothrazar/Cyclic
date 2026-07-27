@@ -14,7 +14,7 @@
     "announce_to_chat": true,
     "hidden": false
   },
-  "parent": "cyclic:potions/noclip",
+  "parent": "cyclic:potions/double_effects",
   "criteria": {
     "speed_demon": {
       "trigger": "minecraft:effects_changed",

@@ -496,8 +496,8 @@ public static final DeferredItem<Item> SHEARING = ITEMS.registerItem("shearing",
   public static final DeferredItem<Item> PEAT_BAKED = ITEMS.registerItem("peat_baked", props -> new BlockItem(BlockRegistry.PEAT_BAKED.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> PEAT_FARM = ITEMS.registerItem("peat_farm", props -> new BlockItem(BlockRegistry.PEAT_FARM.get(), props.useBlockDescriptionPrefix()));
  // ---- energy machine blocks
-  public static final DeferredItem<Item> BATTERY_CLAY = ITEMS.registerItem("battery_clay", props -> new ItemBlockClayBattery(BlockRegistry.BATTERY_CLAY.get(), props));
-  public static final DeferredItem<Item> BATTERY = ITEMS.registerItem("battery", props -> new ItemBlockBattery(BlockRegistry.BATTERY.get(), props));
+  public static final DeferredItem<Item> BATTERY_CLAY = ITEMS.registerItem("battery_clay", props -> new ItemBlockClayBattery(BlockRegistry.BATTERY_CLAY.get(), props.useBlockDescriptionPrefix()));
+  public static final DeferredItem<Item> BATTERY = ITEMS.registerItem("battery", props -> new ItemBlockBattery(BlockRegistry.BATTERY.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> CRAFTER = ITEMS.registerItem("crafter", props -> new BlockItem(BlockRegistry.CRAFTER.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> PACKAGER = ITEMS.registerItem("packager", props -> new BlockItem(BlockRegistry.PACKAGER.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> CRUSHER = ITEMS.registerItem("crusher", props -> new BlockItem(BlockRegistry.CRUSHER.get(), props.useBlockDescriptionPrefix()));
@@ -516,8 +516,8 @@ public static final DeferredItem<Item> SHEARING = ITEMS.registerItem("shearing",
   public static final DeferredItem<Item> COLLECTOR = ITEMS.registerItem("collector", props -> new BlockItem(BlockRegistry.COLLECTOR.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> COLLECTOR_FLUID = ITEMS.registerItem("collector_fluid", props -> new BlockItem(BlockRegistry.COLLECTOR_FLUID.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> PLACER_FLUID = ITEMS.registerItem("placer_fluid", props -> new BlockItem(BlockRegistry.PLACER_FLUID.get(), props.useBlockDescriptionPrefix()));
-  public static final DeferredItem<Item> CASK = ITEMS.registerItem("cask", props -> new ItemBlockCask(BlockRegistry.CASK.get(), props));
-  public static final DeferredItem<Item> TANK = ITEMS.registerItem("tank", props -> new ItemBlockTank(BlockRegistry.TANK.get(), props));
+  public static final DeferredItem<Item> CASK = ITEMS.registerItem("cask", props -> new ItemBlockCask(BlockRegistry.CASK.get(), props.useBlockDescriptionPrefix()));
+  public static final DeferredItem<Item> TANK = ITEMS.registerItem("tank", props -> new ItemBlockTank(BlockRegistry.TANK.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> HOPPER_FLUID = ITEMS.registerItem("hopper_fluid", props -> new BlockItem(BlockRegistry.HOPPER_FLUID.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> HOPPER = ITEMS.registerItem("hopper", props -> new BlockItem(BlockRegistry.HOPPER.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> HOPPER_GOLD = ITEMS.registerItem("hopper_gold", props -> new BlockItem(BlockRegistry.HOPPER_GOLD.get(), props.useBlockDescriptionPrefix()));
@@ -579,12 +579,12 @@ public static final DeferredItem<Item> SHEARING = ITEMS.registerItem("shearing",
 
   public static final DeferredItem<Item> ENDER_SHELF = ITEMS.registerItem("ender_shelf", props -> new BlockItem(BlockRegistry.ENDER_SHELF.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> ENDER_CONTROLLER = ITEMS.registerItem("ender_controller", props -> new BlockItem(BlockRegistry.ENDER_CONTROLLER.get(), props.useBlockDescriptionPrefix()));
-  public static final DeferredItem<Item> EXPERIENCE_PYLON = ITEMS.registerItem("experience_pylon", props -> new ItemBlockPylon(BlockRegistry.EXPERIENCE_PYLON.get(), props));
+  public static final DeferredItem<Item> EXPERIENCE_PYLON = ITEMS.registerItem("experience_pylon", props -> new ItemBlockPylon(BlockRegistry.EXPERIENCE_PYLON.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> EXPERIENCE_FOUNTAIN = ITEMS.registerItem("experience_fountain", props -> new BlockItem(BlockRegistry.EXPERIENCE_FOUNTAIN.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> EXPERIENCE_FOOD = ITEMS.registerItem("experience_food", props -> new ExpItemGain(props));
-  public static final DeferredItem<Item> SCAFFOLD_REPLACE = ITEMS.registerItem("scaffold_replace", props -> new ItemScaffolding(BlockRegistry.SCAFFOLD_REPLACE.get(), props));
-  public static final DeferredItem<Item> SCAFFOLD_FRAGILE = ITEMS.registerItem("scaffold_fragile", props -> new ItemScaffolding(BlockRegistry.SCAFFOLD_FRAGILE.get(), props));
-  public static final DeferredItem<Item> SCAFFOLD_RESPONSIVE = ITEMS.registerItem("scaffold_responsive", props -> new ItemScaffolding(BlockRegistry.SCAFFOLD_RESPONSIVE.get(), props));
+  public static final DeferredItem<Item> SCAFFOLD_REPLACE = ITEMS.registerItem("scaffold_replace", props -> new ItemScaffolding(BlockRegistry.SCAFFOLD_REPLACE.get(), props.useBlockDescriptionPrefix()));
+  public static final DeferredItem<Item> SCAFFOLD_FRAGILE = ITEMS.registerItem("scaffold_fragile", props -> new ItemScaffolding(BlockRegistry.SCAFFOLD_FRAGILE.get(), props.useBlockDescriptionPrefix()));
+  public static final DeferredItem<Item> SCAFFOLD_RESPONSIVE = ITEMS.registerItem("scaffold_responsive", props -> new ItemScaffolding(BlockRegistry.SCAFFOLD_RESPONSIVE.get(), props.useBlockDescriptionPrefix()));
 
   // creative test items
   public static final DeferredItem<Item> BATTERY_INFINITE = ITEMS.registerItem("battery_infinite", props -> new BlockItem(BlockRegistry.BATTERY_INFINITE.get(), props.useBlockDescriptionPrefix()));

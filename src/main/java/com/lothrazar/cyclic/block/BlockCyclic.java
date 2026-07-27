@@ -88,7 +88,6 @@ public class BlockCyclic extends EntityBlockFlib {
         if (tankHere != null) {
          //getting fluid capability from a block
           IFluidHandler handler = CapabilityUtil.fluid(level,pos,hit);
-//breakpoint shows handler is null, even when blockhere is tileTank from a "Block{cyclic:tank}[above=false,below=false]"
           if (handler != null) {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
               if (player instanceof ServerPlayer sp) {

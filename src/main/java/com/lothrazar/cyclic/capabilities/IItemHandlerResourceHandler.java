@@ -4,10 +4,14 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.RootCommitJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 // Bridges the old deprecated-but-functional IItemHandler to the new ResourceHandler<ItemResource>
-// capability registration API. Not transaction-aware (neither was IItemHandler), executes immediately.
+// capability registration API. IItemHandler has no snapshot/rollback support of its own, so the real
+// mutation (simulate=false) is deferred via RootCommitJournal until the transaction actually commits;
+// insert/extract only ever probe with simulate=true, otherwise every simulate-only caller would silently
+// mutate the handler for real (see the identical bug fixed in IFluidHandlerResourceHandler).
 public class IItemHandlerResourceHandler implements ResourceHandler<ItemResource> {
 
   private final IItemHandler wrapped;
@@ -44,13 +48,21 @@ public class IItemHandlerResourceHandler implements ResourceHandler<ItemResource
   @Override
   public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
     ItemStack toInsert = resource.toStack(amount);
-    ItemStack remaining = wrapped.insertItem(index, toInsert, false);
-    return amount - remaining.getCount();
+    ItemStack remaining = wrapped.insertItem(index, toInsert, true);
+    int inserted = amount - remaining.getCount();
+    if (inserted > 0) {
+      new RootCommitJournal(() -> wrapped.insertItem(index, resource.toStack(inserted), false)).updateSnapshots(transaction);
+    }
+    return inserted;
   }
 
   @Override
   public int extract(int index, ItemResource resource, int amount, TransactionContext transaction) {
-    ItemStack extracted = wrapped.extractItem(index, amount, false);
-    return extracted.getCount();
+    ItemStack simulated = wrapped.extractItem(index, amount, true);
+    int extracted = simulated.getCount();
+    if (extracted > 0) {
+      new RootCommitJournal(() -> wrapped.extractItem(index, extracted, false)).updateSnapshots(transaction);
+    }
+    return extracted;
   }
 }

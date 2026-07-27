@@ -81,8 +81,8 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
       ms.text(font, sec + " s", x, 6, FONT);
     }
     ms.text(font, recipe.energy.getRfPertick() + " RF/t", x, 16, FONT);
-    if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {
-      ms.text(font, recipe.randOutput.percent + "%", 56, 36, FONT);
+    if (!recipe.getRandOutput().bonus.isEmpty() && recipe.getRandOutput().percent > 0) {
+      ms.text(font, recipe.getRandOutput().percent + "%", 56, 36, FONT);
     }
     bar.draw(ms, recipe.energy.getEnergyTotal());
     bar.renderHoveredToolTip(ms, (int) mouseX, (int) mouseY, recipe.energy.getEnergyTotal());
@@ -93,8 +93,8 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
     RecipeCrusher recipe = recipeHolder.value();
     builder.addSlot(RecipeIngredientRole.INPUT, 3, 14).addIngredients(recipe.at(0));
     builder.addSlot(RecipeIngredientRole.OUTPUT, 35, 6).addItemStack(recipe.getResult());
-    if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {
-      builder.addSlot(RecipeIngredientRole.OUTPUT, 34, 31).addItemStack(recipe.randOutput.bonus);
+    if (!recipe.getRandOutput().bonus.isEmpty() && recipe.getRandOutput().percent > 0) {
+      builder.addSlot(RecipeIngredientRole.OUTPUT, 34, 31).addItemStack(recipe.getRandOutput().bonus);
     }
   }
 }

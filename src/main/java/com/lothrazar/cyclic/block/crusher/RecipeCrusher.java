@@ -1,8 +1,10 @@
 package com.lothrazar.cyclic.block.crusher;
 
+import java.util.Optional;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.library.recipe.ingredient.RandomizedOutputIngredient;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -32,18 +34,33 @@ public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
   // bound yet") if called eagerly. The template is stored as-is and only turned into a real ItemStack
   // lazily, the first time getResult() is actually called (well after the registry has finished
   // binding components) - see getResult() below.
+  //
+  // The "bonus" field can't just reuse FLib's RandomizedOutputIngredient.CODEC directly for JSON decode:
+  // that codec's own "bonus" item field is built on ItemStack.OPTIONAL_CODEC (a bound-components codec),
+  // which is a third-party bug we can't patch (compiled dependency). Every recipe with a "bonus" block
+  // hit the exact same "Item X does not have components yet" DataResult.Error as the "result" field used
+  // to. So BonusTemplate below decodes the same {percent, bonus} JSON shape ourselves using
+  // ItemStackTemplate for the nested item, and getRandOutput() below lazily builds the real
+  // RandomizedOutputIngredient the first time it's actually needed.
+  private record BonusTemplate(int percent, ItemStackTemplate bonus) {
+    static final Codec<BonusTemplate> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        Codec.INT.fieldOf("percent").forGetter(BonusTemplate::percent),
+        ItemStackTemplate.CODEC.fieldOf("bonus").forGetter(BonusTemplate::bonus)
+    ).apply(instance, BonusTemplate::new));
+  }
+
   public static final MapCodec<RecipeCrusher> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
       Ingredient.CODEC.fieldOf("ingredient").forGetter(r -> r.at(0)),
       EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.energy),
       ItemStackTemplate.CODEC.fieldOf("result").forGetter(r -> r.resultTemplate),
-      RandomizedOutputIngredient.CODEC.optionalFieldOf("bonus", new RandomizedOutputIngredient(0, ItemStack.EMPTY)).forGetter(r -> r.randOutput)
+      BonusTemplate.CODEC.optionalFieldOf("bonus").forGetter(r -> r.bonusTemplate)
   ).apply(instance, RecipeCrusher::new));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, RecipeCrusher> STREAM_CODEC = StreamCodec.composite(
       Ingredient.CONTENTS_STREAM_CODEC, r -> r.at(0),
       EnergyIngredient.STREAM_CODEC, r -> r.energy,
       ItemStack.OPTIONAL_STREAM_CODEC, r -> r.getResult(),
-      RandomizedOutputIngredient.STREAM_CODEC, r -> r.randOutput,
+      RandomizedOutputIngredient.STREAM_CODEC, r -> r.getRandOutput(),
       (ingredient, energy, result, bonus) -> new RecipeCrusher(ingredient, energy, ItemStackTemplate.fromNonEmptyStack(result), bonus)
   );
 
@@ -53,13 +70,25 @@ public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
   private ItemStack result;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   public final EnergyIngredient energy;
-  public RandomizedOutputIngredient randOutput;
+  private final Optional<BonusTemplate> bonusTemplate;
+  private RandomizedOutputIngredient randOutputCache;
 
+  // JSON-decode path: bonus stays a lazy template, resolved on first getRandOutput() call (post component-bind).
+  public RecipeCrusher(Ingredient in, EnergyIngredient energy, ItemStackTemplate resultTemplate, Optional<BonusTemplate> bonusTemplate) {
+    this.energy = energy;
+    ingredients.add(in);
+    this.resultTemplate = resultTemplate;
+    this.bonusTemplate = bonusTemplate;
+  }
+
+  // Network-decode path: bonus arrives as an already-resolved, already-bound ItemStack (live gameplay
+  // data), so no lazy template resolution is needed - cache it directly.
   public RecipeCrusher(Ingredient in, EnergyIngredient energy, ItemStackTemplate resultTemplate, RandomizedOutputIngredient randOutput) {
     this.energy = energy;
     ingredients.add(in);
     this.resultTemplate = resultTemplate;
-    this.randOutput = randOutput;
+    this.bonusTemplate = Optional.empty();
+    this.randOutputCache = randOutput;
   }
 
   public ItemStack getResult() {
@@ -67,6 +96,15 @@ public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
       result = resultTemplate.create();
     }
     return result;
+  }
+
+  public RandomizedOutputIngredient getRandOutput() {
+    if (randOutputCache == null) {
+      randOutputCache = bonusTemplate
+          .map(bt -> new RandomizedOutputIngredient(bt.percent(), bt.bonus().create()))
+          .orElseGet(() -> new RandomizedOutputIngredient(0, ItemStack.EMPTY));
+    }
+    return randOutputCache;
   }
 
   @Override
@@ -121,9 +159,10 @@ public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
   }
 
   public ItemStack createBonus(RandomSource rand) {
-    ItemStack getBonus = this.randOutput.bonus.copy();
-    if (this.randOutput.bonus.getCount() > 1) {
-      getBonus.setCount(1 + rand.nextInt(this.randOutput.bonus.getCount()));
+    ItemStack bonusStack = getRandOutput().bonus;
+    ItemStack getBonus = bonusStack.copy();
+    if (bonusStack.getCount() > 1) {
+      getBonus.setCount(1 + rand.nextInt(bonusStack.getCount()));
     }
     return getBonus;
   }

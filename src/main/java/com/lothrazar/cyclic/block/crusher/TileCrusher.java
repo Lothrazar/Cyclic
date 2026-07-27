@@ -98,8 +98,8 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider, 
     if (outputSlots.getStackInSlot(0).getCount() > max - res.getCount()) {
       return;
     }
-    max = currentRecipe.randOutput.bonus.getMaxStackSize();
-    if (outputSlots.getStackInSlot(1).getCount() > max - currentRecipe.randOutput.bonus.getCount()) {
+    max = currentRecipe.getRandOutput().bonus.getMaxStackSize();
+    if (outputSlots.getStackInSlot(1).getCount() > max - currentRecipe.getRandOutput().bonus.getCount()) {
       return;
     }
     if (this.burnTime <= 0 && this.currentRecipe != null) {
@@ -109,10 +109,10 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider, 
       if (!currentRecipe.getResultItem(level.registryAccess()).isEmpty()) {
         this.outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()).copy(), false);
       }
-      if (!currentRecipe.randOutput.bonus.isEmpty() && currentRecipe.randOutput.percent > 0) {
+      if (!currentRecipe.getRandOutput().bonus.isEmpty() && currentRecipe.getRandOutput().percent > 0) {
         // 1 is always, 0 is never so yeah
         //if you put 90, and i roll between 0 and 90 gj u win
-        if (currentRecipe.randOutput.percent == 1 || level.getRandom().nextInt(100) < currentRecipe.randOutput.percent) {
+        if (currentRecipe.getRandOutput().percent == 1 || level.getRandom().nextInt(100) < currentRecipe.getRandOutput().percent) {
           this.outputSlots.insertItem(1, this.currentRecipe.createBonus(level.getRandom()), false);
         }
       }
