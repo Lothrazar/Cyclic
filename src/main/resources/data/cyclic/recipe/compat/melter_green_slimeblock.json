@@ -7,7 +7,6 @@
   ],
   "type": "cyclic:melter",
   "ingredients": [
-    "minecraft:slime_block",
     "minecraft:slime_block"
   ],
   "energy": {

@@ -10,7 +10,7 @@
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": "#c:glass",
+  "ingredient": "#c:glass_blocks",
   "energy": {
     "ticks": 400,
     "rfpertick": 10

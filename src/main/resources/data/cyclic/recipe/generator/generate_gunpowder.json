@@ -10,7 +10,7 @@
     }
   ],
   "type": "cyclic:generator_item",
-  "fuel": "#c:gunpowder",
+  "fuel": "#c:gunpowders",
   "energy": {
     "ticks": 400,
     "rfpertick": 80

@@ -68,11 +68,11 @@ public class SolidifierRecipeComponent implements ICustomComponent {
     Font font = Minecraft.getInstance().font;
     ctx.renderItemStack(graphics, x + 50, y, mouseX, mouseY, new ItemStack(BlockRegistry.SOLIDIFIER.get()));
     renderFluidSlot(graphics, x + 2, y + 45, resolvedRecipe.getRecipeFluid());
-    ctx.renderIngredient(graphics, x + 22, y + 27, mouseX, mouseY, resolvedRecipe.at(0));
-    ctx.renderIngredient(graphics, x + 22, y + 45, mouseX, mouseY, resolvedRecipe.at(1));
-    ctx.renderIngredient(graphics, x + 22, y + 63, mouseX, mouseY, resolvedRecipe.at(2));
+    resolvedRecipe.at(0).ifPresent(i -> ctx.renderIngredient(graphics, x + 22, y + 27, mouseX, mouseY, i));
+    resolvedRecipe.at(1).ifPresent(i -> ctx.renderIngredient(graphics, x + 22, y + 45, mouseX, mouseY, i));
+    resolvedRecipe.at(2).ifPresent(i -> ctx.renderIngredient(graphics, x + 22, y + 63, mouseX, mouseY, i));
     graphics.text(font, "->", x + 42, y + 48, 0xFF404040, false);
-    ctx.renderItemStack(graphics, x + 58, y + 45, mouseX, mouseY, resolvedRecipe.result);
+    ctx.renderItemStack(graphics, x + 58, y + 45, mouseX, mouseY, resolvedRecipe.getResult());
     int rfpt = resolvedRecipe.getEnergy().getRfPertick();
     int total = resolvedRecipe.getEnergy().getEnergyTotal();
     int mB = resolvedRecipe.getAmount();

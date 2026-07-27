@@ -27,33 +27,46 @@ public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
   // components to already be bound - matches vanilla ShapedRecipe/ShapelessRecipe's own "result" field,
   // which hits the same DataResult.Error["Item X does not have components yet"] failure otherwise
   // (ItemStack.CODEC's "id" field validates Item#areComponentsBound(), ItemStackTemplate's doesn't).
+  // Critically, ItemStackTemplate#create() must NOT be called during decode either - components are
+  // still unbound at that point too, so create() throws its own NullPointerException("Components not
+  // bound yet") if called eagerly. The template is stored as-is and only turned into a real ItemStack
+  // lazily, the first time getResult() is actually called (well after the registry has finished
+  // binding components) - see getResult() below.
   public static final MapCodec<RecipeCrusher> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
       Ingredient.CODEC.fieldOf("ingredient").forGetter(r -> r.at(0)),
       EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.energy),
-      ItemStackTemplate.CODEC.fieldOf("result").forGetter(r -> ItemStackTemplate.fromNonEmptyStack(r.result)),
+      ItemStackTemplate.CODEC.fieldOf("result").forGetter(r -> r.resultTemplate),
       RandomizedOutputIngredient.CODEC.optionalFieldOf("bonus", new RandomizedOutputIngredient(0, ItemStack.EMPTY)).forGetter(r -> r.randOutput)
-  ).apply(instance, (ingredient, energy, result, bonus) -> new RecipeCrusher(ingredient, energy, result.create(), bonus)));
+  ).apply(instance, RecipeCrusher::new));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, RecipeCrusher> STREAM_CODEC = StreamCodec.composite(
       Ingredient.CONTENTS_STREAM_CODEC, r -> r.at(0),
       EnergyIngredient.STREAM_CODEC, r -> r.energy,
-      ItemStack.OPTIONAL_STREAM_CODEC, r -> r.result,
+      ItemStack.OPTIONAL_STREAM_CODEC, r -> r.getResult(),
       RandomizedOutputIngredient.STREAM_CODEC, r -> r.randOutput,
-      RecipeCrusher::new
+      (ingredient, energy, result, bonus) -> new RecipeCrusher(ingredient, energy, ItemStackTemplate.fromNonEmptyStack(result), bonus)
   );
 
   public static final RecipeSerializer<RecipeCrusher> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-  public ItemStack result = ItemStack.EMPTY;
+  private final ItemStackTemplate resultTemplate;
+  private ItemStack result;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   public final EnergyIngredient energy;
   public RandomizedOutputIngredient randOutput;
 
-  public RecipeCrusher(Ingredient in, EnergyIngredient energy, ItemStack out, RandomizedOutputIngredient randOutput) {
+  public RecipeCrusher(Ingredient in, EnergyIngredient energy, ItemStackTemplate resultTemplate, RandomizedOutputIngredient randOutput) {
     this.energy = energy;
     ingredients.add(in);
-    this.result = out;
+    this.resultTemplate = resultTemplate;
     this.randOutput = randOutput;
+  }
+
+  public ItemStack getResult() {
+    if (result == null) {
+      result = resultTemplate.create();
+    }
+    return result;
   }
 
   @Override
@@ -94,7 +107,7 @@ public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
   }
 
   public ItemStack getResultItem(HolderLookup.Provider ra) {
-    return result;
+    return getResult();
   }
 
   @Override
@@ -117,7 +130,7 @@ public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
 
   @Override
   public ItemStack assemble(CrusherRecipeInput t) {
-    return result.copy();
+    return getResult().copy();
   }
 
     public boolean canCraftInDimensions(int width, int height) {

@@ -10,7 +10,7 @@
   ],
   "type": "cyclic:melter",
   "ingredients": [
-    "#c:slimeballs"
+    "#c:slime_balls"
   ],
   "energy": {
     "rfpertick": 80,

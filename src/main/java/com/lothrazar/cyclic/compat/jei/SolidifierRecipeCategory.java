@@ -88,10 +88,10 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeHolder<Re
   @Override
   public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<RecipeSolidifier> recipeHolder, IFocusGroup focuses) {
     RecipeSolidifier recipe = recipeHolder.value();
-    builder.addSlot(RecipeIngredientRole.INPUT, 34, 7).addIngredients(recipe.at(0));
-    builder.addSlot(RecipeIngredientRole.INPUT, 34, 25).addIngredients(recipe.at(1));
-    builder.addSlot(RecipeIngredientRole.INPUT, 34, 43).addIngredients(recipe.at(2));
-    builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 25).addItemStack(recipe.result);
+    recipe.at(0).ifPresent(builder.addSlot(RecipeIngredientRole.INPUT, 34, 7)::addIngredients);
+    recipe.at(1).ifPresent(builder.addSlot(RecipeIngredientRole.INPUT, 34, 25)::addIngredients);
+    recipe.at(2).ifPresent(builder.addSlot(RecipeIngredientRole.INPUT, 34, 43)::addIngredients);
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 25).addItemStack(recipe.getResult());
     List<FluidStack> matchingFluids = recipe.getMatchingFluids();
     builder.addSlot(RecipeIngredientRole.INPUT, 4, 25).addIngredients(NeoForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
   }

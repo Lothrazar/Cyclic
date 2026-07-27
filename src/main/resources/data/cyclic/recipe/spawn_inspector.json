@@ -8,7 +8,7 @@
   "key": {
     "s": "cyclic:gem_amber",
     "f": "#c:storage_blocks/flint",
-    "p": "#c:glass/purple"
+    "p": "minecraft:purple_stained_glass"
   },
   "result": {
     "id": "cyclic:spawn_inspector"

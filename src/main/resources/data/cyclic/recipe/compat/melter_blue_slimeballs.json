@@ -7,7 +7,6 @@
   ],
   "type": "cyclic:melter",
   "ingredients": [
-    "tconstruct:sky_slime_ball",
     "tconstruct:sky_slime_ball"
   ],
   "energy": {

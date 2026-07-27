@@ -1,8 +1,10 @@
 package com.lothrazar.cyclic.block.melter;
 
+import java.util.List;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentPatch;
@@ -18,6 +20,7 @@ import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidInstance;
 import net.neoforged.neoforge.fluids.FluidStack;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -27,44 +30,67 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
 
   // Plain FluidStack.CODEC's "id" field validates Fluid#areComponentsBound(), which fails during
   // datapack/recipe reload with DataResult.Error["Fluid X does not have components yet"] - same bug
-  // class as ItemStack.CODEC (see RecipeSolidifier/RecipeCrusher's "result" field fix), but NeoForge
-  // doesn't ship a ready-made "FluidStackTemplate" equivalent to ItemStackTemplate, so this rebuilds
-  // FluidStack's own MAP_CODEC shape using the unbound FluidInstance#FLUID_HOLDER_CODEC instead.
-  private static final MapCodec<FluidStack> RESULT_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-      FluidInstance.FLUID_HOLDER_CODEC.fieldOf("id").forGetter(FluidStack::typeHolder),
-      ExtraCodecs.POSITIVE_INT.fieldOf("amount").forGetter(FluidStack::getAmount),
-      DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(FluidStack::getComponentsPatch)
-  ).apply(i, FluidStack::new));
+  // class as ItemStack.CODEC (see RecipeSolidifier/RecipeCrusher's "result" field fix). Using the
+  // unbound FluidInstance#FLUID_HOLDER_CODEC for the "id" sub-field alone isn't enough though: even
+  // constructing a plain `new FluidStack(holder, amount, patch)` throws its own
+  // NullPointerException("Components not bound yet") the moment the constructor touches
+  // holder.components() to build the fluid's default component prototype - so no real FluidStack can be
+  // built at decode time at all. This tiny template record (mirroring vanilla's ItemStackTemplate, which
+  // NeoForge has no fluid equivalent of) decodes the same 3 fields but only builds the real FluidStack
+  // lazily, in create() - see getRecipeFluid() below, which is never called until well after the
+  // registry has finished binding components.
+  private record ResultTemplate(Holder<Fluid> fluid, int amount, DataComponentPatch patch) {
+    static final MapCodec<ResultTemplate> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+        FluidInstance.FLUID_HOLDER_CODEC.fieldOf("id").forGetter(ResultTemplate::fluid),
+        ExtraCodecs.POSITIVE_INT.fieldOf("amount").forGetter(ResultTemplate::amount),
+        DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(ResultTemplate::patch)
+    ).apply(i, ResultTemplate::new));
 
+    static ResultTemplate fromStack(FluidStack stack) {
+      return new ResultTemplate(stack.typeHolder(), stack.getAmount(), stack.getComponentsPatch());
+    }
+
+    FluidStack create() {
+      return new FluidStack(fluid, amount, patch);
+    }
+  }
+
+  // .validate(...) here (not a constructor-side throw) so a malformed recipe fails gracefully as a
+  // per-file DataResult.Error (logged with the actual file name by SimpleJsonResourceReloadListener)
+  // instead of throwing a raw exception that aborts the entire datapack reload for every recipe type.
   public static final MapCodec<RecipeMelter> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-      Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.getIngredients()),
-      RESULT_CODEC.codec().fieldOf("result").forGetter(r -> r.getRecipeFluid()),
+      Ingredient.CODEC.listOf().validate(list -> list.size() == 1
+          ? com.mojang.serialization.DataResult.success(list)
+          : com.mojang.serialization.DataResult.error(() -> "Melter recipe must have exactly one ingredient, got " + list.size()))
+          .fieldOf("ingredients").forGetter(r -> r.getIngredients()),
+      ResultTemplate.CODEC.codec().fieldOf("result").forGetter(r -> r.resultTemplate),
       EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
-  ).apply(instance, (ingredients, fluid, energy) -> new RecipeMelter(NonNullList.of(Ingredient.of(), ingredients.toArray(new Ingredient[0])), fluid, energy)));
+  ).apply(instance, RecipeMelter::new));
   public static final StreamCodec<RegistryFriendlyByteBuf, RecipeMelter> STREAM_CODEC = StreamCodec.composite(
       Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.getIngredients(),
       FluidStack.OPTIONAL_STREAM_CODEC, r -> r.getRecipeFluid(),
       EnergyIngredient.STREAM_CODEC, r -> r.getEnergy(),
-      (ingredients, fluid, energy) -> new RecipeMelter(NonNullList.of(Ingredient.of(), ingredients.toArray(new Ingredient[0])), fluid, energy)
+      (ingredients, fluid, energy) -> new RecipeMelter(ingredients, ResultTemplate.fromStack(fluid), energy)
   );
 
   public static final RecipeSerializer<RecipeMelter> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-  private NonNullList<Ingredient> ingredients = NonNullList.create();
+  private final ResultTemplate resultTemplate;
   private FluidStack outFluid;
+  private NonNullList<Ingredient> ingredients = NonNullList.create();
   private final EnergyIngredient energy;
 
-  public RecipeMelter(NonNullList<Ingredient> ingredientsIn, FluidStack out, EnergyIngredient energy) {
+  public RecipeMelter(List<Ingredient> ingredientsIn, ResultTemplate resultTemplate, EnergyIngredient energy) {
     this.energy = energy;
     ingredients = NonNullList.create();
     ingredients.addAll(ingredientsIn);
-    while (ingredients.size() < 1) {
-      ingredients.add(Ingredient.of());
+    // No padding with Ingredient.of() here - it now throws UnsupportedOperationException("Ingredients
+    // can't be empty") in 26.1 (empty Ingredients can no longer be constructed at all). A melter recipe
+    // legitimately declaring zero ingredients is a genuine data error, not a case to silently paper over.
+    if (ingredients.size() != 1) {
+      throw new IllegalArgumentException("Melter recipe must have exactly one ingredient, got " + ingredients);
     }
-    if (ingredients.size() > 1) {
-      throw new IllegalArgumentException("Melter recipe must have exactly one ingredient");
-    }
-    this.outFluid = out;
+    this.resultTemplate = resultTemplate;
   }
 
   @Override
@@ -109,6 +135,9 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
   }
 
   public FluidStack getRecipeFluid() {
+    if (outFluid == null) {
+      outFluid = resultTemplate.create();
+    }
     return outFluid.copy();
   }
 
