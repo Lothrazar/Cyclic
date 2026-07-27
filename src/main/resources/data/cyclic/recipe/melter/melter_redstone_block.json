@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:redstone_block"
-    }
+    "minecraft:redstone_block"
   ],
   "energy": {
     "rfpertick": 80,

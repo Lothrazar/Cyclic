@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "tag": "minecraft:leaves"
-    },
-    {
-      "item": "minecraft:torch"
-    }
+    "#minecraft:leaves",
+    "minecraft:torch"
   ],
   "result": {
     "count": 1,

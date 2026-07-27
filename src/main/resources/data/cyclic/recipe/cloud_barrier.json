@@ -6,12 +6,8 @@
     "s s"
   ],
   "key": {
-    "i": {
-      "item": "cyclic:membrane"
-    },
-    "s": {
-      "item": "cyclic:cloud"
-    }
+    "i": "cyclic:membrane",
+    "s": "cyclic:cloud"
   },
   "result": {
     "count": 4,

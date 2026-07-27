@@ -6,24 +6,12 @@
     "iii"
   ],
   "key": {
-    "s": {
-      "tag": "c:nuggets/copper"
-    },
-    "f": {
-      "item": "minecraft:anvil"
-    },
-    "i": {
-      "item": "minecraft:iron_bars"
-    },
-    "r": {
-      "tag": "c:dyes/red"
-    },
-    "g": {
-      "tag": "c:dyes/green"
-    },
-    "b": {
-      "tag": "c:dyes/blue"
-    }
+    "s": "#c:nuggets/copper",
+    "f": "minecraft:anvil",
+    "i": "minecraft:iron_bars",
+    "r": "#c:dyes/red",
+    "g": "#c:dyes/green",
+    "b": "#c:dyes/blue"
   },
   "result": {
     "count": 1,

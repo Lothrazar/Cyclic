@@ -9,8 +9,8 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
@@ -22,7 +22,5 @@
     "count": 1,
     "id": "minecraft:sand"
   },
-  "ingredient": {
-    "item": "cobblestoney:dirt_sand"
-  }
+  "ingredient": "cobblestoney:dirt_sand"
 }

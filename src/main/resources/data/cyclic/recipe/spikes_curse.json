@@ -5,12 +5,8 @@
     "t"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:spider_eye"
-    },
-    "t": {
-      "item": "cyclic:spikes_iron"
-    }
+    "s": "minecraft:spider_eye",
+    "t": "cyclic:spikes_iron"
   },
   "result": {
     "count": 1,

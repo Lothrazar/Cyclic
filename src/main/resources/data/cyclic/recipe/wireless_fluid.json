@@ -6,18 +6,10 @@
     "iri"
   ],
   "key": {
-    "i": {
-      "item": "minecraft:iron_bars"
-    },
-    "c": {
-      "item": "minecraft:comparator"
-    },
-    "r": {
-      "item": "minecraft:bucket"
-    },
-    "g": {
-      "item": "cyclic:gem_amber"
-    }
+    "i": "minecraft:iron_bars",
+    "c": "minecraft:comparator",
+    "r": "minecraft:bucket",
+    "g": "cyclic:gem_amber"
   },
   "result": {
     "count": 1,

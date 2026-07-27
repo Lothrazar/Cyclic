@@ -6,18 +6,10 @@
     "pip"
   ],
   "key": {
-    "p": {
-      "item": "minecraft:lava_bucket"
-    },
-    "i": {
-      "item": "minecraft:piston"
-    },
-    "b": {
-      "item": "minecraft:magma_block"
-    },
-    "c": {
-      "item": "minecraft:repeater"
-    }
+    "p": "minecraft:lava_bucket",
+    "i": "minecraft:piston",
+    "b": "minecraft:magma_block",
+    "c": "minecraft:repeater"
   },
   "result": {
     "id": "cyclic:generator_fluid"

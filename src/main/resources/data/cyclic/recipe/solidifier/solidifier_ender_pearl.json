@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:ender_pearl"
-    }
+    "minecraft:ender_pearl"
   ],
   "energy": {
     "rfpertick": 1000,
     "ticks": 180
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 250
   },
   "result": {

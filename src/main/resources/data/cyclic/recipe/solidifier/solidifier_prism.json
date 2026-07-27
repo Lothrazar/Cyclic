@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:prismarine"
-    },
-    {
-      "tag": "c:dusts/glowstone"
-    },
-    {
-      "item": "minecraft:prismarine"
-    }
+    "minecraft:prismarine",
+    "#c:dusts/glowstone",
+    "minecraft:prismarine"
   ],
   "mix": {
-    "tag": "c:biomass",
+    "ingredient": "#c:biomass",
     "amount": 100
   },
   "energy": {

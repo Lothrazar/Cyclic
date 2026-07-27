@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "item": "minecraft:sea_lantern"
-  },
+  "ingredient": "minecraft:sea_lantern",
   "energy": {
     "ticks": 30,
     "rfpertick": 20

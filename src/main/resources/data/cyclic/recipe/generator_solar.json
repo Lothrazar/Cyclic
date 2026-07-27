@@ -6,18 +6,10 @@
     "cpc"
   ],
   "key": {
-    "e": {
-      "item": "cyclic:gem_amber"
-    },
-    "p": {
-      "item": "minecraft:bone_block"
-    },
-    "b": {
-      "item": "minecraft:lapis_lazuli"
-    },
-    "c": {
-      "tag": "c:nuggets/copper"
-    }
+    "e": "cyclic:gem_amber",
+    "p": "minecraft:bone_block",
+    "b": "minecraft:lapis_lazuli",
+    "c": "#c:nuggets/copper"
   },
   "result": {
     "id": "cyclic:generator_solar"

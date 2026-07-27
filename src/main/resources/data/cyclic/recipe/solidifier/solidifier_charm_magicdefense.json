@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:polished_blackstone_pressure_plate"
-    },
-    {
-      "item": "cyclic:heart_empty"
-    },
-    {
-      "tag": "c:nuggets/copper"
-    }
+    "minecraft:polished_blackstone_pressure_plate",
+    "cyclic:heart_empty",
+    "#c:nuggets/copper"
   ],
   "energy": {
     "rfpertick": 2000,
     "ticks": 200
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 2000
   },
   "result": {

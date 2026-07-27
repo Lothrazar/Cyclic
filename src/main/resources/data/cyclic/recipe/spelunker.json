@@ -6,15 +6,9 @@
     "b  "
   ],
   "key": {
-    "b": {
-      "item": "minecraft:stick"
-    },
-    "s": {
-      "tag": "c:storage_blocks/flint"
-    },
-    "g": {
-      "tag": "c:dyes/light_blue"
-    }
+    "b": "minecraft:stick",
+    "s": "#c:storage_blocks/flint",
+    "g": "#c:dyes/light_blue"
   },
   "result": {
     "id": "cyclic:spelunker"

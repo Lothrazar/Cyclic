@@ -6,18 +6,10 @@
     "ccc"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:calcite"
-    },
-    "s": {
-      "item": "cyclic:gem_obsidian"
-    },
-    "g": {
-      "tag": "c:nuggets/netherite"
-    },
-    "r": {
-      "item": "minecraft:diamond"
-    }
+    "c": "minecraft:calcite",
+    "s": "cyclic:gem_obsidian",
+    "g": "#c:nuggets/netherite",
+    "r": "minecraft:diamond"
   },
   "result": {
     "count": 1,

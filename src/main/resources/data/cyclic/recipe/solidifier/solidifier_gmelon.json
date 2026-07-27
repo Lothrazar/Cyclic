@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:biomass"
-    },
-    {
-      "item": "minecraft:charcoal"
-    },
-    {
-      "item": "minecraft:dirt"
-    }
+    "cyclic:biomass",
+    "minecraft:charcoal",
+    "minecraft:dirt"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 40
   },
   "mix": {
-    "tag": "c:biomass",
+    "ingredient": "#c:biomass",
     "amount": 500
   },
   "result": {

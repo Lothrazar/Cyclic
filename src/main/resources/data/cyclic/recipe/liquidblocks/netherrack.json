@@ -7,9 +7,7 @@
   ],
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:netherrack"
-    }
+    "minecraft:netherrack"
   ],
   "result": {
     "id": "liquidblocks:liquid_netherrack",

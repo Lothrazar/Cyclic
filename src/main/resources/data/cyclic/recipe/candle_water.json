@@ -6,18 +6,10 @@
     "ggg"
   ],
   "key": {
-    "d": {
-      "tag": "minecraft:candles"
-    },
-    "g": {
-      "item": "minecraft:light_weighted_pressure_plate"
-    },
-    "s": {
-      "item": "minecraft:amethyst_block"
-    },
-    "q": {
-      "item": "minecraft:quartz"
-    }
+    "d": "#minecraft:candles",
+    "g": "minecraft:light_weighted_pressure_plate",
+    "s": "minecraft:amethyst_block",
+    "q": "minecraft:quartz"
   },
   "result": {
     "count": 1,

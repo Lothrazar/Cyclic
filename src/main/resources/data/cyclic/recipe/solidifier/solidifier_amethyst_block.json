@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:cobblestone"
-    }
+    "minecraft:cobblestone"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 80
   },
   "mix": {
-    "tag": "c:amethyst",
+    "ingredient": "#c:amethyst",
     "amount": 400
   },
   "result": {

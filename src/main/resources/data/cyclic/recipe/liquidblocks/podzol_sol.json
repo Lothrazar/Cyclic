@@ -7,12 +7,10 @@
   ],
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:dirt"
-    }
+    "minecraft:dirt"
   ],
   "mix": {
-    "fluid": "liquidblocks:liquid_podzol",
+    "ingredient": "liquidblocks:liquid_podzol",
     "amount": 1000
   },
   "result": {

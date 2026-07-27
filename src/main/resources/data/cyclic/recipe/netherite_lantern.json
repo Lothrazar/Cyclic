@@ -6,12 +6,8 @@
     "nnn"
   ],
   "key": {
-    "n": {
-      "tag": "c:nuggets/netherite"
-    },
-    "t": {
-      "item": "minecraft:soul_torch"
-    }
+    "n": "#c:nuggets/netherite",
+    "t": "minecraft:soul_torch"
   },
   "result": {
     "count": 4,

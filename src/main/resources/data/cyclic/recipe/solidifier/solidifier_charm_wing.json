@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:feathers"
-    },
-    {
-      "item": "minecraft:leather"
-    },
-    {
-      "tag": "c:ingots/copper"
-    }
+    "#c:feathers",
+    "minecraft:leather",
+    "#c:ingots/copper"
   ],
   "energy": {
     "rfpertick": 200,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:amethyst",
+    "ingredient": "#c:amethyst",
     "amount": 2000
   },
   "result": {

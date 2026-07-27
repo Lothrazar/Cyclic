@@ -6,9 +6,7 @@
     "s s"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:stick"
-    }
+    "s": "minecraft:stick"
   },
   "result": {
     "count": 16,

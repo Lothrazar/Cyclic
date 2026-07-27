@@ -1,19 +1,15 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:purple_dye"
-    },
-    {
-      "item": "minecraft:magma_cream"
-    }
+    "minecraft:purple_dye",
+    "minecraft:magma_cream"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 60
   },
   "mix": {
-    "tag": "c:glowstone",
+    "ingredient": "#c:glowstone",
     "amount": 100
   },
   "result": {

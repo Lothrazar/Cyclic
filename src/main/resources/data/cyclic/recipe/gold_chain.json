@@ -6,12 +6,8 @@
     "n"
   ],
   "key": {
-    "n": {
-      "tag": "c:nuggets/gold"
-    },
-    "i": {
-      "tag": "c:ingots/gold"
-    }
+    "n": "#c:nuggets/gold",
+    "i": "#c:ingots/gold"
   },
   "result": {
     "count": 2,

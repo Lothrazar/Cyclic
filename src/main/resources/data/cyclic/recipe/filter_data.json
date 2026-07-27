@@ -6,15 +6,9 @@
     " a "
   ],
   "key": {
-    "a": {
-      "tag": "c:dyes/purple"
-    },
-    "c": {
-      "item": "minecraft:iron_nugget"
-    },
-    "p": {
-      "item": "cyclic:carbon_paper"
-    }
+    "a": "#c:dyes/purple",
+    "c": "minecraft:iron_nugget",
+    "p": "cyclic:carbon_paper"
   },
   "result": {
     "count": 4,

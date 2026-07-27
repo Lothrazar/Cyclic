@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:grass_block"
-    },
-    {
-      "item": "minecraft:grass_block"
-    },
-    {
-      "item": "minecraft:grass_block"
-    }
+    "minecraft:grass_block",
+    "minecraft:grass_block",
+    "minecraft:grass_block"
   ],
   "mix": {
-    "fluid": "minecraft:water",
+    "ingredient": "minecraft:water",
     "amount": 10
   },
   "energy": {

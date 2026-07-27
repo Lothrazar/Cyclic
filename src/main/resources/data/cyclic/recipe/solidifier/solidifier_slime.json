@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:slime_ball"
-    },
-    {
-      "item": "minecraft:slime_ball"
-    },
-    {
-      "item": "minecraft:slime_ball"
-    }
+    "minecraft:slime_ball",
+    "minecraft:slime_ball",
+    "minecraft:slime_ball"
   ],
   "mix": {
-    "fluid": "cyclic:slime",
+    "ingredient": "cyclic:slime",
     "amount": 1500
   },
   "energy": {

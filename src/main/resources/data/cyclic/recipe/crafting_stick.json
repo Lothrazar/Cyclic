@@ -5,12 +5,8 @@
     "s "
   ],
   "key": {
-    "t": {
-      "item": "minecraft:crafting_table"
-    },
-    "s": {
-      "tag": "c:rods/wooden"
-    }
+    "t": "minecraft:crafting_table",
+    "s": "#c:rods/wooden"
   },
   "result": {
     "id": "cyclic:crafting_stick"

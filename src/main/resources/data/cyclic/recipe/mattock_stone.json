@@ -6,12 +6,8 @@
     " e "
   ],
   "key": {
-    "o": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "e": {
-      "tag": "minecraft:logs"
-    }
+    "o": "#c:storage_blocks/cobblestone",
+    "e": "#minecraft:logs"
   },
   "result": {
     "id": "cyclic:mattock_stone"

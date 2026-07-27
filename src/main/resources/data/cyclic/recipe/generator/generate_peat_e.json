@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:generator_item",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:generator_item"
     }
   ],
   "type": "cyclic:generator_item",
-  "fuel": {
-    "item": "cyclic:peat_fuel_enriched"
-  },
+  "fuel": "cyclic:peat_fuel_enriched",
   "energy": {
     "ticks": 1000,
     "rfpertick": 1000

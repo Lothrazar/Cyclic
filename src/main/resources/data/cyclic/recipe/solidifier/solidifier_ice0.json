@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:snow_block"
-    }
+    "minecraft:snow_block"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 100
   },
   "mix": {
-    "fluid": "minecraft:water",
+    "ingredient": "minecraft:water",
     "amount": 1000
   },
   "result": {

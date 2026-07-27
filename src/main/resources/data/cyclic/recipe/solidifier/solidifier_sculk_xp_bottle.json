@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:glass_bottle"
-    },
-    {
-      "item": "minecraft:sculk"
-    },
-    {
-      "item": "minecraft:sculk_vein"
-    }
+    "minecraft:glass_bottle",
+    "minecraft:sculk",
+    "minecraft:sculk_vein"
   ],
   "energy": {
     "rfpertick": 200,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:sculk",
+    "ingredient": "#c:sculk",
     "amount": 1000
   },
   "result": {

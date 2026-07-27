@@ -6,18 +6,10 @@
     "ccc"
   ],
   "key": {
-    "v": {
-      "item": "cyclic:conveyor"
-    },
-    "c": {
-      "item": "minecraft:calcite"
-    },
-    "e": {
-      "tag": "c:end_stones"
-    },
-    "g": {
-      "item": "cyclic:gem_amber"
-    }
+    "v": "cyclic:conveyor",
+    "c": "minecraft:calcite",
+    "e": "#c:end_stones",
+    "g": "cyclic:gem_amber"
   },
   "result": {
     "count": 1,

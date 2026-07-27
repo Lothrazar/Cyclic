@@ -6,12 +6,8 @@
     "rsr"
   ],
   "key": {
-    "s": {
-      "tag": "minecraft:signs"
-    },
-    "r": {
-      "item": "minecraft:stick"
-    }
+    "s": "#minecraft:signs",
+    "r": "minecraft:stick"
   },
   "result": {
     "count": 1,

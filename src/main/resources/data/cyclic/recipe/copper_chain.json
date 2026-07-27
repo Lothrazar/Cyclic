@@ -6,12 +6,8 @@
     "n"
   ],
   "key": {
-    "n": {
-      "tag": "c:nuggets/copper"
-    },
-    "i": {
-      "tag": "c:ingots/copper"
-    }
+    "n": "#c:nuggets/copper",
+    "i": "#c:ingots/copper"
   },
   "result": {
     "count": 2,

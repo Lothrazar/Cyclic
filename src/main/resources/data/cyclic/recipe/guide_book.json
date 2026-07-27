@@ -7,13 +7,8 @@
   ],
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    {
-      "item": "minecraft:book",
-      "count": 1
-    }
+    "#c:storage_blocks/cobblestone",
+    "minecraft:book"
   ],
   "result": {
     "id": "patchouli:guide_book",

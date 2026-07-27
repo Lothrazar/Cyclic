@@ -5,16 +5,16 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     },
     {
       "modid": "mysticalagriculture",
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "mysticalagriculture:prosperity_shard",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "mysticalagriculture:prosperity_shard"
     }
   ],
   "type": "cyclic:crusher",
@@ -26,9 +26,7 @@
     "count": 1,
     "id": "mysticalagriculture:prosperity_shard"
   },
-  "ingredient": {
-    "tag": "c:ores/prosperity"
-  },
+  "ingredient": "#c:ores/prosperity",
   "bonus": {
     "percent": 50,
     "bonus": {

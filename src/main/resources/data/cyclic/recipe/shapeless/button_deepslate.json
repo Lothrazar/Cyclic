@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:deepslate"
-    },
-    {
-      "item": "minecraft:stone_button"
-    }
+    "minecraft:deepslate",
+    "minecraft:stone_button"
   ],
   "result": {
     "count": 2,

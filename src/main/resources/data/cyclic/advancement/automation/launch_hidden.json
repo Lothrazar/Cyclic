@@ -19,11 +19,16 @@
     "place_launch_plate": {
       "trigger": "minecraft:placed_block",
       "conditions": {
-        "location": {
-          "block": {
-            "blocks": ["cyclic:plate_launch"]
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": ["cyclic:plate_launch"]
+              }
+            }
           }
-        }
+        ]
       }
     }
   }

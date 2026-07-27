@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:gold_block"
-    },
-    {
-      "item": "minecraft:breeze_rod"
-    },
-    {
-      "item": "minecraft:sculk"
-    }
+    "minecraft:gold_block",
+    "minecraft:breeze_rod",
+    "minecraft:sculk"
   ],
   "mix": {
-    "tag": "c:wax",
+    "ingredient": "#c:wax",
     "amount": 4000
   },
   "energy": {

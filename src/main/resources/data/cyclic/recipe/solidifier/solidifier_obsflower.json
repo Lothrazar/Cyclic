@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:obsidians"
-    },
-    {
-      "item": "cyclic:gem_amber"
-    },
-    {
-      "item": "minecraft:wither_rose"
-    }
+    "#c:obsidians",
+    "cyclic:gem_amber",
+    "minecraft:wither_rose"
   ],
   "energy": {
     "rfpertick": 1500,
     "ticks": 300
   },
   "mix": {
-    "tag": "c:slime",
+    "ingredient": "#c:slime",
     "amount": 1000
   },
   "result": {

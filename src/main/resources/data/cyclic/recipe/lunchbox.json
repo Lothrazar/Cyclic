@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:copper_ingot"
-    },
-    "s": {
-      "item": "minecraft:stick"
-    }
+    "c": "minecraft:copper_ingot",
+    "s": "minecraft:stick"
   },
   "result": {
     "count": 1,

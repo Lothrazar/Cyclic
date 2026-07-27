@@ -6,18 +6,10 @@
     "ooo"
   ],
   "key": {
-    "e": {
-      "item": "minecraft:yellow_terracotta"
-    },
-    "a": {
-      "item": "cyclic:gem_obsidian"
-    },
-    "t": {
-      "item": "minecraft:enchanting_table"
-    },
-    "o": {
-      "item": "cyclic:obsidian_pressure_plate"
-    }
+    "e": "minecraft:yellow_terracotta",
+    "a": "cyclic:gem_obsidian",
+    "t": "minecraft:enchanting_table",
+    "o": "cyclic:obsidian_pressure_plate"
   },
   "result": {
     "count": 1,

@@ -5,9 +5,7 @@
     "c c"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:emerald"
-    }
+    "c": "minecraft:emerald"
   },
   "result": {
     "count": 1,

@@ -6,15 +6,9 @@
     "gag"
   ],
   "key": {
-    "g": {
-      "tag": "c:nuggets/copper"
-    },
-    "f": {
-      "item": "minecraft:end_crystal"
-    },
-    "a": {
-      "item": "cyclic:apple_ender"
-    }
+    "g": "#c:nuggets/copper",
+    "f": "minecraft:end_crystal",
+    "a": "cyclic:apple_ender"
   },
   "result": {
     "id": "cyclic:charm_stone"

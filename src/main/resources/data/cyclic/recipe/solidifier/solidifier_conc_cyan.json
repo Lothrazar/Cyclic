@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:cyan_concrete_powder"
-    },
-    {
-      "item": "minecraft:cyan_concrete_powder"
-    },
-    {
-      "item": "minecraft:cyan_concrete_powder"
-    }
+    "minecraft:cyan_concrete_powder",
+    "minecraft:cyan_concrete_powder",
+    "minecraft:cyan_concrete_powder"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 40
   },
   "mix": {
-    "fluid": "minecraft:water",
+    "ingredient": "minecraft:water",
     "amount": 10
   },
   "result": {

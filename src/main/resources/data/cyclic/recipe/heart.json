@@ -6,33 +6,15 @@
     "ghi"
   ],
   "key": {
-    "a": {
-      "item": "minecraft:rabbit_stew"
-    },
-    "b": {
-      "item": "minecraft:echo_shard"
-    },
-    "c": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "d": {
-      "item": "minecraft:cake"
-    },
-    "e": {
-      "item": "cyclic:gem_obsidian"
-    },
-    "f": {
-      "item": "minecraft:enchanted_golden_apple"
-    },
-    "g": {
-      "item": "minecraft:prismarine_shard"
-    },
-    "h": {
-      "item": "minecraft:poisonous_potato"
-    },
-    "i": {
-      "tag": "c:nuggets/netherite"
-    }
+    "a": "minecraft:rabbit_stew",
+    "b": "minecraft:echo_shard",
+    "c": "minecraft:amethyst_shard",
+    "d": "minecraft:cake",
+    "e": "cyclic:gem_obsidian",
+    "f": "minecraft:enchanted_golden_apple",
+    "g": "minecraft:prismarine_shard",
+    "h": "minecraft:poisonous_potato",
+    "i": "#c:nuggets/netherite"
   },
   "result": {
     "id": "cyclic:heart"

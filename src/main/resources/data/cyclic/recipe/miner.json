@@ -6,21 +6,11 @@
     "ooo"
   ],
   "key": {
-    "b": {
-      "item": "minecraft:diamond"
-    },
-    "o": {
-      "tag": "c:storage_blocks/flint"
-    },
-    "g": {
-      "tag": "c:nuggets/copper"
-    },
-    "r": {
-      "tag": "c:storage_blocks/lapis"
-    },
-    "s": {
-      "item": "minecraft:iron_pickaxe"
-    }
+    "b": "minecraft:diamond",
+    "o": "#c:storage_blocks/flint",
+    "g": "#c:nuggets/copper",
+    "r": "#c:storage_blocks/lapis",
+    "s": "minecraft:iron_pickaxe"
   },
   "result": {
     "count": 1,

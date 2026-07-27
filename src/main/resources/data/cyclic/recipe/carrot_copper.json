@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ccc",
@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:golden_carrot"
-    },
-    "d": {
-      "item": "minecraft:copper_ingot"
-    }
+    "c": "minecraft:golden_carrot",
+    "d": "minecraft:copper_ingot"
   },
   "result": {
     "count": 8,

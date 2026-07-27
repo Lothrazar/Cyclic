@@ -6,12 +6,8 @@
     "n"
   ],
   "key": {
-    "n": {
-      "tag": "c:nuggets/netherite"
-    },
-    "i": {
-      "tag": "c:ingots/netherite"
-    }
+    "n": "#c:nuggets/netherite",
+    "i": "#c:ingots/netherite"
   },
   "result": {
     "count": 4,

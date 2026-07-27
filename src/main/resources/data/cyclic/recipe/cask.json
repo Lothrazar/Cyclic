@@ -6,15 +6,9 @@
     "rsr"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:barrel"
-    },
-    "r": {
-      "tag": "minecraft:logs"
-    },
-    "c": {
-      "item": "minecraft:sandstone"
-    }
+    "s": "minecraft:barrel",
+    "r": "#minecraft:logs",
+    "c": "minecraft:sandstone"
   },
   "result": {
     "count": 2,

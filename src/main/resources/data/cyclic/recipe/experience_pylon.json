@@ -6,24 +6,12 @@
     "sis"
   ],
   "key": {
-    "v": {
-      "item": "minecraft:vine"
-    },
-    "h": {
-      "item": "minecraft:hopper"
-    },
-    "i": {
-      "item": "cyclic:gem_amber"
-    },
-    "g": {
-      "tag": "c:dyes/lime"
-    },
-    "r": {
-      "item": "cyclic:fireball"
-    },
-    "s": {
-      "item": "minecraft:nether_brick"
-    }
+    "v": "minecraft:vine",
+    "h": "minecraft:hopper",
+    "i": "cyclic:gem_amber",
+    "g": "#c:dyes/lime",
+    "r": "cyclic:fireball",
+    "s": "minecraft:nether_brick"
   },
   "result": {
     "id": "cyclic:experience_pylon"

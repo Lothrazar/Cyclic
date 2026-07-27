@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:sculk"
-    },
-    {
-      "item": "minecraft:soul_lantern"
-    },
-    {
-      "item": "minecraft:blackstone"
-    }
+    "minecraft:sculk",
+    "minecraft:soul_lantern",
+    "minecraft:blackstone"
   ],
   "mix": {
-    "tag": "c:experience",
+    "ingredient": "#c:experience",
     "amount": 2000
   },
   "energy": {

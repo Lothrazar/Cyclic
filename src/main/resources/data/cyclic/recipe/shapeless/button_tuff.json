@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:tuff"
-    },
-    {
-      "item": "minecraft:stone_button"
-    }
+    "minecraft:tuff",
+    "minecraft:stone_button"
   ],
   "result": {
     "count": 2,

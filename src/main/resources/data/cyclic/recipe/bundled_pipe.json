@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "cyclic:energy_pipe" },
-    { "item": "cyclic:item_pipe" },
-    { "item": "cyclic:fluid_pipe" }
+    "cyclic:energy_pipe",
+    "cyclic:item_pipe",
+    "cyclic:fluid_pipe"
   ],
   "result": {
     "count": 1,

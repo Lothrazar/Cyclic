@@ -6,12 +6,8 @@
     " i "
   ],
   "key": {
-    "i": {
-      "item": "minecraft:iron_ingot"
-    },
-    "o": {
-      "item": "minecraft:obsidian"
-    }
+    "i": "minecraft:iron_ingot",
+    "o": "minecraft:obsidian"
   },
   "result": {
     "id": "cyclic:shears_obsidian"

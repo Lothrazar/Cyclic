@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "minecraft:leaves"
-    },
-    {
-      "tag": "minecraft:leaves"
-    },
-    {
-      "tag": "minecraft:leaves"
-    }
+    "#minecraft:leaves",
+    "#minecraft:leaves",
+    "#minecraft:leaves"
   ],
   "mix": {
-    "fluid": "minecraft:water",
+    "ingredient": "minecraft:water",
     "amount": 50
   },
   "energy": {

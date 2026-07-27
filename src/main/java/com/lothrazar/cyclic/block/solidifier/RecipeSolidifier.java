@@ -12,6 +12,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -25,12 +26,16 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
 
+  // result uses ItemStackTemplate (not ItemStack) so JSON parsing doesn't require the result item's
+  // components to already be bound - matches vanilla ShapedRecipe/ShapelessRecipe's own "result" field,
+  // which hits the same DataResult.Error["Item X does not have components yet"] failure otherwise
+  // (ItemStack.CODEC's "id" field validates Item#areComponentsBound(), ItemStackTemplate's doesn't).
   public static final MapCodec<RecipeSolidifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
       Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.getIngredients()),
       SizedFluidIngredient.CODEC.fieldOf("mix").forGetter(r -> r.fluidIngredient),
-      ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
+      ItemStackTemplate.CODEC.fieldOf("result").forGetter(r -> ItemStackTemplate.fromNonEmptyStack(r.result)),
       EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
-  ).apply(instance, (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.of(), ingredients.toArray(new Ingredient[0])), fluid, result, energy)));
+  ).apply(instance, (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.of(), ingredients.toArray(new Ingredient[0])), fluid, result.create(), energy)));
   public static final StreamCodec<RegistryFriendlyByteBuf, RecipeSolidifier> STREAM_CODEC = StreamCodec.composite(
       Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.getIngredients(),
       SizedFluidIngredient.STREAM_CODEC, r -> r.fluidIngredient,

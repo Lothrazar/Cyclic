@@ -1,12 +1,10 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:chest"
-    }
+    "minecraft:chest"
   ],
   "mix": {
-    "tag": "c:wax",
+    "ingredient": "#c:wax",
     "amount": 1000
   },
   "energy": {

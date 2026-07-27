@@ -6,18 +6,10 @@
     "gag"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:cookie"
-    },
-    "f": {
-      "item": "minecraft:cake"
-    },
-    "a": {
-      "item": "cyclic:apple_chocolate"
-    },
-    "i": {
-      "item": "minecraft:ghast_tear"
-    }
+    "g": "minecraft:cookie",
+    "f": "minecraft:cake",
+    "a": "cyclic:apple_chocolate",
+    "i": "minecraft:ghast_tear"
   },
   "result": {
     "id": "cyclic:charm_starvation"

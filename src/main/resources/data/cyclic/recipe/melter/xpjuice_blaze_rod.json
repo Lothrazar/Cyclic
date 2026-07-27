@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:blaze_rod"
-    }
+    "minecraft:blaze_rod"
   ],
   "energy": {
     "rfpertick": 100,

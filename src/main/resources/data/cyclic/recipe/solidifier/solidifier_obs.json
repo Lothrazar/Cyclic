@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:gems/emerald"
-    },
-    {
-      "item": "cyclic:gem_amber"
-    },
-    {
-      "item": "minecraft:amethyst_block"
-    }
+    "#c:gems/emerald",
+    "cyclic:gem_amber",
+    "minecraft:amethyst_block"
   ],
   "energy": {
     "rfpertick": 1500,
     "ticks": 300
   },
   "mix": {
-    "tag": "c:slime",
+    "ingredient": "#c:slime",
     "amount": 500
   },
   "result": {

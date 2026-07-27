@@ -6,15 +6,9 @@
     "iiw"
   ],
   "key": {
-    "e": {
-      "item": "cyclic:gem_amber"
-    },
-    "i": {
-      "item": "minecraft:iron_block"
-    },
-    "w": {
-      "item": "cyclic:fireball"
-    }
+    "e": "cyclic:gem_amber",
+    "i": "minecraft:iron_block",
+    "w": "cyclic:fireball"
   },
   "result": {
     "id": "cyclic:charm_fire"

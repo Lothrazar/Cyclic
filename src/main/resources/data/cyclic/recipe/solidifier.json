@@ -6,21 +6,11 @@
     "hhh"
   ],
   "key": {
-    "l": {
-      "item": "minecraft:quartz"
-    },
-    "g": {
-      "tag": "c:glass/colorless"
-    },
-    "r": {
-      "tag": "c:storage_blocks/lapis"
-    },
-    "h": {
-      "item": "cyclic:obsidian_pressure_plate"
-    },
-    "q": {
-      "tag": "c:storage_blocks/cobblestone"
-    }
+    "l": "minecraft:quartz",
+    "g": "#c:glass/colorless",
+    "r": "#c:storage_blocks/lapis",
+    "h": "cyclic:obsidian_pressure_plate",
+    "q": "#c:storage_blocks/cobblestone"
   },
   "result": {
     "id": "cyclic:solidifier"

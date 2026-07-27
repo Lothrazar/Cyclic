@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "item": "minecraft:tinted_glass"
-  },
+  "ingredient": "minecraft:tinted_glass",
   "energy": {
     "ticks": 20,
     "rfpertick": 20

@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:gem_amber"
-    },
-    {
-      "item": "minecraft:end_stone"
-    },
-    {
-      "item": "minecraft:wind_charge"
-    }
+    "cyclic:gem_amber",
+    "minecraft:end_stone",
+    "minecraft:wind_charge"
   ],
   "energy": {
     "rfpertick": 200,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:amethyst",
+    "ingredient": "#c:amethyst",
     "amount": 1000
   },
   "result": {

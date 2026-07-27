@@ -6,12 +6,8 @@
     "d"
   ],
   "key": {
-    "d": {
-      "item": "minecraft:diamond"
-    },
-    "c": {
-      "item": "cyclic:gem_obsidian"
-    }
+    "d": "minecraft:diamond",
+    "c": "cyclic:gem_obsidian"
   },
   "result": {
     "count": 1,

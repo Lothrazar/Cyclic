@@ -5,16 +5,16 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     },
     {
       "modid": "mysticalagriculture",
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "mysticalagriculture:inferium_essence",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "mysticalagriculture:inferium_essence"
     }
   ],
   "type": "cyclic:crusher",
@@ -26,9 +26,7 @@
     "count": 1,
     "id": "mysticalagriculture:inferium_essence"
   },
-  "ingredient": {
-    "tag": "c:ores/inferium"
-  },
+  "ingredient": "#c:ores/inferium",
   "bonus": {
     "percent": 50,
     "bonus": {

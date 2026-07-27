@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:chorus_fruit"
-    }
+    "minecraft:chorus_fruit"
   ],
   "energy": {
     "rfpertick": 1500,

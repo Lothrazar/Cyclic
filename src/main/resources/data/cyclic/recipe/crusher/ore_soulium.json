@@ -5,16 +5,16 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     },
     {
       "modid": "mysticalagriculture",
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "mysticalagriculture:soulium_dust",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "mysticalagriculture:soulium_dust"
     }
   ],
   "type": "cyclic:crusher",
@@ -26,9 +26,7 @@
     "count": 1,
     "id": "mysticalagriculture:soulium_dust"
   },
-  "ingredient": {
-    "tag": "c:ores/soulium"
-  },
+  "ingredient": "#c:ores/soulium",
   "bonus": {
     "percent": 50,
     "bonus": {

@@ -6,18 +6,10 @@
     "gag"
   ],
   "key": {
-    "g": {
-      "tag": "c:nuggets/copper"
-    },
-    "p": {
-      "item": "minecraft:poisonous_potato"
-    },
-    "f": {
-      "item": "minecraft:fermented_spider_eye"
-    },
-    "a": {
-      "item": "cyclic:apple_bone"
-    }
+    "g": "#c:nuggets/copper",
+    "p": "minecraft:poisonous_potato",
+    "f": "minecraft:fermented_spider_eye",
+    "a": "cyclic:apple_bone"
   },
   "result": {
     "id": "cyclic:charm_venom"

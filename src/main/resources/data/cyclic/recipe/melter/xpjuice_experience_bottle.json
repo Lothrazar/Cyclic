@@ -1,9 +1,7 @@
-﻿{
+{
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:experience_bottle"
-    }
+    "minecraft:experience_bottle"
   ],
   "energy": {
     "rfpertick": 50,

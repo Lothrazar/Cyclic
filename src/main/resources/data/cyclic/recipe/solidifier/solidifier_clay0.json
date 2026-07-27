@@ -1,12 +1,10 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:terracotta"
-    }
+    "minecraft:terracotta"
   ],
   "mix": {
-    "fluid": "minecraft:water",
+    "ingredient": "minecraft:water",
     "amount": 25
   },
   "energy": {

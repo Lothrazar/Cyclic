@@ -6,15 +6,9 @@
     "iiw"
   ],
   "key": {
-    "e": {
-      "item": "cyclic:gem_amber"
-    },
-    "i": {
-      "tag": "c:storage_blocks/iron"
-    },
-    "w": {
-      "item": "minecraft:sugar"
-    }
+    "e": "cyclic:gem_amber",
+    "i": "#c:storage_blocks/iron",
+    "w": "minecraft:sugar"
   },
   "result": {
     "id": "cyclic:charm_speed"

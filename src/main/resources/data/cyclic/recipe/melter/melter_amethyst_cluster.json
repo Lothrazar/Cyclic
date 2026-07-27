@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:amethyst_cluster"
-    }
+    "minecraft:amethyst_cluster"
   ],
   "energy": {
     "rfpertick": 80,

@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "a": {
-      "item": "cyclic:apple_honey"
-    },
-    "c": {
-      "item": "minecraft:lapis_lazuli"
-    }
+    "a": "cyclic:apple_honey",
+    "c": "minecraft:lapis_lazuli"
   },
   "result": {
     "count": 1,

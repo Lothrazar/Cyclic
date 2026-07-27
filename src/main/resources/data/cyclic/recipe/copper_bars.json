@@ -6,9 +6,7 @@
     "rrr"
   ],
   "key": {
-    "r": {
-      "tag": "c:ingots/copper"
-    }
+    "r": "#c:ingots/copper"
   },
   "result": {
     "count": 16,

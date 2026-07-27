@@ -1,33 +1,15 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "cyclic:cloud"
-    },
-    {
-      "item": "cyclic:cloud"
-    },
-    {
-      "item": "cyclic:cloud"
-    },
-    {
-      "item": "cyclic:cloud"
-    },
-    {
-      "item": "cyclic:cloud"
-    },
-    {
-      "item": "cyclic:cloud"
-    },
-    {
-      "item": "cyclic:cloud"
-    },
-    {
-      "item": "cyclic:cloud"
-    },
-    {
-      "item": "cyclic:cloud"
-    }
+    "cyclic:cloud",
+    "cyclic:cloud",
+    "cyclic:cloud",
+    "cyclic:cloud",
+    "cyclic:cloud",
+    "cyclic:cloud",
+    "cyclic:cloud",
+    "cyclic:cloud",
+    "cyclic:cloud"
   ],
   "result": {
     "id": "cyclic:cloud_membrane",

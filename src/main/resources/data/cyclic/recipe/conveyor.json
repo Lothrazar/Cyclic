@@ -6,12 +6,8 @@
     "r r"
   ],
   "key": {
-    "r": {
-      "item": "minecraft:rail"
-    },
-    "c": {
-      "tag": "c:dusts/redstone"
-    }
+    "r": "minecraft:rail",
+    "c": "#c:dusts/redstone"
   },
   "result": {
     "count": 8,

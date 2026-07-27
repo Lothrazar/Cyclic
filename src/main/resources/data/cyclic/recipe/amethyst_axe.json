@@ -6,12 +6,8 @@
     " d "
   ],
   "key": {
-    "d": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "item": "minecraft:amethyst_shard"
-    }
+    "d": "minecraft:stick",
+    "c": "minecraft:amethyst_shard"
   },
   "result": {
     "count": 1,

@@ -1,19 +1,15 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:storage_blocks/lapis"
-    },
-    {
-      "tag": "c:nuggets/copper"
-    }
+    "#c:storage_blocks/lapis",
+    "#c:nuggets/copper"
   ],
   "energy": {
     "rfpertick": 1000,
     "ticks": 200
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 1000
   },
   "result": {

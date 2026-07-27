@@ -6,12 +6,8 @@
     "eee"
   ],
   "key": {
-    "e": {
-      "item": "minecraft:ender_eye"
-    },
-    "s": {
-      "item": "minecraft:redstone_block"
-    }
+    "e": "minecraft:ender_eye",
+    "s": "minecraft:redstone_block"
   },
   "result": {
     "count": 1,

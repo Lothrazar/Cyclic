@@ -5,13 +5,8 @@
     "cdc"
   ],
   "key": {
-    "d": {
-      "item": "minecraft:diamond_helmet",
-      "data": 0
-    },
-    "c": {
-      "item": "cyclic:gem_obsidian"
-    }
+    "d": "minecraft:diamond_helmet",
+    "c": "cyclic:gem_obsidian"
   },
   "result": {
     "count": 1,

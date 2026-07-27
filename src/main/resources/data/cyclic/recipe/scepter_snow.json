@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "cdc",
@@ -6,18 +6,10 @@
     " i "
   ],
   "key": {
-    "c": {
-      "item": "minecraft:ice"
-    },
-    "d": {
-      "tag": "c:nuggets/copper"
-    },
-    "s": {
-      "item": "minecraft:redstone"
-    },
-    "i": {
-      "tag": "c:nuggets/gold"
-    }
+    "c": "minecraft:ice",
+    "d": "#c:nuggets/copper",
+    "s": "minecraft:redstone",
+    "i": "#c:nuggets/gold"
   },
   "result": {
     "id": "cyclic:scepter_snow"

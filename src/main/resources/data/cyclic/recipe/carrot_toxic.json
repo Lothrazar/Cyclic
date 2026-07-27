@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "cpc",
@@ -6,18 +6,10 @@
     "cbc"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:golden_carrot"
-    },
-    "b": {
-      "item": "minecraft:beetroot"
-    },
-    "p": {
-      "item": "minecraft:poisonous_potato"
-    },
-    "d": {
-      "item": "minecraft:fermented_spider_eye"
-    }
+    "c": "minecraft:golden_carrot",
+    "b": "minecraft:beetroot",
+    "p": "minecraft:poisonous_potato",
+    "d": "minecraft:fermented_spider_eye"
   },
   "result": {
     "count": 1,

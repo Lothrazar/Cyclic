@@ -1,4 +1,4 @@
-﻿{
+{
   "neoforge:conditions": [
     {
       "value": {
@@ -10,9 +10,7 @@
   ],
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "tag": "c:slimeballs"
-    }
+    "#c:slimeballs"
   ],
   "energy": {
     "rfpertick": 80,

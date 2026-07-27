@@ -6,18 +6,10 @@
     "ooo"
   ],
   "key": {
-    "o": {
-      "tag": "c:nuggets/copper"
-    },
-    "s": {
-      "item": "minecraft:piston"
-    },
-    "l": {
-      "tag": "minecraft:logs"
-    },
-    "m": {
-      "tag": "c:storage_blocks/cobblestone"
-    }
+    "o": "#c:nuggets/copper",
+    "s": "minecraft:piston",
+    "l": "#minecraft:logs",
+    "m": "#c:storage_blocks/cobblestone"
   },
   "result": {
     "count": 1,

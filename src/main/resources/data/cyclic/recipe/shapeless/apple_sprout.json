@@ -1,19 +1,18 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {    "item": "minecraft:apple"  },
-    {    "item": "minecraft:apple"  },
-    {    "item": "minecraft:apple"  },
-    {    "item": "minecraft:apple"  },
-    {    "item": "minecraft:apple"  },
-    {    "item": "minecraft:apple"  },
-    {    "item": "minecraft:apple"  },
-    {    "item": "minecraft:apple"  },
-    {    "item": "minecraft:apple"  }
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:apple"
   ],
   "result": {
     "id": "cyclic:apple_sprout",
     "count": 1
   }
 }
-

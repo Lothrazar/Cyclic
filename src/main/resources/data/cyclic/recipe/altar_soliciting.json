@@ -6,15 +6,9 @@
     "ooo"
   ],
   "key": {
-    "o": {
-      "item": "cyclic:copper_pressure_plate"
-    },
-    "b": {
-      "item": "minecraft:basalt"
-    },
-    "s": {
-      "tag": "c:glass/colorless"
-    }
+    "o": "cyclic:copper_pressure_plate",
+    "b": "minecraft:basalt",
+    "s": "#c:glass/colorless"
   },
   "result": {
     "count": 1,

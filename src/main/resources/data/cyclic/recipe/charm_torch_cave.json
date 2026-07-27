@@ -6,18 +6,10 @@
     "cic"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:coal_block"
-    },
-    "t": {
-      "item": "minecraft:torch"
-    },
-    "i": {
-      "item": "cyclic:gem_obsidian"
-    },
-    "a": {
-      "item": "cyclic:charm_torch"
-    }
+    "c": "minecraft:coal_block",
+    "t": "minecraft:torch",
+    "i": "cyclic:gem_obsidian",
+    "a": "cyclic:charm_torch"
   },
   "result": {
     "id": "cyclic:charm_torch_cave"

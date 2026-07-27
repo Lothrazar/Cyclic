@@ -1,15 +1,11 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:string"
-    },
-    {
-      "tag": "c:dyes/cyan"
-    }
+    "minecraft:string",
+    "#c:dyes/cyan"
   ],
   "mix": {
-    "tag": "c:wax",
+    "ingredient": "#c:wax",
     "amount": 100
   },
   "energy": {

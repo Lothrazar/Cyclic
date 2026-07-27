@@ -1,19 +1,15 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:wheat"
-    },
-    {
-      "item": "minecraft:sugar"
-    }
+    "minecraft:wheat",
+    "minecraft:sugar"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 60
   },
   "mix": {
-    "tag": "c:chocolate",
+    "ingredient": "#c:chocolate",
     "amount": 100
   },
   "result": {

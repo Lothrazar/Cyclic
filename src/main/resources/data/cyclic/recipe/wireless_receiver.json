@@ -6,15 +6,9 @@
     "isi"
   ],
   "key": {
-    "i": {
-      "tag": "c:nuggets/copper"
-    },
-    "q": {
-      "item": "minecraft:bone_block"
-    },
-    "s": {
-      "tag": "c:dusts/redstone"
-    }
+    "i": "#c:nuggets/copper",
+    "q": "minecraft:bone_block",
+    "s": "#c:dusts/redstone"
   },
   "result": {
     "count": 4,

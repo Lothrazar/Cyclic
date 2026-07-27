@@ -6,12 +6,8 @@
     " d "
   ],
   "key": {
-    "d": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "item": "minecraft:emerald"
-    }
+    "d": "minecraft:stick",
+    "c": "minecraft:emerald"
   },
   "result": {
     "count": 1,

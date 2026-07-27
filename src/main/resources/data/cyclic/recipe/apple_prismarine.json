@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "a": {
-      "item": "cyclic:apple_honey"
-    },
-    "c": {
-      "item": "minecraft:prismarine_shard"
-    }
+    "a": "cyclic:apple_honey",
+    "c": "minecraft:prismarine_shard"
   },
   "result": {
     "count": 1,

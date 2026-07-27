@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:quartz_block"
-    },
-    {
-      "item": "minecraft:redstone_lamp"
-    },
-    {
-      "item": "minecraft:blaze_rod"
-    }
+    "minecraft:quartz_block",
+    "minecraft:redstone_lamp",
+    "minecraft:blaze_rod"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 500
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 2000
   },
   "result": {

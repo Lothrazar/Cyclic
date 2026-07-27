@@ -1,8 +1,6 @@
 {
   "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "minecraft:glass"
-  },
+  "ingredient": "minecraft:glass",
   "result": {
     "id": "cyclic:glass_connected"
   },

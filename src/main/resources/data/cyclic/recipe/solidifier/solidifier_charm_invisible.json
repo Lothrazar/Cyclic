@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:purple_wool"
-    },
-    {
-      "item": "cyclic:sleeping_mat"
-    },
-    {
-      "item": "minecraft:wind_charge"
-    }
+    "minecraft:purple_wool",
+    "cyclic:sleeping_mat",
+    "minecraft:wind_charge"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 800
   },
   "mix": {
-    "tag": "c:glowstone",
+    "ingredient": "#c:glowstone",
     "amount": 2000
   },
   "result": {

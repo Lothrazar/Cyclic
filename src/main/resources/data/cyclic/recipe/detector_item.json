@@ -6,18 +6,10 @@
     "r r"
   ],
   "key": {
-    "r": {
-      "tag": "c:dusts/redstone"
-    },
-    "q": {
-      "tag": "c:gems/quartz"
-    },
-    "c": {
-      "item": "minecraft:observer"
-    },
-    "d": {
-      "tag": "c:gems/lapis"
-    }
+    "r": "#c:dusts/redstone",
+    "q": "#c:gems/quartz",
+    "c": "minecraft:observer",
+    "d": "#c:gems/lapis"
   },
   "result": {
     "count": 1,

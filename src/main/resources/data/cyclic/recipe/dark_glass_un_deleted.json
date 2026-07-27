@@ -1,4 +1,4 @@
-﻿{
+{
   "__comment": "This recipe was temporarily deleted from previous versions",
   "type": "minecraft:crafting_shaped",
   "pattern": [
@@ -7,12 +7,8 @@
     "gog"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:black_stained_glass"
-    },
-    "o": {
-      "item": "minecraft:obsidian"
-    }
+    "g": "minecraft:black_stained_glass",
+    "o": "minecraft:obsidian"
   },
   "result": {
     "count": 8,

@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:compressed_cobblestone"
-    },
-    {
-      "item": "minecraft:string"
-    },
-    {
-      "item": "minecraft:stick"
-    }
+    "cyclic:compressed_cobblestone",
+    "minecraft:string",
+    "minecraft:stick"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:redstone",
+    "ingredient": "#c:redstone",
     "amount": 100
   },
   "result": {

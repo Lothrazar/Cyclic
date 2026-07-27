@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "tag": "c:seeds"
-    }
+    "#c:seeds"
   ],
   "energy": {
     "rfpertick": 20,

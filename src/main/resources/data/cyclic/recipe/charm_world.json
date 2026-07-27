@@ -6,18 +6,10 @@
     "egf"
   ],
   "key": {
-    "f": {
-      "tag": "c:feathers"
-    },
-    "g": {
-      "item": "minecraft:gold_ingot"
-    },
-    "e": {
-      "item": "cyclic:gem_amber"
-    },
-    "q": {
-      "item": "minecraft:quartz_block"
-    }
+    "f": "#c:feathers",
+    "g": "minecraft:gold_ingot",
+    "e": "cyclic:gem_amber",
+    "q": "minecraft:quartz_block"
   },
   "result": {
     "id": "cyclic:charm_world"

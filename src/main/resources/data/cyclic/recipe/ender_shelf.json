@@ -6,12 +6,8 @@
     "ppp"
   ],
   "key": {
-    "p": {
-      "item": "minecraft:purpur_block"
-    },
-    "b": {
-      "tag": "c:bookshelves"
-    }
+    "p": "minecraft:purpur_block",
+    "b": "#c:bookshelves"
   },
   "result": {
     "count": 4,

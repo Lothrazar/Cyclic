@@ -6,15 +6,9 @@
     "gfg"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:gold_ingot"
-    },
-    "f": {
-      "item": "minecraft:obsidian"
-    },
-    "a": {
-      "item": "cyclic:gem_obsidian"
-    }
+    "g": "minecraft:gold_ingot",
+    "f": "minecraft:obsidian",
+    "a": "cyclic:gem_obsidian"
   },
   "result": {
     "id": "cyclic:charm_knockback_resistance"

@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:amethyst_shard"
-    }
+    "minecraft:amethyst_shard"
   ],
   "energy": {
     "rfpertick": 80,

@@ -6,15 +6,9 @@
     "ttt"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:iron_bars"
-    },
-    "t": {
-      "item": "minecraft:iron_ingot"
-    },
-    "r": {
-      "item": "minecraft:repeater"
-    }
+    "s": "minecraft:iron_bars",
+    "t": "minecraft:iron_ingot",
+    "r": "minecraft:repeater"
   },
   "result": {
     "count": 4,

@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:fire_charge"
-    },
-    {
-      "tag": "c:dusts/redstone"
-    },
-    {
-      "item": "minecraft:magma_block"
-    }
+    "minecraft:fire_charge",
+    "#c:dusts/redstone",
+    "minecraft:magma_block"
   ],
   "mix": {
-    "tag": "c:honey",
+    "ingredient": "#c:honey",
     "amount": 500
   },
   "energy": {

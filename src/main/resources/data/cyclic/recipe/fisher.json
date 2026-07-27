@@ -6,15 +6,9 @@
     "pwp"
   ],
   "key": {
-    "w": {
-      "item": "minecraft:cobweb"
-    },
-    "p": {
-      "tag": "c:chests/trapped"
-    },
-    "f": {
-      "tag": "c:storage_blocks/copper"
-    }
+    "w": "minecraft:cobweb",
+    "p": "#c:chests/trapped",
+    "f": "#c:storage_blocks/copper"
   },
   "result": {
     "count": 1,

@@ -6,18 +6,10 @@
     "bkb"
   ],
   "key": {
-    "b": {
-      "item": "minecraft:brick_slab"
-    },
-    "r": {
-      "item": "minecraft:netherrack"
-    },
-    "f": {
-      "item": "cyclic:fireball"
-    },
-    "k": {
-      "tag": "c:storage_blocks/flint"
-    }
+    "b": "minecraft:brick_slab",
+    "r": "minecraft:netherrack",
+    "f": "cyclic:fireball",
+    "k": "#c:storage_blocks/flint"
   },
   "result": {
     "count": 1,

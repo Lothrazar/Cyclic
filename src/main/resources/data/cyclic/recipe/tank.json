@@ -6,15 +6,9 @@
     "igi"
   ],
   "key": {
-    "o": {
-      "item": "cyclic:cask"
-    },
-    "i": {
-      "tag": "c:ingots/iron"
-    },
-    "g": {
-      "tag": "c:glass/colorless"
-    }
+    "o": "cyclic:cask",
+    "i": "#c:ingots/iron",
+    "g": "#c:glass/colorless"
   },
   "result": {
     "count": 1,

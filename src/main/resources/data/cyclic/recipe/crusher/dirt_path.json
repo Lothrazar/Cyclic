@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "item": "minecraft:dirt_path"
-  },
+  "ingredient": "minecraft:dirt_path",
   "energy": {
     "ticks": 100,
     "rfpertick": 10

@@ -6,15 +6,9 @@
     "ooo"
   ],
   "key": {
-    "b": {
-      "item": "cyclic:sponge_milk"
-    },
-    "o": {
-      "item": "minecraft:obsidian"
-    },
-    "s": {
-      "tag": "c:glass/dark"
-    }
+    "b": "cyclic:sponge_milk",
+    "o": "minecraft:obsidian",
+    "s": "#c:glass/dark"
   },
   "result": {
     "count": 1,

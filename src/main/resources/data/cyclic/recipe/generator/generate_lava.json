@@ -5,13 +5,13 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:generator_fluid",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:generator_fluid"
     }
   ],
   "type": "cyclic:generator_fluid",
   "fuel": {
-    "fluid": "minecraft:lava",
+    "ingredient": "minecraft:lava",
     "amount": 1000
   },
   "energy": {

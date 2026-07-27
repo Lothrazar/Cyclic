@@ -7,12 +7,10 @@
   ],
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:sands"
-    }
+    "#c:sands"
   ],
   "mix": {
-    "fluid": "liquidblocks:liquid_red_sand",
+    "ingredient": "liquidblocks:liquid_red_sand",
     "amount": 1000
   },
   "result": {

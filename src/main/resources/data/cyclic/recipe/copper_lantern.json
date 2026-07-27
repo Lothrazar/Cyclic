@@ -6,12 +6,8 @@
     "nnn"
   ],
   "key": {
-    "n": {
-      "tag": "c:nuggets/copper"
-    },
-    "t": {
-      "item": "minecraft:torch"
-    }
+    "n": "#c:nuggets/copper",
+    "t": "minecraft:torch"
   },
   "result": {
     "count": 1,

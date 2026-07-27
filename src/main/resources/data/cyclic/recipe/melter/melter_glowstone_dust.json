@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:glowstone_dust"
-    }
+    "minecraft:glowstone_dust"
   ],
   "energy": {
     "rfpertick": 80,

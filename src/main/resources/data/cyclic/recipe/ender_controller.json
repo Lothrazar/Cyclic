@@ -6,18 +6,10 @@
     "eoe"
   ],
   "key": {
-    "e": {
-      "item": "minecraft:ender_pearl"
-    },
-    "o": {
-      "item": "minecraft:obsidian"
-    },
-    "p": {
-      "item": "minecraft:purpur_block"
-    },
-    "b": {
-      "item": "cyclic:ender_shelf"
-    }
+    "e": "minecraft:ender_pearl",
+    "o": "minecraft:obsidian",
+    "p": "minecraft:purpur_block",
+    "b": "cyclic:ender_shelf"
   },
   "result": {
     "count": 1,

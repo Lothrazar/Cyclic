@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:apple"
-    }
+    "minecraft:apple"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 80
   },
   "mix": {
-    "tag": "c:chocolate",
+    "ingredient": "#c:chocolate",
     "amount": 500
   },
   "result": {

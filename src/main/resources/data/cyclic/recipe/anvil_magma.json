@@ -6,18 +6,10 @@
     "rfr"
   ],
   "key": {
-    "s": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "d": {
-      "item": "minecraft:magma_block"
-    },
-    "r": {
-      "item": "minecraft:obsidian"
-    },
-    "f": {
-      "item": "cyclic:fireball"
-    }
+    "s": "#c:storage_blocks/cobblestone",
+    "d": "minecraft:magma_block",
+    "r": "minecraft:obsidian",
+    "f": "cyclic:fireball"
   },
   "result": {
     "count": 1,

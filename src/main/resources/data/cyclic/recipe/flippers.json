@@ -6,15 +6,9 @@
     "dld"
   ],
   "key": {
-    "l": {
-      "item": "minecraft:clay_ball"
-    },
-    "d": {
-      "tag": "c:dyes/cyan"
-    },
-    "b": {
-      "item": "minecraft:leather"
-    }
+    "l": "minecraft:clay_ball",
+    "d": "#c:dyes/cyan",
+    "b": "minecraft:leather"
   },
   "result": {
     "count": 1,

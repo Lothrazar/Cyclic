@@ -6,12 +6,8 @@
     " b "
   ],
   "key": {
-    "b": {
-      "item": "minecraft:brick"
-    },
-    "c": {
-      "item": "cyclic:hopper"
-    }
+    "b": "minecraft:brick",
+    "c": "cyclic:hopper"
   },
   "result": {
     "count": 1,

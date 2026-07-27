@@ -6,12 +6,8 @@
     " W "
   ],
   "key": {
-    "W": {
-      "tag": "minecraft:planks"
-    },
-    "o": {
-      "tag": "c:bones"
-    }
+    "W": "#minecraft:planks",
+    "o": "#c:bones"
   },
   "result": {
     "id": "cyclic:shield_bone"

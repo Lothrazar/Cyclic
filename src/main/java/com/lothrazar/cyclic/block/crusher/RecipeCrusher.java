@@ -10,6 +10,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -22,12 +23,16 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
 
+  // result uses ItemStackTemplate (not ItemStack) so JSON parsing doesn't require the result item's
+  // components to already be bound - matches vanilla ShapedRecipe/ShapelessRecipe's own "result" field,
+  // which hits the same DataResult.Error["Item X does not have components yet"] failure otherwise
+  // (ItemStack.CODEC's "id" field validates Item#areComponentsBound(), ItemStackTemplate's doesn't).
   public static final MapCodec<RecipeCrusher> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
       Ingredient.CODEC.fieldOf("ingredient").forGetter(r -> r.at(0)),
       EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.energy),
-      ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
+      ItemStackTemplate.CODEC.fieldOf("result").forGetter(r -> ItemStackTemplate.fromNonEmptyStack(r.result)),
       RandomizedOutputIngredient.CODEC.optionalFieldOf("bonus", new RandomizedOutputIngredient(0, ItemStack.EMPTY)).forGetter(r -> r.randOutput)
-  ).apply(instance, RecipeCrusher::new));
+  ).apply(instance, (ingredient, energy, result, bonus) -> new RecipeCrusher(ingredient, energy, result.create(), bonus)));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, RecipeCrusher> STREAM_CODEC = StreamCodec.composite(
       Ingredient.CONTENTS_STREAM_CODEC, r -> r.at(0),

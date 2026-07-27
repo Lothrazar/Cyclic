@@ -6,15 +6,9 @@
     "lll"
   ],
   "key": {
-    "c": {
-      "tag": "c:slimeballs"
-    },
-    "s": {
-      "item": "minecraft:string"
-    },
-    "l": {
-      "item": "minecraft:leather"
-    }
+    "c": "#c:slimeballs",
+    "s": "minecraft:string",
+    "l": "minecraft:leather"
   },
   "result": {
     "count": 1,

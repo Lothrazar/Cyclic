@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "tag": "c:storage_blocks/flint"
-    }
+    "#c:storage_blocks/flint"
   ],
   "result": {
     "count": 9,

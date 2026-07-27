@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:gold_nugget"
-    },
-    {
-      "item": "minecraft:blackstone"
-    },
-    {
-      "item": "minecraft:gold_nugget"
-    }
+    "minecraft:gold_nugget",
+    "minecraft:blackstone",
+    "minecraft:gold_nugget"
   ],
   "mix": {
-    "fluid": "minecraft:lava",
+    "ingredient": "minecraft:lava",
     "amount": 100
   },
   "energy": {

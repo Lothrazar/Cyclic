@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:ender_chest"
-    },
-    {
-      "item": "cyclic:gem_amber"
-    },
-    {
-      "item": "minecraft:leather"
-    }
+    "minecraft:ender_chest",
+    "cyclic:gem_amber",
+    "minecraft:leather"
   ],
   "energy": {
     "rfpertick": 2000,
     "ticks": 300
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 500
   },
   "result": {

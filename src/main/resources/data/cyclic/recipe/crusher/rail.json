@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "item": "minecraft:rail"
-  },
+  "ingredient": "minecraft:rail",
   "energy": {
     "ticks": 100,
     "rfpertick": 20

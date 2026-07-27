@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " s ",
@@ -6,12 +6,8 @@
     " s "
   ],
   "key": {
-    "o": {
-      "item": "cyclic:soundproofing"
-    },
-    "s": {
-      "item": "cyclic:glass_dark"
-    }
+    "o": "cyclic:soundproofing",
+    "s": "cyclic:glass_dark"
   },
   "result": {
     "count": 1,

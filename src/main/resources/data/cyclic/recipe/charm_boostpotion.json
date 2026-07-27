@@ -6,18 +6,10 @@
     "gag"
   ],
   "key": {
-    "g": {
-      "tag": "c:nuggets/copper"
-    },
-    "f": {
-      "item": "minecraft:fermented_spider_eye"
-    },
-    "a": {
-      "item": "cyclic:apple_lapis"
-    },
-    "b": {
-      "item": "cyclic:gem_amber"
-    }
+    "g": "#c:nuggets/copper",
+    "f": "minecraft:fermented_spider_eye",
+    "a": "cyclic:apple_lapis",
+    "b": "cyclic:gem_amber"
   },
   "result": {
     "id": "cyclic:charm_boostpotion"

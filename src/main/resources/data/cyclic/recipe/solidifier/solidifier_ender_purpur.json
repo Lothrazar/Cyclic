@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:popped_chorus_fruit"
-    }
+    "minecraft:popped_chorus_fruit"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 80
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 500
   },
   "result": {

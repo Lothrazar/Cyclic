@@ -5,9 +5,7 @@
     " f"
   ],
   "key": {
-    "f": {
-      "item": "minecraft:flint"
-    }
+    "f": "minecraft:flint"
   },
   "result": {
     "id": "cyclic:shears_flint"

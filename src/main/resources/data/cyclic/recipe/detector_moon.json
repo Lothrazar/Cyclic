@@ -6,15 +6,9 @@
     "r r"
   ],
   "key": {
-    "r": {
-      "item": "minecraft:daylight_detector"
-    },
-    "q": {
-      "item": "minecraft:daylight_detector"
-    },
-    "c": {
-      "item": "minecraft:observer"
-    }
+    "r": "minecraft:daylight_detector",
+    "q": "minecraft:daylight_detector",
+    "c": "minecraft:observer"
   },
   "result": {
     "count": 1,

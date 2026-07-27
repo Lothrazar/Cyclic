@@ -6,12 +6,8 @@
     " W "
   ],
   "key": {
-    "W": {
-      "tag": "minecraft:planks"
-    },
-    "o": {
-      "item": "minecraft:obsidian"
-    }
+    "W": "#minecraft:planks",
+    "o": "minecraft:obsidian"
   },
   "result": {
     "id": "cyclic:shield_obsidian"

@@ -6,15 +6,9 @@
     "csc"
   ],
   "key": {
-    "a": {
-      "item": "cyclic:apple_chocolate"
-    },
-    "c": {
-      "item": "minecraft:chorus_fruit"
-    },
-    "s": {
-      "item": "minecraft:sugar"
-    }
+    "a": "cyclic:apple_chocolate",
+    "c": "minecraft:chorus_fruit",
+    "s": "minecraft:sugar"
   },
   "result": {
     "count": 1,

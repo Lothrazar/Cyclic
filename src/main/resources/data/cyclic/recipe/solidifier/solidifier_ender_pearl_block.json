@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:cobblestones"
-    }
+    "#c:cobblestones"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 2250
   },
   "result": {

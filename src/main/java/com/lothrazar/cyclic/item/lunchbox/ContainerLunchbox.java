@@ -48,7 +48,22 @@ public class ContainerLunchbox extends ContainerBase {
         for (int j = 0; j < h.getSlots(); j++) {
           this.addSlot(new SlotItemHandler(h, j,
               26 + j * Const.SQ,
-              36));
+              36) {
+
+            // 26.1: CapabilityUtil.item(...) returns a bridge (IItemHandler.of(resourceHandler)) that no
+            // longer implements IItemHandlerModifiable - the base SlotItemHandler#set() hard-casts to it
+            // and crashes the container on open (container-content sync calls this for every slot).
+            // Emulate "overwrite this slot" via extract-then-insert instead.
+            @Override
+            public void set(ItemStack stack) {
+              IItemHandler handler = getItemHandler();
+              handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+              if (!stack.isEmpty()) {
+                handler.insertItem(index, stack, false);
+              }
+              setChanged();
+            }
+          });
         }
       }
     layoutPlayerInventorySlots(8, 84);

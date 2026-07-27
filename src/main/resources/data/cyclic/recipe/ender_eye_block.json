@@ -6,9 +6,7 @@
     "eee"
   ],
   "key": {
-    "e": {
-      "item": "minecraft:ender_eye"
-    }
+    "e": "minecraft:ender_eye"
   },
   "result": {
     "count": 1,

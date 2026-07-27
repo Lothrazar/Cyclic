@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:cobblestone"
-    }
+    "minecraft:cobblestone"
   ],
   "energy": {
     "rfpertick": 50,
     "ticks": 60
   },
   "mix": {
-    "tag": "c:biomass",
+    "ingredient": "#c:biomass",
     "amount": 10
   },
   "result": {

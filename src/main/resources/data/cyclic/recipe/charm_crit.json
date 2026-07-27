@@ -6,15 +6,9 @@
     "g g"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:diamond"
-    },
-    "f": {
-      "item": "minecraft:blaze_powder"
-    },
-    "a": {
-      "item": "cyclic:gem_amber"
-    }
+    "g": "minecraft:diamond",
+    "f": "minecraft:blaze_powder",
+    "a": "cyclic:gem_amber"
   },
   "result": {
     "id": "cyclic:charm_crit"

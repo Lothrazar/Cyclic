@@ -5,12 +5,8 @@
     "pp"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:obsidian"
-    },
-    "p": {
-      "item": "minecraft:stone_pressure_plate"
-    }
+    "c": "minecraft:obsidian",
+    "p": "minecraft:stone_pressure_plate"
   },
   "result": {
     "count": 2,

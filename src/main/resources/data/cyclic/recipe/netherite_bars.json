@@ -6,9 +6,7 @@
     "rrr"
   ],
   "key": {
-    "r": {
-      "tag": "c:nuggets/netherite"
-    }
+    "r": "#c:nuggets/netherite"
   },
   "result": {
     "count": 16,

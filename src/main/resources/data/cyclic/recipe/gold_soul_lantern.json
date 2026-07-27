@@ -6,12 +6,8 @@
     "nnn"
   ],
   "key": {
-    "n": {
-      "tag": "c:nuggets/gold"
-    },
-    "t": {
-      "item": "minecraft:soul_torch"
-    }
+    "n": "#c:nuggets/gold",
+    "t": "minecraft:soul_torch"
   },
   "result": {
     "count": 1,

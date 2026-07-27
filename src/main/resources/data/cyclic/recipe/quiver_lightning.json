@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ggg",
@@ -6,15 +6,9 @@
     "gag"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:leather"
-    },
-    "f": {
-      "item": "minecraft:arrow"
-    },
-    "a": {
-      "item": "cyclic:scepter_lightning"
-    }
+    "g": "minecraft:leather",
+    "f": "minecraft:arrow",
+    "a": "cyclic:scepter_lightning"
   },
   "result": {
     "id": "cyclic:quiver_lightning"

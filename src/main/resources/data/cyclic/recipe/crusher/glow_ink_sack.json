@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "item": "minecraft:glow_ink_sac"
-  },
+  "ingredient": "minecraft:glow_ink_sac",
   "energy": {
     "ticks": 600,
     "rfpertick": 40

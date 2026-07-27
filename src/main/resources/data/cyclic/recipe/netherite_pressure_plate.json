@@ -4,9 +4,7 @@
     "cc"
   ],
   "key": {
-    "c": {
-      "tag": "c:nuggets/netherite"
-    }
+    "c": "#c:nuggets/netherite"
   },
   "result": {
     "count": 1,

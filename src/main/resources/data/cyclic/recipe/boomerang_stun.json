@@ -6,15 +6,9 @@
     " fd"
   ],
   "key": {
-    "d": {
-      "tag": "c:nuggets/copper"
-    },
-    "g": {
-      "item": "minecraft:redstone"
-    },
-    "f": {
-      "item": "minecraft:stick"
-    }
+    "d": "#c:nuggets/copper",
+    "g": "minecraft:redstone",
+    "f": "minecraft:stick"
   },
   "result": {
     "count": 1,

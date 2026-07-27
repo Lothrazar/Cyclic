@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:apple_ender"
-    },
-    {
-      "item": "minecraft:chorus_fruit"
-    },
-    {
-      "item": "minecraft:glowstone_dust"
-    }
+    "cyclic:apple_ender",
+    "minecraft:chorus_fruit",
+    "minecraft:glowstone_dust"
   ],
   "energy": {
     "rfpertick": 200,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:sculk",
+    "ingredient": "#c:sculk",
     "amount": 2000
   },
   "result": {

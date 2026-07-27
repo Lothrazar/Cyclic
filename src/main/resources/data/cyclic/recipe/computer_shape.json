@@ -6,18 +6,10 @@
     "ipi"
   ],
   "key": {
-    "i": {
-      "item": "minecraft:repeater"
-    },
-    "p": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "f": {
-      "item": "minecraft:iron_block"
-    },
-    "o": {
-      "item": "minecraft:green_concrete"
-    }
+    "i": "minecraft:repeater",
+    "p": "#c:storage_blocks/cobblestone",
+    "f": "minecraft:iron_block",
+    "o": "minecraft:green_concrete"
   },
   "result": {
     "count": 1,

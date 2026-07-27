@@ -5,8 +5,10 @@ import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
@@ -16,15 +18,27 @@ import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.fluids.FluidInstance;
 import net.neoforged.neoforge.fluids.FluidStack;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.codec.ByteBufCodecs;
 
 public class RecipeMelter implements Recipe<MelterRecipeInput> {
 
+  // Plain FluidStack.CODEC's "id" field validates Fluid#areComponentsBound(), which fails during
+  // datapack/recipe reload with DataResult.Error["Fluid X does not have components yet"] - same bug
+  // class as ItemStack.CODEC (see RecipeSolidifier/RecipeCrusher's "result" field fix), but NeoForge
+  // doesn't ship a ready-made "FluidStackTemplate" equivalent to ItemStackTemplate, so this rebuilds
+  // FluidStack's own MAP_CODEC shape using the unbound FluidInstance#FLUID_HOLDER_CODEC instead.
+  private static final MapCodec<FluidStack> RESULT_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+      FluidInstance.FLUID_HOLDER_CODEC.fieldOf("id").forGetter(FluidStack::typeHolder),
+      ExtraCodecs.POSITIVE_INT.fieldOf("amount").forGetter(FluidStack::getAmount),
+      DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(FluidStack::getComponentsPatch)
+  ).apply(i, FluidStack::new));
+
   public static final MapCodec<RecipeMelter> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
       Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.getIngredients()),
-      FluidStack.CODEC.fieldOf("result").forGetter(r -> r.getRecipeFluid()),
+      RESULT_CODEC.codec().fieldOf("result").forGetter(r -> r.getRecipeFluid()),
       EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
   ).apply(instance, (ingredients, fluid, energy) -> new RecipeMelter(NonNullList.of(Ingredient.of(), ingredients.toArray(new Ingredient[0])), fluid, energy)));
   public static final StreamCodec<RegistryFriendlyByteBuf, RecipeMelter> STREAM_CODEC = StreamCodec.composite(

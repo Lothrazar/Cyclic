@@ -6,15 +6,9 @@
     "sis"
   ],
   "key": {
-    "i": {
-      "item": "minecraft:iron_ingot"
-    },
-    "r": {
-      "item": "minecraft:repeater"
-    },
-    "s": {
-      "item": "minecraft:stone_slab"
-    }
+    "i": "minecraft:iron_ingot",
+    "r": "minecraft:repeater",
+    "s": "minecraft:stone_slab"
   },
   "result": {
     "count": 1,

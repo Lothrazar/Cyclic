@@ -6,15 +6,9 @@
     "ggg"
   ],
   "key": {
-    "d": {
-      "tag": "minecraft:candles"
-    },
-    "g": {
-      "item": "minecraft:calcite"
-    },
-    "s": {
-      "item": "minecraft:emerald"
-    }
+    "d": "#minecraft:candles",
+    "g": "minecraft:calcite",
+    "s": "minecraft:emerald"
   },
   "result": {
     "count": 1,

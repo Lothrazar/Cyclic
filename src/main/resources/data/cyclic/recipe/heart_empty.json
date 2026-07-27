@@ -5,18 +5,10 @@
     "cd"
   ],
   "key": {
-    "a": {
-      "item": "minecraft:pumpkin_pie"
-    },
-    "b": {
-      "item": "minecraft:fermented_spider_eye"
-    },
-    "c": {
-      "item": "minecraft:beetroot"
-    },
-    "d": {
-      "item": "minecraft:cookie"
-    }
+    "a": "minecraft:pumpkin_pie",
+    "b": "minecraft:fermented_spider_eye",
+    "c": "minecraft:beetroot",
+    "d": "minecraft:cookie"
   },
   "result": {
     "id": "cyclic:heart_empty"

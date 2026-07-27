@@ -6,15 +6,9 @@
     "rsr"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:iron_bars"
-    },
-    "r": {
-      "tag": "c:chests/wooden"
-    },
-    "c": {
-      "item": "minecraft:sandstone"
-    }
+    "s": "minecraft:iron_bars",
+    "r": "#c:chests/wooden",
+    "c": "minecraft:sandstone"
   },
   "result": {
     "count": 2,

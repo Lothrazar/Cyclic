@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:dead_fire_coral"
-    },
-    {
-      "item": "minecraft:fire_coral"
-    },
-    {
-      "item": "minecraft:dead_fire_coral"
-    }
+    "minecraft:dead_fire_coral",
+    "minecraft:fire_coral",
+    "minecraft:dead_fire_coral"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 160
   },
   "mix": {
-    "fluid": "minecraft:water",
+    "ingredient": "minecraft:water",
     "amount": 100
   },
   "result": {

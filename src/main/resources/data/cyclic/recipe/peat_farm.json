@@ -6,18 +6,10 @@
     "ipi"
   ],
   "key": {
-    "i": {
-      "item": "minecraft:copper_ingot"
-    },
-    "p": {
-      "item": "minecraft:dispenser"
-    },
-    "f": {
-      "item": "cyclic:generator_item"
-    },
-    "o": {
-      "item": "minecraft:observer"
-    }
+    "i": "minecraft:copper_ingot",
+    "p": "minecraft:dispenser",
+    "f": "cyclic:generator_item",
+    "o": "minecraft:observer"
   },
   "result": {
     "count": 1,

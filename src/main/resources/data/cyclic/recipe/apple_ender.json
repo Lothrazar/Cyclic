@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "a": {
-      "item": "cyclic:apple_honey"
-    },
-    "c": {
-      "item": "minecraft:ender_pearl"
-    }
+    "a": "cyclic:apple_honey",
+    "c": "minecraft:ender_pearl"
   },
   "result": {
     "count": 1,

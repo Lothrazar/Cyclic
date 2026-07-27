@@ -6,18 +6,10 @@
     "gag"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:cobweb"
-    },
-    "g": {
-      "item": "minecraft:nether_bricks"
-    },
-    "f": {
-      "tag": "c:feathers"
-    },
-    "a": {
-      "item": "cyclic:gem_amber"
-    }
+    "s": "minecraft:cobweb",
+    "g": "minecraft:nether_bricks",
+    "f": "#c:feathers",
+    "a": "cyclic:gem_amber"
   },
   "result": {
     "id": "cyclic:charm_longfall"

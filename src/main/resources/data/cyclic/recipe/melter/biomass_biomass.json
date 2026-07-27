@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "cyclic:biomass"
-    }
+    "cyclic:biomass"
   ],
   "energy": {
     "rfpertick": 100,

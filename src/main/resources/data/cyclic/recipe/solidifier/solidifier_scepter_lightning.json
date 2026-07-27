@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:nuggets/netherite"
-    },
-    {
-      "item": "minecraft:blaze_rod"
-    },
-    {
-      "item": "minecraft:breeze_rod"
-    }
+    "#c:nuggets/netherite",
+    "minecraft:blaze_rod",
+    "minecraft:breeze_rod"
   ],
   "energy": {
     "rfpertick": 300,
     "ticks": 150
   },
   "mix": {
-    "tag": "c:glowstone",
+    "ingredient": "#c:glowstone",
     "amount": 1000
   },
   "result": {

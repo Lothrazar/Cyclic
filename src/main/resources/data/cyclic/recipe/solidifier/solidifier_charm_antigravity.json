@@ -1,19 +1,15 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:bone_block"
-    },
-    {
-      "item": "cyclic:gem_obsidian"
-    }
+    "minecraft:bone_block",
+    "cyclic:gem_obsidian"
   ],
   "energy": {
     "rfpertick": 200,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:amethyst",
+    "ingredient": "#c:amethyst",
     "amount": 1000
   },
   "result": {

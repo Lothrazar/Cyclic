@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:ice"
-    }
+    "minecraft:ice"
   ],
   "energy": {
     "rfpertick": 80,

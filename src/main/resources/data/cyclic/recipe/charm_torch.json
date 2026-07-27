@@ -6,18 +6,10 @@
     "cic"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:coal_block"
-    },
-    "t": {
-      "item": "minecraft:torch"
-    },
-    "i": {
-      "item": "minecraft:iron_bars"
-    },
-    "a": {
-      "item": "cyclic:gem_amber"
-    }
+    "c": "minecraft:coal_block",
+    "t": "minecraft:torch",
+    "i": "minecraft:iron_bars",
+    "a": "cyclic:gem_amber"
   },
   "result": {
     "id": "cyclic:charm_torch"

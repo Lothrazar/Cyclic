@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:amethyst_shard"
-    },
-    {
-      "item": "minecraft:prismarine_shard"
-    },
-    {
-      "item": "minecraft:wind_charge"
-    }
+    "minecraft:amethyst_shard",
+    "minecraft:prismarine_shard",
+    "minecraft:wind_charge"
   ],
   "energy": {
     "rfpertick": 800,
     "ticks": 700
   },
   "mix": {
-    "tag": "c:sculk",
+    "ingredient": "#c:sculk",
     "amount": 1000
   },
   "result": {

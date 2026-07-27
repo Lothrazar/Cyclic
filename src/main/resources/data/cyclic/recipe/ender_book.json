@@ -6,15 +6,9 @@
     "cpc"
   ],
   "key": {
-    "a": {
-      "item": "minecraft:book"
-    },
-    "c": {
-      "item": "cyclic:ender_eye_block"
-    },
-    "p": {
-      "item": "minecraft:end_rod"
-    }
+    "a": "minecraft:book",
+    "c": "cyclic:ender_eye_block",
+    "p": "minecraft:end_rod"
   },
   "result": {
     "count": 1,

@@ -6,15 +6,9 @@
     " fd"
   ],
   "key": {
-    "d": {
-      "tag": "c:nuggets/copper"
-    },
-    "g": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "f": {
-      "item": "minecraft:stick"
-    }
+    "d": "#c:nuggets/copper",
+    "g": "minecraft:amethyst_shard",
+    "f": "minecraft:stick"
   },
   "result": {
     "count": 1,

@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:rotten_flesh"
-    }
+    "minecraft:rotten_flesh"
   ],
   "energy": {
     "rfpertick": 1000,

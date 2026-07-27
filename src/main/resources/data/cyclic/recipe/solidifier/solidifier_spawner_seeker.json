@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:nether_wart"
-    },
-    {
-      "item": "minecraft:mossy_cobblestone"
-    },
-    {
-      "tag": "c:dyes/purple"
-    }
+    "minecraft:nether_wart",
+    "minecraft:mossy_cobblestone",
+    "#c:dyes/purple"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 120
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 250
   },
   "result": {

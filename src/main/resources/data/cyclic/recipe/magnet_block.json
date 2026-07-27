@@ -6,15 +6,9 @@
     "sbs"
   ],
   "key": {
-    "s": {
-      "tag": "c:nuggets/copper"
-    },
-    "b": {
-      "tag": "minecraft:planks"
-    },
-    "x": {
-      "tag": "c:dyes/purple"
-    }
+    "s": "#c:nuggets/copper",
+    "b": "#minecraft:planks",
+    "x": "#c:dyes/purple"
   },
   "result": {
     "id": "cyclic:magnet_block"

@@ -6,15 +6,9 @@
     "isi"
   ],
   "key": {
-    "i": {
-      "tag": "c:nuggets/copper"
-    },
-    "q": {
-      "item": "cyclic:lever_remote"
-    },
-    "s": {
-      "item": "minecraft:repeater"
-    }
+    "i": "#c:nuggets/copper",
+    "q": "cyclic:lever_remote",
+    "s": "minecraft:repeater"
   },
   "result": {
     "count": 1,

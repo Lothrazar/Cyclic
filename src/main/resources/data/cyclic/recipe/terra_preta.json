@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "c": {
-      "item": "cyclic:biomass"
-    },
-    "i": {
-      "item": "cyclic:peat_unbaked"
-    }
+    "c": "cyclic:biomass",
+    "i": "cyclic:peat_unbaked"
   },
   "result": {
     "count": 4,

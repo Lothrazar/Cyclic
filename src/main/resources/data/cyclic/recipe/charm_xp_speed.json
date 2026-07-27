@@ -6,15 +6,9 @@
     " a "
   ],
   "key": {
-    "g": {
-      "item": "minecraft:vine"
-    },
-    "f": {
-      "item": "minecraft:lapis_lazuli"
-    },
-    "a": {
-      "item": "cyclic:charm_xp_blocker"
-    }
+    "g": "minecraft:vine",
+    "f": "minecraft:lapis_lazuli",
+    "a": "cyclic:charm_xp_blocker"
   },
   "result": {
     "id": "cyclic:charm_xp_speed"

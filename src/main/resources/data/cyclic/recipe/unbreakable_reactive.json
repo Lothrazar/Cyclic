@@ -6,12 +6,8 @@
     "ooo"
   ],
   "key": {
-    "o": {
-      "item": "minecraft:obsidian"
-    },
-    "r": {
-      "item": "minecraft:repeater"
-    }
+    "o": "minecraft:obsidian",
+    "r": "minecraft:repeater"
   },
   "result": {
     "count": 4,

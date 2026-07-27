@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:magma_cream"
-    }
+    "minecraft:magma_cream"
   ],
   "energy": {
     "rfpertick": 200,

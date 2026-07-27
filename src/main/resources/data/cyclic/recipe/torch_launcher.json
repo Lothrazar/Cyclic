@@ -6,15 +6,9 @@
     "l  "
   ],
   "key": {
-    "g": {
-      "item": "minecraft:gold_block"
-    },
-    "c": {
-      "item": "minecraft:coal_block"
-    },
-    "l": {
-      "tag": "c:storage_blocks/flint"
-    }
+    "g": "minecraft:gold_block",
+    "c": "minecraft:coal_block",
+    "l": "#c:storage_blocks/flint"
   },
   "result": {
     "count": 1,

@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:obsidian"
-    }
+    "minecraft:obsidian"
   ],
   "energy": {
     "rfpertick": 100,

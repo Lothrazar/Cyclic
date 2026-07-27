@@ -6,18 +6,10 @@
     "too"
   ],
   "key": {
-    "o": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "t": {
-      "item": "minecraft:stick"
-    },
-    "l": {
-      "item": "minecraft:leather"
-    },
-    "s": {
-      "item": "minecraft:string"
-    }
+    "o": "#c:storage_blocks/cobblestone",
+    "t": "minecraft:stick",
+    "l": "minecraft:leather",
+    "s": "minecraft:string"
   },
   "result": {
     "id": "cyclic:slingshot"

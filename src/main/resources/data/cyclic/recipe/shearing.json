@@ -6,12 +6,8 @@
     " r "
   ],
   "key": {
-    "r": {
-      "item": "minecraft:shears"
-    },
-    "e": {
-      "tag": "minecraft:stone_tool_materials"
-    }
+    "r": "minecraft:shears",
+    "e": "#minecraft:stone_tool_materials"
   },
   "result": {
     "count": 4,

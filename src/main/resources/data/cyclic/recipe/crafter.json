@@ -6,18 +6,10 @@
     "pcp"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:crafting_table"
-    },
-    "d": {
-      "item": "cyclic:gem_amber"
-    },
-    "x": {
-      "item": "minecraft:sticky_piston"
-    },
-    "p": {
-      "item": "minecraft:amethyst_block"
-    }
+    "c": "minecraft:crafting_table",
+    "d": "cyclic:gem_amber",
+    "x": "minecraft:sticky_piston",
+    "p": "minecraft:amethyst_block"
   },
   "result": {
     "count": 1,

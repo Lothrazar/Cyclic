@@ -6,12 +6,8 @@
     " e "
   ],
   "key": {
-    "e": {
-      "item": "minecraft:quartz_block"
-    },
-    "o": {
-      "item": "minecraft:obsidian"
-    }
+    "e": "minecraft:quartz_block",
+    "o": "minecraft:obsidian"
   },
   "result": {
     "id": "cyclic:mattock"

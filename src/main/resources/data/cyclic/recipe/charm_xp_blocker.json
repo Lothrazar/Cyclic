@@ -6,18 +6,10 @@
     "dad"
   ],
   "key": {
-    "x": {
-      "tag": "c:storage_blocks/flint"
-    },
-    "g": {
-      "tag": "c:nuggets/copper"
-    },
-    "d": {
-      "item": "minecraft:gray_concrete_powder"
-    },
-    "a": {
-      "item": "cyclic:experience_food"
-    }
+    "x": "#c:storage_blocks/flint",
+    "g": "#c:nuggets/copper",
+    "d": "minecraft:gray_concrete_powder",
+    "a": "cyclic:experience_food"
   },
   "result": {
     "id": "cyclic:charm_xp_blocker"

@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:gem_obsidian"
-    },
-    {
-      "tag": "c:nuggets/netherite"
-    },
-    {
-      "tag": "c:nuggets/netherite"
-    }
+    "cyclic:gem_obsidian",
+    "#c:nuggets/netherite",
+    "#c:nuggets/netherite"
   ],
   "energy": {
     "rfpertick": 5000,
     "ticks": 200
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 8000
   },
   "result": {

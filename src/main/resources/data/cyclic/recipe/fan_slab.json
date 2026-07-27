@@ -5,12 +5,8 @@
     "sss"
   ],
   "key": {
-    "f": {
-      "item": "cyclic:fan"
-    },
-    "s": {
-      "tag": "c:storage_blocks/cobblestone"
-    }
+    "f": "cyclic:fan",
+    "s": "#c:storage_blocks/cobblestone"
   },
   "result": {
     "count": 3,

@@ -5,13 +5,8 @@
     "c c"
   ],
   "key": {
-    "d": {
-      "item": "minecraft:diamond_boots",
-      "data": 0
-    },
-    "c": {
-      "item": "cyclic:gem_obsidian"
-    }
+    "d": "minecraft:diamond_boots",
+    "c": "cyclic:gem_obsidian"
   },
   "result": {
     "count": 1,

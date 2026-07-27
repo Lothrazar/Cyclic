@@ -6,15 +6,9 @@
     "cbc"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:copper_ingot"
-    },
-    "b": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "a": {
-      "item": "minecraft:clay_ball"
-    }
+    "c": "minecraft:copper_ingot",
+    "b": "#c:storage_blocks/cobblestone",
+    "a": "minecraft:clay_ball"
   },
   "result": {
     "count": 1,

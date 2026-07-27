@@ -6,12 +6,8 @@
     " d "
   ],
   "key": {
-    "d": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "tag": "c:ingots/copper"
-    }
+    "d": "minecraft:stick",
+    "c": "#c:ingots/copper"
   },
   "result": {
     "count": 1,

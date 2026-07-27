@@ -6,15 +6,9 @@
     " l "
   ],
   "key": {
-    "l": {
-      "item": "minecraft:smooth_stone_slab"
-    },
-    "s": {
-      "item": "minecraft:stone_button"
-    },
-    "t": {
-      "item": "minecraft:lever"
-    }
+    "l": "minecraft:smooth_stone_slab",
+    "s": "minecraft:stone_button",
+    "t": "minecraft:lever"
   },
   "result": {
     "id": "cyclic:lever_remote"

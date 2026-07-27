@@ -6,9 +6,7 @@
     "ccc"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:copper_ingot"
-    }
+    "c": "minecraft:copper_ingot"
   },
   "result": {
     "count": 1,

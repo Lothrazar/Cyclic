@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "tag": "minecraft:boats"
-  },
+  "ingredient": "#minecraft:boats",
   "energy": {
     "ticks": 40,
     "rfpertick": 30

@@ -6,12 +6,8 @@
     "s s"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:stick"
-    },
-    "d": {
-      "item": "minecraft:dirt"
-    }
+    "s": "minecraft:stick",
+    "d": "minecraft:dirt"
   },
   "result": {
     "count": 16,

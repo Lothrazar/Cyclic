@@ -6,9 +6,7 @@
     "sss"
   ],
   "key": {
-    "s": {
-      "tag": "minecraft:wooden_pressure_plates"
-    }
+    "s": "#minecraft:wooden_pressure_plates"
   },
   "result": {
     "count": 1,

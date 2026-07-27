@@ -6,15 +6,9 @@
     "sis"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:string"
-    },
-    "i": {
-      "item": "cyclic:cloud"
-    },
-    "r": {
-      "item": "minecraft:redstone"
-    }
+    "s": "minecraft:string",
+    "i": "cyclic:cloud",
+    "r": "minecraft:redstone"
   },
   "result": {
     "count": 4,

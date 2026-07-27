@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:dead_horn_coral"
-    },
-    {
-      "item": "minecraft:horn_coral"
-    },
-    {
-      "item": "minecraft:dead_horn_coral"
-    }
+    "minecraft:dead_horn_coral",
+    "minecraft:horn_coral",
+    "minecraft:dead_horn_coral"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 160
   },
   "mix": {
-    "fluid": "minecraft:water",
+    "ingredient": "minecraft:water",
     "amount": 100
   },
   "result": {

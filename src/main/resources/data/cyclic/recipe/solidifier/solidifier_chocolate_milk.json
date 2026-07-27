@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:milk_bottle"
-    }
+    "cyclic:milk_bottle"
   ],
   "energy": {
     "rfpertick": 800,
     "ticks": 80
   },
   "mix": {
-    "tag": "c:chocolate",
+    "ingredient": "#c:chocolate",
     "amount": 50
   },
   "result": {

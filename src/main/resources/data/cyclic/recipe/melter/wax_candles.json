@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "tag": "minecraft:candles"
-    }
+    "#minecraft:candles"
   ],
   "energy": {
     "rfpertick": 20,

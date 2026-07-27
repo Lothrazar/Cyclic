@@ -1,7 +1,8 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "minecraft:glass"
-  },
-  "result": {"id": "cyclic:glass_connected", "count": 1}
+  "ingredient": "minecraft:glass",
+  "result": {
+    "id": "cyclic:glass_connected",
+    "count": 1
+  }
 }

@@ -6,15 +6,9 @@
     "cbc"
   ],
   "key": {
-    "c": {
-      "tag": "c:nuggets/copper"
-    },
-    "b": {
-      "item": "minecraft:heavy_weighted_pressure_plate"
-    },
-    "a": {
-      "item": "minecraft:redstone_block"
-    }
+    "c": "#c:nuggets/copper",
+    "b": "minecraft:heavy_weighted_pressure_plate",
+    "a": "minecraft:redstone_block"
   },
   "result": {
     "count": 1,

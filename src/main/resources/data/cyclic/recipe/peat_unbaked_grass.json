@@ -6,15 +6,9 @@
     "bcb"
   ],
   "key": {
-    "b": {
-      "item": "cyclic:biomass"
-    },
-    "c": {
-      "item": "minecraft:grass_block"
-    },
-    "d": {
-      "item": "minecraft:charcoal"
-    }
+    "b": "cyclic:biomass",
+    "c": "minecraft:grass_block",
+    "d": "minecraft:charcoal"
   },
   "result": {
     "count": 16,

@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "item": "minecraft:lime_concrete_powder"
-  },
+  "ingredient": "minecraft:lime_concrete_powder",
   "energy": {
     "ticks": 60,
     "rfpertick": 40

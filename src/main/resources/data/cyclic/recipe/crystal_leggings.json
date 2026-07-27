@@ -6,13 +6,8 @@
     "c c"
   ],
   "key": {
-    "d": {
-      "item": "minecraft:diamond_leggings",
-      "data": 0
-    },
-    "c": {
-      "item": "cyclic:gem_obsidian"
-    }
+    "d": "minecraft:diamond_leggings",
+    "c": "cyclic:gem_obsidian"
   },
   "result": {
     "count": 1,

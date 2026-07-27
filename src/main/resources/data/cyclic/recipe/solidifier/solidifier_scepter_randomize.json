@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:dyes/purple"
-    },
-    {
-      "tag": "c:ingots/iron"
-    },
-    {
-      "item": "cyclic:gem_amber"
-    }
+    "#c:dyes/purple",
+    "#c:ingots/iron",
+    "cyclic:gem_amber"
   ],
   "energy": {
     "rfpertick": 300,
     "ticks": 150
   },
   "mix": {
-    "tag": "c:redstone",
+    "ingredient": "#c:redstone",
     "amount": 200
   },
   "result": {

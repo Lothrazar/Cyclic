@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "minecraft:candles"
-    },
-    {
-      "tag": "c:dusts/glowstone"
-    },
-    {
-      "tag": "c:torches"
-    }
+    "#minecraft:candles",
+    "#c:dusts/glowstone",
+    "#c:torches"
   ],
   "mix": {
-    "tag": "c:wax",
+    "ingredient": "#c:wax",
     "amount": 10
   },
   "energy": {

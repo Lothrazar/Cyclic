@@ -1,15 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:crafting_table"
-    },
-    {
-      "tag": "minecraft:stone_tool_materials"
-    },
-    {
-      "tag": "minecraft:stone_tool_materials"
-    }
+    "minecraft:crafting_table",
+    "#minecraft:stone_tool_materials",
+    "#minecraft:stone_tool_materials"
   ],
   "result": {
     "count": 1,

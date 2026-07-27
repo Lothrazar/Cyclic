@@ -6,12 +6,8 @@
     "sis"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:stone_brick_stairs"
-    },
-    "i": {
-      "tag": "c:nuggets/copper"
-    }
+    "s": "minecraft:stone_brick_stairs",
+    "i": "#c:nuggets/copper"
   },
   "result": {
     "count": 8,

@@ -1,6 +1,6 @@
 ﻿{
   "name": "enchantment.cyclic.ender",
-  "icon": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:ender\":1}}]",
+  "icon": "minecraft:enchanted_book[minecraft:stored_enchantments={\"cyclic:ender\":1}]",
   "category": "cyclic:enchantments",
   "pages": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "type": "spotlight",
-      "item": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:ender\":1}}]",
+      "item": "minecraft:enchanted_book[minecraft:stored_enchantments={\"cyclic:ender\":1}]",
       "link_recipe": true
     }
   ]

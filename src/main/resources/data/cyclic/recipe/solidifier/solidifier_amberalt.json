@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:fire_charge"
-    },
-    {
-      "tag": "c:storage_blocks/redstone"
-    },
-    {
-      "tag": "c:ingots/gold"
-    }
+    "minecraft:fire_charge",
+    "#c:storage_blocks/redstone",
+    "#c:ingots/gold"
   ],
   "mix": {
-    "tag": "c:magma",
+    "ingredient": "#c:magma",
     "amount": 1000
   },
   "energy": {

@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:repeater"
-    },
-    {
-      "item": "minecraft:leather"
-    },
-    {
-      "item": "cyclic:obsidian_pressure_plate"
-    }
+    "minecraft:repeater",
+    "minecraft:leather",
+    "cyclic:obsidian_pressure_plate"
   ],
   "energy": {
     "rfpertick": 1000,
     "ticks": 80
   },
   "mix": {
-    "tag": "c:slime",
+    "ingredient": "#c:slime",
     "amount": 1500
   },
   "result": {

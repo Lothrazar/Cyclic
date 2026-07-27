@@ -6,15 +6,9 @@
     "bcb"
   ],
   "key": {
-    "b": {
-      "tag": "c:storage_blocks/redstone"
-    },
-    "c": {
-      "item": "minecraft:amethyst_block"
-    },
-    "s": {
-      "tag": "c:glass/dark"
-    }
+    "b": "#c:storage_blocks/redstone",
+    "c": "minecraft:amethyst_block",
+    "s": "#c:glass/dark"
   },
   "result": {
     "count": 1,

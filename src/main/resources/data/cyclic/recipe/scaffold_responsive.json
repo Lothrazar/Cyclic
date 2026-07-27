@@ -6,12 +6,8 @@
     "s s"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:stick"
-    },
-    "d": {
-      "tag": "c:dyes/red"
-    }
+    "s": "minecraft:stick",
+    "d": "#c:dyes/red"
   },
   "result": {
     "count": 16,

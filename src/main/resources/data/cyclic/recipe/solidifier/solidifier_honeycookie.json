@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:wheat"
-    },
-    {
-      "item": "minecraft:cocoa_beans"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:wheat",
+    "minecraft:cocoa_beans",
+    "minecraft:wheat"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:honey",
+    "ingredient": "#c:honey",
     "amount": 50
   },
   "result": {

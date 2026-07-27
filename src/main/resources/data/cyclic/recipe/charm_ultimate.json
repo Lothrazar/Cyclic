@@ -6,24 +6,12 @@
     "svs"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:gray_concrete"
-    },
-    "w": {
-      "item": "cyclic:charm_wither"
-    },
-    "f": {
-      "item": "cyclic:charm_fire"
-    },
-    "a": {
-      "item": "cyclic:charm_antidote"
-    },
-    "v": {
-      "item": "cyclic:charm_void"
-    },
-    "g": {
-      "item": "cyclic:gem_obsidian"
-    }
+    "s": "minecraft:gray_concrete",
+    "w": "cyclic:charm_wither",
+    "f": "cyclic:charm_fire",
+    "a": "cyclic:charm_antidote",
+    "v": "cyclic:charm_void",
+    "g": "cyclic:gem_obsidian"
   },
   "result": {
     "id": "cyclic:charm_ultimate"

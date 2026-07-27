@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "cyclic:flower_purple_tulip"
-    }
+    "cyclic:flower_purple_tulip"
   ],
   "result": {
     "count": 2,

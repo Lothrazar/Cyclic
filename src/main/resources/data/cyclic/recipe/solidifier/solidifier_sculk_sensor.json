@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:emerald"
-    },
-    {
-      "item": "minecraft:comparator"
-    },
-    {
-      "item": "minecraft:sculk_catalyst"
-    }
+    "minecraft:emerald",
+    "minecraft:comparator",
+    "minecraft:sculk_catalyst"
   ],
   "mix": {
-    "tag": "c:experience",
+    "ingredient": "#c:experience",
     "amount": 2000
   },
   "energy": {

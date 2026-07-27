@@ -6,15 +6,9 @@
     "ldl"
   ],
   "key": {
-    "l": {
-      "item": "minecraft:leather"
-    },
-    "d": {
-      "item": "minecraft:diamond"
-    },
-    "c": {
-      "item": "cyclic:crate"
-    }
+    "l": "minecraft:leather",
+    "d": "minecraft:diamond",
+    "c": "cyclic:crate"
   },
   "result": {
     "count": 1,

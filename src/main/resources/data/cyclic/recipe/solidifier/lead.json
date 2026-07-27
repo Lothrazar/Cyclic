@@ -1,12 +1,10 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:string"
-    }
+    "minecraft:string"
   ],
   "mix": {
-    "tag": "c:slime",
+    "ingredient": "#c:slime",
     "amount": 250
   },
   "energy": {

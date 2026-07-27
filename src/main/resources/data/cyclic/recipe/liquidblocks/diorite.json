@@ -7,9 +7,7 @@
   ],
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:diorite"
-    }
+    "minecraft:diorite"
   ],
   "result": {
     "id": "liquidblocks:liquid_diorite",

@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "minecraft:sugar"
-    }
+    "minecraft:sugar",
+    "minecraft:sugar",
+    "minecraft:sugar"
   ],
   "energy": {
     "rfpertick": 2000,
     "ticks": 80
   },
   "mix": {
-    "tag": "c:experience",
+    "ingredient": "#c:experience",
     "amount": 1000
   },
   "result": {

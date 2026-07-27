@@ -6,21 +6,11 @@
     "sss"
   ],
   "key": {
-    "r": {
-      "item": "minecraft:emerald"
-    },
-    "g": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "b": {
-      "item": "cyclic:biomass"
-    },
-    "s": {
-      "tag": "c:nuggets/copper"
-    },
-    "o": {
-      "item": "cyclic:obsidian_pressure_plate"
-    }
+    "r": "minecraft:emerald",
+    "g": "#c:storage_blocks/cobblestone",
+    "b": "cyclic:biomass",
+    "s": "#c:nuggets/copper",
+    "o": "cyclic:obsidian_pressure_plate"
   },
   "result": {
     "count": 1,

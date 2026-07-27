@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:sandstone"
-    }
+    "minecraft:sandstone"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 10
   },
   "result": {

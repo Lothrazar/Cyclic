@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:nuggets/copper"
-    },
-    {
-      "item": "minecraft:fermented_spider_eye"
-    },
-    {
-      "item": "minecraft:amethyst_shard"
-    }
+    "#c:nuggets/copper",
+    "minecraft:fermented_spider_eye",
+    "minecraft:amethyst_shard"
   ],
   "energy": {
     "rfpertick": 200,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 2000
   },
   "result": {

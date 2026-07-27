@@ -6,15 +6,9 @@
     "gag"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:leather"
-    },
-    "f": {
-      "item": "minecraft:arrow"
-    },
-    "a": {
-      "item": "cyclic:gem_amber"
-    }
+    "g": "minecraft:leather",
+    "f": "minecraft:arrow",
+    "a": "cyclic:gem_amber"
   },
   "result": {
     "id": "cyclic:quiver_damage"

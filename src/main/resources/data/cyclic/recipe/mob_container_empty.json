@@ -6,18 +6,10 @@
     "lal"
   ],
   "key": {
-    "i": {
-      "item": "minecraft:gold_ingot"
-    },
-    "l": {
-      "tag": "c:vines"
-    },
-    "a": {
-      "tag": "c:dyes/cyan"
-    },
-    "q": {
-      "item": "minecraft:ice"
-    }
+    "i": "minecraft:gold_ingot",
+    "l": "#c:vines",
+    "a": "#c:dyes/cyan",
+    "q": "minecraft:ice"
   },
   "result": {
     "count": 4,

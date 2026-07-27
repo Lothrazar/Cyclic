@@ -1,12 +1,10 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:copper_block"
-    }
+    "minecraft:copper_block"
   ],
   "mix": {
-    "tag": "c:wax",
+    "ingredient": "#c:wax",
     "amount": 50
   },
   "energy": {

@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:quartz"
-    },
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:quartz"
-    }
+    "minecraft:quartz",
+    "minecraft:stone",
+    "minecraft:quartz"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 80
   },
   "mix": {
-    "tag": "c:redstone",
+    "ingredient": "#c:redstone",
     "amount": 200
   },
   "result": {

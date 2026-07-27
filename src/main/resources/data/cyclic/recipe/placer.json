@@ -6,18 +6,10 @@
     "ooo"
   ],
   "key": {
-    "o": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "g": {
-      "tag": "c:nuggets/copper"
-    },
-    "s": {
-      "item": "minecraft:dropper"
-    },
-    "r": {
-      "item": "minecraft:andesite"
-    }
+    "o": "#c:storage_blocks/cobblestone",
+    "g": "#c:nuggets/copper",
+    "s": "minecraft:dropper",
+    "r": "minecraft:andesite"
   },
   "result": {
     "id": "cyclic:placer"

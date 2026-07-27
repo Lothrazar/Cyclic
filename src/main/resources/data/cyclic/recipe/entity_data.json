@@ -6,15 +6,9 @@
     "cac"
   ],
   "key": {
-    "a": {
-      "tag": "c:dyes/gray"
-    },
-    "c": {
-      "item": "minecraft:iron_nugget"
-    },
-    "p": {
-      "item": "cyclic:carbon_paper"
-    }
+    "a": "#c:dyes/gray",
+    "c": "minecraft:iron_nugget",
+    "p": "cyclic:carbon_paper"
   },
   "result": {
     "count": 4,

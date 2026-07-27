@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:echo_shard"
-    }
+    "minecraft:echo_shard"
   ],
   "energy": {
     "rfpertick": 80,

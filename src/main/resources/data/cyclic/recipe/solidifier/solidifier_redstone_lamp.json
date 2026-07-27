@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:glowstone"
-    }
+    "minecraft:glowstone"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 120
   },
   "mix": {
-    "tag": "c:redstone",
+    "ingredient": "#c:redstone",
     "amount": 250
   },
   "result": {

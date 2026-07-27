@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "tag": "c:ores/redstone"
-  },
+  "ingredient": "#c:ores/redstone",
   "energy": {
     "ticks": 300,
     "rfpertick": 20

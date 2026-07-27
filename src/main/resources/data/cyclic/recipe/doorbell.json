@@ -4,12 +4,8 @@
     "iri"
   ],
   "key": {
-    "i": {
-      "tag": "minecraft:wooden_buttons"
-    },
-    "r": {
-      "item": "minecraft:note_block"
-    }
+    "i": "#minecraft:wooden_buttons",
+    "r": "minecraft:note_block"
   },
   "result": {
     "count": 1,

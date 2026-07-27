@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "a": {
-      "item": "cyclic:apple_honey"
-    },
-    "c": {
-      "item": "minecraft:iron_ingot"
-    }
+    "a": "cyclic:apple_honey",
+    "c": "minecraft:iron_ingot"
   },
   "result": {
     "count": 1,

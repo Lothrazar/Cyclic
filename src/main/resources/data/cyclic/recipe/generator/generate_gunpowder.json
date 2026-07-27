@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:generator_item",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:generator_item"
     }
   ],
   "type": "cyclic:generator_item",
-  "fuel": {
-    "tag": "c:gunpowder"
-  },
+  "fuel": "#c:gunpowder",
   "energy": {
     "ticks": 400,
     "rfpertick": 80

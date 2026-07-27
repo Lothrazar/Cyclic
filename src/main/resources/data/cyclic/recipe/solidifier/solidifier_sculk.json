@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:moss_block"
-    },
-    {
-      "item": "minecraft:tuff"
-    },
-    {
-      "item": "minecraft:sculk_vein"
-    }
+    "minecraft:moss_block",
+    "minecraft:tuff",
+    "minecraft:sculk_vein"
   ],
   "mix": {
-    "tag": "c:experience",
+    "ingredient": "#c:experience",
     "amount": 2000
   },
   "energy": {

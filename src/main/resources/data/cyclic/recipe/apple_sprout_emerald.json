@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "a": {
-      "item": "cyclic:apple_chocolate"
-    },
-    "c": {
-      "item": "minecraft:emerald"
-    }
+    "a": "cyclic:apple_chocolate",
+    "c": "minecraft:emerald"
   },
   "result": {
     "count": 2,

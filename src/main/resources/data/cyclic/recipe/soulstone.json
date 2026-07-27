@@ -6,15 +6,9 @@
     "igi"
   ],
   "key": {
-    "o": {
-      "tag": "c:nether_stars"
-    },
-    "i": {
-      "tag": "c:nuggets/netherite"
-    },
-    "g": {
-      "item": "minecraft:totem_of_undying"
-    }
+    "o": "#c:nether_stars",
+    "i": "#c:nuggets/netherite",
+    "g": "minecraft:totem_of_undying"
   },
   "result": {
     "count": 1,

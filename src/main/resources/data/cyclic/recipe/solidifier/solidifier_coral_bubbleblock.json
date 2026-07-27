@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:dead_bubble_coral_block"
-    },
-    {
-      "item": "minecraft:bubble_coral_block"
-    },
-    {
-      "item": "minecraft:dead_bubble_coral_block"
-    }
+    "minecraft:dead_bubble_coral_block",
+    "minecraft:bubble_coral_block",
+    "minecraft:dead_bubble_coral_block"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 160
   },
   "mix": {
-    "fluid": "minecraft:water",
+    "ingredient": "minecraft:water",
     "amount": 100
   },
   "result": {

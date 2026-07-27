@@ -6,12 +6,8 @@
     "sss"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:anvil"
-    },
-    "d": {
-      "tag": "c:storage_blocks/iron"
-    }
+    "s": "minecraft:anvil",
+    "d": "#c:storage_blocks/iron"
   },
   "result": {
     "count": 1,

@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " gi",
@@ -6,15 +6,9 @@
     "o  "
   ],
   "key": {
-    "i": {
-      "item": "minecraft:iron_ingot"
-    },
-    "g": {
-      "item": "minecraft:lapis_block"
-    },
-    "o": {
-      "tag": "c:ingots/copper"
-    }
+    "i": "minecraft:iron_ingot",
+    "g": "minecraft:lapis_block",
+    "o": "#c:ingots/copper"
   },
   "result": {
     "count": 1,

@@ -6,18 +6,10 @@
     "iii"
   ],
   "key": {
-    "r": {
-      "item": "minecraft:redstone"
-    },
-    "i": {
-      "item": "minecraft:iron_block"
-    },
-    "d": {
-      "item": "minecraft:diamond"
-    },
-    "e": {
-      "item": "cyclic:gem_obsidian"
-    }
+    "r": "minecraft:redstone",
+    "i": "minecraft:iron_block",
+    "d": "minecraft:diamond",
+    "e": "cyclic:gem_obsidian"
   },
   "result": {
     "count": 1,

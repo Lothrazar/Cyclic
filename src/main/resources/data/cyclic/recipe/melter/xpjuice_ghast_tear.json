@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:ghast_tear"
-    }
+    "minecraft:ghast_tear"
   ],
   "energy": {
     "rfpertick": 100,

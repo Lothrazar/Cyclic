@@ -6,9 +6,7 @@
     "rrr"
   ],
   "key": {
-    "r": {
-      "tag": "c:ingots/gold"
-    }
+    "r": "#c:ingots/gold"
   },
   "result": {
     "count": 16,

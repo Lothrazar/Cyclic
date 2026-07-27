@@ -6,21 +6,11 @@
     "gbg"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:emerald"
-    },
-    "f": {
-      "item": "minecraft:blaze_powder"
-    },
-    "a": {
-      "item": "cyclic:gem_amber"
-    },
-    "b": {
-      "item": "minecraft:blue_concrete_powder"
-    },
-    "l": {
-      "item": "minecraft:leather"
-    }
+    "g": "minecraft:emerald",
+    "f": "minecraft:blaze_powder",
+    "a": "cyclic:gem_amber",
+    "b": "minecraft:blue_concrete_powder",
+    "l": "minecraft:leather"
   },
   "result": {
     "id": "cyclic:charm_attack_speed"

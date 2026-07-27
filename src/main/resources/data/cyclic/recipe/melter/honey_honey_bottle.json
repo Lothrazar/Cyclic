@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:honey_bottle"
-    }
+    "minecraft:honey_bottle"
   ],
   "energy": {
     "rfpertick": 80,

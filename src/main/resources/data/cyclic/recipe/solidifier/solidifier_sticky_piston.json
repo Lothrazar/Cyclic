@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:piston"
-    }
+    "minecraft:piston"
   ],
   "energy": {
     "rfpertick": 200,
     "ticks": 500
   },
   "mix": {
-    "tag": "c:slime",
+    "ingredient": "#c:slime",
     "amount": 50
   },
   "result": {

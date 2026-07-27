@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "tag": "c:crops"
-    }
+    "#c:crops"
   ],
   "energy": {
     "rfpertick": 250,

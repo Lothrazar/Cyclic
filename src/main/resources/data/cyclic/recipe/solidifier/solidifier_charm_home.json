@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:feathers"
-    },
-    {
-      "tag": "c:ingots/gold"
-    },
-    {
-      "item": "cyclic:gem_amber"
-    }
+    "#c:feathers",
+    "#c:ingots/gold",
+    "cyclic:gem_amber"
   ],
   "energy": {
     "rfpertick": 200,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 2000
   },
   "result": {

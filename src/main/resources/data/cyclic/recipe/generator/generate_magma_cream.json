@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:generator_item",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:generator_item"
     }
   ],
   "type": "cyclic:generator_item",
-  "fuel": {
-    "item": "minecraft:magma_cream"
-  },
+  "fuel": "minecraft:magma_cream",
   "energy": {
     "ticks": 1000,
     "rfpertick": 60

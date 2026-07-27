@@ -6,15 +6,9 @@
     "bcb"
   ],
   "key": {
-    "b": {
-      "item": "cyclic:biomass"
-    },
-    "c": {
-      "item": "minecraft:podzol"
-    },
-    "d": {
-      "item": "minecraft:charcoal"
-    }
+    "b": "cyclic:biomass",
+    "c": "minecraft:podzol",
+    "d": "minecraft:charcoal"
   },
   "result": {
     "count": 32,

@@ -6,12 +6,8 @@
     "bcb"
   ],
   "key": {
-    "b": {
-      "item": "cyclic:biomass"
-    },
-    "c": {
-      "item": "cyclic:peat_fuel"
-    }
+    "b": "cyclic:biomass",
+    "c": "cyclic:peat_fuel"
   },
   "result": {
     "count": 8,

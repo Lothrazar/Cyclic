@@ -6,18 +6,10 @@
     "cpc"
   ],
   "key": {
-    "d": {
-      "item": "minecraft:dropper"
-    },
-    "g": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "c": {
-      "tag": "c:nuggets/copper"
-    },
-    "p": {
-      "tag": "c:ingots/iron"
-    }
+    "d": "minecraft:dropper",
+    "g": "#c:storage_blocks/cobblestone",
+    "c": "#c:nuggets/copper",
+    "p": "#c:ingots/iron"
   },
   "result": {
     "count": 1,

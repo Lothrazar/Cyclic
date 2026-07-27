@@ -5,9 +5,7 @@
     "gg"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:glass"
-    }
+    "g": "minecraft:glass"
   },
   "result": {
     "count": 4,

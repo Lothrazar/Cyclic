@@ -6,15 +6,9 @@
     "lml"
   ],
   "key": {
-    "l": {
-      "item": "minecraft:dirt"
-    },
-    "m": {
-      "item": "minecraft:lily_pad"
-    },
-    "b": {
-      "item": "cyclic:biomass"
-    }
+    "l": "minecraft:dirt",
+    "m": "minecraft:lily_pad",
+    "b": "cyclic:biomass"
   },
   "result": {
     "count": 6,

@@ -6,12 +6,8 @@
     " W "
   ],
   "key": {
-    "W": {
-      "tag": "minecraft:planks"
-    },
-    "o": {
-      "tag": "c:storage_blocks/flint"
-    }
+    "W": "#minecraft:planks",
+    "o": "#c:storage_blocks/flint"
   },
   "result": {
     "id": "cyclic:shield_flint"

@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "item": "cyclic:flower_purple_tulip"
-  },
+  "ingredient": "cyclic:flower_purple_tulip",
   "energy": {
     "ticks": 100,
     "rfpertick": 10

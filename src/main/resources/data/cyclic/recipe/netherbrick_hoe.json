@@ -6,12 +6,8 @@
     " d "
   ],
   "key": {
-    "d": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "item": "minecraft:nether_brick"
-    }
+    "d": "minecraft:stick",
+    "c": "minecraft:nether_brick"
   },
   "result": {
     "count": 1,

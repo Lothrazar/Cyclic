@@ -6,15 +6,9 @@
     "c c"
   ],
   "key": {
-    "d": {
-      "item": "minecraft:cauldron"
-    },
-    "c": {
-      "item": "cyclic:glass_terra"
-    },
-    "b": {
-      "item": "cyclic:hopper_fluid"
-    }
+    "d": "minecraft:cauldron",
+    "c": "cyclic:glass_terra",
+    "b": "cyclic:hopper_fluid"
   },
   "result": {
     "count": 1,

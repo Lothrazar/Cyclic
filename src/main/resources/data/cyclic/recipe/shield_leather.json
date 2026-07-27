@@ -6,12 +6,8 @@
     " W "
   ],
   "key": {
-    "W": {
-      "tag": "minecraft:planks"
-    },
-    "o": {
-      "item": "minecraft:leather"
-    }
+    "W": "#minecraft:planks",
+    "o": "minecraft:leather"
   },
   "result": {
     "id": "cyclic:shield_leather"

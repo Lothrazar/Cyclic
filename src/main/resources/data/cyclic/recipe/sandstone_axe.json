@@ -6,12 +6,8 @@
     " d "
   ],
   "key": {
-    "d": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "item": "minecraft:sandstone"
-    }
+    "d": "minecraft:stick",
+    "c": "minecraft:sandstone"
   },
   "result": {
     "count": 1,

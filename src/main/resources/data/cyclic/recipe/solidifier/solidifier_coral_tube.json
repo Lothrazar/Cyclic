@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:dead_tube_coral_fan"
-    },
-    {
-      "item": "minecraft:tube_coral_fan"
-    },
-    {
-      "item": "minecraft:dead_tube_coral_fan"
-    }
+    "minecraft:dead_tube_coral_fan",
+    "minecraft:tube_coral_fan",
+    "minecraft:dead_tube_coral_fan"
   ],
   "energy": {
     "rfpertick": 500,
     "ticks": 160
   },
   "mix": {
-    "fluid": "minecraft:water",
+    "ingredient": "minecraft:water",
     "amount": 100
   },
   "result": {

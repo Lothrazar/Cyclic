@@ -6,15 +6,9 @@
     "cdc"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:golden_carrot"
-    },
-    "d": {
-      "item": "minecraft:ender_pearl"
-    },
-    "k": {
-      "item": "minecraft:cake"
-    }
+    "c": "minecraft:golden_carrot",
+    "d": "minecraft:ender_pearl",
+    "k": "minecraft:cake"
   },
   "result": {
     "count": 6,

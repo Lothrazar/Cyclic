@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:sculk_catalyst"
-    }
+    "minecraft:sculk_catalyst"
   ],
   "energy": {
     "rfpertick": 80,

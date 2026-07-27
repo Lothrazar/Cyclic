@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:peat_fuel"
-    },
-    {
-      "item": "cyclic:peat_fuel"
-    },
-    {
-      "item": "cyclic:peat_fuel"
-    }
+    "cyclic:peat_fuel",
+    "cyclic:peat_fuel",
+    "cyclic:peat_fuel"
   ],
   "mix": {
-    "tag": "c:biomass",
+    "ingredient": "#c:biomass",
     "amount": 500
   },
   "energy": {

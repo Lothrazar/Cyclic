@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "tag": "c:ingots/netherite"
-    }
+    "#c:ingots/netherite"
   ],
   "result": {
     "count": 9,

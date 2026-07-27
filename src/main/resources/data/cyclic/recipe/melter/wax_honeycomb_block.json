@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:honeycomb_block"
-    }
+    "minecraft:honeycomb_block"
   ],
   "energy": {
     "rfpertick": 50,

@@ -6,18 +6,10 @@
     "gbg"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:redstone"
-    },
-    "f": {
-      "item": "minecraft:brain_coral_block"
-    },
-    "a": {
-      "tag": "c:storage_blocks/flint"
-    },
-    "b": {
-      "item": "minecraft:light_weighted_pressure_plate"
-    }
+    "g": "minecraft:redstone",
+    "f": "minecraft:brain_coral_block",
+    "a": "#c:storage_blocks/flint",
+    "b": "minecraft:light_weighted_pressure_plate"
   },
   "result": {
     "id": "cyclic:charm_luck"

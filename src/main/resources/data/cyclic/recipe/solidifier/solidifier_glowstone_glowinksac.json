@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:iron_nugget"
-    }
+    "minecraft:iron_nugget"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 80
   },
   "mix": {
-    "tag": "c:glowstone",
+    "ingredient": "#c:glowstone",
     "amount": 500
   },
   "result": {

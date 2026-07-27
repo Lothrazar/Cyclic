@@ -6,15 +6,9 @@
     "ooo"
   ],
   "key": {
-    "b": {
-      "tag": "c:storage_blocks/flint"
-    },
-    "o": {
-      "item": "minecraft:blackstone"
-    },
-    "s": {
-      "item": "minecraft:creeper_head"
-    }
+    "b": "#c:storage_blocks/flint",
+    "o": "minecraft:blackstone",
+    "s": "minecraft:creeper_head"
   },
   "result": {
     "count": 1,

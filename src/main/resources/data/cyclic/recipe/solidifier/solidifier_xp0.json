@@ -1,12 +1,10 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:glass_bottle"
-    }
+    "minecraft:glass_bottle"
   ],
   "mix": {
-    "tag": "c:experience",
+    "ingredient": "#c:experience",
     "amount": 250
   },
   "energy": {

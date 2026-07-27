@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:leather"
-    },
-    {
-      "item": "minecraft:red_wool"
-    }
+    "minecraft:leather",
+    "minecraft:red_wool"
   ],
   "result": {
     "count": 1,

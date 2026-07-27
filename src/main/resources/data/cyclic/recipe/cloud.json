@@ -6,15 +6,9 @@
     "cmc"
   ],
   "key": {
-    "m": {
-      "item": "minecraft:cobweb"
-    },
-    "p": {
-      "item": "minecraft:sea_pickle"
-    },
-    "c": {
-      "item": "minecraft:snowball"
-    }
+    "m": "minecraft:cobweb",
+    "p": "minecraft:sea_pickle",
+    "c": "minecraft:snowball"
   },
   "result": {
     "count": 4,

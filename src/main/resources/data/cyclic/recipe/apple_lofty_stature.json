@@ -5,18 +5,10 @@
     "cd"
   ],
   "key": {
-    "a": {
-      "tag": "c:dyes/cyan"
-    },
-    "b": {
-      "tag": "c:dyes/orange"
-    },
-    "c": {
-      "tag": "c:eggs"
-    },
-    "d": {
-      "item": "minecraft:apple"
-    }
+    "a": "#c:dyes/cyan",
+    "b": "#c:dyes/orange",
+    "c": "#c:eggs",
+    "d": "minecraft:apple"
   },
   "result": {
     "count": 1,

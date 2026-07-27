@@ -6,15 +6,9 @@
     " fd"
   ],
   "key": {
-    "d": {
-      "tag": "c:nuggets/copper"
-    },
-    "g": {
-      "item": "minecraft:flint"
-    },
-    "f": {
-      "item": "minecraft:purple_concrete"
-    }
+    "d": "#c:nuggets/copper",
+    "g": "minecraft:flint",
+    "f": "minecraft:purple_concrete"
   },
   "result": {
     "count": 1,

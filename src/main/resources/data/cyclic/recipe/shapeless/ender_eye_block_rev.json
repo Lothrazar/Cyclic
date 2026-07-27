@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "tag": "c:storage_blocks/ender_eye"
-    }
+    "#c:storage_blocks/ender_eye"
   ],
   "result": {
     "count": 9,

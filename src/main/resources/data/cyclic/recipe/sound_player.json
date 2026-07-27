@@ -6,12 +6,8 @@
     "sss"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:note_block"
-    },
-    "r": {
-      "item": "minecraft:redstone"
-    }
+    "s": "minecraft:note_block",
+    "r": "minecraft:redstone"
   },
   "result": {
     "count": 1,

@@ -6,15 +6,9 @@
     "sis"
   ],
   "key": {
-    "s": {
-      "tag": "minecraft:leaves"
-    },
-    "i": {
-      "tag": "minecraft:small_flowers"
-    },
-    "p": {
-      "tag": "minecraft:saplings"
-    }
+    "s": "#minecraft:leaves",
+    "i": "#minecraft:small_flowers",
+    "p": "#minecraft:saplings"
   },
   "result": {
     "count": 8,

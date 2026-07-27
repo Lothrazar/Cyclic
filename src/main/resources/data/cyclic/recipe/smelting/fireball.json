@@ -1,8 +1,6 @@
 {
   "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "minecraft:fire_charge"
-  },
+  "ingredient": "minecraft:fire_charge",
   "result": {
     "id": "cyclic:fireball"
   },

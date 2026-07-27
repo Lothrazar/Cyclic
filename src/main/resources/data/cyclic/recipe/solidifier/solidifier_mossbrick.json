@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:stone_bricks"
-    },
-    {
-      "item": "minecraft:stone_bricks"
-    },
-    {
-      "item": "minecraft:stone_bricks"
-    }
+    "minecraft:stone_bricks",
+    "minecraft:stone_bricks",
+    "minecraft:stone_bricks"
   ],
   "energy": {
     "rfpertick": 50,
     "ticks": 60
   },
   "mix": {
-    "tag": "c:biomass",
+    "ingredient": "#c:biomass",
     "amount": 10
   },
   "result": {

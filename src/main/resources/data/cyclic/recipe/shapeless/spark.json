@@ -1,15 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "tag": "minecraft:candles"
-    },
-    {
-      "tag": "c:dusts/glowstone"
-    },
-    {
-      "tag": "c:torches"
-    }
+    "#minecraft:candles",
+    "#c:dusts/glowstone",
+    "#c:torches"
   ],
   "result": {
     "count": 2,

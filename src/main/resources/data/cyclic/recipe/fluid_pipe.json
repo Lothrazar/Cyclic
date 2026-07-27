@@ -6,12 +6,8 @@
     "sis"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:sandstone_stairs"
-    },
-    "i": {
-      "tag": "c:nuggets/copper"
-    }
+    "s": "minecraft:sandstone_stairs",
+    "i": "#c:nuggets/copper"
   },
   "result": {
     "count": 8,

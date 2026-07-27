@@ -1,19 +1,15 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:ghast_tear"
-    },
-    {
-      "item": "cyclic:gem_amber"
-    }
+    "minecraft:ghast_tear",
+    "cyclic:gem_amber"
   ],
   "energy": {
     "rfpertick": 300,
     "ticks": 150
   },
   "mix": {
-    "tag": "c:amethyst",
+    "ingredient": "#c:amethyst",
     "amount": 250
   },
   "result": {

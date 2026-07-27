@@ -6,15 +6,9 @@
     "ii "
   ],
   "key": {
-    "i": {
-      "item": "minecraft:gold_ingot"
-    },
-    "d": {
-      "item": "minecraft:lead"
-    },
-    "l": {
-      "item": "minecraft:leather"
-    }
+    "i": "minecraft:gold_ingot",
+    "d": "minecraft:lead",
+    "l": "minecraft:leather"
   },
   "result": {
     "id": "cyclic:stirrups_reverse"

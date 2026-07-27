@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "cyclic:compressed_cobblestone"
-    }
+    "cyclic:compressed_cobblestone"
   ],
   "result": {
     "count": 9,

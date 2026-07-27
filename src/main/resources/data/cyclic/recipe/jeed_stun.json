@@ -7,11 +7,7 @@
   ],
   "type": "jeed:potion_provider",
   "providers": [
-    {
-      "item": "cyclic:slingshot"
-    },
-    {
-      "item": "cyclic:boomerang_stun"
-    }
+    "cyclic:slingshot",
+    "cyclic:boomerang_stun"
   ]
 }

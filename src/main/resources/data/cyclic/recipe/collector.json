@@ -6,21 +6,11 @@
     "hhh"
   ],
   "key": {
-    "l": {
-      "item": "minecraft:lapis_lazuli"
-    },
-    "g": {
-      "item": "minecraft:dropper"
-    },
-    "r": {
-      "item": "minecraft:iron_ingot"
-    },
-    "h": {
-      "item": "minecraft:hopper"
-    },
-    "q": {
-      "tag": "c:storage_blocks/flint"
-    }
+    "l": "minecraft:lapis_lazuli",
+    "g": "minecraft:dropper",
+    "r": "minecraft:iron_ingot",
+    "h": "minecraft:hopper",
+    "q": "#c:storage_blocks/flint"
   },
   "result": {
     "id": "cyclic:collector"

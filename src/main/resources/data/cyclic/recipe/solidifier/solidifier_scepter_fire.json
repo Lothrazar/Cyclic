@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:fireball"
-    },
-    {
-      "item": "minecraft:obsidian"
-    },
-    {
-      "tag": "c:nuggets/gold"
-    }
+    "cyclic:fireball",
+    "minecraft:obsidian",
+    "#c:nuggets/gold"
   ],
   "energy": {
     "rfpertick": 300,
     "ticks": 150
   },
   "mix": {
-    "tag": "c:magma",
+    "ingredient": "#c:magma",
     "amount": 500
   },
   "result": {

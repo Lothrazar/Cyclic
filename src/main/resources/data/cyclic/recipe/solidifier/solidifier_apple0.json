@@ -1,12 +1,10 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:apple"
-    }
+    "minecraft:apple"
   ],
   "mix": {
-    "tag": "c:honey",
+    "ingredient": "#c:honey",
     "amount": 1000
   },
   "energy": {

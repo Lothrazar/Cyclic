@@ -7,9 +7,7 @@
   ],
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "tconstruct:blood_slime"
-    }
+    "tconstruct:blood_slime"
   ],
   "energy": {
     "rfpertick": 100,

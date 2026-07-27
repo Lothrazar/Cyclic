@@ -12,12 +12,8 @@
     "csc"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:stone"
-    },
-    "c": {
-      "item": "minecraft:cobblestone"
-    }
+    "s": "minecraft:stone",
+    "c": "minecraft:cobblestone"
   },
   "result": {
     "count": 4,

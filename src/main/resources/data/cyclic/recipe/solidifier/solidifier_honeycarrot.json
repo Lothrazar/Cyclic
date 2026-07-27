@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:gold_nugget"
-    },
-    {
-      "item": "minecraft:carrot"
-    }
+    "minecraft:carrot",
+    "minecraft:gold_nugget",
+    "minecraft:carrot"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 100
   },
   "mix": {
-    "tag": "c:honey",
+    "ingredient": "#c:honey",
     "amount": 100
   },
   "result": {

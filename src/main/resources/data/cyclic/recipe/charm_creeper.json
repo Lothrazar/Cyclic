@@ -6,21 +6,11 @@
     "gag"
   ],
   "key": {
-    "g": {
-      "tag": "c:nuggets/copper"
-    },
-    "d": {
-      "item": "minecraft:lime_concrete_powder"
-    },
-    "f": {
-      "item": "cyclic:fireball"
-    },
-    "a": {
-      "tag": "c:storage_blocks/ender_pearl"
-    },
-    "b": {
-      "item": "cyclic:gem_amber"
-    }
+    "g": "#c:nuggets/copper",
+    "d": "minecraft:lime_concrete_powder",
+    "f": "cyclic:fireball",
+    "a": "#c:storage_blocks/ender_pearl",
+    "b": "cyclic:gem_amber"
   },
   "result": {
     "id": "cyclic:charm_creeper"

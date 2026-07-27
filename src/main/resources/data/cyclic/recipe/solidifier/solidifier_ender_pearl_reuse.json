@@ -1,19 +1,15 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "tag": "c:storage_blocks/redstone"
-    },
-    {
-      "tag": "c:nuggets/copper"
-    }
+    "#c:storage_blocks/redstone",
+    "#c:nuggets/copper"
   ],
   "energy": {
     "rfpertick": 1000,
     "ticks": 200
   },
   "mix": {
-    "tag": "c:ender",
+    "ingredient": "#c:ender",
     "amount": 1000
   },
   "result": {

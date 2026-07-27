@@ -8,7 +8,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerBreaker extends ContainerBase {
@@ -27,7 +29,22 @@ public class ContainerBreaker extends ContainerBase {
     this.playerInventory = playerInventory;
     var h = CapabilityUtil.item(world,pos);
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 81, 31));
+      addSlot(new SlotItemHandler(h, 0, 81, 31) {
+
+        // 26.1: CapabilityUtil.item(...) returns a bridge (IItemHandler.of(resourceHandler)) that no
+        // longer implements IItemHandlerModifiable - the base SlotItemHandler#set() hard-casts to it
+        // and crashes the container on open (container-content sync calls this for every slot).
+        // Emulate "overwrite this slot" via extract-then-insert instead.
+        @Override
+        public void set(ItemStack stack) {
+          IItemHandler handler = getItemHandler();
+          handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+          if (!stack.isEmpty()) {
+            handler.insertItem(index, stack, false);
+          }
+          setChanged();
+        }
+      });
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(this.tile);
     this.trackAllIntFields(this.tile, TileBreaker.Fields.values().length);

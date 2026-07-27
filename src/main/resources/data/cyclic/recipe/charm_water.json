@@ -6,18 +6,10 @@
     "iai"
   ],
   "key": {
-    "e": {
-      "item": "minecraft:blue_orchid"
-    },
-    "f": {
-      "item": "minecraft:lily_pad"
-    },
-    "i": {
-      "item": "minecraft:gold_ingot"
-    },
-    "a": {
-      "item": "cyclic:apple_prismarine"
-    }
+    "e": "minecraft:blue_orchid",
+    "f": "minecraft:lily_pad",
+    "i": "minecraft:gold_ingot",
+    "a": "cyclic:apple_prismarine"
   },
   "result": {
     "id": "cyclic:charm_water"

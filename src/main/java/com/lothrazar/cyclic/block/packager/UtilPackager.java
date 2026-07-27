@@ -76,7 +76,16 @@ public class UtilPackager {
 
   public static boolean isRecipeValid(final CraftingRecipe recipe, RegistryAccess ra) {
     return recipeValidCache.computeIfAbsent(recipe, k -> {
-      final ItemStack recipeOutput = recipe.assemble(CraftingInput.EMPTY);
+      final ItemStack recipeOutput;
+      try {
+        // Some special vanilla CraftingRecipe subclasses (e.g. DecoratedPotRecipe) assume a fully
+        // populated 3x3 grid and throw when probed with an empty input - not a candidate for packager
+        // conversion regardless, so treat any such failure as "not valid" rather than crashing JEI.
+        recipeOutput = recipe.assemble(CraftingInput.EMPTY);
+      }
+      catch (Exception e) {
+        return false;
+      }
       if (recipeOutput.getMaxStackSize() == 1 || recipeOutput.getCount() != 1) {
         return false;
       }

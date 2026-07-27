@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:generator_item",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:generator_item"
     }
   ],
   "type": "cyclic:generator_item",
-  "fuel": {
-    "item": "minecraft:nether_star"
-  },
+  "fuel": "minecraft:nether_star",
   "energy": {
     "rfpertick": 4000,
     "ticks": 2400

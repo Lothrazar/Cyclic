@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "bbb",
@@ -6,15 +6,9 @@
     "gsg"
   ],
   "key": {
-    "b": {
-      "tag": "c:dyes/blue"
-    },
-    "s": {
-      "item": "minecraft:sponge"
-    },
-    "g": {
-      "item": "minecraft:sugar"
-    }
+    "b": "#c:dyes/blue",
+    "s": "minecraft:sponge",
+    "g": "minecraft:sugar"
   },
   "result": {
     "count": 1,

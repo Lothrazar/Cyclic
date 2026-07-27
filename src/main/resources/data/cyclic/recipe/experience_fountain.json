@@ -6,12 +6,8 @@
     " d "
   ],
   "key": {
-    "d": {
-      "tag": "c:nuggets/copper"
-    },
-    "b": {
-      "item": "cyclic:sprinkler"
-    }
+    "d": "#c:nuggets/copper",
+    "b": "cyclic:sprinkler"
   },
   "result": {
     "count": 1,

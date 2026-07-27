@@ -6,12 +6,8 @@
     "ggg"
   ],
   "key": {
-    "g": {
-      "item": "minecraft:lime_stained_glass"
-    },
-    "o": {
-      "item": "cyclic:terra_preta"
-    }
+    "g": "minecraft:lime_stained_glass",
+    "o": "cyclic:terra_preta"
   },
   "result": {
     "count": 8,

@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:gem_amber"
-    },
-    {
-      "item": "minecraft:turtle_scute"
-    },
-    {
-      "item": "minecraft:leather"
-    }
+    "cyclic:gem_amber",
+    "minecraft:turtle_scute",
+    "minecraft:leather"
   ],
   "energy": {
     "rfpertick": 200,
     "ticks": 1000
   },
   "mix": {
-    "tag": "c:slime",
+    "ingredient": "#c:slime",
     "amount": 2000
   },
   "result": {

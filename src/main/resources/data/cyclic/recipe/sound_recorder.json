@@ -6,12 +6,8 @@
     "sss"
   ],
   "key": {
-    "s": {
-      "item": "minecraft:note_block"
-    },
-    "r": {
-      "item": "minecraft:jukebox"
-    }
+    "s": "minecraft:note_block",
+    "r": "minecraft:jukebox"
   },
   "result": {
     "count": 1,

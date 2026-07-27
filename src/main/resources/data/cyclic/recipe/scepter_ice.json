@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ofo",
@@ -6,15 +6,9 @@
     "ofo"
   ],
   "key": {
-    "e": {
-      "item": "cyclic:gem_amber"
-    },
-    "o": {
-      "item": "minecraft:nether_brick"
-    },
-    "f": {
-      "item": "minecraft:breeze_rod"
-    }
+    "e": "cyclic:gem_amber",
+    "o": "minecraft:nether_brick",
+    "f": "minecraft:breeze_rod"
   },
   "result": {
     "id": "cyclic:scepter_ice"

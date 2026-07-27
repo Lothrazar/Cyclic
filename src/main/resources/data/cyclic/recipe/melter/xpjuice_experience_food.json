@@ -1,9 +1,7 @@
 {
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "cyclic:experience_food"
-    }
+    "cyclic:experience_food"
   ],
   "energy": {
     "rfpertick": 100,

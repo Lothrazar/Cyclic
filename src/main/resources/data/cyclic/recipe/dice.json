@@ -6,12 +6,8 @@
     "sts"
   ],
   "key": {
-    "t": {
-      "tag": "minecraft:stone_crafting_materials"
-    },
-    "s": {
-      "tag": "c:storage_blocks/cobblestone"
-    }
+    "t": "#minecraft:stone_crafting_materials",
+    "s": "#c:storage_blocks/cobblestone"
   },
   "result": {
     "count": 4,

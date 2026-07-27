@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "cyclic:flower_lime_carnation"
-    }
+    "cyclic:flower_lime_carnation"
   ],
   "result": {
     "count": 2,

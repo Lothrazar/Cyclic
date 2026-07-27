@@ -6,15 +6,9 @@
     "lll"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:clay"
-    },
-    "s": {
-      "item": "minecraft:string"
-    },
-    "l": {
-      "item": "minecraft:leather"
-    }
+    "c": "minecraft:clay",
+    "s": "minecraft:string",
+    "l": "minecraft:leather"
   },
   "result": {
     "count": 1,

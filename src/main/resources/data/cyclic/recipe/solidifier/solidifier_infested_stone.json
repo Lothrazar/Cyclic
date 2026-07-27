@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:stone"
-    },
-    {
-      "item": "minecraft:spider_eye"
-    },
-    {
-      "item": "minecraft:string"
-    }
+    "minecraft:stone",
+    "minecraft:spider_eye",
+    "minecraft:string"
   ],
   "mix": {
-    "fluid": "cyclic:slime",
+    "ingredient": "cyclic:slime",
     "amount": 4000
   },
   "energy": {

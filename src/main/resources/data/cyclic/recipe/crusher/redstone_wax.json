@@ -5,8 +5,8 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
@@ -18,9 +18,7 @@
     "count": 9,
     "id": "minecraft:redstone"
   },
-  "ingredient": {
-    "item": "cyclic:waxed_redstone"
-  },
+  "ingredient": "cyclic:waxed_redstone",
   "bonus": {
     "percent": 0,
     "bonus": {

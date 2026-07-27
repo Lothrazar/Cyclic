@@ -6,15 +6,9 @@
     "i  "
   ],
   "key": {
-    "i": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "d": {
-      "item": "minecraft:diamond"
-    },
-    "g": {
-      "item": "minecraft:light_blue_stained_glass"
-    }
+    "i": "#c:storage_blocks/cobblestone",
+    "d": "minecraft:diamond",
+    "g": "minecraft:light_blue_stained_glass"
   },
   "result": {
     "count": 1,

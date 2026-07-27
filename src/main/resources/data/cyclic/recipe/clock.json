@@ -6,15 +6,9 @@
     "iri"
   ],
   "key": {
-    "i": {
-      "tag": "c:nuggets/iron"
-    },
-    "r": {
-      "tag": "c:dusts/redstone"
-    },
-    "q": {
-      "item": "minecraft:repeater"
-    }
+    "i": "#c:nuggets/iron",
+    "r": "#c:dusts/redstone",
+    "q": "minecraft:repeater"
   },
   "result": {
     "count": 1,

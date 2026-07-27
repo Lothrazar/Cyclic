@@ -6,12 +6,8 @@
     " s "
   ],
   "key": {
-    "o": {
-      "tag": "c:dyes/orange"
-    },
-    "s": {
-      "item": "minecraft:white_terracotta"
-    }
+    "o": "#c:dyes/orange",
+    "s": "minecraft:white_terracotta"
   },
   "result": {
     "count": 4,

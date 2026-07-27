@@ -6,15 +6,9 @@
     "sts"
   ],
   "key": {
-    "t": {
-      "item": "minecraft:sponge"
-    },
-    "s": {
-      "item": "minecraft:tuff"
-    },
-    "i": {
-      "item": "minecraft:magma_block"
-    }
+    "t": "minecraft:sponge",
+    "s": "minecraft:tuff",
+    "i": "minecraft:magma_block"
   },
   "result": {
     "count": 4,

@@ -6,12 +6,8 @@
     " b "
   ],
   "key": {
-    "b": {
-      "tag": "minecraft:wooden_slabs"
-    },
-    "c": {
-      "tag": "c:chests/wooden"
-    }
+    "b": "#minecraft:wooden_slabs",
+    "c": "#c:chests/wooden"
   },
   "result": {
     "count": 1,

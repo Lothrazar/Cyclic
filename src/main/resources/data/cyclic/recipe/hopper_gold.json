@@ -6,12 +6,8 @@
     " b "
   ],
   "key": {
-    "b": {
-      "item": "minecraft:gold_ingot"
-    },
-    "c": {
-      "item": "cyclic:hopper"
-    }
+    "b": "minecraft:gold_ingot",
+    "c": "cyclic:hopper"
   },
   "result": {
     "count": 1,

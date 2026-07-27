@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:gem_amber"
-    }
+    "cyclic:gem_amber"
   ],
   "energy": {
     "rfpertick": 300,
     "ticks": 150
   },
   "mix": {
-    "tag": "c:glowstone",
+    "ingredient": "#c:glowstone",
     "amount": 1000
   },
   "result": {

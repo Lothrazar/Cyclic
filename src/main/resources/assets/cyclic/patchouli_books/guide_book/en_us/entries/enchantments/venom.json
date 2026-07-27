@@ -1,6 +1,6 @@
 ﻿{
   "name": "enchantment.cyclic.venom",
-  "icon": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:venom\":1}}]",
+  "icon": "minecraft:enchanted_book[minecraft:stored_enchantments={\"cyclic:venom\":1}]",
   "category": "cyclic:enchantments",
   "pages": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "type": "spotlight",
-      "item": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:venom\":1}}]",
+      "item": "minecraft:enchanted_book[minecraft:stored_enchantments={\"cyclic:venom\":1}]",
       "link_recipe": true
     }
   ]

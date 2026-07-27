@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:gem_obsidian"
-    },
-    {
-      "item": "minecraft:diamond_block"
-    },
-    {
-      "item": "minecraft:dark_prismarine"
-    }
+    "cyclic:gem_obsidian",
+    "minecraft:diamond_block",
+    "minecraft:dark_prismarine"
   ],
   "energy": {
     "rfpertick": 1000,
     "ticks": 200
   },
   "mix": {
-    "tag": "c:amethyst",
+    "ingredient": "#c:amethyst",
     "amount": 4000
   },
   "result": {

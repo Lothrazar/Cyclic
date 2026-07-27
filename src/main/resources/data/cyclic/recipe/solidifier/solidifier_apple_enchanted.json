@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:apple_diamond"
-    },
-    {
-      "tag": "c:nuggets/netherite"
-    },
-    {
-      "item": "minecraft:golden_apple"
-    }
+    "cyclic:apple_diamond",
+    "#c:nuggets/netherite",
+    "minecraft:golden_apple"
   ],
   "mix": {
-    "tag": "c:honey",
+    "ingredient": "#c:honey",
     "amount": 4000
   },
   "energy": {

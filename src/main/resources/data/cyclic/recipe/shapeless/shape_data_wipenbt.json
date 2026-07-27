@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "cyclic:shape_data"
-    }
+    "cyclic:shape_data"
   ],
   "result": {
     "count": 1,

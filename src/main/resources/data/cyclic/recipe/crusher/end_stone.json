@@ -5,14 +5,12 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
-  "ingredient": {
-    "tag": "c:end_stones"
-  },
+  "ingredient": "#c:end_stones",
   "energy": {
     "ticks": 600,
     "rfpertick": 10

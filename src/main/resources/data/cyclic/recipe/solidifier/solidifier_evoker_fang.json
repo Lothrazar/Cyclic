@@ -1,22 +1,16 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "cyclic:gem_amber"
-    },
-    {
-      "item": "minecraft:cobweb"
-    },
-    {
-      "item": "minecraft:blaze_rod"
-    }
+    "cyclic:gem_amber",
+    "minecraft:cobweb",
+    "minecraft:blaze_rod"
   ],
   "energy": {
     "rfpertick": 3000,
     "ticks": 240
   },
   "mix": {
-    "tag": "c:sculk",
+    "ingredient": "#c:sculk",
     "amount": 5000
   },
   "result": {

@@ -5,9 +5,7 @@
     "aa"
   ],
   "key": {
-    "a": {
-      "item": "minecraft:phantom_membrane"
-    }
+    "a": "minecraft:phantom_membrane"
   },
   "result": {
     "id": "cyclic:membrane"

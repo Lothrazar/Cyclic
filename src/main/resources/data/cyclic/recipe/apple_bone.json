@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "a": {
-      "item": "cyclic:apple_honey"
-    },
-    "c": {
-      "item": "minecraft:bone_block"
-    }
+    "a": "cyclic:apple_honey",
+    "c": "minecraft:bone_block"
   },
   "result": {
     "count": 1,

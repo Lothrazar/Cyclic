@@ -6,15 +6,9 @@
     "s  "
   ],
   "key": {
-    "s": {
-      "item": "cyclic:gem_amber"
-    },
-    "f": {
-      "tag": "c:storage_blocks/flint"
-    },
-    "p": {
-      "tag": "c:glass/purple"
-    }
+    "s": "cyclic:gem_amber",
+    "f": "#c:storage_blocks/flint",
+    "p": "#c:glass/purple"
   },
   "result": {
     "id": "cyclic:spawn_inspector"

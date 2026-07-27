@@ -6,18 +6,10 @@
     "pip"
   ],
   "key": {
-    "b": {
-      "tag": "c:storage_blocks/ender_eye"
-    },
-    "p": {
-      "item": "minecraft:hopper"
-    },
-    "i": {
-      "tag": "c:nuggets/copper"
-    },
-    "c": {
-      "item": "minecraft:repeater"
-    }
+    "b": "#c:storage_blocks/ender_eye",
+    "p": "minecraft:hopper",
+    "i": "#c:nuggets/copper",
+    "c": "minecraft:repeater"
   },
   "result": {
     "id": "cyclic:generator_item"

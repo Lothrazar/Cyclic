@@ -6,12 +6,8 @@
     " g "
   ],
   "key": {
-    "g": {
-      "item": "cyclic:location_data"
-    },
-    "c": {
-      "item": "minecraft:compass"
-    }
+    "g": "cyclic:location_data",
+    "c": "minecraft:compass"
   },
   "result": {
     "count": 1,

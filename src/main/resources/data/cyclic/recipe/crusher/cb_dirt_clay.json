@@ -9,8 +9,8 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:crusher",
-      "type": "neoforge:item_exists"
+      "type": "neoforge:registered",
+      "value": "cyclic:crusher"
     }
   ],
   "type": "cyclic:crusher",
@@ -22,9 +22,7 @@
     "count": 1,
     "id": "cobblestoney:mud"
   },
-  "ingredient": {
-    "item": "cobblestoney:dirt_clay"
-  },
+  "ingredient": "cobblestoney:dirt_clay",
   "bonus": {
     "percent": 50,
     "bonus": {

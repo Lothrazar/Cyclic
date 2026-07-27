@@ -1,16 +1,14 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:glass_pane"
-    }
+    "minecraft:glass_pane"
   ],
   "energy": {
     "rfpertick": 100,
     "ticks": 60
   },
   "mix": {
-    "tag": "c:amethyst",
+    "ingredient": "#c:amethyst",
     "amount": 100
   },
   "result": {

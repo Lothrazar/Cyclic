@@ -6,21 +6,11 @@
     "ooo"
   ],
   "key": {
-    "o": {
-      "tag": "c:storage_blocks/flint"
-    },
-    "s": {
-      "item": "minecraft:dispenser"
-    },
-    "l": {
-      "item": "minecraft:tripwire_hook"
-    },
-    "m": {
-      "tag": "c:storage_blocks/cobblestone"
-    },
-    "r": {
-      "tag": "c:ingots/gold"
-    }
+    "o": "#c:storage_blocks/flint",
+    "s": "minecraft:dispenser",
+    "l": "minecraft:tripwire_hook",
+    "m": "#c:storage_blocks/cobblestone",
+    "r": "#c:ingots/gold"
   },
   "result": {
     "count": 1,

@@ -1,18 +1,12 @@
 {
   "type": "cyclic:solidifier",
   "ingredients": [
-    {
-      "item": "minecraft:mud"
-    },
-    {
-      "tag": "c:sands"
-    },
-    {
-      "tag": "c:gravels"
-    }
+    "minecraft:mud",
+    "#c:sands",
+    "#c:gravels"
   ],
   "mix": {
-    "tag": "c:biomass",
+    "ingredient": "#c:biomass",
     "amount": 1000
   },
   "energy": {

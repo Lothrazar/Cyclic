@@ -7,9 +7,7 @@
   ],
   "type": "cyclic:melter",
   "ingredients": [
-    {
-      "item": "minecraft:red_sandstone"
-    }
+    "minecraft:red_sandstone"
   ],
   "result": {
     "id": "liquidblocks:liquid_red_sandstone",

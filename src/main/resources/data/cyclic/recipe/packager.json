@@ -6,18 +6,10 @@
     "btb"
   ],
   "key": {
-    "b": {
-      "tag": "c:dyes/light_blue"
-    },
-    "c": {
-      "item": "cyclic:crafter"
-    },
-    "t": {
-      "item": "minecraft:dropper"
-    },
-    "f": {
-      "item": "minecraft:piston"
-    }
+    "b": "#c:dyes/light_blue",
+    "c": "cyclic:crafter",
+    "t": "minecraft:dropper",
+    "f": "minecraft:piston"
   },
   "result": {
     "id": "cyclic:packager"

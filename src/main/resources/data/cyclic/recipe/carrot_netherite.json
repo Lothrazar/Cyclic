@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ccc",
@@ -6,12 +6,8 @@
     "ccc"
   ],
   "key": {
-    "c": {
-      "item": "minecraft:golden_carrot"
-    },
-    "d": {
-      "tag": "c:nuggets/netherite"
-    }
+    "c": "minecraft:golden_carrot",
+    "d": "#c:nuggets/netherite"
   },
   "result": {
     "count": 4,
