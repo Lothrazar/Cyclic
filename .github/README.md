@@ -1,6 +1,13 @@
-# Cyclic [![](http://cf.way2muchnoise.eu/239286.svg)](https://minecraft.curseforge.com/projects/cyclic) [![](http://cf.way2muchnoise.eu/versions/239286.svg)](https://minecraft.curseforge.com/projects/cyclic)
+# Cyclic 
+
+[![](http://cf.way2muchnoise.eu/239286.svg)](https://minecraft.curseforge.com/projects/cyclic) 
+[![](http://cf.way2muchnoise.eu/versions/239286.svg)](https://minecraft.curseforge.com/projects/cyclic)
 
 Minecraft mod written in Java using the Minecraft Forge API. 
+
+[![CurseForge](https://img.shields.io/badge/CurseForge-F16436?style=flat-square&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/cyclic)
+[![Modrinth](https://img.shields.io/badge/Modrinth-1bd96a?style=flat-square&logo=modrinth&logoColor=white)](https://modrinth.com/mod/cyclic)
+
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Badge](https://img.shields.io/badge/contact-twitter-blue.svg)](https://twitter.com/lothrazar)
