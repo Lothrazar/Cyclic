@@ -321,7 +321,9 @@ public class ItemEventHandler {
     if (original != null) {
       AttributeModifier healthModifier = original.getModifier(AttributesUtil.DEFAULT_ID);
       if (healthModifier != null) {
-        event.getEntity().getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(healthModifier);
+        AttributeInstance newAttribute = event.getEntity().getAttribute(Attributes.MAX_HEALTH);
+        newAttribute.removeModifier(AttributesUtil.DEFAULT_ID);
+        newAttribute.addPermanentModifier(healthModifier);
       }
     }
   }
