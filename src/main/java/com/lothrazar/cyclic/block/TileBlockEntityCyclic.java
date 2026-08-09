@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
@@ -212,7 +213,11 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   public WeakReference<FakePlayer> setupBeforeTrigger(ServerLevel sw, String name) {
-    WeakReference<FakePlayer> fakePlayer = FakePlayerUtil.initFakePlayer(sw, name);
+    return setupBeforeTrigger(sw, name, null);
+  }
+
+  public WeakReference<FakePlayer> setupBeforeTrigger(ServerLevel sw, String name, UUID ownerId) {
+    WeakReference<FakePlayer> fakePlayer = FakePlayerUtil.initFakePlayer(sw, name, ownerId);
     if (fakePlayer == null) {
       ModCyclic.LOGGER.error("Fake player failed to init " + name);
       return null;

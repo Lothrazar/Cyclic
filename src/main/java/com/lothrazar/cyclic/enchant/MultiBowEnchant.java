@@ -24,7 +24,8 @@ public class MultiBowEnchant {
 
   public static void spawnArrow(Level worldIn, Player player, ItemStack stackBow, int charge, Vec3 offsetVector) {
     ArrowItem arrowitem = (ArrowItem) Items.ARROW;
-    AbstractArrow abstractarrowentity = arrowitem.createArrow(worldIn, stackBow, player, stackBow);
+    ItemStack ammoStack = new ItemStack(Items.ARROW);
+    AbstractArrow abstractarrowentity = arrowitem.createArrow(worldIn, ammoStack, player, stackBow);
     abstractarrowentity.pickup = AbstractArrow.Pickup.DISALLOWED;
     abstractarrowentity.setPos(abstractarrowentity.getX() + offsetVector.x(), abstractarrowentity.getY(), abstractarrowentity.getZ() + offsetVector.z());
     float f = BowItem.getPowerForTime(charge);

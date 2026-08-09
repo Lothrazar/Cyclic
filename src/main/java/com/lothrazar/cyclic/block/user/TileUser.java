@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.user;
 
 import java.lang.ref.WeakReference;
+import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -35,6 +36,13 @@ import net.neoforged.neoforge.items.IItemHandler;
 public class TileUser extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
   public static ModConfigSpec.IntValue POWERCONF;
+  /**
+   * When true, the fake player's GameProfile UUID is the block's owner instead of a shared
+   * anonymous ID, so claim/protection mods can recognize it as the owner. Default false because
+   * this also means the owner's real advancement progress gets credited for actions the fake
+   * player performs (killing mobs, etc) - see issue #2522.
+   */
+  public static ModConfigSpec.BooleanValue USE_OWNER_UUID;
   static final int MAX = 640000;
 
   static enum Fields {
@@ -51,6 +59,11 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
   private int timerDelay = 20;
   boolean doHitBreak = false; // was useLeftHand
   boolean entities = false;
+  private UUID ownerId;
+
+  public void setOwner(UUID ownerId) {
+    this.ownerId = ownerId;
+  }
 
   public TileUser(BlockPos pos, BlockState state) {
     super(TileRegistry.USER.get(), pos, state);
@@ -76,7 +89,8 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
     //timer is zero so trigger
     timer = timerDelay;
     if (fakePlayer == null) {
-      fakePlayer = setupBeforeTrigger((ServerLevel) level, "user");
+      UUID useOwner = USE_OWNER_UUID.get() ? this.ownerId : null;
+      fakePlayer = setupBeforeTrigger((ServerLevel) level, "user", useOwner);
     }
     final int repair = POWERCONF.get();
     if (repair > 0) {
@@ -210,6 +224,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
     userSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
     doHitBreak = tag.getBoolean("doBreakBlock");
     entities = tag.getBoolean("entities");
+    ownerId = tag.hasUUID("ownerId") ? tag.getUUID("ownerId") : null;
     super.loadAdditional(tag,registries);
   }
 
@@ -220,6 +235,9 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
     tag.put(NBTINV, userSlots.serializeNBT(registries));
     tag.putBoolean("doBreakBlock", doHitBreak);
     tag.putBoolean("entities", entities);
+    if (ownerId != null) {
+      tag.putUUID("ownerId", ownerId);
+    }
     super.saveAdditional(tag,registries);
   }
 
@@ -235,7 +253,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
 
   @Override
   public IItemHandler getItemHandler(Direction side) {
-    return userSlots;
+    return inventory;
   }
 
 

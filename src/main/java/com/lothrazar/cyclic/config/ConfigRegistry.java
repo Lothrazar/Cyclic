@@ -543,6 +543,11 @@ public class ConfigRegistry {
     TilePackager.POWERCONF = CFG.comment(" Power per recipe in the packager").defineInRange("packager.energy_cost", 50, 0, Integer.MAX_VALUE);
     TilePackager.TIMERCONF = CFG.comment(" Ticks required per operation in the packager").defineInRange("packager.ticks", 40, 1, Integer.MAX_VALUE);
     TileUser.POWERCONF = CFG.comment(" Power per use user").defineInRange("user.energy_cost", 0, 0, Integer.MAX_VALUE);
+    TileUser.USE_OWNER_UUID = CFG.comment(" If true, the User's fake player uses the UUID of the player who placed it instead of a shared anonymous ID."
+        + " This lets claim/protection mods (like FTB Chunks) that trust the owner recognize the fake player and allow it to act in claimed chunks."
+        + " Caution: since the UUID is shared with the real owner, any vanilla advancement/achievement progress triggered by the fake player's actions"
+        + " (e.g. killing mobs) will be credited to that real player, even while they are offline or elsewhere. Default false keeps the existing anonymous-ID behavior.")
+        .define("user.fake_player_uses_owner_id", false);
     TileAnvilAuto.POWERCONF = CFG.comment(" Power per repair anvil").defineInRange("anvil.energy_cost", 250, 0, Integer.MAX_VALUE);
     TileDropper.POWERCONF = CFG.comment(" Power per use dropper").defineInRange("dropper.energy_cost", 50, 0, Integer.MAX_VALUE);
     TileForester.POWERCONF = CFG.comment(" Power per use forester").defineInRange("forester.energy_cost", 50, 0, Integer.MAX_VALUE);

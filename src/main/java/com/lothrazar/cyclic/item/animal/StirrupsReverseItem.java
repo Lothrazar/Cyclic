@@ -26,9 +26,11 @@ package com.lothrazar.cyclic.item.animal;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class StirrupsReverseItem extends ItemBaseCyclic {
 
@@ -38,12 +40,28 @@ public class StirrupsReverseItem extends ItemBaseCyclic {
 
   @Override
   public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
-    playerIn.swing(hand);
     if (playerIn.hasPassenger(target)) {
+      playerIn.swing(hand);
       target.removeVehicle();
-      playerIn.removeVehicle();
       return InteractionResult.SUCCESS;
     }
+    if (!playerIn.getPassengers().isEmpty()) {
+      //already carrying something: dont allow picking up a second entity
+      return InteractionResult.PASS;
+    }
+    playerIn.swing(hand);
     return target.startRiding(playerIn, true) ? InteractionResult.SUCCESS : super.interactLivingEntity(stack, playerIn, target, hand);
+  }
+
+  @Override
+  public InteractionResultHolder<ItemStack> use(Level level, Player playerIn, InteractionHand hand) {
+    //a carried passenger usually rides above/behind the player's own head, so it often can't be
+    //re-clicked to drop it; right-clicking with no entity target releases it instead
+    if (!playerIn.getPassengers().isEmpty()) {
+      playerIn.ejectPassengers();
+      playerIn.swing(hand);
+      return InteractionResultHolder.success(playerIn.getItemInHand(hand));
+    }
+    return super.use(level, playerIn, hand);
   }
 }

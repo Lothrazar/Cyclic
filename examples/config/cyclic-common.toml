@@ -831,6 +831,8 @@
 			# Default: 0
 			# Range: > 0
 			energy_cost = 0
+			# If true, the User's fake player uses the UUID of the player who placed it instead of a shared anonymous ID. This lets claim/protection mods (like FTB Chunks) that trust the owner recognize the fake player and allow it to act in claimed chunks. Caution: since the UUID is shared with the real owner, any vanilla advancement/achievement progress triggered by the fake player's actions (e.g. killing mobs) will be credited to that real player, even while they are offline or elsewhere. Default false keeps the existing anonymous-ID behavior.
+			fake_player_uses_owner_id = false
 
 		[cyclic.blocks.anvil]
 			# Power per repair anvil

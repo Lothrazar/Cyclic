@@ -7,6 +7,7 @@ import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -38,6 +39,9 @@ public class BlockUser extends BlockCyclic {
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
       world.setBlock(pos, state.setValue(BlockStateProperties.FACING, BlockstatesUtil.getFacingFromEntity(pos, entity)), 2);
+    }
+    if (entity instanceof Player player && world.getBlockEntity(pos) instanceof TileUser tile) {
+      tile.setOwner(player.getUUID());
     }
   }
 
