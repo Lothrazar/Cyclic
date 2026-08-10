@@ -324,7 +324,9 @@ public class ItemEventHandler {
     if (original != null) {
       AttributeModifier healthModifier = original.getModifier(AttributesUtil.DEFAULT_ID);
       if (healthModifier != null) {
-        event.getEntity().getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(healthModifier);
+        AttributeInstance newAttribute = event.getEntity().getAttribute(Attributes.MAX_HEALTH);
+        newAttribute.removeModifier(AttributesUtil.DEFAULT_ID);
+        newAttribute.addPermanentModifier(healthModifier);
       }
     }
   }
@@ -433,28 +435,45 @@ public class ItemEventHandler {
 
     if (state.getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
       event.setSuccessful(true);
+      consumeBonemeal(event);
       if (world.getRandom().nextDouble() < 0.5) {
         ItemStackUtil.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_CYAN.get()));
       }
     }
     else if (state.getBlock() == BlockRegistry.FLOWER_PURPLE_TULIP.get()) {
       event.setSuccessful(true);
+      consumeBonemeal(event);
       if (world.getRandom().nextDouble() < 0.25) {
         ItemStackUtil.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_PURPLE_TULIP.get()));
       }
     }
     else if (state.getBlock() == BlockRegistry.FLOWER_ABSALON_TULIP.get()) {
       event.setSuccessful(true);
+      consumeBonemeal(event);
       if (world.getRandom().nextDouble() < 0.25) {
         ItemStackUtil.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_ABSALON_TULIP.get()));
       }
     }
     else if (state.getBlock() == BlockRegistry.FLOWER_LIME_CARNATION.get()) {
       event.setSuccessful(true);
+      consumeBonemeal(event);
       if (world.getRandom().nextDouble() < 0.25) {
         ItemStackUtil.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_LIME_CARNATION.get()));
       }
     }
+  }
+
+  /**
+   * setSuccessful(true) cancels the event, which skips ALL vanilla handling for this
+   * bonemeal use - including the normal stack shrink - so we have to consume it ourselves.
+   * Matches vanilla crop-bonemeal behavior: consumed on every use, creative mode exempt.
+   */
+  private void consumeBonemeal(BonemealEvent event) {
+    Player player = event.getPlayer();
+    if (player != null && player.getAbilities().instabuild) {
+      return;
+    }
+    event.getStack().shrink(1);
   }
 
   @SubscribeEvent

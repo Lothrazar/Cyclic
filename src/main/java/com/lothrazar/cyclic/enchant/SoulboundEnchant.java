@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
@@ -105,8 +106,11 @@ public class SoulboundEnchant {
   /**
    * Fires AFTER inventory has been cleared into drops. Remove all soulbound drops
    * and persist the saved item list (with slot info from onLivingDeath) to player NBT.
+   * HIGHEST priority so this strips soulbound items out of event.getDrops() before other
+   * mods' LivingDropsEvent listeners (e.g. corpse/gravestone mods) can copy them out -
+   * otherwise a copy survives in the corpse while Cyclic also restores one on respawn (#2524).
    */
-  @SubscribeEvent
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public void onPlayerDrops(LivingDropsEvent event) {
     if (!isEnabled()) {
       return;

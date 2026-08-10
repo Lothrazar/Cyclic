@@ -382,7 +382,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
 
   @Override
   public IItemHandler getItemHandler(Direction side) {
-    return inputHandler;
+    return inventory;
   }
 
 

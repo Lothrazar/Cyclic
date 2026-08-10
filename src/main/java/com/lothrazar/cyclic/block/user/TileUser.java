@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.user;
 
 import java.lang.ref.WeakReference;
+import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -9,8 +10,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
@@ -38,6 +38,13 @@ import net.neoforged.neoforge.items.IItemHandler;
 public class TileUser extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
   public static ModConfigSpec.IntValue POWERCONF;
+  /**
+   * When true, the fake player's GameProfile UUID is the block's owner instead of a shared
+   * anonymous ID, so claim/protection mods can recognize it as the owner. Default false because
+   * this also means the owner's real advancement progress gets credited for actions the fake
+   * player performs (killing mobs, etc) - see issue #2522.
+   */
+  public static ModConfigSpec.BooleanValue USE_OWNER_UUID;
   static final int MAX = 640000;
 
   static enum Fields {
@@ -54,6 +61,11 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
   private int timerDelay = 20;
   boolean doHitBreak = false; // was useLeftHand
   boolean entities = false;
+  private UUID ownerId;
+
+  public void setOwner(UUID ownerId) {
+    this.ownerId = ownerId;
+  }
 
   public TileUser(BlockPos pos, BlockState state) {
     super(TileRegistry.USER.get(), pos, state);
@@ -79,7 +91,8 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
     //timer is zero so trigger
     timer = timerDelay;
     if (fakePlayer == null) {
-      fakePlayer = setupBeforeTrigger((ServerLevel) level, "user");
+      UUID useOwner = USE_OWNER_UUID.get() ? this.ownerId : null;
+      fakePlayer = setupBeforeTrigger((ServerLevel) level, "user", useOwner);
     }
     final int repair = POWERCONF.get();
     if (repair > 0) {
@@ -210,10 +223,11 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
   @Override
   public void loadAdditional(ValueInput input) {
     timerDelay = input.getIntOr("delay", 0);
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     userSlots.deserialize(input.childOrEmpty(NBTINV));
     doHitBreak = input.getBooleanOr("doBreakBlock", false);
     entities = input.getBooleanOr("entities", false);
+    ownerId = input.read("ownerId", UUIDUtil.CODEC).orElse(null);
     super.loadAdditional(input);
   }
 
@@ -224,6 +238,9 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
     userSlots.serialize(output.child(NBTINV));
     output.putBoolean("doBreakBlock", doHitBreak);
     output.putBoolean("entities", entities);
+    if (ownerId != null) {
+      output.store("ownerId", UUIDUtil.CODEC, ownerId);
+    }
     super.saveAdditional(output);
   }
 
@@ -239,7 +256,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
 
   @Override
   public IItemHandler getItemHandler(Direction side) {
-    return userSlots;
+    return inventory;
   }
 
 

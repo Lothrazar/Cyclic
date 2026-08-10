@@ -12,6 +12,8 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.FluidTags;
@@ -68,7 +70,7 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     Level world = context.getLevel();
     Direction face = context.getClickedFace();
     ItemStack itemstack = context.getItemInHand();
-    EvaporateMode fluidMode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getIntOr(NBT_MODE, 0)];
+    EvaporateMode fluidMode = EvaporateMode.values()[itemstack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBT_MODE, 0)];
     List<BlockPos> area = ShapeUtil.cubeSquareBase(pos.relative(face), SIZE, 1);
     //    AtomicBoolean removed = new AtomicBoolean(false);
     switch (fluidMode) {
@@ -123,12 +125,14 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
 
   @Override
   public void onCraftedBy(ItemStack stack, Player playerIn) {
-    CustomData.EMPTY.copyTag().putInt(NBT_MODE, EvaporateMode.WATER.ordinal());
+    CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+    tag.putInt(NBT_MODE, EvaporateMode.WATER.ordinal());
+    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     super.onCraftedBy(stack, playerIn);
   }
 
   private static MutableComponent getModeTooltip(ItemStack stack) {
-    EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getIntOr(NBT_MODE, 0)];
+    EvaporateMode mode = EvaporateMode.values()[stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBT_MODE, 0)];
     return Component.translatable("item.cyclic.scepter_antimatter.tooltip0",
         Component.translatable(String.format("item.cyclic.scepter_antimatter.mode.%s",
             mode.getSerializedName())));
@@ -138,8 +142,10 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     if (player.getCooldowns().isOnCooldown(stack)) {
       return;
     }
-    EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getIntOr(NBT_MODE, 0)];
-    CustomData.EMPTY.copyTag().putInt(NBT_MODE, mode.getNext().ordinal());
+    CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+    EvaporateMode mode = EvaporateMode.values()[tag.getIntOr(NBT_MODE, 0)];
+    tag.putInt(NBT_MODE, mode.getNext().ordinal());
+    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     player.getCooldowns().addCooldown(stack, COOLDOWN);
     if (player.level().isClientSide()) {
       // 26.1: Player#displayClientMessage(Component, boolean) removed - actionBar=true -> sendOverlayMessage
