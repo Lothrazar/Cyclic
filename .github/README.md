@@ -4,7 +4,8 @@
 [![](http://cf.way2muchnoise.eu/239286.svg)](https://www.curseforge.com/minecraft/mc-mods/cyclic) 
 [![](http://cf.way2muchnoise.eu/versions/239286.svg)](https://www.curseforge.com/minecraft/mc-mods/cyclic)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Twitter Badge](https://img.shields.io/badge/contact-twitter-blue.svg)](https://twitter.com/lothrazar)
+[![Modrinth](https://img.shields.io/badge/Modrinth-1bd96a?style=flat-square&logo=modrinth&logoColor=white)](https://modrinth.com/mod/cyclicy)
+
  
 
 Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
@@ -18,13 +19,13 @@ Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 - Baubles https://www.curseforge.com/minecraft/mc-mods/baubles
 - Guide API https://www.curseforge.com/minecraft/mc-mods/guide-api
 - JEI https://www.curseforge.com/minecraft/mc-mods/jei
-- Enchantment Descriptions https://minecraft.curseforge.com/projects/enchantment-descriptions
+- Enchantment Descriptions https://www.curseforge.com/minecraft/mc-mods/enchantment-descriptions
 - Curios https://www.curseforge.com/minecraft/mc-mods/curios
 
 ## CraftTweaker support
 
 Recipes for the Hydrator can be customized (added and removed) using CraftTwaker
-- https://minecraft.curseforge.com/projects/crafttweaker
+- https://www.curseforge.com/minecraft/mc-mods/crafttweaker
 - Sample scripts https://github.com/Lothrazar/Cyclic/tree/trunk/1.12/crafttweaker
 
 
