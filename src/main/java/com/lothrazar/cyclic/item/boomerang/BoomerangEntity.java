@@ -74,6 +74,11 @@ public class BoomerangEntity extends ThrowableItemProjectile {
 
   public void setBoomerangThrown(ItemStack boomerangThrown) {
     this.boomerangThrown = boomerangThrown;
+    // BoomerangRenderer reads entity.getItem() (ThrowableItemProjectile's own SynchedEntityData-backed
+    // item) to resolve what to render - boomerangThrown itself is a plain, unsynced field only ever
+    // read server-side (for the save/restore and drop-back-to-player logic), so the client never saw
+    // an item to render without this call.
+    this.setItem(boomerangThrown);
   }
 
   @Override
@@ -93,6 +98,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     entityData.set(IS_RETURNING, input.getByteOr("returning", (byte) 0));
     entityData.set(REDSTONE_TRIGGERED, input.getByteOr("REDSTONE_TRIGGERED", (byte) 0));
     boomerangThrown = input.read("boomerangItem", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
+    this.setItem(boomerangThrown);
     super.readAdditionalSaveData(input);
   }
 

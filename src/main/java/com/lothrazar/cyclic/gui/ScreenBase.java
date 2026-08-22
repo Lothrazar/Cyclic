@@ -92,14 +92,14 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
     for (GuiEventListener btn : this.children()) {
       if (btn instanceof IHasTooltip ww && btn.isMouseOver(mouseX, mouseY)) {
         if (ww.getTooltips() != null) {
-          gg.setTooltipForNextFrame(font, ww.getTooltips(), noImage, mouseX - leftPos, mouseY - topPos);
+          gg.setTooltipForNextFrame(font, ww.getTooltips(), noImage, mouseX, mouseY);
         }
       }
     }
     for (GuiEventListener widget : this.children()) {
       if (widget instanceof IHasTooltip txt && widget.isMouseOver(mouseX, mouseY)) {
         if (txt.getTooltips() != null) {
-          gg.setTooltipForNextFrame(font, txt.getTooltips(), noImage, mouseX - leftPos, mouseY - topPos);
+          gg.setTooltipForNextFrame(font, txt.getTooltips(), noImage, mouseX, mouseY);
         }
       }
     }

@@ -95,7 +95,10 @@ public class OutlineRenderer {
         if (loc != null) {
           if (loc.getDimension() == null ||
               loc.getDimension().equalsIgnoreCase(LevelWorldUtil.dimensionToString(world))) {
-            RenderBlockUtils.createBox(event.getPoseStack(), loc.getPos());
+            // Only queue it here - the unified putBoxHere loop below renders it. Previously this
+            // also called createBox() directly, so every found position got drawn twice per frame
+            // (once here, once again in the putBoxHere loop), unlike every other item type in this
+            // method (BuilderItem/RandomizerItem/ShapeCard) which only ever queues into putBoxHere.
             putBoxHere.add(loc.getPos());
           }
         }
@@ -167,7 +170,7 @@ public class OutlineRenderer {
     for (BlockPos coordinate : putBoxHere) {
       RenderBlockUtils.createBox(event.getPoseStack(), coordinate);
     }
-    //render the pos->colour map 
+    //render the pos->colour map
     if (renderCubes.keySet().size() > 0) {
       float scale = 1;
       PoseStack matrix = event.getPoseStack();
