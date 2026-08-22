@@ -167,9 +167,9 @@ dependencies {
   testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // for other mods depending on THIS FLIB library, use either a local copy or a maven
-      implementation "local.mods:flib:${minecraft_version}-${flib_version}"
- // implementation "curse.maven:flib-661261:${flib_file}"
+  // for other mods depending on THIS FLIB library, use either a local copy or a maven
+  //  implementation "local.mods:flib:${minecraft_version}-${flib_version}"
+  implementation "curse.maven:flib-661261:${flib_file}"
 
 
   //these mods have API jars for compile as well as the full mod for local
