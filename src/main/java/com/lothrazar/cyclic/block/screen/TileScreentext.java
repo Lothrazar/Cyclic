@@ -4,18 +4,14 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class TileScreentext extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -124,25 +120,25 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
     switch (Fields.values()[id]) {
       case BLUE:
         blue = value;
-      break;
+        break;
       case GREEN:
         green = value;
-      break;
+        break;
       case RED:
         red = value;
-      break;
+        break;
       case PADDING:
         padding = value;
-      break;
+        break;
       case FONT:
         fontSize = value;
-      break;
+        break;
       case OFFSET:
         offset = value;
-      break;
+        break;
       case REDSTONE:
         this.setNeedsRedstone(value);
-      break;
+        break;
     }
   }
 

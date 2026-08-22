@@ -7,9 +7,9 @@ import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.components.Tooltip;
 
 public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
 

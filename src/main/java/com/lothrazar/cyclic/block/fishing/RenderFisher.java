@@ -34,7 +34,7 @@ public class RenderFisher implements BlockEntityRenderer<TileFisher, RenderFishe
 
   @Override
   public void extractRenderState(TileFisher tankHere, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(tankHere, state, partialTicks, cameraPosition, breakProgress);
     if (tankHere.inventory != null) {
       ItemStack stack = tankHere.inventory.getStackInSlot(0);

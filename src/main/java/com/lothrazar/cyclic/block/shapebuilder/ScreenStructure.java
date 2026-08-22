@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.shapebuilder;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
@@ -12,10 +10,13 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.components.Tooltip;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScreenStructure extends ScreenBase<ContainerStructure> {
 
@@ -71,11 +72,11 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
       String shapeName = ChatUtil.lang("buildertype." + shape.name().toLowerCase());
       ButtonMachine btnShape = addRenderableWidget(new ButtonMachine(x, y, bsize, bsize,
           shapeName.substring(0, 2), (p) -> {
-            //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
-            ClientPacketDistributor.sendToServer(
-                new PacketTileData(fld.ordinal(),
-                    shape.ordinal(), menu.tile.getBlockPos()));
-          }));
+        //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
+        ClientPacketDistributor.sendToServer(
+            new PacketTileData(fld.ordinal(),
+                shape.ordinal(), menu.tile.getBlockPos()));
+      }));
       btnShape.setTooltip(shapeName);
       x += bsize;
       btnShape.setTileField(shape.ordinal());

@@ -1,26 +1,25 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.registry.EnchantRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.core.Const;
-import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.packet.PacketPlayerFalldamage;
+import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.item.component.CustomData;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class MultiJumpEnchant {
 
@@ -37,27 +36,43 @@ public class MultiJumpEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(EntityTickEvent.Pre event) {
-    if (!(event.getEntity() instanceof Player p)) { return; }
+    if (!(event.getEntity() instanceof Player p)) {
+      return;
+    }
     Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.LAUNCH, p);
     ItemStack armorStack = EnchantUtil.getFirstArmorStackWithEnchant(h, p);
-    if (armorStack.isEmpty()) { return; }
+    if (armorStack.isEmpty()) {
+      return;
+    }
     // 26.1: Entity#hasImpulse field removed entirely (no replacement) - onGround() alone covers the
     // "jump sequence is over, reset uses" intent this used to help gate.
     if (p.onGround() && armorStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getIntOr(NBT_USES, 0) > 0) {
-      armorStack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, d -> { CompoundTag t = d.copyTag(); t.putInt(NBT_USES, 0); return CustomData.of(t); });
+      armorStack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, d -> {
+        CompoundTag t = d.copyTag();
+        t.putInt(NBT_USES, 0);
+        return CustomData.of(t);
+      });
     }
   }
 
   // Called from ClientInputEventHandler. Static because the caller can't go through the registry anymore
   // (in 1.21 EnchantRegistry.LAUNCH is a ResourceKey<Enchantment>, not a DeferredHolder<…, MultiJumpEnchant>).
   public static void onKeyInput(Player player) {
-    if (player == null || player.getVehicle() instanceof Boat) { return; }
+    if (player == null || player.getVehicle() instanceof Boat) {
+      return;
+    }
     Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.LAUNCH, player);
     ItemStack feet = EnchantUtil.getFirstArmorStackWithEnchant(h, player);
-    if (feet.isEmpty() || player.isCrouching()) { return; }
+    if (feet.isEmpty() || player.isCrouching()) {
+      return;
+    }
     int level = EnchantUtil.getCurrentLevelTool(h, feet);
-    if (level <= 0) { return; }
-    if (player.getCooldowns().isOnCooldown(feet)) { return; }
+    if (level <= 0) {
+      return;
+    }
+    if (player.getCooldowns().isOnCooldown(feet)) {
+      return;
+    }
     // 26.1: Entity#hasImpulse field removed entirely (no replacement) - falling (getY() < yOld) + not in
     // water is sufficient gating without it.
     if (Minecraft.getInstance().options.keyJump.isDown()
@@ -73,7 +88,11 @@ public class MultiJumpEnchant {
         uses = 0;
       }
       final int finalUses = uses;
-      feet.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, d -> { CompoundTag t = d.copyTag(); t.putInt(NBT_USES, finalUses); return CustomData.of(t); });
+      feet.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, d -> {
+        CompoundTag t = d.copyTag();
+        t.putInt(NBT_USES, finalUses);
+        return CustomData.of(t);
+      });
       player.fallDistance = 0;
       ClientPacketDistributor.sendToServer(new PacketPlayerFalldamage());
     }

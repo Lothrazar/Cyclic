@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.gui;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketTileString;
 import net.minecraft.client.Minecraft;
@@ -12,6 +10,9 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TextBoxAutosave extends EditBox {
 

@@ -1,11 +1,5 @@
 package com.lothrazar.cyclic.config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
 import com.lothrazar.cyclic.block.LavaSpongeBlock;
@@ -26,6 +20,7 @@ import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
+import com.lothrazar.cyclic.block.expfountain.TileExperienceFountain;
 import com.lothrazar.cyclic.block.eye.TileEye;
 import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
@@ -42,14 +37,33 @@ import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
 import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
-import com.lothrazar.cyclic.block.expfountain.TileExperienceFountain;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.terraglass.TileTerraGlass;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.tp.BlockTeleport;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
-import com.lothrazar.cyclic.enchant.*;
+import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
+import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
+import com.lothrazar.cyclic.enchant.BeheadingEnchant;
+import com.lothrazar.cyclic.enchant.DisarmEnchant;
+import com.lothrazar.cyclic.enchant.EnderPearlEnchant;
+import com.lothrazar.cyclic.enchant.ExcavationEnchant;
+import com.lothrazar.cyclic.enchant.GloomCurseEnchant;
+import com.lothrazar.cyclic.enchant.GrowthEnchant;
+import com.lothrazar.cyclic.enchant.LastStandEnchant;
+import com.lothrazar.cyclic.enchant.LifeLeechEnchant;
+import com.lothrazar.cyclic.enchant.MagnetEnchant;
+import com.lothrazar.cyclic.enchant.MultiBowEnchant;
+import com.lothrazar.cyclic.enchant.MultiJumpEnchant;
+import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
+import com.lothrazar.cyclic.enchant.ReachEnchant;
+import com.lothrazar.cyclic.enchant.SoulboundEnchant;
+import com.lothrazar.cyclic.enchant.SteadyEnchant;
+import com.lothrazar.cyclic.enchant.StepEnchant;
+import com.lothrazar.cyclic.enchant.TravellerEnchant;
+import com.lothrazar.cyclic.enchant.VenomEnchant;
+import com.lothrazar.cyclic.enchant.XpEnchant;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.WandHypnoItem;
@@ -58,6 +72,7 @@ import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.bauble.CharmInvisible;
 import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
+import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.elemental.IceWand;
 import com.lothrazar.cyclic.item.elemental.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.ender.ItemProjectileDungeon;
@@ -67,7 +82,6 @@ import com.lothrazar.cyclic.item.food.EdibleSpecItem;
 import com.lothrazar.cyclic.item.food.EnderApple;
 import com.lothrazar.cyclic.item.food.HeartItem;
 import com.lothrazar.cyclic.item.food.HeartToxicItem;
-import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.missile.WandMissileItem;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.item.scythe.ScytheBrush;
@@ -81,14 +95,23 @@ import com.lothrazar.cyclic.registry.MaterialRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.StringParseUtil;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.ModConfigSpec.*;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
+import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ConfigRegistry {
 
@@ -99,7 +122,7 @@ public class ConfigRegistry {
     ModContainer mc = ModLoadingContext.get().getActiveContainer();
     mc.registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG);
     // Separate file so pack authors editing chest loot don't scroll through everything else.
-    mc.registerConfig(ModConfig.Type.COMMON, LootConfig.SPEC, ModCyclic.MODID+"-loot.toml");
+    mc.registerConfig(ModConfig.Type.COMMON, LootConfig.SPEC, ModCyclic.MODID + "-loot.toml");
   }
 
   public void setupClient() {
@@ -135,6 +158,7 @@ public class ConfigRegistry {
   public static IntValue LaserItemEnergyMax;
   public static BooleanValue LaserRenderMisses;
   public static IntValue AMETHYST_FLUID_GROWTH_RADIUS;
+
   static {
     buildDefaults();
     initConfig();
@@ -243,28 +267,28 @@ public class ConfigRegistry {
     final ModConfigSpec.Builder CFG = new ModConfigSpec.Builder();
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
     CFG.comment(WALL, " Configs make sure players will not be able to craft any in survival "
-        + " (api only allows me to disable original base level potion, stuff like splash/tipped arrows are out of my control, for futher steps i suggest modpacks hide them from JEI as well if desired, or bug Mojang to implement JSON brewing stand recipes)", WALL)
+            + " (api only allows me to disable original base level potion, stuff like splash/tipped arrows are out of my control, for futher steps i suggest modpacks hide them from JEI as well if desired, or bug Mojang to implement JSON brewing stand recipes)", WALL)
         .push("potion");
 
-     PotionRegistry.PotionRecipeConfig.ANTIGRAVITY = CFG.comment(" Set false to disable the base recipe").define("antigravity.enabled", true);
-     PotionRegistry.PotionRecipeConfig.ATTACK_RANGE = CFG.comment(" Set false to disable the base recipe").define("attack_range.enabled", true);
-     PotionRegistry.PotionRecipeConfig.BLIND = CFG.comment(" Set false to disable the base recipe").define("blind.enabled", true);
-     PotionRegistry.PotionRecipeConfig.BUTTERFINGERS = CFG.comment(" Set false to disable the base recipe").define("butterfingers.enabled", true);
-     PotionRegistry.PotionRecipeConfig.FLIGHT = CFG.comment(" Set false to disable the base recipe").define("flight.enabled", true);
-     PotionRegistry.PotionRecipeConfig.NOCLIP = CFG.comment(" Set false to disable the base recipe").define("noclip.enabled", true);
-     PotionRegistry.PotionRecipeConfig.FROST_WALKER = CFG.comment(" Set false to disable the base recipe").define("frost_walker.enabled", true);
-     PotionRegistry.PotionRecipeConfig.GRAVITY = CFG.comment(" Set false to disable the base recipe").define("gravity.enabled", true);
-     PotionRegistry.PotionRecipeConfig.HASTE = CFG.comment(" Set false to disable the base recipe").define("haste.enabled", true);
-     PotionRegistry.PotionRecipeConfig.HUNGER = CFG.comment(" Set false to disable the base recipe").define("hunger.enabled", true);
-     PotionRegistry.PotionRecipeConfig.LEVITATION = CFG.comment(" Set false to disable the base recipe").define("levitation.enabled", true);
-     PotionRegistry.PotionRecipeConfig.MAGNETIC = CFG.comment(" Set false to disable the base recipe").define("magnetic.enabled", true);
-     PotionRegistry.PotionRecipeConfig.REACH_DISTANCE = CFG.comment(" Set false to disable the base recipe").define("reach_distance.enabled", true);
-     PotionRegistry.PotionRecipeConfig.RESISTANCE = CFG.comment(" Set false to disable the base recipe").define("resistance.enabled", true);
-     PotionRegistry.PotionRecipeConfig.STUN = CFG.comment(" Set false to disable the base recipe").define("stun.enabled", true);
-     PotionRegistry.PotionRecipeConfig.SWIMSPEED = CFG.comment(" Set false to disable the base recipe").define("swimspeed.enabled", true);
-     PotionRegistry.PotionRecipeConfig.SNOWWALK = CFG.comment(" Set false to disable the base recipe").define("snowwalk.enabled", true);
-     PotionRegistry.PotionRecipeConfig.WATERWALK = CFG.comment(" Set false to disable the base recipe").define("waterwalk.enabled", true);
-     PotionRegistry.PotionRecipeConfig.WITHER = CFG.comment(" Set false to disable the base recipe").define("wither.enabled", true);
+    PotionRegistry.PotionRecipeConfig.ANTIGRAVITY = CFG.comment(" Set false to disable the base recipe").define("antigravity.enabled", true);
+    PotionRegistry.PotionRecipeConfig.ATTACK_RANGE = CFG.comment(" Set false to disable the base recipe").define("attack_range.enabled", true);
+    PotionRegistry.PotionRecipeConfig.BLIND = CFG.comment(" Set false to disable the base recipe").define("blind.enabled", true);
+    PotionRegistry.PotionRecipeConfig.BUTTERFINGERS = CFG.comment(" Set false to disable the base recipe").define("butterfingers.enabled", true);
+    PotionRegistry.PotionRecipeConfig.FLIGHT = CFG.comment(" Set false to disable the base recipe").define("flight.enabled", true);
+    PotionRegistry.PotionRecipeConfig.NOCLIP = CFG.comment(" Set false to disable the base recipe").define("noclip.enabled", true);
+    PotionRegistry.PotionRecipeConfig.FROST_WALKER = CFG.comment(" Set false to disable the base recipe").define("frost_walker.enabled", true);
+    PotionRegistry.PotionRecipeConfig.GRAVITY = CFG.comment(" Set false to disable the base recipe").define("gravity.enabled", true);
+    PotionRegistry.PotionRecipeConfig.HASTE = CFG.comment(" Set false to disable the base recipe").define("haste.enabled", true);
+    PotionRegistry.PotionRecipeConfig.HUNGER = CFG.comment(" Set false to disable the base recipe").define("hunger.enabled", true);
+    PotionRegistry.PotionRecipeConfig.LEVITATION = CFG.comment(" Set false to disable the base recipe").define("levitation.enabled", true);
+    PotionRegistry.PotionRecipeConfig.MAGNETIC = CFG.comment(" Set false to disable the base recipe").define("magnetic.enabled", true);
+    PotionRegistry.PotionRecipeConfig.REACH_DISTANCE = CFG.comment(" Set false to disable the base recipe").define("reach_distance.enabled", true);
+    PotionRegistry.PotionRecipeConfig.RESISTANCE = CFG.comment(" Set false to disable the base recipe").define("resistance.enabled", true);
+    PotionRegistry.PotionRecipeConfig.STUN = CFG.comment(" Set false to disable the base recipe").define("stun.enabled", true);
+    PotionRegistry.PotionRecipeConfig.SWIMSPEED = CFG.comment(" Set false to disable the base recipe").define("swimspeed.enabled", true);
+    PotionRegistry.PotionRecipeConfig.SNOWWALK = CFG.comment(" Set false to disable the base recipe").define("snowwalk.enabled", true);
+    PotionRegistry.PotionRecipeConfig.WATERWALK = CFG.comment(" Set false to disable the base recipe").define("waterwalk.enabled", true);
+    PotionRegistry.PotionRecipeConfig.WITHER = CFG.comment(" Set false to disable the base recipe").define("wither.enabled", true);
     CFG.pop();
     ////////////////////////////////////////////////////////////////// enchantment
     CFG.comment(WALL, " Enchantment related configs. If enabled is false the enchantment still exists everywhere it just does nothing.  To further disable obtaining these enchantments you now have to use the mojang datapacks as of mc1.21+  ", WALL)
@@ -493,20 +517,20 @@ public class ConfigRegistry {
     CFG.pop();
     // 
     TRANSFER_NODES_DIMENSIONAL = CFG.comment("  Allows the dimensional Transfer Nodes to cross dimensions "
-        + "(no chunk loading is done, you have to do that on your own); "
-        + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
-        + "If you change it to false it will only work if the target is in the same dimension.")
+            + "(no chunk loading is done, you have to do that on your own); "
+            + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
+            + "If you change it to false it will only work if the target is in the same dimension.")
         .define("wireless_transfer_dimensional", true);
 
-     TileAntiBeacon.RADIUS = CFG.comment(" Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
-         .defineInRange("beacon_sponge.radius", 16, 1, 128);
-     TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
-         .defineInRange("beacon_sponge.ticks", 200, 20, 9999);
+    TileAntiBeacon.RADIUS = CFG.comment(" Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
+        .defineInRange("beacon_sponge.radius", 16, 1, 128);
+    TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
+        .defineInRange("beacon_sponge.ticks", 200, 20, 9999);
 
-     TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. Any effect marked harmfil, or in this list, will be cured. Supports exact ids (e.g. 'minecraft:poison'),"
-         + " namespace wildcards (e.g. cyclic:*, minecraft:trial_omen, minecraft:glowing)."
-         + "  ")
-         .defineList("beacon_sponge.potion_list", Arrays.asList("cyclic:gravity"), it -> it instanceof String);
+    TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. Any effect marked harmfil, or in this list, will be cured. Supports exact ids (e.g. 'minecraft:poison'),"
+            + " namespace wildcards (e.g. cyclic:*, minecraft:trial_omen, minecraft:glowing)."
+            + "  ")
+        .defineList("beacon_sponge.potion_list", Arrays.asList("cyclic:gravity"), it -> it instanceof String);
     CFG.push("fluids");
     ConfigRegistry.AMETHYST_FLUID_GROWTH_RADIUS = CFG.comment(" Liquid amethyst fluid: radius (in blocks) to search for budding amethyst close to source fluid and accelerate their crystal growth on random tick")
         .defineInRange("amethyst.growth_radius", 2, 0, 8);
@@ -544,9 +568,9 @@ public class ConfigRegistry {
     TilePackager.TIMERCONF = CFG.comment(" Ticks required per operation in the packager").defineInRange("packager.ticks", 40, 1, Integer.MAX_VALUE);
     TileUser.POWERCONF = CFG.comment(" Power per use user").defineInRange("user.energy_cost", 0, 0, Integer.MAX_VALUE);
     TileUser.USE_OWNER_UUID = CFG.comment(" If true, the User's fake player uses the UUID of the player who placed it instead of a shared anonymous ID."
-        + " This lets claim/protection mods (like FTB Chunks) that trust the owner recognize the fake player and allow it to act in claimed chunks."
-        + " Caution: since the UUID is shared with the real owner, any vanilla advancement/achievement progress triggered by the fake player's actions"
-        + " (e.g. killing mobs) will be credited to that real player, even while they are offline or elsewhere. Default false keeps the existing anonymous-ID behavior.")
+            + " This lets claim/protection mods (like FTB Chunks) that trust the owner recognize the fake player and allow it to act in claimed chunks."
+            + " Caution: since the UUID is shared with the real owner, any vanilla advancement/achievement progress triggered by the fake player's actions"
+            + " (e.g. killing mobs) will be credited to that real player, even while they are offline or elsewhere. Default false keeps the existing anonymous-ID behavior.")
         .define("user.fake_player_uses_owner_id", false);
     TileAnvilAuto.POWERCONF = CFG.comment(" Power per repair anvil").defineInRange("anvil.energy_cost", 250, 0, Integer.MAX_VALUE);
     TileDropper.POWERCONF = CFG.comment(" Power per use dropper").defineInRange("dropper.energy_cost", 50, 0, Integer.MAX_VALUE);
@@ -645,7 +669,7 @@ public class ConfigRegistry {
     CFG.pop();
     CFG.push("uncrafter");
     TileUncraft.NBT_IGNORED = CFG.comment(" When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
-        + "For example, if false it will not uncraft damaged or enchanted items")
+            + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", false);
     TileUncraft.IGNORE_LIST = CFG.comment(" ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", IGNORE_LIST_UNCRAFTER, it -> it instanceof String);
     TileUncraft.IGNORE_RECIPES = CFG.comment(" RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")
@@ -732,8 +756,7 @@ public class ConfigRegistry {
         String entity = stuff[0] + ":" + stuff[1];
         String skin = stuff[2];
         mappedBeheading.put(entity, skin);
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         ModCyclic.LOGGER.error("Beheading Enchantment: Invalid config entry " + s);
       }
     }

@@ -23,17 +23,17 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.soundrecord.TileSoundRecorder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketRecordSound implements CustomPacketPayload {
 
@@ -80,6 +80,6 @@ public class PacketRecordSound implements CustomPacketPayload {
         ((TileSoundRecorder) tile).onSoundHeard(message.sound);
       }
     });
-    
+
   }
 }

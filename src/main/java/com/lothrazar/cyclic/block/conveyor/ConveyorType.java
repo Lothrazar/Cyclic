@@ -1,7 +1,8 @@
 package com.lothrazar.cyclic.block.conveyor;
 
-import java.util.Locale;
 import net.minecraft.util.StringRepresentable;
+
+import java.util.Locale;
 
 public enum ConveyorType implements StringRepresentable {
 

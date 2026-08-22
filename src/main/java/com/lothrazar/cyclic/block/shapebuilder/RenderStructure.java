@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.shapebuilder;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -34,6 +32,9 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jspecify.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RenderStructure implements BlockEntityRenderer<TileStructure, RenderStructure.State> {
 
   private static final float PREVIEW_ALPHA = 0.7f;
@@ -42,7 +43,8 @@ public class RenderStructure implements BlockEntityRenderer<TileStructure, Rende
     TileStructure blockEntity;
   }
 
-  public RenderStructure(BlockEntityRendererProvider.Context d) {}
+  public RenderStructure(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -51,7 +53,7 @@ public class RenderStructure implements BlockEntityRenderer<TileStructure, Rende
 
   @Override
   public void extractRenderState(TileStructure blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }
@@ -69,12 +71,10 @@ public class RenderStructure implements BlockEntityRenderer<TileStructure, Rende
       MultiBufferSource.BufferSource ibuffer = Minecraft.getInstance().renderBuffers().bufferSource();
       try {
         renderPreviewInWorld(te, matrixStack, ibuffer, state.lightCoords, 0, stack);
-      }
-      catch (NullPointerException e) {
+      } catch (NullPointerException e) {
         //handle unexpected & unsupported model types, for example: https://github.com/Lothrazar/Cyclic/issues/2473
         ModCyclic.LOGGER.error("Error rendering preview: broken or unsupported model", e);
-      }
-      catch (Exception ex) {
+      } catch (Exception ex) {
         ModCyclic.LOGGER.error("Error in structure block preview", ex);
       }
       ibuffer.endBatch();

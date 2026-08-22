@@ -1,15 +1,16 @@
 package com.lothrazar.cyclic.block.antipotion;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.render.beacon.BeamHolder;
 import com.lothrazar.cyclic.render.beacon.BeamStuff;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.List;
 
 public class TileAntiBeacon extends TileBlockEntityCyclic implements BeamHolder {
 
@@ -58,7 +59,8 @@ public class TileAntiBeacon extends TileBlockEntityCyclic implements BeamHolder 
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

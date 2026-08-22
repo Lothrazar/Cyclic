@@ -3,8 +3,6 @@ package com.lothrazar.cyclic.render;
 import com.lothrazar.cyclic.registry.MaterialShieldRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.object.equipment.ShieldModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -21,6 +19,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.Nullable;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Cyclic's own shield material variants used the vanilla {@code BlockEntityWithoutLevelRenderer} + custom
@@ -49,7 +50,7 @@ public class ShieldMaterialSpecialRenderer implements SpecialModelRenderer<DataC
 
   @Override
   public void submit(@Nullable DataComponentMap components, PoseStack poseStack, SubmitNodeCollector submitNodeCollector,
-      int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
+                     int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
     BannerPatternLayers patterns = components != null ? components.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY) : BannerPatternLayers.EMPTY;
     DyeColor baseColor = components != null ? components.get(DataComponents.BASE_COLOR) : null;
     boolean hasPatterns = !patterns.layers().isEmpty() || baseColor != null;

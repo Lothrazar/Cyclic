@@ -1,17 +1,23 @@
 package com.lothrazar.cyclic.block.packager;
 
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.common.Tags;
+
+import java.util.HashMap;
+import java.util.Map;
 //import net.neoforged.neoforge.common.Tags;
 
 /**
  * https://github.com/Lothrazar/Cyclic/commit/2cd2376fd07685414b5a8a2a52250caab8143d9b#diff-f5ee2272c17948b8822c0020ec2b3f35b8dea7ec714d70a11355717c9d3a92f0
- * 
+ * <p>
  * Packager PR @author https://github.com/Lothrazar/Cyclic/pull/2013
  *
  */
@@ -23,7 +29,8 @@ public class UtilPackager {
   private static final Map<Item, Boolean> itemValidCache = new HashMap<>();
   private static final Map<CraftingRecipe, Boolean> recipeValidCache = new HashMap<>();
 
-  private UtilPackager() {}
+  private UtilPackager() {
+  }
 
   private static Map<Item, CraftingRecipe> getFourItemRecipeCache(final RecipeManager recipeManager, RegistryAccess ra) {
     if (fourItemRecipeCache.isEmpty()) {
@@ -82,8 +89,7 @@ public class UtilPackager {
         // populated 3x3 grid and throw when probed with an empty input - not a candidate for packager
         // conversion regardless, so treat any such failure as "not valid" rather than crashing JEI.
         recipeOutput = recipe.assemble(CraftingInput.EMPTY);
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         return false;
       }
       if (recipeOutput.getMaxStackSize() == 1 || recipeOutput.getCount() != 1) {
@@ -121,7 +127,8 @@ public class UtilPackager {
   }
 
   public static void buildRecipeCaches(final RecipeManager recipeManager, RegistryAccess ra) {
-    recipeLoop: for (final RecipeHolder<CraftingRecipe> r : recipeManager.recipeMap().byType(RecipeType.CRAFTING)) {
+    recipeLoop:
+    for (final RecipeHolder<CraftingRecipe> r : recipeManager.recipeMap().byType(RecipeType.CRAFTING)) {
       CraftingRecipe recipe = r.value();
       final ItemStack recipeOutput;
       try {
@@ -130,8 +137,7 @@ public class UtilPackager {
         // conversion regardless, so skip it rather than crashing the whole cache build (same guard as
         // isRecipeValid above).
         recipeOutput = recipe.assemble(CraftingInput.EMPTY);
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         continue recipeLoop;
       }
       if (recipeOutput.getMaxStackSize() == 1 || recipeOutput.getCount() != 1) {

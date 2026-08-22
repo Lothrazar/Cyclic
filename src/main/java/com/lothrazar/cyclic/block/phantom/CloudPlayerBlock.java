@@ -53,6 +53,6 @@ public class CloudPlayerBlock extends BlockCyclic {
 
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean isPrecise) {
- 
+
   }
 }

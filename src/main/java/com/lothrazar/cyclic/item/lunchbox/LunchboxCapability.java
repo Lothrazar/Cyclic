@@ -3,10 +3,10 @@ package com.lothrazar.cyclic.item.lunchbox;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.storage.TagValueInput;
-import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
@@ -40,8 +40,8 @@ public class LunchboxCapability extends ItemStackHandler {
     }
     CompoundTag data = boxStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, server.registryAccess());
-      serialize(output);
-      data.put(NBT_KEY, output.buildResult());
+    serialize(output);
+    data.put(NBT_KEY, output.buildResult());
     int empty = 0;
     for (int i = 0; i < getSlots(); i++) {
       if (getStackInSlot(i).isEmpty()) {

@@ -20,7 +20,8 @@ public class RenderDetectorItem implements BlockEntityRenderer<TileDetectorItem,
     TileDetectorItem blockEntity;
   }
 
-  public RenderDetectorItem(BlockEntityRendererProvider.Context d) {}
+  public RenderDetectorItem(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public boolean shouldRender(TileDetectorItem blockEntity, Vec3 cameraPosition) {
@@ -34,7 +35,7 @@ public class RenderDetectorItem implements BlockEntityRenderer<TileDetectorItem,
 
   @Override
   public void extractRenderState(TileDetectorItem blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

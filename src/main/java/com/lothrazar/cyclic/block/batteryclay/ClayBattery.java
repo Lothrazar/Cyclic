@@ -1,18 +1,19 @@
 package com.lothrazar.cyclic.block.batteryclay;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.EnumBatteryPercent;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,9 +24,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
-import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClayBattery extends BlockCyclic {
 

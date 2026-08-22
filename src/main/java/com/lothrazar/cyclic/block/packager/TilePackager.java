@@ -7,10 +7,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -22,11 +19,12 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 
 public class TilePackager extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
@@ -121,7 +119,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
 
   @Override
   public void loadAdditional(ValueInput input) {
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     super.loadAdditional(input);
   }
@@ -143,7 +141,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
       case BURNMAX:
         return TIMERCONF.get();
       default:
-      break;
+        break;
     }
     return 0;
   }
@@ -153,12 +151,12 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case BURNMAX:
-      break;
+        break;
     }
   }
 

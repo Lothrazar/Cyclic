@@ -5,9 +5,11 @@ import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
+
 public final class ClientNetHandlers {
 
-  private ClientNetHandlers() {}
+  private ClientNetHandlers() {
+  }
 
   public static void handleTileInventory(PacketTileInventoryToClient message) {
     if (Minecraft.getInstance().level == null) {

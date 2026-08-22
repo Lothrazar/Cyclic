@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.compat.jei;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.packager.UtilPackager;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -21,14 +19,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PackagerRecipeCategory implements IRecipeCategory<RecipeHolder<CraftingRecipe>> {
 
   private static final Identifier ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packager");
-  static final RecipeType<RecipeHolder<CraftingRecipe>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
+  static final RecipeType<RecipeHolder<CraftingRecipe>> TYPE = new RecipeType<>(ID, (Class) RecipeHolder.class);
   Minecraft instance; // since we call on this so often for recipe validatoin, cache one copy of it for the duration
   private IDrawable gui;
   private IDrawable icon;

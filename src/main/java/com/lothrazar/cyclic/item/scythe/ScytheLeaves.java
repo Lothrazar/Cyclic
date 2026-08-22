@@ -29,8 +29,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
-import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ScytheLeaves extends ItemBaseCyclic {
 
@@ -40,7 +40,6 @@ public class ScytheLeaves extends ItemBaseCyclic {
     super(properties);
   }
 
-  
 
   @Override
   public InteractionResult useOn(UseOnContext context) {

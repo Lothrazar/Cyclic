@@ -1,8 +1,9 @@
 package com.lothrazar.cyclic.util;
 
-import java.util.function.Supplier;
 import net.minecraft.core.HolderLookup;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
+
+import java.util.function.Supplier;
 
 /**
  *
@@ -18,8 +19,8 @@ public class RegistryHolder {
   /**
    *
    * Provides a HolderLookup.Provider that works on both sides:
-   *   - Server: ServerLifecycleHooks.getCurrentServer().registryAccess()
-   *   - Client (including dedicated-server clients): supplied by a client-side init hook
+   * - Server: ServerLifecycleHooks.getCurrentServer().registryAccess()
+   * - Client (including dedicated-server clients): supplied by a client-side init hook
    */
   public static HolderLookup.Provider get() {
     var server = ServerLifecycleHooks.getCurrentServer();

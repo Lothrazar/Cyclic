@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.detectoritem;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.detectorentity.CompareType;
@@ -11,21 +10,21 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.HolderLookup;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
 
 public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -79,15 +78,15 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
     switch (this.compType) {
       case LESS:
         trigger = (entitiesFound < limitUntilRedstone);
-      break;
+        break;
       case GREATER:
         trigger = (entitiesFound > limitUntilRedstone);
-      break;
+        break;
       case EQUAL:
         trigger = (entitiesFound == limitUntilRedstone);
-      break;
+        break;
       default:
-      break;
+        break;
     }
     if (isPoweredNow != trigger) {
       isPoweredNow = trigger;
@@ -95,8 +94,7 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
       level.sendBlockUpdated(this.getBlockPos(), state, state, 3);
       try {
         level.updateNeighborsAt(this.getBlockPos(), this.getBlockState().getBlock());
-      }
-      catch (Throwable e) {
+      } catch (Throwable e) {
         //somehow this lead to a  
         //        java.lang.NullPointerException
         //        at net.minecraft.block.BlockDoor.neighborChanged(BlockDoor.java:228)
@@ -164,7 +162,7 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
       case RENDER:
         return this.render;
       default:
-      break;
+        break;
     }
     return 0;
   }
@@ -189,7 +187,7 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
           value = CompareType.values().length - 1;
         }
         this.compType = CompareType.values()[value];
-      break;
+        break;
       case LIMIT:
         if (value > 999) {
           value = MAX_RANGE;
@@ -198,19 +196,19 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
           value = 0;
         }
         this.limitUntilRedstone = value;
-      break;
+        break;
       case RANGEX:
         this.rangeX = value;
-      break;
+        break;
       case RANGEY:
         this.rangeY = value;
-      break;
+        break;
       case RANGEZ:
         this.rangeZ = value;
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
     }
   }
 
@@ -224,7 +222,7 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
     if (cType >= 0 && cType < CompareType.values().length) {
       this.compType = CompareType.values()[cType];
     }
-          filter.deserialize(input.childOrEmpty("filter"));
+    filter.deserialize(input.childOrEmpty("filter"));
     super.loadAdditional(input);
   }
 

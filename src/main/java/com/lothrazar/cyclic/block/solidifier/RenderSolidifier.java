@@ -47,7 +47,7 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier, Ren
 
   @Override
   public void extractRenderState(TileSolidifier tankHere, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(tankHere, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = tankHere;
     IItemHandler itemHandler = CapabilityUtil.item(tankHere.getLevel(), tankHere.getBlockPos());

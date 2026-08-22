@@ -1,30 +1,29 @@
 package com.lothrazar.cyclic.block.sprinkler;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.GrowthUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+
+import java.util.List;
 
 public class TileSprinkler extends TileBlockEntityCyclic {
 
@@ -91,7 +90,7 @@ public class TileSprinkler extends TileBlockEntityCyclic {
       return;
     }
 //    BlockEntity below = this.level.getBlockEntity(this.worldPosition.below());
-    var below = CapabilityUtil.fluid(this.level,this.worldPosition.below());
+    var below = CapabilityUtil.fluid(this.level, this.worldPosition.below());
     if (below != null) {
       //from below, fill this.pos 
       FluidHelpers.tryFillPositionFromTank(level, this.worldPosition, Direction.DOWN, below, CAPACITY);
@@ -123,7 +122,8 @@ public class TileSprinkler extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

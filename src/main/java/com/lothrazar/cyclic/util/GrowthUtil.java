@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.util;
 
-import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -39,8 +38,7 @@ public class GrowthUtil {
       Block block = bState.getBlock();
       try {
         grow(world, current, bState, block);
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         return false;
       }
     }

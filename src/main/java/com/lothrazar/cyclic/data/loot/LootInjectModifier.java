@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.data.loot;
 
-import java.util.List;
-import java.util.function.Supplier;
 import com.google.common.base.Suppliers;
 import com.lothrazar.cyclic.config.LootConfig;
 import com.lothrazar.cyclic.config.LootConfig.ParsedEntry;
@@ -17,9 +15,12 @@ import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
+import java.util.List;
+import java.util.function.Supplier;
+
 /**
  * Single GLM that injects items into vanilla loot tables based on cyclic-loot.toml.
- *
+ * <p>
  * Registered once with no conditions; runs on every loot roll. We early-return
  * for any table that isn't keyed in {@link LootConfig#ENTRIES}, so the overhead
  * on unrelated rolls (block drops, mob drops, fishing, modded tables) is one

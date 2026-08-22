@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.generatorsolar;
 
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +25,7 @@ public class ContainerGeneratorSolar extends ContainerBase {
   }
 
   public int getEnergy() {
-    return CapabilityUtil.energyStored(tile.getLevel(),tile.getBlockPos());
+    return CapabilityUtil.energyStored(tile.getLevel(), tile.getBlockPos());
   }
 
   @Override

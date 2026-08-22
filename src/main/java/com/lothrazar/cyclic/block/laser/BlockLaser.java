@@ -1,11 +1,8 @@
 package com.lothrazar.cyclic.block.laser;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;

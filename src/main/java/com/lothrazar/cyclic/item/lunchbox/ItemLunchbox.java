@@ -25,22 +25,21 @@ package com.lothrazar.cyclic.item.lunchbox;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.ChatUtil;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.component.CustomData;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 
 public class ItemLunchbox extends ItemBaseCyclic {
 
@@ -50,7 +49,6 @@ public class ItemLunchbox extends ItemBaseCyclic {
     super(prop.stacksTo(1));
   }
 
-  
 
   @Override
   public int getUseDuration(ItemStack st, LivingEntity entity) {
@@ -86,9 +84,6 @@ public class ItemLunchbox extends ItemBaseCyclic {
     //    return super.getBarWidth(stack);
   }
 
-  
-
-  
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
@@ -144,12 +139,9 @@ public class ItemLunchbox extends ItemBaseCyclic {
   /**
    * for use by Item slot GUI Screen interactions. Mouse is holding an item to be inserted into a closed luncbbox from a different GUI
    *
-   * @param lunchbox
-   *          assumes this is a valid lunchbox with item as instance of this
-   * @param itemFoodMouse
-   *          a valid food item nonempty and not a lunchbox
-   * @param player
-   *          instance that is doing the insert
+   * @param lunchbox      assumes this is a valid lunchbox with item as instance of this
+   * @param itemFoodMouse a valid food item nonempty and not a lunchbox
+   * @param player        instance that is doing the insert
    */
   public static void insertFoodIntoLunchbox(ItemStack lunchbox, ItemStack itemFoodMouse, ServerPlayer player) {
     IItemHandler boxCap = CapabilityUtil.item(lunchbox);

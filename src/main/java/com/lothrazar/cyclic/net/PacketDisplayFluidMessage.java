@@ -11,7 +11,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
  * Tells a single client to display a fluid-status message in their action bar.
- *
+ * <p>
  * Why a packet: the original {@code displayClientFluidMessage} ran server-side and gated the
  * call on a CLIENT-type ModConfigSpec ({@link ClientConfigCyclic#FLUID_BLOCK_STATUS}). On a
  * dedicated server that config is never loaded, so calling {@code .get()} throws
@@ -30,7 +30,8 @@ public class PacketDisplayFluidMessage implements CustomPacketPayload {
     this.translationKey = translationKey;
   }
 
-  public PacketDisplayFluidMessage() {}
+  public PacketDisplayFluidMessage() {
+  }
 
   @Override
   public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {

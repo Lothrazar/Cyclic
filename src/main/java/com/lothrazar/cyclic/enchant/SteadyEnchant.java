@@ -17,7 +17,9 @@ public class SteadyEnchant {
 
   @SubscribeEvent
   public void onLivingKnockBackEvent(LivingKnockBackEvent event) {
-    if (!isEnabled()) { return; }
+    if (!isEnabled()) {
+      return;
+    }
     int level = EnchantUtil.getCurrentArmorLevel(EnchantUtil.holder(EnchantRegistry.STEADY, event.getEntity()), event.getEntity());
     if (level > 0) {
       event.setCanceled(true);

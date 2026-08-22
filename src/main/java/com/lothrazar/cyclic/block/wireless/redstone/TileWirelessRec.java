@@ -1,12 +1,13 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
-import java.util.HashMap;
-import java.util.UUID;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TileWirelessRec extends TileBlockEntityCyclic {
 
@@ -18,7 +19,8 @@ public class TileWirelessRec extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

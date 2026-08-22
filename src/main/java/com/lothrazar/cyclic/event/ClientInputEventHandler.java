@@ -50,9 +50,9 @@ public class ClientInputEventHandler {
 
   /**
    * mouseclicked doesnt work right for inserting item. mouse released.pre is better for htis use case
-   * 
+   * <p>
    * REFERENCE https://github.com/P3pp3rF1y/SophisticatedCore/blob/b86b0d5a3997ee570f86d2a0074f987fe5e103ee/src/main/java/net/p3pp3rf1y/sophisticatedcore/client/ClientEventHandler.java#L128
-   * 
+   * <p>
    * finished porting from https://github.com/Lothrazar/Cyclic/commit/fcd6ea36d83d421dccdabe87e23f7fa099b6dbf2
    */
   @SubscribeEvent
@@ -108,9 +108,9 @@ public class ClientInputEventHandler {
         else if (maybeCharm.getItem() instanceof ItemStorageBag
             || maybeCharm.getItem() instanceof CraftingStickItem
             || maybeCharm.getItem() instanceof CraftingBagItem) {
-              ClientPacketDistributor.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
-              event.setCanceled(true);
-            }
+          ClientPacketDistributor.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
+          event.setCanceled(true);
+        }
         else if (maybeCharm.getItem() instanceof ItemLunchbox) {
           // if you have an EMPTY hand, use this to open the GUI screen of the lunchbox
           ItemStack maybeFood = mc.player.containerMenu.getCarried();
@@ -120,8 +120,8 @@ public class ClientInputEventHandler {
           }
         }
       }
-    }
-    catch (Exception e) { //array out of bounds, or we are in a strange third party GUI that doesnt have slots like this
+    } catch (
+        Exception e) { //array out of bounds, or we are in a strange third party GUI that doesnt have slots like this
       //EXAMPLE:  mod.chiselsandbits.bitbag.BagGui
       ModCyclic.LOGGER.error("click error", e);
       // so this fixes ithttps://github.com/PrinceOfAmber/Cyclic/issues/410

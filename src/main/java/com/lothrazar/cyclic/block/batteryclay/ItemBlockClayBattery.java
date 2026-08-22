@@ -1,10 +1,7 @@
 package com.lothrazar.cyclic.block.batteryclay;
 
-import java.util.List;
-import java.util.function.Consumer;
-
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -14,6 +11,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+
+import java.util.function.Consumer;
 
 public class ItemBlockClayBattery extends BlockItem {
 
@@ -34,7 +33,7 @@ public class ItemBlockClayBattery extends BlockItem {
   public int getBarWidth(ItemStack stack) {
     float current = 0;
     float max = 0;
-    IEnergyStorage storage =  CapabilityUtil.energy(stack);
+    IEnergyStorage storage = CapabilityUtil.energy(stack);
     if (storage != null) {
       current = storage.getEnergyStored();
       max = storage.getMaxEnergyStored();
@@ -60,5 +59,5 @@ public class ItemBlockClayBattery extends BlockItem {
     super.appendHoverText(stack, worldIn, tooltipDisplay, tooltip, flagIn);
   }
 
-  }
+}
 

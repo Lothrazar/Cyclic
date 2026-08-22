@@ -19,15 +19,15 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.event.level.block.CropGrowEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.level.block.CropGrowEvent;
 
 
 public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
 
   private static final int MAX_AGE = 7;
   private static final IntegerProperty AGE = BlockStateProperties.AGE_7;
-  private static final VoxelShape[] SHAPES = new VoxelShape[] {
+  private static final VoxelShape[] SHAPES = new VoxelShape[]{
       //////////////         x1    y1    z1    x2     y2     z2
       Block.box(4.0D, 12.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 0
       Block.box(4.0D, 11.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 1
@@ -36,7 +36,7 @@ public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
       Block.box(4.0D, 8.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 4
       Block.box(4.0D, 6.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 5
       Block.box(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 6
-      Block.box(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D) };
+      Block.box(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D)};
   boolean canBonemeal = true;
 
   public AppleCropBlock(Block.Properties builder, boolean canBonemeal) {

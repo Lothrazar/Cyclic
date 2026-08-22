@@ -20,28 +20,28 @@ public class ContainerShapedata extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     var h = tile.inventory;
-      this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 9, 29 + 18) {
+    this.endInv = h.getSlots();
+    addSlot(new SlotItemHandler(h, 0, 9, 29 + 18) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
-      addSlot(new SlotItemHandler(h, 1, 9 + 18, 29) {
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(h, 1, 9 + 18, 29) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
-      addSlot(new SlotItemHandler(h, 2, 71, 39) {
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(h, 2, 71, 39) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
 //    });
     this.trackAllIntFields(tile, TileShapedata.Fields.values().length);
     layoutPlayerInventorySlots(8, 84);

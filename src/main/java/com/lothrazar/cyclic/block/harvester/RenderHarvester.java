@@ -20,7 +20,8 @@ public class RenderHarvester implements BlockEntityRenderer<TileHarvester, Rende
     TileHarvester blockEntity;
   }
 
-  public RenderHarvester(BlockEntityRendererProvider.Context d) {}
+  public RenderHarvester(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -29,7 +30,7 @@ public class RenderHarvester implements BlockEntityRenderer<TileHarvester, Rende
 
   @Override
   public void extractRenderState(TileHarvester blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.net;
 
+import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketTileInventoryToClient implements CustomPacketPayload {
 
@@ -38,7 +38,8 @@ public class PacketTileInventoryToClient implements CustomPacketPayload {
     this.type = type;
   }
 
-  public PacketTileInventoryToClient() {}
+  public PacketTileInventoryToClient() {
+  }
 
   public static void handle(PacketTileInventoryToClient message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> ClientNetHandlers.handleTileInventory(message));

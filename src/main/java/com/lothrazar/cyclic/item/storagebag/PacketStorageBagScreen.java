@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.storagebag;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.ByteTag;
@@ -14,14 +15,13 @@ import net.minecraft.nbt.LongTag;
 import net.minecraft.nbt.ShortTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketStorageBagScreen implements CustomPacketPayload {
 
@@ -42,7 +42,8 @@ public class PacketStorageBagScreen implements CustomPacketPayload {
   private StringTag nbtKey;
   private Tag nbtValue;
 
-  public PacketStorageBagScreen() {}
+  public PacketStorageBagScreen() {
+  }
 
   public PacketStorageBagScreen(ItemStack stack, int slot, byte type, StringTag nbtKey, Tag nbtValue) {
     this.stack = stack;
@@ -65,7 +66,9 @@ public class PacketStorageBagScreen implements CustomPacketPayload {
             && serverStack.getItem() == ItemRegistry.STORAGE_BAG.get()
             && (key.equals(RefillMode.NBT) || key.equals(DepositMode.NBT) || key.equals(PickupMode.NBT))) {
           //its validated this item and nbt key so now save value in the tag
-          CompoundTag tag = ItemStorageBag.getCustomData(serverStack); tag.put(key, message.nbtValue); ItemStorageBag.setCustomData(serverStack, tag);
+          CompoundTag tag = ItemStorageBag.getCustomData(serverStack);
+          tag.put(key, message.nbtValue);
+          ItemStorageBag.setCustomData(serverStack, tag);
         }
       }
     });
@@ -80,43 +83,44 @@ public class PacketStorageBagScreen implements CustomPacketPayload {
     switch (packet.type) {
       case 1: //Byte
         packet.nbtValue = ByteTag.valueOf(buffer.readByte());
-      break;
+        break;
       case 2: //Short
         packet.nbtValue = ShortTag.valueOf(buffer.readShort());
-      break;
+        break;
       case 3: //Int
         packet.nbtValue = IntTag.valueOf(buffer.readInt());
-      break;
+        break;
       case 4: //Long
         packet.nbtValue = LongTag.valueOf(buffer.readLong());
-      break;
+        break;
       case 5: //Float
         packet.nbtValue = FloatTag.valueOf(buffer.readFloat());
-      break;
+        break;
       case 6: //Double
         packet.nbtValue = DoubleTag.valueOf(buffer.readDouble());
-      break;
+        break;
       case 7: //ByteArray
         packet.nbtValue = new ByteArrayTag(buffer.readByteArray());
-      break;
+        break;
       case 8: //String
         packet.nbtValue = StringTag.valueOf(buffer.readUtf(32767));
-      break;
-      case 9: //List... not sure of best way to handle this one since there's no constructor/setter. Look at other implementations?
+        break;
+      case
+          9: //List... not sure of best way to handle this one since there's no constructor/setter. Look at other implementations?
         packet.nbtValue = new ListTag();
-      break;
+        break;
       case 10: //CompoundNBT
         packet.nbtValue = buffer.readNbt();
-      break;
+        break;
       case 11: //IntArray
         packet.nbtValue = new IntArrayTag(buffer.readVarIntArray());
-      break;
+        break;
       case 12: //LongArray
         packet.nbtValue = new LongArrayTag(buffer.readLongArray(null));
-      break;
+        break;
       default: //0 is EndNBT, shouldn't ever happen, I don't think.
         packet.nbtValue = StringTag.valueOf("");
-      break;
+        break;
     }
     return packet;
   }
@@ -129,40 +133,41 @@ public class PacketStorageBagScreen implements CustomPacketPayload {
     switch (message.type) {
       case 1: //Byte
         buffer.writeByte(((ByteTag) message.nbtValue).value());
-      break;
+        break;
       case 2: //Short
         buffer.writeShort(((ShortTag) message.nbtValue).value());
-      break;
+        break;
       case 3: //Int
         buffer.writeInt(((IntTag) message.nbtValue).value());
-      break;
+        break;
       case 4: //Long
         buffer.writeLong(((LongTag) message.nbtValue).value());
-      break;
+        break;
       case 5: //Float
         buffer.writeFloat(((FloatTag) message.nbtValue).value());
-      break;
+        break;
       case 6: //Double
         buffer.writeDouble(((DoubleTag) message.nbtValue).value());
-      break;
+        break;
       case 7: //ByteArray
         buffer.writeByteArray(((ByteArrayTag) message.nbtValue).getAsByteArray());
-      break;
+        break;
       case 8: //String
         buffer.writeUtf(((StringTag) message.nbtValue).value());
-      break;
-      case 9: //List... not sure of best way to handle this one since there's no constructor/setter. Look at other implementations?
+        break;
+      case
+          9: //List... not sure of best way to handle this one since there's no constructor/setter. Look at other implementations?
         buffer.writeUtf("There could have been a list here, if I knew how to process it.");
-      break;
+        break;
       case 10: //CompoundNBT
         buffer.writeNbt(((CompoundTag) message.nbtValue));
-      break;
+        break;
       case 11: //IntArray
         buffer.writeVarIntArray(((IntArrayTag) message.nbtValue).getAsIntArray());
-      break;
+        break;
       case 12: //LongArray
         buffer.writeLongArray(((LongArrayTag) message.nbtValue).getAsLongArray());
-      break;
+        break;
       default: //0 is EndNBT, shouldn't ever happen, I don't think.
         buffer.writeUtf("");
     }

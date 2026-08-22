@@ -1,49 +1,50 @@
 package com.lothrazar.cyclic.render.beacon;
 
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 /**
  * Pure beam-draw helper. A 1.20-era copy of vanilla's
  * {@link BeaconRenderer#renderBeaconBeam} that the Cyclic beacons share, since
  * vanilla's helper is tightly coupled to {@link BeaconBlockEntity} and can't
  * be reused directly.
- *
+ * <p>
  * The only entry point client code should call is
  * {@link #drawBeam(PoseStack, MultiBufferSource, float, long, int, int, int)},
  * which takes the ARGB color stored on a {@link BeaconBlockEntity.BeaconBeamSection}
  * and handles the float-component conversion internally.
- *
+ * <p>
  * The lower-level overloads are kept public for callers that want to draw a
  * beam with non-default radius or with a custom beam texture.
  */
 public final class BeaconBeamRenderer {
 
-  private BeaconBeamRenderer() {}
+  private BeaconBeamRenderer() {
+  }
 
   /**
    * Draw one segment of a beam at the default vanilla beam radius.
    *
-   * @param ms         pose stack from the BER render method
-   * @param buf        buffer source from the BER render method
-   * @param partial    partial tick from the BER render method
-   * @param time       {@code level.getGameTime()}
-   * @param yOffset    distance above the beacon at which this segment starts
-   * @param height     length of this segment in blocks; pass a large value
-   *                   (e.g. 1024) for the topmost segment to extend out of sight
-   * @param argbColor  beam tint as ARGB int (see
-   *                   {@link BeaconBlockEntity.BeaconBeamSection#getColor()})
+   * @param ms        pose stack from the BER render method
+   * @param buf       buffer source from the BER render method
+   * @param partial   partial tick from the BER render method
+   * @param time      {@code level.getGameTime()}
+   * @param yOffset   distance above the beacon at which this segment starts
+   * @param height    length of this segment in blocks; pass a large value
+   *                  (e.g. 1024) for the topmost segment to extend out of sight
+   * @param argbColor beam tint as ARGB int (see
+   *                  {@link BeaconBlockEntity.BeaconBeamSection#getColor()})
    */
   public static void drawBeam(PoseStack ms, MultiBufferSource buf, float partial,
                               long time, int yOffset, int height, int argbColor) {
@@ -56,7 +57,7 @@ public final class BeaconBeamRenderer {
    * Alpha is dropped; the beam is always opaque.
    */
   public static float[] argbToFloats(int argb) {
-    return new float[] {
+    return new float[]{
         ARGB.red(argb) / 255.0F,
         ARGB.green(argb) / 255.0F,
         ARGB.blue(argb) / 255.0F

@@ -27,7 +27,8 @@ public class RenderExperienceFountain implements BlockEntityRenderer<TileExperie
     float partialTicks;
   }
 
-  public RenderExperienceFountain(BlockEntityRendererProvider.Context d) {}
+  public RenderExperienceFountain(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -36,7 +37,7 @@ public class RenderExperienceFountain implements BlockEntityRenderer<TileExperie
 
   @Override
   public void extractRenderState(TileExperienceFountain blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
     state.partialTicks = partialTicks;

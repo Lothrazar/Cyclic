@@ -1,22 +1,23 @@
 package com.lothrazar.cyclic.enchant;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.StringParseUtil;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DisarmEnchant {
 
@@ -37,16 +38,26 @@ public class DisarmEnchant {
 
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
-    if (!isEnabled()) { return; }
-    if (!(event.getTarget() instanceof LivingEntity livingTarget)) { return; }
+    if (!isEnabled()) {
+      return;
+    }
+    if (!(event.getTarget() instanceof LivingEntity livingTarget)) {
+      return;
+    }
     LivingEntity user = event.getEntity();
     int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.DISARM, user), user);
-    if (level <= 0) { return; }
-    if (!canDisarm(livingTarget)) { return; }
+    if (level <= 0) {
+      return;
+    }
+    if (!canDisarm(livingTarget)) {
+      return;
+    }
     List<ItemStack> toDisarm = new ArrayList<>();
     // 26.1: LivingEntity#getHandSlots() removed entirely - main hand + offhand cover the same 2 slots
     List.of(livingTarget.getMainHandItem(), livingTarget.getOffhandItem()).forEach(itemStack -> {
-      if (!itemStack.is(ItemTags.SWORDS)) { return; }
+      if (!itemStack.is(ItemTags.SWORDS)) {
+        return;
+      }
       if (getChanceToDisarm(level) > user.level().getRandom().nextDouble()) {
         toDisarm.add(itemStack);
       }

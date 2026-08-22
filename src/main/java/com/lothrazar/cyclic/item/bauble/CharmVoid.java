@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
+
 public class CharmVoid extends CharmBase {
 
   public CharmVoid(Properties properties) {

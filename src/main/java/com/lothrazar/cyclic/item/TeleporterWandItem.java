@@ -8,6 +8,7 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -15,9 +16,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemUseAnimation;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -51,7 +51,7 @@ public class TeleporterWandItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn,  EquipmentSlot slot) {
+  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn, EquipmentSlot slot) {
     if (entityIn instanceof Player && stack.isDamaged() && stack.getDamageValue() >= TICK_REPAIR) {
       this.tryRepairWith(stack, (Player) entityIn, Items.ENDER_PEARL);
     }

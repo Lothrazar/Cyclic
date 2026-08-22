@@ -23,17 +23,18 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.scythe;
 
-import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.util.HarvestUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import com.lothrazar.cyclic.ModCyclic;
+
+import java.util.List;
 
 public class PacketScythe implements CustomPacketPayload {
 
@@ -52,7 +53,8 @@ public class PacketScythe implements CustomPacketPayload {
   private ScytheType type;
   private int radius;
 
-  public PacketScythe() {}
+  public PacketScythe() {
+  }
 
   public PacketScythe(BlockPos mouseover, ScytheType t, int r) {
     pos = mouseover;
@@ -69,7 +71,7 @@ public class PacketScythe implements CustomPacketPayload {
         HarvestUtil.harvestByScytheType(world, player, posCurrent, message.type);
       }
     });
-    
+
   }
 
   public static PacketScythe decode(FriendlyByteBuf buf) {

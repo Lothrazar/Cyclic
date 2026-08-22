@@ -11,9 +11,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.animal.equine.TraderLlama;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader;
@@ -58,15 +58,15 @@ public class CandlePeaceBlock extends BlockCyclic {
 
   /**
    * first check spawn type: Natural = as expected
-   * 
+   * <p>
    * REINFORCEMENT = zombie calls and stuff
-   * 
+   * <p>
    * EVENT = villager raids etc
-   * 
+   * <p>
    * and check the creature if it implements Enemy interface
-   * 
+   * <p>
    * or is not friendly (category Monster)
-   * 
+   * <p>
    * or as a bonus nuke wandering traders too
    */
   public static boolean isBad(LivingEntity mob, EntitySpawnReason res) {

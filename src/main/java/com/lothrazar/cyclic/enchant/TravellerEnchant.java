@@ -24,7 +24,9 @@ public class TravellerEnchant {
 
   @SubscribeEvent
   public void onEnderTeleportEvent(EntityTeleportEvent.EnderPearl event) {
-    if (!isEnabled()) { return; }
+    if (!isEnabled()) {
+      return;
+    }
     if (event.getEntity() instanceof LivingEntity living) {
       int level = EnchantUtil.getCurrentArmorLevelSlot(EnchantUtil.holder(EnchantRegistry.TRAVELLER, living), living, EquipmentSlot.LEGS);
       if (level > 0) {
@@ -35,7 +37,9 @@ public class TravellerEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingDamageEvent.Pre event) {
-    if (!isEnabled()) { return; }
+    if (!isEnabled()) {
+      return;
+    }
     LivingEntity entity = event.getEntity();
     int level = EnchantUtil.getCurrentArmorLevelSlot(EnchantUtil.holder(EnchantRegistry.TRAVELLER, entity), entity, EquipmentSlot.LEGS);
     DamageSource source = event.getSource();
@@ -44,17 +48,17 @@ public class TravellerEnchant {
         || source == sourcesList.flyIntoWall()
         || source == sourcesList.sweetBerryBush()
         || source == sourcesList.sting(null))) {
-      event.setNewDamage (0.1F);
+      event.setNewDamage(0.1F);
     }
     if (level > 0 && source == sourcesList.fall()) {
       if (entity.fallDistance <= 8) {
-        event.setNewDamage (0.1F);
+        event.setNewDamage(0.1F);
       }
       // 26.1: ElytraItem class removed - gliding is now a data-component check (DataComponents.GLIDER +
       // matching Equippable slot), see LivingEntity#canGlideUsing(ItemStack, EquipmentSlot).
       else if (LivingEntity.canGlideUsing(entity.getItemBySlot(EquipmentSlot.CHEST), EquipmentSlot.CHEST)) {
-        if (event.getOriginalDamage()  > entity.getHealth() - 0.5F) {
-          event.setNewDamage (entity.getHealth() - 1F);
+        if (event.getOriginalDamage() > entity.getHealth() - 0.5F) {
+          event.setNewDamage(entity.getHealth() - 1F);
           ParticleUtil.spawnParticle(entity.level(), ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, entity.blockPosition(), 4);
         }
       }

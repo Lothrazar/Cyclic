@@ -55,7 +55,7 @@ public class UnbreakableBlock extends BlockCyclic {
 
   @Override
   public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn,
-      net.minecraft.world.level.redstone.Orientation orientation, boolean movedByPiston) {
+                              net.minecraft.world.level.redstone.Orientation orientation, boolean movedByPiston) {
     if (movedByPiston || !state.hasProperty(BREAKABLE)) {
       return;
     }

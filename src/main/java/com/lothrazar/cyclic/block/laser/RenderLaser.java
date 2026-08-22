@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.laser;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.library.render.type.FakeBlockRenderTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -17,6 +15,8 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -31,7 +31,8 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser, RenderLaser.S
     TileLaser blockEntity;
   }
 
-  public RenderLaser(BlockEntityRendererProvider.Context d) {}
+  public RenderLaser(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public boolean shouldRender(TileLaser blockEntity, Vec3 cameraPosition) {
@@ -45,7 +46,7 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser, RenderLaser.S
 
   @Override
   public void extractRenderState(TileLaser blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }
@@ -60,8 +61,7 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser, RenderLaser.S
       MultiBufferSource.BufferSource iRenderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
       draw(te, matrixStack, iRenderTypeBuffer);
       iRenderTypeBuffer.endBatch();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("RenderLaser.java ", e);
     }
   }

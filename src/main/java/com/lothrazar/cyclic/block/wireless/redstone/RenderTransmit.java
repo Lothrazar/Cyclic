@@ -1,9 +1,5 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import com.lothrazar.cyclic.block.laser.RenderLaser;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -22,7 +18,12 @@ import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit, RenderTransmit.State> {
 
@@ -30,7 +31,8 @@ public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit,
     TileWirelessTransmit blockEntity;
   }
 
-  public RenderTransmit(BlockEntityRendererProvider.Context d) {}
+  public RenderTransmit(BlockEntityRendererProvider.Context d) {
+  }
 
   public static void draw(int slot, TileWirelessTransmit tile, PoseStack matrixStackIn, MultiBufferSource bufferIn) {
     BlockPosDim posPosTarget = tile.getTargetInSlot(slot);
@@ -73,7 +75,7 @@ public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit,
 
   @Override
   public void extractRenderState(TileWirelessTransmit blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }
@@ -100,7 +102,8 @@ public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit,
     }
     if (PreviewOutlineType.SHADOW.ordinal() == previewType) {
       RenderBlockUtils.renderOutline(te.getBlockPos(), shape, matrixStack, 0.9F, ClientConfigCyclic.getColor(te));
-    } else if (PreviewOutlineType.WIREFRAME.ordinal() == previewType) {
+    }
+    else if (PreviewOutlineType.WIREFRAME.ordinal() == previewType) {
       for (BlockPos crd : shape) {
         RenderBlockUtils.createBox(matrixStack, crd, Vec3.atLowerCornerOf(te.getBlockPos()));
       }

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
-import java.util.List;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.mojang.serialization.MapCodec;
@@ -20,6 +19,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
+
+import java.util.List;
 
 public class RecipeGeneratorFluid implements Recipe<GeneratorFluidRecipeInput> {
 
@@ -54,7 +55,7 @@ public class RecipeGeneratorFluid implements Recipe<GeneratorFluidRecipeInput> {
     return ItemStack.EMPTY;
   }
 
-    public boolean canCraftInDimensions(int width, int height) {
+  public boolean canCraftInDimensions(int width, int height) {
     return true;
   }
 
@@ -79,13 +80,12 @@ public class RecipeGeneratorFluid implements Recipe<GeneratorFluidRecipeInput> {
   public boolean matches(GeneratorFluidRecipeInput inv, Level worldIn) {
     try {
       return fluid.test(inv.getFluid());
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return false;
     }
   }
 
-    public NonNullList<Ingredient> getIngredients() {
+  public NonNullList<Ingredient> getIngredients() {
     return ingredients;
   }
 

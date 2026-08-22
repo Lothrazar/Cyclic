@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.potion.effect;
 
 import com.lothrazar.cyclic.potion.CyclicMobEffect;
+import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,7 +9,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 
 public class SnowwalkEffect extends CyclicMobEffect {
 
@@ -18,7 +18,9 @@ public class SnowwalkEffect extends CyclicMobEffect {
 
   @Override
   public void tick(EntityTickEvent.Pre event) {
-    if (!(event.getEntity() instanceof LivingEntity living)) { return; }
+    if (!(event.getEntity() instanceof LivingEntity living)) {
+      return;
+    }
     Level level = living.level();
     BlockPos center = living.blockPosition();
     BlockState snow = Blocks.SNOW.defaultBlockState();

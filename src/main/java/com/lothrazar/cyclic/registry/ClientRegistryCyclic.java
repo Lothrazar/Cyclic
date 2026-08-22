@@ -1,80 +1,95 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.config.ClientConfigCyclic;
-import com.lothrazar.cyclic.util.CapabilityUtil;
-import com.lothrazar.cyclic.util.RegistryHolder;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
-import com.lothrazar.cyclic.render.SpinModelRenderer;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
-import com.lothrazar.library.render.type.FakeBlockRenderTypes;
-import com.lothrazar.library.render.type.LineRenderType;
-import com.lothrazar.library.render.type.LaserRenderType;
-import com.lothrazar.library.render.type.OverlayRenderType;
-import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.cyclic.ModCyclic;
- import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
+import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
+import com.lothrazar.cyclic.block.anvil.ScreenAnvil;
+import com.lothrazar.cyclic.block.anvilmagma.ScreenAnvilMagma;
+import com.lothrazar.cyclic.block.anvilvoid.ScreenAnvilVoid;
+import com.lothrazar.cyclic.block.battery.ScreenBattery;
+import com.lothrazar.cyclic.block.batteryclay.ScreenClayBattery;
 import com.lothrazar.cyclic.block.beaconpotion.RenderBeaconPotion;
+import com.lothrazar.cyclic.block.beaconpotion.ScreenPotion;
 import com.lothrazar.cyclic.block.beaconredstone.RenderBeaconRedstone;
+import com.lothrazar.cyclic.block.breaker.ScreenBreaker;
+import com.lothrazar.cyclic.block.cable.fluid.ScreenCableFluid;
+import com.lothrazar.cyclic.block.cable.item.ScreenCableItem;
+import com.lothrazar.cyclic.block.clock.ScreenClock;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
+import com.lothrazar.cyclic.block.collectfluid.ScreenFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.RenderItemCollect;
+import com.lothrazar.cyclic.block.collectitem.ScreenItemCollector;
 import com.lothrazar.cyclic.block.conveyor.ConveyorItemRenderer;
-import com.lothrazar.cyclic.item.boomerang.BoomerangRenderer;
+import com.lothrazar.cyclic.block.crafter.ScreenCrafter;
+import com.lothrazar.cyclic.block.crate.ScreenCrate;
+import com.lothrazar.cyclic.block.cratemini.ScreenCrateMini;
+import com.lothrazar.cyclic.block.crusher.ScreenCrusher;
 import com.lothrazar.cyclic.block.detectorentity.RenderDetector;
+import com.lothrazar.cyclic.block.detectorentity.ScreenDetector;
 import com.lothrazar.cyclic.block.detectoritem.RenderDetectorItem;
+import com.lothrazar.cyclic.block.detectoritem.ScreenDetectorItem;
 import com.lothrazar.cyclic.block.disenchant.RenderDisenchant;
+import com.lothrazar.cyclic.block.disenchant.ScreenDisenchant;
 import com.lothrazar.cyclic.block.dropper.RenderDropper;
+import com.lothrazar.cyclic.block.dropper.ScreenDropper;
 import com.lothrazar.cyclic.block.enderitemshelf.ItemShelfRenderer;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfRenderer;
+import com.lothrazar.cyclic.block.expcollect.ScreenExpPylon;
+import com.lothrazar.cyclic.block.expfountain.RenderExperienceFountain;
 import com.lothrazar.cyclic.block.facade.RenderCableFacade;
 import com.lothrazar.cyclic.block.facade.light.RenderLightFacade;
 import com.lothrazar.cyclic.block.facade.soundmuff.SoundmuffRenderFacade;
 import com.lothrazar.cyclic.block.fan.RenderFan;
+import com.lothrazar.cyclic.block.fan.ScreenFan;
 import com.lothrazar.cyclic.block.fishing.RenderFisher;
+import com.lothrazar.cyclic.block.fishing.ScreenFisher;
 import com.lothrazar.cyclic.block.forester.RenderForester;
+import com.lothrazar.cyclic.block.forester.ScreenForester;
+import com.lothrazar.cyclic.block.generatorfluid.ScreenGeneratorFluid;
+import com.lothrazar.cyclic.block.generatorfood.ScreenGeneratorFood;
+import com.lothrazar.cyclic.block.generatorfuel.ScreenGeneratorFuel;
+import com.lothrazar.cyclic.block.generatoritem.ScreenGeneratorDrops;
+import com.lothrazar.cyclic.block.generatorsolar.ScreenGeneratorSolar;
 import com.lothrazar.cyclic.block.harvester.RenderHarvester;
+import com.lothrazar.cyclic.block.harvester.ScreenHarvester;
+import com.lothrazar.cyclic.block.hopperfluid.ScreenFluidHopper;
+import com.lothrazar.cyclic.block.hoppergold.ScreenGoldHopper;
 import com.lothrazar.cyclic.block.laser.RenderLaser;
+import com.lothrazar.cyclic.block.laser.ScreenLaser;
+import com.lothrazar.cyclic.block.magnet.ScreenMagnet;
 import com.lothrazar.cyclic.block.melter.RenderMelter;
+import com.lothrazar.cyclic.block.melter.ScreenMelter;
 import com.lothrazar.cyclic.block.miner.RenderMiner;
+import com.lothrazar.cyclic.block.miner.ScreenMiner;
+import com.lothrazar.cyclic.block.packager.ScreenPackager;
 import com.lothrazar.cyclic.block.peatfarm.RenderPeatFarm;
+import com.lothrazar.cyclic.block.peatfarm.ScreenPeatFarm;
+import com.lothrazar.cyclic.block.placer.ScreenPlacer;
+import com.lothrazar.cyclic.block.placerfluid.ScreenPlacerFluid;
 import com.lothrazar.cyclic.block.screen.RenderScreentext;
+import com.lothrazar.cyclic.block.screen.ScreenScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.RenderStructure;
+import com.lothrazar.cyclic.block.shapebuilder.ScreenStructure;
 import com.lothrazar.cyclic.block.shapedata.RenderShapedata;
+import com.lothrazar.cyclic.block.shapedata.ScreenShapedata;
 import com.lothrazar.cyclic.block.solidifier.RenderSolidifier;
-import com.lothrazar.cyclic.block.expfountain.RenderExperienceFountain;
+import com.lothrazar.cyclic.block.solidifier.ScreenSolidifier;
+import com.lothrazar.cyclic.block.soundplay.ScreenSoundPlayer;
+import com.lothrazar.cyclic.block.soundrecord.ScreenSoundRecorder;
 import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
+import com.lothrazar.cyclic.block.tp.ScreenTeleport;
+import com.lothrazar.cyclic.block.uncrafter.ScreenUncraft;
+import com.lothrazar.cyclic.block.user.ScreenUser;
 import com.lothrazar.cyclic.block.wireless.energy.RenderWirelessEnergy;
+import com.lothrazar.cyclic.block.wireless.energy.ScreenWirelessEnergy;
 import com.lothrazar.cyclic.block.wireless.fluid.RenderWirelessFluid;
+import com.lothrazar.cyclic.block.wireless.fluid.ScreenWirelessFluid;
 import com.lothrazar.cyclic.block.wireless.item.RenderWirelessItem;
+import com.lothrazar.cyclic.block.wireless.item.ScreenWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
-import com.lothrazar.cyclic.item.compass.GpsCompassItem;
-import com.lothrazar.cyclic.item.compass.GpsCompassAngleProperty;
-import com.lothrazar.cyclic.item.compass.ScreenGpsCompass;
-import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
-import com.lothrazar.cyclic.item.lunchbox.LunchboxOverlayTintSource;
-import com.lothrazar.cyclic.item.lunchbox.ScreenLunchbox;
-import com.lothrazar.cyclic.item.storagebag.StorageBagBodyTintSource;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.resources.Identifier;
-import net.minecraft.client.player.LocalPlayer;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
-import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
-import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
-import net.neoforged.neoforge.client.fluid.FluidTintSources;
-import net.minecraft.client.renderer.block.FluidModel;
-import com.lothrazar.cyclic.render.ShieldMaterialSpecialRenderer;
+import com.lothrazar.cyclic.block.wireless.redstone.ScreenTransmit;
+import com.lothrazar.cyclic.block.workbench.ScreenWorkbench;
+import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.fluid.FluidAmethystHolder;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.fluid.FluidChocolateHolder;
@@ -87,66 +102,49 @@ import com.lothrazar.cyclic.fluid.FluidSculkHolder;
 import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidWaxHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
-import com.lothrazar.cyclic.block.anvil.ScreenAnvil;
-import com.lothrazar.cyclic.block.anvilmagma.ScreenAnvilMagma;
-import com.lothrazar.cyclic.block.anvilvoid.ScreenAnvilVoid;
-import com.lothrazar.cyclic.block.battery.ScreenBattery;
-import com.lothrazar.cyclic.block.batteryclay.ScreenClayBattery;
-import com.lothrazar.cyclic.block.beaconpotion.ScreenPotion;
-import com.lothrazar.cyclic.block.breaker.ScreenBreaker;
-import com.lothrazar.cyclic.block.cable.fluid.ScreenCableFluid;
-import com.lothrazar.cyclic.block.cable.item.ScreenCableItem;
-import com.lothrazar.cyclic.block.clock.ScreenClock;
-import com.lothrazar.cyclic.block.collectfluid.ScreenFluidCollect;
-import com.lothrazar.cyclic.block.collectitem.ScreenItemCollector;
-import com.lothrazar.cyclic.block.magnet.ScreenMagnet;
-import com.lothrazar.cyclic.block.crafter.ScreenCrafter;
-import com.lothrazar.cyclic.block.crate.ScreenCrate;
-import com.lothrazar.cyclic.block.cratemini.ScreenCrateMini;
-import com.lothrazar.cyclic.block.crusher.ScreenCrusher;
-import com.lothrazar.cyclic.block.detectorentity.ScreenDetector;
-import com.lothrazar.cyclic.block.detectoritem.ScreenDetectorItem;
-import com.lothrazar.cyclic.block.disenchant.ScreenDisenchant;
-import com.lothrazar.cyclic.block.dropper.ScreenDropper;
-import com.lothrazar.cyclic.block.expcollect.ScreenExpPylon;
-import com.lothrazar.cyclic.block.fan.ScreenFan;
-import com.lothrazar.cyclic.block.fishing.ScreenFisher;
-import com.lothrazar.cyclic.block.forester.ScreenForester;
-import com.lothrazar.cyclic.block.generatorfluid.ScreenGeneratorFluid;
-import com.lothrazar.cyclic.block.generatorfood.ScreenGeneratorFood;
-import com.lothrazar.cyclic.block.generatorfuel.ScreenGeneratorFuel;
-import com.lothrazar.cyclic.block.generatoritem.ScreenGeneratorDrops;
-import com.lothrazar.cyclic.block.generatorsolar.ScreenGeneratorSolar;
-import com.lothrazar.cyclic.block.harvester.ScreenHarvester;
-import com.lothrazar.cyclic.block.laser.ScreenLaser;
-import com.lothrazar.cyclic.block.melter.ScreenMelter;
-import com.lothrazar.cyclic.block.miner.ScreenMiner;
-import com.lothrazar.cyclic.block.packager.ScreenPackager;
-import com.lothrazar.cyclic.block.peatfarm.ScreenPeatFarm;
-import com.lothrazar.cyclic.block.placer.ScreenPlacer;
-import com.lothrazar.cyclic.block.placerfluid.ScreenPlacerFluid;
-import com.lothrazar.cyclic.block.screen.ScreenScreentext;
-import com.lothrazar.cyclic.block.shapebuilder.ScreenStructure;
-import com.lothrazar.cyclic.block.shapedata.ScreenShapedata;
-import com.lothrazar.cyclic.block.solidifier.ScreenSolidifier;
-import com.lothrazar.cyclic.block.soundplay.ScreenSoundPlayer;
-import com.lothrazar.cyclic.block.soundrecord.ScreenSoundRecorder;
-import com.lothrazar.cyclic.block.tp.ScreenTeleport;
-import com.lothrazar.cyclic.block.uncrafter.ScreenUncraft;
-import com.lothrazar.cyclic.block.user.ScreenUser;
-import com.lothrazar.cyclic.block.wireless.energy.ScreenWirelessEnergy;
-import com.lothrazar.cyclic.block.wireless.fluid.ScreenWirelessFluid;
-import com.lothrazar.cyclic.block.wireless.item.ScreenWirelessItem;
-import com.lothrazar.cyclic.block.wireless.redstone.ScreenTransmit;
-import com.lothrazar.cyclic.block.workbench.ScreenWorkbench;
+import com.lothrazar.cyclic.item.boomerang.BoomerangRenderer;
+import com.lothrazar.cyclic.item.compass.GpsCompassAngleProperty;
+import com.lothrazar.cyclic.item.compass.ScreenGpsCompass;
 import com.lothrazar.cyclic.item.crafting.CraftingBagScreen;
-import com.lothrazar.cyclic.item.enderbook.EnderBookScreen;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickScreen;
 import com.lothrazar.cyclic.item.datacard.filter.ScreenFilterCard;
-import com.lothrazar.cyclic.block.hopperfluid.ScreenFluidHopper;
-import com.lothrazar.cyclic.block.hoppergold.ScreenGoldHopper;
 import com.lothrazar.cyclic.item.datacard.fluid.ScreenFluidFilterCard;
+import com.lothrazar.cyclic.item.enderbook.EnderBookScreen;
+import com.lothrazar.cyclic.item.lunchbox.LunchboxOverlayTintSource;
+import com.lothrazar.cyclic.item.lunchbox.ScreenLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ScreenStorageBag;
+import com.lothrazar.cyclic.item.storagebag.StorageBagBodyTintSource;
+import com.lothrazar.cyclic.render.ShieldMaterialSpecialRenderer;
+import com.lothrazar.cyclic.render.SpinModelRenderer;
+import com.lothrazar.cyclic.util.CapabilityUtil;
+import com.lothrazar.cyclic.util.RegistryHolder;
+import com.lothrazar.library.render.type.FakeBlockRenderTypes;
+import com.lothrazar.library.render.type.FluidTankRenderType;
+import com.lothrazar.library.render.type.LaserRenderType;
+import com.lothrazar.library.render.type.LineRenderType;
+import com.lothrazar.library.render.type.OverlayRenderType;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.block.FluidModel;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.resources.Identifier;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
+import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
+import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
+import net.neoforged.neoforge.client.fluid.FluidTintSources;
+import net.neoforged.neoforge.client.gui.GuiLayer;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 
 @EventBusSubscriber(modid = ModCyclic.MODID, value = Dist.CLIENT)
 public class ClientRegistryCyclic {
@@ -168,8 +166,9 @@ public class ClientRegistryCyclic {
 
   @SubscribeEvent
   public static void onRegisterGuiOverlays(RegisterGuiLayersEvent event) {
-    event.registerAbove(VanillaGuiLayers.HOTBAR, Identifier.fromNamespaceAndPath(ModCyclic.MODID,"energy_hud"), ENERGY_HUD_LAYER);
+    event.registerAbove(VanillaGuiLayers.HOTBAR, Identifier.fromNamespaceAndPath(ModCyclic.MODID, "energy_hud"), ENERGY_HUD_LAYER);
   }
+
   /**
    *
    */
@@ -179,14 +178,14 @@ public class ClientRegistryCyclic {
     }
     LocalPlayer player = Minecraft.getInstance().player;
     var e = CapabilityUtil.energy(player.getMainHandItem());
-    if(e != null) {
+    if (e != null) {
 
       final String toDisplay = e.getEnergyStored() + "/" + e.getMaxEnergyStored();
       int x = 10;
       int y = 10;
       int colour = 0xFF0000;
 //      if (x >= 0 && y >= 0) {
-        guiGraphics.text(Minecraft.getInstance().font, toDisplay, x, y, colour);
+      guiGraphics.text(Minecraft.getInstance().font, toDisplay, x, y, colour);
 //      }
     }
   };
@@ -307,8 +306,8 @@ public class ClientRegistryCyclic {
   }
 
   private static void registerFluidModel(RegisterFluidModelsEvent event, Identifier stillTexture, Identifier flowTexture, int color,
-      java.util.function.Supplier<? extends net.minecraft.world.level.material.Fluid> stillFluid,
-      java.util.function.Supplier<? extends net.minecraft.world.level.material.Fluid> flowingFluid) {
+                                         java.util.function.Supplier<? extends net.minecraft.world.level.material.Fluid> stillFluid,
+                                         java.util.function.Supplier<? extends net.minecraft.world.level.material.Fluid> flowingFluid) {
     FluidModel.Unbaked model = new FluidModel.Unbaked(
         new net.minecraft.client.resources.model.sprite.Material(stillTexture, false),
         new net.minecraft.client.resources.model.sprite.Material(flowTexture, false),

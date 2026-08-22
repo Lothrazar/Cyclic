@@ -20,7 +20,8 @@ public class RenderLightFacade implements BlockEntityRenderer<TileLightFacade, R
     TileLightFacade blockEntity;
   }
 
-  public RenderLightFacade(BlockEntityRendererProvider.Context d) {}
+  public RenderLightFacade(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public boolean shouldRenderOffScreen() {
@@ -34,7 +35,7 @@ public class RenderLightFacade implements BlockEntityRenderer<TileLightFacade, R
 
   @Override
   public void extractRenderState(TileLightFacade blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

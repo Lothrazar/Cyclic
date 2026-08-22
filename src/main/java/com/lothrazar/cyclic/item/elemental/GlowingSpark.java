@@ -41,7 +41,6 @@ public class GlowingSpark extends ItemBaseCyclic {
     super(properties);
   }
 
-  
 
   @Override
   public InteractionResult useOn(UseOnContext context) {

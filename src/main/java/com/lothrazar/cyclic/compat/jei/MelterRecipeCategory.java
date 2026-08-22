@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.compat.jei;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
@@ -29,11 +28,13 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 
+import java.util.List;
+
 public class MelterRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeMelter>> {
 
   private static final int FONT = 0xFFFFFFFF;
   private static final Identifier ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "melter");
-  static final RecipeType<RecipeHolder<RecipeMelter>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
+  static final RecipeType<RecipeHolder<RecipeMelter>> TYPE = new RecipeType<>(ID, (Class) RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
   private Font font;

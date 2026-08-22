@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.user;
 
-import java.lang.ref.WeakReference;
-import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -10,15 +8,13 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.UUIDUtil;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,13 +23,17 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.lang.ref.WeakReference;
+import java.util.UUID;
 
 public class TileUser extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
@@ -136,8 +136,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
         this.depositOutputMainhand();
       }
       TileBlockEntityCyclic.syncEquippedItem(this.userSlots, fakePlayer, 0, InteractionHand.MAIN_HAND);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("User action item error", e);
     }
     final boolean dropItemsOnGround = false;
@@ -162,7 +161,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
       if (doHitBreak) {
         fakePlayer.get().attack(entityFound);
       }
-      else { // interact 
+      else { // interact
         // 26.1: Player#interactOn gained a required Vec3 hit-location param - no precise hit point here, use the entity's own position
         InteractionResult res = fakePlayer.get().interactOn(entityFound, InteractionHand.MAIN_HAND, entityFound.position());
 
@@ -182,22 +181,22 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case TIMERDEL:
         this.timerDelay = value;
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
       case INTERACTTYPE: // was LEFTHAND
         this.doHitBreak = value == 1;
-      break;
+        break;
       case ENTITIES:
         this.entities = value == 1;
-      break;
+        break;
     }
   }
 
@@ -271,7 +270,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

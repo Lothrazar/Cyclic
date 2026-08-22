@@ -1,8 +1,9 @@
 package com.lothrazar.cyclic.render.beacon;
 
+import net.minecraft.world.level.block.entity.BeaconBeamOwner.Section;
+
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.world.level.block.entity.BeaconBeamOwner.Section;
 
 /**
  * Per-tile state for the incremental beam scan. One instance lives on each

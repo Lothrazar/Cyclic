@@ -1,8 +1,9 @@
 package com.lothrazar.cyclic.render.overlay;
 
+import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
+
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
 
 /**
  * Client-side cache of horse carrot state, populated by PacketSyncHorseCarrots

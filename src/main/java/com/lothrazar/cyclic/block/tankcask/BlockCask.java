@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.tankcask;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.util.CapabilityUtil;
@@ -17,6 +15,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BlockCask extends BlockCyclic {
@@ -52,14 +53,13 @@ public class BlockCask extends BlockCyclic {
     try {
       IFluidHandler storage = CapabilityUtil.fluid(stack);// stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
 
-      IFluidHandler storageTile = CapabilityUtil.fluid(world,pos);
+      IFluidHandler storageTile = CapabilityUtil.fluid(world, pos);
       if (storage != null && storageTile != null) {
 
-          storageTile.fill(storage.getFluidInTank(0), IFluidHandler.FluidAction.EXECUTE);
+        storageTile.fill(storage.getFluidInTank(0), IFluidHandler.FluidAction.EXECUTE);
 
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("Error during fill from item ", e);
     }
     //set default state 

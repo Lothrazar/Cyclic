@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block.spawntriggers;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.library.core.Const;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.cache.ServerCacheHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.library.core.Const;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,7 +47,8 @@ public class TileAltar extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

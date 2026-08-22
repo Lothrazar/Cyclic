@@ -1,19 +1,17 @@
 package com.lothrazar.cyclic.block.soundplay;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.redstone.Orientation;
-import org.jspecify.annotations.Nullable;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jspecify.annotations.Nullable;
 
 public class BlockSoundPlayer extends BlockCyclic {
 

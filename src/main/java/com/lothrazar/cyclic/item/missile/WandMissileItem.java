@@ -1,11 +1,8 @@
 package com.lothrazar.cyclic.item.missile;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.ItemHasEnergy;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -19,6 +16,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WandMissileItem extends ItemHasEnergy {
 

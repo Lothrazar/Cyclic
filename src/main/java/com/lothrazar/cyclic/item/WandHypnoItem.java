@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.ParticleUtil;
@@ -20,6 +17,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WandHypnoItem extends ItemHasEnergy {
 

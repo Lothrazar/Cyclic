@@ -2,17 +2,18 @@ package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.net.PacketDisplayFluidMessage;
 import com.lothrazar.cyclic.util.CapabilityUtil;
-import net.neoforged.neoforge.network.PacketDistributor;
 import com.lothrazar.library.block.EntityBlockFlib;
 import com.lothrazar.library.util.SoundUtil;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.*;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -27,6 +28,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class BlockCyclic extends EntityBlockFlib {
 
@@ -79,15 +81,15 @@ public class BlockCyclic extends EntityBlockFlib {
     return newState;
   }
 
-//  protected ItemInteractionResult useItemOn(ItemStack p_316304_, BlockState p_316362_, Level p_316459_, BlockPos p_316366_, Player p_316132_, InteractionHand p_316595_, BlockHitResult p_316140_) {
+  //  protected ItemInteractionResult useItemOn(ItemStack p_316304_, BlockState p_316362_, Level p_316459_, BlockPos p_316366_, Player p_316132_, InteractionHand p_316595_, BlockHitResult p_316140_) {
   @Override
   public InteractionResult useItemOn(ItemStack st, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     if (hasFluidInteract) {
       if (!level.isClientSide()) {
         BlockEntity tankHere = level.getBlockEntity(pos);
         if (tankHere != null) {
-         //getting fluid capability from a block
-          IFluidHandler handler = CapabilityUtil.fluid(level,pos,hit);
+          //getting fluid capability from a block
+          IFluidHandler handler = CapabilityUtil.fluid(level, pos, hit);
           if (handler != null) {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
               if (player instanceof ServerPlayer sp) {
@@ -122,7 +124,7 @@ public class BlockCyclic extends EntityBlockFlib {
       }
       return InteractionResult.SUCCESS;
     }
-    return super.useItemOn(st,state, level, pos, player, hand, hit);
+    return super.useItemOn(st, state, level, pos, player, hand, hit);
   }
 
   @Override
@@ -132,7 +134,8 @@ public class BlockCyclic extends EntityBlockFlib {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity instanceof MenuProvider mp) {
           player.openMenu(mp, pos);
-        } else {
+        }
+        else {
           throw new IllegalStateException("Our named container provider is missing!");
         }
       }

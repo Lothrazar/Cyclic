@@ -9,9 +9,9 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.gui.FluidBar;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.components.Tooltip;
 
 public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
 
@@ -74,7 +74,7 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
   public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 8, 48);
-    this.drawSlot(ms,  8+22, 8,  TextureRegistry.SLOT_FILTER_FLUID, 18);
+    this.drawSlot(ms, 8 + 22, 8, TextureRegistry.SLOT_FILTER_FLUID, 18);
     if (TileFluidCollect.POWERCONF.get() > 0) {
       energy.draw(ms, menu.tile.getEnergy());
     }

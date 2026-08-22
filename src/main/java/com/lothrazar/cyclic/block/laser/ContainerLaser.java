@@ -20,14 +20,14 @@ public class ContainerLaser extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
 //    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-      this.endInv = tile.inventory.getSlots();
-      addSlot(new SlotItemHandler(tile.inventory, 0, 152, 8) {
+    this.endInv = tile.inventory.getSlots();
+    addSlot(new SlotItemHandler(tile.inventory, 0, 152, 8) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
 //    });
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileLaser.Fields.values().length);

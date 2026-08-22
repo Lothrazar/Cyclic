@@ -1,21 +1,21 @@
 package com.lothrazar.cyclic.item.datacard;
 
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.component.CustomData;
+
+import java.util.function.Consumer;
 
 public class SoundCard extends ItemBaseCyclic {
 
@@ -54,10 +54,14 @@ public class SoundCard extends ItemBaseCyclic {
 
   public static void saveSound(ItemStack stack, String soundId) {
     if (stack.has(DataComponents.CUSTOM_DATA) && (soundId == null || soundId.isEmpty())) {
-      CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(); tag.remove(SOUND_ID); stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+      CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+      tag.remove(SOUND_ID);
+      stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
     else {
-      CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(); tag.putString(SOUND_ID, soundId); stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+      CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+      tag.putString(SOUND_ID, soundId);
+      stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
   }
 }

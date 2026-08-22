@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.item.datacard;
 
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.data.BlockPosDim;
@@ -9,9 +7,9 @@ import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.library.util.TagDataUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -21,11 +19,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
+
+import java.util.function.Consumer;
 
 public class LocationGpsCard extends ItemBaseCyclic {
 
@@ -107,8 +106,7 @@ public class LocationGpsCard extends ItemBaseCyclic {
           tag.getDoubleOr("hity", 0d),
           tag.getDoubleOr("hitz", 0d));
       dim.setHitVec(vec);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("SIde error in GPS", e);
     }
     return dim;

@@ -15,7 +15,6 @@ import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 
 public class SpawnInspectorTool extends ItemBaseCyclic {

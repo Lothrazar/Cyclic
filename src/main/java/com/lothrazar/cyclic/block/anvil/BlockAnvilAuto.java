@@ -1,15 +1,12 @@
 package com.lothrazar.cyclic.block.anvil;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.BlockstatesUtil;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;

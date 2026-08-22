@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.workbench;
 
-import java.util.List;
-import java.util.Optional;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -20,9 +18,15 @@ import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
+import java.util.Optional;
 
 public class ContainerWorkbench extends AbstractCraftingMenu implements IContainerCraftingAction {
 
@@ -145,8 +149,7 @@ public class ContainerWorkbench extends AbstractCraftingMenu implements IContain
         slot.onTake(playerIn, stack);
       }
       return itemstack;
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return ItemStack.EMPTY;
     }
   }

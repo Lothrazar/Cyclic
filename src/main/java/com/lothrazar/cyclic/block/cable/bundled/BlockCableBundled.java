@@ -2,17 +2,18 @@ package com.lothrazar.cyclic.block.cable.bundled;
 
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.library.data.ShapeCache;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
+import com.lothrazar.library.data.ShapeCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
@@ -25,7 +26,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.util.RandomSource;
 
 public class BlockCableBundled extends CableBase {
 
@@ -38,7 +38,8 @@ public class BlockCableBundled extends CableBase {
     boolean facadesEnabled = false;
     try {
       facadesEnabled = ConfigRegistry.CABLE_FACADES.get();
-    } catch (Exception e) {}
+    } catch (Exception e) {
+    }
     if (facadesEnabled) {
       VoxelShape facade = this.getFacadeShape(state, worldIn, pos, context);
       if (facade != null) {
@@ -97,7 +98,7 @@ public class BlockCableBundled extends CableBase {
 
   @Override
   public BlockState updateShape(BlockState stateIn, LevelReader world, ScheduledTickAccess ticks, BlockPos currentPos,
-      Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
+                                Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     EnumConnectType oldProp = stateIn.getValue(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {
@@ -105,15 +106,16 @@ public class BlockCableBundled extends CableBase {
     }
     boolean hasAnyCap = world instanceof Level lvl
         && (CapabilityUtil.isEnergy(facing, lvl, facingPos)
-            || CapabilityUtil.isItem(facing, lvl, facingPos)
-            || CapabilityUtil.isFluid(facing, lvl, facingPos));
+        || CapabilityUtil.isItem(facing, lvl, facingPos)
+        || CapabilityUtil.isFluid(facing, lvl, facingPos));
     if (hasAnyCap) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
       if (world.getBlockState(currentPos).getBlock() == this && world instanceof Level lvl) {
         lvl.setBlockAndUpdate(currentPos, with);
       }
       return with;
-    } else {
+    }
+    else {
       return stateIn.setValue(property, EnumConnectType.NONE);
     }
   }

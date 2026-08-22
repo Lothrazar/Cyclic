@@ -1,11 +1,12 @@
 package com.lothrazar.cyclic.command;
 
-import java.util.Collection;
 import com.lothrazar.library.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameType;
+
+import java.util.Collection;
 
 public class CommandGamemode {
 
@@ -14,19 +15,19 @@ public class CommandGamemode {
       switch (integer) {
         case 0:
           p.setGameMode(GameType.SURVIVAL);
-        break;
+          break;
         case 1:
           p.setGameMode(GameType.CREATIVE);
-        break;
+          break;
         case 2:
           p.setGameMode(GameType.ADVENTURE);
-        break;
+          break;
         case 3:
           p.setGameMode(GameType.SPECTATOR);
-        break;
+          break;
         default:
           ChatUtil.sendFeedback(x, integer + " = ?!");
-        break;
+          break;
       }
     }
     return 0;

@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.shapedata;
 
-import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -12,23 +10,24 @@ import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
 
 public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -87,12 +86,12 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
           worldShape.write(shapeCard);
           /// shape set
         }
-      break;
+        break;
       case COPY:
         //copy shape from CARD to BUFFER
         //only works
         this.copiedShape = new RelativeShape(cardShape);
-      break;
+        break;
       case PASTE:
         //from BUFFER to CARD
         //only works on EMPTY CARDS
@@ -101,7 +100,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
           shapeCard.remove(DataComponents.CUSTOM_DATA); //paste and not merge so overwrite
           this.copiedShape.write(shapeCard);
         }
-      break;
+        break;
       case MERGE:
         //from BUFFER to CARD
         //only works on NOT EMPTY cards
@@ -110,7 +109,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
           cardShape.merge(this.copiedShape);
           cardShape.write(shapeCard);
         }
-      break;
+        break;
     }
   }
 
@@ -135,7 +134,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
 
   @Override
   public void loadAdditional(ValueInput input) {
-    ((ItemStackHandler)inventory).deserialize(input.childOrEmpty(NBTINV));
+    ((ItemStackHandler) inventory).deserialize(input.childOrEmpty(NBTINV));
     input.read("copiedShape", CompoundTag.CODEC).ifPresent(cs -> this.copiedShape = RelativeShape.read(cs));
     hasStashIfOne = input.getIntOr("stashToggle", 0);
     super.loadAdditional(input);
@@ -148,7 +147,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
       CompoundTag copiedShapeTags = this.copiedShape.write(new CompoundTag());
       output.store("copiedShape", CompoundTag.CODEC, copiedShapeTags);
     }
-    ((ItemStackHandler)inventory).serialize(output.child(NBTINV));
+    ((ItemStackHandler) inventory).serialize(output.child(NBTINV));
     super.saveAdditional(output);
   }
 
@@ -215,17 +214,17 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
     switch (Fields.values()[field]) {
       case STASH:
         hasStashIfOne = value;
-      break;
+        break;
       case COMMAND:
         if (value >= StructCommands.values().length) {
           value = 0;
         }
         StructCommands cmd = StructCommands.values()[value];
         this.execute(cmd);
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
     }
   }
 

@@ -19,10 +19,11 @@ public final class SpinModelRenderer {
   public static final StandaloneModelKey<QuadCollection> SPRINKLER_SPIN = new StandaloneModelKey<>(() -> ModCyclic.MODID + ":block/sprinkler_spin");
   public static final StandaloneModelKey<QuadCollection> FOUNTAIN_SPIN = new StandaloneModelKey<>(() -> ModCyclic.MODID + ":block/experience_fountain_spin");
 
-  private SpinModelRenderer() {}
+  private SpinModelRenderer() {
+  }
 
   public static void render(StandaloneModelKey<QuadCollection> key, float angleDeg, PoseStack matrix,
-      MultiBufferSource buffers, int light, int overlay) {
+                            MultiBufferSource buffers, int light, int overlay) {
     QuadCollection model = Minecraft.getInstance().getModelManager().getStandaloneModel(key);
     if (model == null) {
       return;

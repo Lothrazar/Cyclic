@@ -4,9 +4,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockAndLightGetter;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,7 +21,7 @@ public class BlockBeaconRedstone extends BlockCyclic implements BeaconBeamBlock 
     return DyeColor.WHITE;
   }
 
-  private static final float[] COLOR = new float[] { 1, 1, 1 };
+  private static final float[] COLOR = new float[]{1, 1, 1};
   public static ModConfigSpec.IntValue RADIUS;
 
   public BlockBeaconRedstone(Properties properties) {

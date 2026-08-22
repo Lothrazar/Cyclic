@@ -2,14 +2,13 @@ package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.ItemStackUtil;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 
 public class CharmInvisible extends ItemBaseToggle {
@@ -22,7 +21,7 @@ public class CharmInvisible extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn,  EquipmentSlot slot) {
+  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn, EquipmentSlot slot) {
     if (!this.canUse(stack)) {
       return;
     }

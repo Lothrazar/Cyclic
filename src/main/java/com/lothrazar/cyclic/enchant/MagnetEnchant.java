@@ -37,9 +37,15 @@ public class MagnetEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(EntityTickEvent.Pre event) {
-    if (!isEnabled()) { return; }
-    if (!(event.getEntity() instanceof LivingEntity entity)) { return; }
-    if (entity instanceof Player p && p.isSpectator()) { return; }
+    if (!isEnabled()) {
+      return;
+    }
+    if (!(event.getEntity() instanceof LivingEntity entity)) {
+      return;
+    }
+    if (entity instanceof Player p && p.isSpectator()) {
+      return;
+    }
     int level = EnchantUtil.getLevelAll(EnchantUtil.holder(EnchantRegistry.MAGNET, entity), entity);
     if (level > 0 && !BotaniaWrapper.hasSolegnoliaAround(entity)) {
       EntityUtil.moveEntityItemsInRegion(entity.level(), entity.blockPosition(), hRadiusBase() + hRadiusPerLevel() * level, vRadius());

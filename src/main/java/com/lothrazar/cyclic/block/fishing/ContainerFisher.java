@@ -20,14 +20,14 @@ public class ContainerFisher extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     var h = tile.inventory;
-      this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 80, 29) {
+    this.endInv = h.getSlots();
+    addSlot(new SlotItemHandler(h, 0, 80, 29) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
 //    });
     layoutPlayerInventorySlots(8, 84);
     this.trackIntField(tile, TileFisher.Fields.REDSTONE.ordinal());

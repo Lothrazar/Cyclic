@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.scythe;
 
-import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.net.PacketHarvesting;
 import com.lothrazar.library.util.ItemStackUtil;
@@ -10,8 +9,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
-import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.List;
 
 public class ScytheHarvest extends ItemBaseCyclic {
 

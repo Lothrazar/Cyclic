@@ -40,7 +40,9 @@ public class ItemProjectileDungeon extends ItemBaseCyclic {
     }
     BlockPos blockpos = LevelWorldUtil.findClosestBlock(player, Blocks.SPAWNER, RANGE.get());
     if (blockpos == null) {
-      if (!world.isClientSide()) ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.notfound") + " " + RANGE.get());
+      if (!world.isClientSide()) {
+        ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.notfound") + " " + RANGE.get());
+      }
       entityendereye.remove(Entity.RemovalReason.DISCARDED);
     }
     else {

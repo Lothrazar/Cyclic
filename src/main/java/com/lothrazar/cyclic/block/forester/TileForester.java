@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.forester;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -11,10 +9,7 @@ import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -32,12 +27,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class TileForester extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -119,8 +118,7 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
         //ok then DRAIN POWER
         energy.extractEnergy(cost, false);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("Forester action item error", e);
     }
   }
@@ -141,7 +139,7 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     height = input.getIntOr("height", 0);
     shapeIndex = input.getIntOr("shapeIndex", 0);
     radius = input.getIntOr("radius", 0);
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     super.loadAdditional(input);
   }
@@ -249,16 +247,16 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-      break;
+        break;
       case HEIGHT:
         this.height = Math.min(value, MAX_HEIGHT);
-      break;
+        break;
     }
   }
 

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.item.ItemFlib;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -11,7 +11,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class ItemHasEnergy extends ItemFlib {
@@ -19,13 +18,14 @@ public class ItemHasEnergy extends ItemFlib {
   public ItemHasEnergy(Properties properties) {
     super(properties);
   }
+
   public ItemHasEnergy(Properties properties, Settings settings) {
     super(properties, settings);
   }
 
   @Override
   public int getBarColor(ItemStack stack) {
-      return TextureRegistry.COLOUR_RF_BAR;
+    return TextureRegistry.COLOUR_RF_BAR;
   }
 
   @Override

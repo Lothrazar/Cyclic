@@ -20,7 +20,8 @@ public class RenderMiner implements BlockEntityRenderer<TileMiner, RenderMiner.S
     TileMiner blockEntity;
   }
 
-  public RenderMiner(BlockEntityRendererProvider.Context d) {}
+  public RenderMiner(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -29,7 +30,7 @@ public class RenderMiner implements BlockEntityRenderer<TileMiner, RenderMiner.S
 
   @Override
   public void extractRenderState(TileMiner blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

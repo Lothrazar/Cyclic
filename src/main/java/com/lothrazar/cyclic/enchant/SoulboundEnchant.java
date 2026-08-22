@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.enchant;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -24,6 +21,10 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class SoulboundEnchant {
 
   public static final String ID = "soulbound";
@@ -43,8 +44,7 @@ public class SoulboundEnchant {
   private static Holder<Enchantment> getHolder(Player player) {
     try {
       return player.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantRegistry.SOULBOUND);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return null;
     }
   }

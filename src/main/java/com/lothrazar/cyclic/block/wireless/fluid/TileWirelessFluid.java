@@ -10,10 +10,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,12 +19,13 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.minecraft.core.Direction;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -45,7 +43,8 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   public IFluidHandler getFluidHandler(Direction side) {
     return tank;
   }
-// //  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+
+  // //  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   public ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
@@ -137,13 +136,13 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
       case TRANSFER_RATE:
         transferRate = value;
-      break;
+        break;
     }
   }
 

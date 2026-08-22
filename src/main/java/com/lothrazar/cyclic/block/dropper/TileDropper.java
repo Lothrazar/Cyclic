@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.dropper;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -12,10 +10,7 @@ import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -24,11 +19,15 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -39,7 +38,7 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
   static final int MAX = 64000;
   public static ModConfigSpec.IntValue POWERCONF;
   private EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
-    ItemStackHandler inventory = new ItemStackHandler(1);
+  ItemStackHandler inventory = new ItemStackHandler(1);
   ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
@@ -105,7 +104,7 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void loadAdditional(ValueInput input) {
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     gpsSlots.deserialize(input.childOrEmpty(NBTINV + "gps"));
     this.delay = input.getIntOr("delay", 0);
@@ -153,19 +152,19 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
     switch (Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case DELAY:
         delay = Math.max(0, value);
-      break;
+        break;
       case DROPCOUNT:
         dropCount = Math.max(1, value);
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
     }
   }
 

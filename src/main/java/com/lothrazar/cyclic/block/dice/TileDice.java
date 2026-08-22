@@ -5,14 +5,12 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class TileDice extends TileBlockEntityCyclic {
 
@@ -100,10 +98,10 @@ public class TileDice extends TileBlockEntityCyclic {
     switch (Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case SPINNING:
         spinningIfZero = value;
-      break;
+        break;
     }
   }
 }

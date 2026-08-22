@@ -1,4 +1,5 @@
 package com.lothrazar.cyclic.item.builder;
+
 public enum BuildStyle {
 
   NORMAL, REPLACE, OFFSET;

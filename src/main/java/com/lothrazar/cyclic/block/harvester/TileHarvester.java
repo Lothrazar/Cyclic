@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.harvester;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -10,10 +9,6 @@ import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,9 +17,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+
+import java.util.List;
 
 public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -144,19 +142,19 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-      break;
+        break;
       case DIRECTION:
         this.directionIsUp = value == 1;
-      break;
+        break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-      break;
+        break;
     }
   }
 
@@ -166,7 +164,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     height = input.getIntOr("height", 0);
     directionIsUp = input.getBooleanOr("directionIsUp", false);
     shapeIndex = input.getIntOr("shapeIndex", 0);
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     super.loadAdditional(input);
   }
 

@@ -8,10 +8,7 @@ import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -22,11 +19,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
@@ -43,8 +41,8 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
     public boolean isItemValid(int slot, ItemStack stack) {
       // 26.1: ItemStack#isRepairable() removed with no replacement - getDamageValue() > 0 already implies
       // the stack is damageable, which covers the meaningful part of the old check.
-      boolean v= stack.getDamageValue() > 0;
-    return v;
+      boolean v = stack.getDamageValue() > 0;
+      return v;
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
@@ -76,7 +74,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
 
   @Override
   public void loadAdditional(ValueInput input) {
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     super.loadAdditional(input);
   }
@@ -131,7 +129,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
       case TIMER:
         return this.timer;
       default:
-      break;
+        break;
     }
     return 0;
   }
@@ -141,10 +139,10 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.timer = value;
-      break;
+        break;
     }
   }
 
@@ -169,7 +167,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

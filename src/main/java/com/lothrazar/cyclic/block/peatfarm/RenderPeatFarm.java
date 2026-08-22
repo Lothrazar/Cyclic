@@ -20,7 +20,8 @@ public class RenderPeatFarm implements BlockEntityRenderer<TilePeatFarm, RenderP
     TilePeatFarm blockEntity;
   }
 
-  public RenderPeatFarm(BlockEntityRendererProvider.Context d) {}
+  public RenderPeatFarm(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -29,7 +30,7 @@ public class RenderPeatFarm implements BlockEntityRenderer<TilePeatFarm, RenderP
 
   @Override
   public void extractRenderState(TilePeatFarm blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

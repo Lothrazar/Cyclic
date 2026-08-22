@@ -16,12 +16,11 @@ import com.lothrazar.library.util.DirectionUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -41,9 +40,18 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
   private boolean isItemCable = false;
   private boolean isFluidCable = false;
 
-  public boolean isEnergyCable() { return isEnergyCable; }
-  public boolean isItemCable() { return isItemCable; }
-  public boolean isFluidCable() { return isFluidCable; }
+  public boolean isEnergyCable() {
+    return isEnergyCable;
+  }
+
+  public boolean isItemCable() {
+    return isItemCable;
+  }
+
+  public boolean isFluidCable() {
+    return isFluidCable;
+  }
+
   // energy has no filter
   // item has no flow configs
   protected static final int FLOW_QTY = 64; // fixed, for non-extract motion
@@ -69,7 +77,8 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {
@@ -85,19 +94,19 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
       for (Direction f : Direction.values()) {
         mapIncomingEnergy.put(f, input.getIntOr(f.getSerializedName() + "_incenergy", 0));
       }
-              energy.deserialize(input.childOrEmpty(NBTENERGY));
+      energy.deserialize(input.childOrEmpty(NBTENERGY));
     }
-    if(this.isItemCable()) {
+    if (this.isItemCable()) {
       IItemHandler item;
       for (Direction f : Direction.values()) {
         item = mapItemFlow.get(f);
-        if(item !=null){ //item.ifPresent(h -> {
-          ((ItemStackHandler)item).deserialize(input.childOrEmpty("item" + f.toString()));
+        if (item != null) { //item.ifPresent(h -> {
+          ((ItemStackHandler) item).deserialize(input.childOrEmpty("item" + f.toString()));
         }
       }
       itemFilter.deserialize(input.childOrEmpty("itemFilter"));
     }
-    if(this.isFluidCable()) {
+    if (this.isFluidCable()) {
 
       fluidFilter.deserialize(input.childOrEmpty("filter"));
       FluidTankBase fluidh;
@@ -110,6 +119,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
     }
     super.loadAdditional(input);
   }
+
   @Override
   public void saveAdditional(ValueOutput output) {
     CompoundTag facadeTag = new CompoundTag();
@@ -123,7 +133,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
       }
       energy.serialize(output.child(NBTENERGY));
     }
-    if(this.isItemCable()) {
+    if (this.isItemCable()) {
 
       itemFilter.serialize(output.child("itemFilter"));
       IItemHandler item;
@@ -134,7 +144,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
         }
       }
     }
-    if(this.isFluidCable()) {
+    if (this.isFluidCable()) {
 
       fluidFilter.serialize(output.child("filter"));
       FluidTankBase fluidh;
@@ -163,12 +173,14 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
     }
     this.isItemCable = true;
   }
+
   protected void setIsFluid() {
     for (Direction f : Direction.values()) {
       mapFluidFlow.put(f, new FluidTankBase(this, TileCableFluid.BUFFERSIZE.get() * FluidHelpers.FluidAttributes.BUCKET_VOLUME, p -> true));
     }
     this.isFluidCable = true;
   }
+
   private CompoundTag facadeState = null;
 
   @Override
@@ -240,7 +252,8 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
   }
 
   private void tickItemNormalFlow() {
-    incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
+    incomingSideLoop:
+    for (final Direction incomingSide : Direction.values()) {
       final IItemHandler sideHandler = mapItemFlow.get(incomingSide);
       for (final Direction outgoingSide : DirectionUtil.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {

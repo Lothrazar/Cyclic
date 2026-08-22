@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.enchant;
 
-import java.util.Collections;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
@@ -21,6 +19,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+
+import java.util.Collections;
+import java.util.List;
 
 public class GloomCurseEnchant {
 
@@ -50,14 +51,18 @@ public class GloomCurseEnchant {
         + EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.CHEST)
         + EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.LEGS)
         + EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.FEET);
-    if (totalLevels <= 0) { return; }
+    if (totalLevels <= 0) {
+      return;
+    }
     double adjustedActivationChance = BASE_ACTIVATION_CHANCE / totalLevels;
     if (adjustedActivationChance > user.level().getRandom().nextDouble()) {
       List<MobEffect> negativeEffects = EnchantUtil.getNegativeEffects();
       Collections.shuffle(negativeEffects);
       int appliedEffects = 0;
       for (MobEffect effect : negativeEffects) {
-        if (effect == null) {continue;}
+        if (effect == null) {
+          continue;
+        }
         Identifier effectKey = BuiltInRegistries.MOB_EFFECT.getKey(effect);
         if (StringParseUtil.isInList(ConfigRegistry.getGloomIgnoreList(), effectKey)) {
           ModCyclic.LOGGER.debug("Gloom(curse) effect cannot apply " + effectKey);
@@ -66,7 +71,9 @@ public class GloomCurseEnchant {
         if (appliedEffects < MIN_EFFECTS || BASE_APPLY_CHANCE > user.level().getRandom().nextDouble()) {
           livingAttacker.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect), EFFECT_DURATION));
           appliedEffects++;
-          if (appliedEffects >= MAX_EFFECTS) {break;}
+          if (appliedEffects >= MAX_EFFECTS) {
+            break;
+          }
         }
       }
     }

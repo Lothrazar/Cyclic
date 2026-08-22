@@ -1,27 +1,26 @@
 package com.lothrazar.cyclic.block.expfountain;
 
-import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.CapabilityUtil;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.util.FluidHelpersUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+
+import java.util.function.Predicate;
 
 public class TileExperienceFountain extends TileBlockEntityCyclic {
 
@@ -115,7 +114,8 @@ public class TileExperienceFountain extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

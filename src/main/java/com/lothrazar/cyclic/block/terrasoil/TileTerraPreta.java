@@ -54,8 +54,7 @@ public class TileTerraPreta extends TileBlockEntityCyclic {
           bState.randomTick(sw, current, world.getRandom());
           bState.randomTick(sw, current, world.getRandom());
         }
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         return false;
       }
     }
@@ -75,7 +74,8 @@ public class TileTerraPreta extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

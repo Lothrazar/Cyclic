@@ -3,24 +3,23 @@ package com.lothrazar.cyclic.render;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.LaserItem;
-import com.lothrazar.cyclic.util.CapabilityUtil;
-import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
-import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.net.PacketEntityLaser;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.render.RenderEntityToBlockLaser;
-import com.lothrazar.library.util.*;
+import com.lothrazar.library.util.ChatUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
+import com.lothrazar.library.util.RenderBlockUtils;
+import com.lothrazar.library.util.SoundUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -32,10 +31,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -189,8 +193,7 @@ public class OutlineRenderer {
       java.awt.Color laserColor;
       try {
         laserColor = java.awt.Color.decode(ClientConfigCyclic.LASER_COLOR.get());
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         laserColor = new java.awt.Color(100, 0, 2);
       }
       float lr = laserColor.getRed() / 255f;

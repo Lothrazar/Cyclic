@@ -49,17 +49,17 @@ public class ContainerPeatFarm extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
 //    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-      this.endInv = tile.inventory.getSlots();
-      int rowSize = 6;
-      for (int i = 0; i < rowSize; i++) {
-        addSlot(new SlotItemHandler(tile.inventory, i, SLOTX_START + i * Const.SQ, SLOTY) {
+    this.endInv = tile.inventory.getSlots();
+    int rowSize = 6;
+    for (int i = 0; i < rowSize; i++) {
+      addSlot(new SlotItemHandler(tile.inventory, i, SLOTX_START + i * Const.SQ, SLOTY) {
 
-          @Override
-          public void setChanged() {
-            tile.setChanged();
-          }
-        });
-      }
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
+      });
+    }
 //    });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TilePeatFarm.Fields.values().length);

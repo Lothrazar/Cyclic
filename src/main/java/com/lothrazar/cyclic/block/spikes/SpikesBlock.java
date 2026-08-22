@@ -17,16 +17,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.redstone.Orientation;
-import org.jspecify.annotations.Nullable;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jspecify.annotations.Nullable;
 
 public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
 
@@ -79,16 +79,16 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
       switch (this.type) {
         case CURSE:
           triggerCurse(worldIn, entity);
-        break;
+          break;
         case FIRE:
           entity.igniteForSeconds(FIRE_TIME);
-        break;
+          break;
         case PLAIN:
           entity.hurt(worldIn.damageSources().cactus(), 1);
-        break;
+          break;
         default:
         case NONE:
-        break;
+          break;
       }
     }
   }
@@ -101,30 +101,30 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
           if (!living.hasEffect(MobEffects.SLOWNESS)) {
             living.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, CURSE_TIME, 2, false, false, false));
           }
-        break;
+          break;
         case 1:
           if (!living.hasEffect(MobEffects.WEAKNESS)) {
             living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, CURSE_TIME, 2, false, false, false));
           }
-        break;
+          break;
         case 2:
           if (!living.hasEffect(MobEffects.UNLUCK)) {
             living.addEffect(new MobEffectInstance(MobEffects.UNLUCK, CURSE_TIME, 1, false, false, false));
           }
-        break;
+          break;
         case 3:
           if (!living.hasEffect(MobEffects.MINING_FATIGUE)) {
             living.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, CURSE_TIME, 2, false, false, false));
           }
-        break;
+          break;
         case 4:
           entity.hurt(worldIn.damageSources().magic(), 1);
-        break;
+          break;
         case 5:
           if (!living.hasEffect(MobEffects.BLINDNESS)) {
             living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, CURSE_TIME, 1, false, false, false));
           }
-        break;
+          break;
       }
     }
   }

@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.potion;
 
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Map;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -14,6 +11,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PotionEventHandler {
 

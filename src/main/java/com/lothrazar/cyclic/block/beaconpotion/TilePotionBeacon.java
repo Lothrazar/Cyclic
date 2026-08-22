@@ -1,26 +1,19 @@
 package com.lothrazar.cyclic.block.beaconpotion;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.render.beacon.BeamHolder;
-import com.lothrazar.cyclic.render.beacon.BeamStuff;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.render.beacon.BeamHolder;
+import com.lothrazar.cyclic.render.beacon.BeamStuff;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.data.EntityFilterType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,14 +21,19 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvider, BeamHolder {
 
@@ -71,7 +69,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
 //      List<MobEffectInstance> newEffects = PotionUtils.getMobEffects(stack);
       PotionContents potionContents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 
-      return potionContents!=null;
+      return potionContents != null;
     }
   };
   private final BeamStuff beamStuff = new BeamStuff();
@@ -157,7 +155,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
     filter.deserialize(input.childOrEmpty("filter"));
     this.radius = input.getIntOr("radius", 0);
     entityFilter = EntityFilterType.values()[input.getIntOr("entityFilter", 0)];
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     this.effects.clear();
     for (MobEffectInstance effectinstance : input.listOrEmpty("Effects", MobEffectInstance.CODEC)) {
@@ -263,14 +261,14 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case ENTITYTYPE:
         value = value % EntityFilterType.values().length;
         this.entityFilter = EntityFilterType.values()[value];
-      break;
+        break;
       case RANGE:
         if (value > MAX_RADIUS) {
           radius = MAX_RADIUS;
@@ -278,7 +276,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
         else {
           this.radius = Math.min(value, MAX_RADIUS);
         }
-      break;
+        break;
     }
   }
 

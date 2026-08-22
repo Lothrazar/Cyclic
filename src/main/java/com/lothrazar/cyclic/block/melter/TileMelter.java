@@ -7,10 +7,7 @@ import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -19,13 +16,14 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.minecraft.core.Direction;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -103,19 +101,19 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
       case BURNMAX:
         this.burnTimeMax = value;
-      break;
+        break;
       case LOCK:
         this.lock = value % 2;
-      break;
+        break;
     }
   }
 
@@ -149,7 +147,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(ValueInput input) {
     tank.deserialize(input.childOrEmpty(NBTFLUID));
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     burnTimeMax = input.getIntOr("burnTimeMax", 0);
     lock = input.getIntOr(NBT_LOCK, 0);

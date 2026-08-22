@@ -23,7 +23,8 @@ public class ScreenCrate extends ScreenBase<ContainerCrate> {
   }
 
   @Override
-  protected void extractLabels(GuiGraphicsExtractor ms, int mouseX, int mouseY) {}
+  protected void extractLabels(GuiGraphicsExtractor ms, int mouseX, int mouseY) {
+  }
 
   @Override
   public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {

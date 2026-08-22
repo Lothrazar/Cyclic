@@ -1,10 +1,11 @@
 package com.lothrazar.cyclic.command;
 
-import java.util.Collection;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerPlayer;
+
+import java.util.Collection;
 
 public class CommandHunger {
 

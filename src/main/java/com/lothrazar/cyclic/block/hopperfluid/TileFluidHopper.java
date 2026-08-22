@@ -11,10 +11,6 @@ import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,6 +19,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -137,7 +135,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic implements MenuProvid
   @Override
   public void loadAdditional(ValueInput input) {
     tank.deserialize(input.childOrEmpty(NBTFLUID));
-          filter.deserialize(input.childOrEmpty(NBT_FILTER));
+    filter.deserialize(input.childOrEmpty(NBT_FILTER));
     super.loadAdditional(input);
   }
 
@@ -156,7 +154,8 @@ public class TileFluidHopper extends TileBlockEntityCyclic implements MenuProvid
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

@@ -23,8 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.peatfarm;
 
-import java.util.List;
-import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
@@ -35,10 +33,7 @@ import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -50,14 +45,18 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -146,10 +145,10 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
     switch (TilePeatFarm.Fields.values()[field]) {
       case REDSTONE:
         this.setNeedsRedstone(value);
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
     }
   }
 
@@ -242,7 +241,7 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
   @Override
   public void loadAdditional(ValueInput input) {
     tank.deserialize(input.childOrEmpty(NBTFLUID));
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     super.loadAdditional(input);
   }

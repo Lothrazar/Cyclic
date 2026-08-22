@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.enchant;
 
-import java.util.Optional;
-import java.util.function.Supplier;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -16,6 +14,9 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
+
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public class AutoSmeltEnchant {
 

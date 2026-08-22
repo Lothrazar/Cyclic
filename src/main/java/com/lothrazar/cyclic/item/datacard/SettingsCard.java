@@ -1,30 +1,30 @@
 package com.lothrazar.cyclic.item.datacard;
 
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.storage.TagValueInput;
+
+import java.util.function.Consumer;
 
 public class SettingsCard extends ItemBaseCyclic {
 
@@ -72,7 +72,7 @@ public class SettingsCard extends ItemBaseCyclic {
         //in future / intheory could be any TE from any mod / vanilla . but thats broken
         CompoundTag tiledata = tile.saveWithoutMetadata(tile.getLevel().registryAccess());
         //cleanup
-        String[] wipers = new String[] { "x", "y", "z", "input", "output", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer", "filter" };
+        String[] wipers = new String[]{"x", "y", "z", "input", "output", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer", "filter"};
         for (String wipe : wipers) {
           tiledata.remove(wipe);
         }

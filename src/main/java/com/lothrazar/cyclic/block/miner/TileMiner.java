@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.miner;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.DataTags;
@@ -12,14 +10,10 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import com.lothrazar.library.util.ShapeUtil;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -27,17 +21,22 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -109,7 +108,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     isCurrentlyMining = input.getBooleanOr("isCurrentlyMining", false);
     shapeIndex = input.getIntOr("shapeIndex", 0);
     directionIsUp = input.getBooleanOr("directionIsUp", false);
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     super.loadAdditional(input);
   }
@@ -143,8 +142,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
       }
       setLitProperty(true);
       updateMiningProgress(shape);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("Miner action error", e);
     }
   }
@@ -335,19 +333,19 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
       case DIRECTION:
         this.directionIsUp = value == 1;
-      break;
+        break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-      break;
+        break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-      break;
+        break;
     }
   }
 

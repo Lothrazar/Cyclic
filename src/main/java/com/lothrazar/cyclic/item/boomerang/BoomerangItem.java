@@ -59,14 +59,14 @@ public class BoomerangItem extends ItemBaseCyclic {
     switch (this.type) {
       case CARRY:
         e = new BoomerangEntityCarry(player, world);
-      break;
+        break;
       case DAMAGE:
         e = new BoomerangEntityDamage(player, world);
-      break;
+        break;
       default:
       case STUN:
         e = new BoomerangEntityStun(player, world);
-      break;
+        break;
     }
     shootMe(world, player, e, 0, percentageCharged * ItemBaseCyclic.VELOCITY_MAX);
     ItemStackUtil.damageItem(player, stack);

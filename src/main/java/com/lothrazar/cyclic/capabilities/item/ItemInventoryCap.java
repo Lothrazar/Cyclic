@@ -4,10 +4,10 @@ import com.lothrazar.cyclic.util.RegistryHolder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.storage.TagValueInput;
-import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 /**
@@ -40,8 +40,8 @@ public class ItemInventoryCap extends ItemStackHandler {
     }
     CompoundTag data = host.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, registries);
-      serialize(output);
-      data.put(KEY, output.buildResult());
+    serialize(output);
+    data.put(KEY, output.buildResult());
     host.set(DataComponents.CUSTOM_DATA, CustomData.of(data));
   }
 }

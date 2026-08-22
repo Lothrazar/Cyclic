@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import java.util.List;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
@@ -21,6 +20,8 @@ import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
+
+import java.util.List;
 
 public class MattockItem extends Item {
 
@@ -139,8 +140,7 @@ public class MattockItem extends Item {
             break;
           }
         }
-      }
-      finally {
+      } finally {
         BUSY.set(Boolean.FALSE);
       }
     }

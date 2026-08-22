@@ -43,7 +43,7 @@ public class FluidHelpers {
 
   /**
    * maps fluid to colour hex code as int value. Used by itemstack durability bar on filled held tanks
-   * 
+   *
    * @param fstack
    * @return
    */
@@ -61,16 +61,14 @@ public class FluidHelpers {
 
   /**
    * Internally knows that water cauldrons fil to level 3, but lava cauldrons are a different block without the level property.
-   * 
+   * <p>
    * Ignores partially filled water cauldrons.
-   * 
+   * <p>
    * a full cauldron is 1000mb
-   * 
+   *
    * @param level
-   * @param posTarget
-   *          where the cauldron exists
-   * @param tank
-   *          of myself that i want to extract frm for the target
+   * @param posTarget where the cauldron exists
+   * @param tank      of myself that i want to extract frm for the target
    * @return
    */
   public static boolean insertSourceCauldron(Level level, BlockPos posTarget, IFluidHandler tank) {
@@ -125,7 +123,7 @@ public class FluidHelpers {
 
     if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
       //for waterlogged it is hardcoded to water
-      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.WATER,1))) {
+      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta, new FluidStack(Fluids.WATER, 1))) {
         int simFill = tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
         if (simFill == FluidAttributes.BUCKET_VOLUME
             && level.setBlockAndUpdate(posTarget, targetState.setValue(BlockStateProperties.WATERLOGGED, false))) {
@@ -134,7 +132,7 @@ public class FluidHelpers {
       }
     }
     else if (targetState.getBlock() == Blocks.WATER_CAULDRON && targetState.getValue(LayeredCauldronBlock.LEVEL) >= 3) {
-      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.WATER,1))) {
+      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta, new FluidStack(Fluids.WATER, 1))) {
         int simFill = tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
         if (simFill == FluidAttributes.BUCKET_VOLUME
             && level.setBlockAndUpdate(posTarget, Blocks.CAULDRON.defaultBlockState())) {
@@ -143,7 +141,7 @@ public class FluidHelpers {
       }
     }
     else if (targetState.getBlock() == Blocks.LAVA_CAULDRON) {
-      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.LAVA,1))) {
+      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta, new FluidStack(Fluids.LAVA, 1))) {
         //copypasta of water cauldron code
         int simFill = tank.fill(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
         if (simFill == FluidAttributes.BUCKET_VOLUME
@@ -244,8 +242,7 @@ public class FluidHelpers {
         ModCyclic.LOGGER.error("Imbalance filling fluids, filled " + filledAmount + " drained " + drainedAmount);
       }
       return true;
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("A fluid tank had an issue when we tried to fill", e);
       //charset crashes here i guess
       //https://github.com/PrinceOfAmber/Cyclic/issues/605

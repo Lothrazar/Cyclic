@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
-import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.AttributesUtil;
+import com.lothrazar.library.util.EnchantUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -24,8 +24,12 @@ public class StepEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(EntityTickEvent.Pre event) {
-    if (!isEnabled()) { return; }
-    if (!(event.getEntity() instanceof Player player)) { return; }
+    if (!isEnabled()) {
+      return;
+    }
+    if (!(event.getEntity() instanceof Player player)) {
+      return;
+    }
     Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.STEP, player);
     int level = EnchantUtil.getCurrentArmorLevelSlot(h, player, EquipmentSlot.LEGS);
     if (level > 0) {

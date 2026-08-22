@@ -1,11 +1,9 @@
 package com.lothrazar.cyclic.enchant;
 
-import java.util.UUID;
-
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
-import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.AttributesUtil;
+import com.lothrazar.library.util.EnchantUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -24,11 +22,15 @@ public class ReachEnchant {
     return CFG == null || CFG.get();
   }
 
-  final static int[] LEVELS = { 0, 4, 7, 11, 16, 19 };
+  final static int[] LEVELS = {0, 4, 7, 11, 16, 19};
 
   private int getBoost(int level) {
-    if (level < 0) { return 0; }
-    else if (level < LEVELS.length) { return LEVELS[level]; }
+    if (level < 0) {
+      return 0;
+    }
+    else if (level < LEVELS.length) {
+      return LEVELS[level];
+    }
     int oldLevel = LEVELS.length - 1;
     return 4 * (level - oldLevel) + LEVELS[oldLevel];
   }
@@ -47,8 +49,12 @@ public class ReachEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(EntityTickEvent.Pre event) {
-    if (!isEnabled()) { return; }
-    if (!(event.getEntity() instanceof Player player)) { return; }
+    if (!isEnabled()) {
+      return;
+    }
+    if (!(event.getEntity() instanceof Player player)) {
+      return;
+    }
     Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.REACH, player);
     int level = EnchantUtil.getCurrentArmorLevel(h, player);
     if (level > 0) {

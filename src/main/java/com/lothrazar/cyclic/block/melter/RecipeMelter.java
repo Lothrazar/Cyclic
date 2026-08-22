@@ -1,14 +1,15 @@
 package com.lothrazar.cyclic.block.melter;
 
-import java.util.List;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
@@ -23,8 +24,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidInstance;
 import net.neoforged.neoforge.fluids.FluidStack;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.codec.ByteBufCodecs;
+
+import java.util.List;
 
 public class RecipeMelter implements Recipe<MelterRecipeInput> {
 
@@ -60,8 +61,8 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
   // instead of throwing a raw exception that aborts the entire datapack reload for every recipe type.
   public static final MapCodec<RecipeMelter> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
       Ingredient.CODEC.listOf().validate(list -> list.size() == 1
-          ? com.mojang.serialization.DataResult.success(list)
-          : com.mojang.serialization.DataResult.error(() -> "Melter recipe must have exactly one ingredient, got " + list.size()))
+              ? com.mojang.serialization.DataResult.success(list)
+              : com.mojang.serialization.DataResult.error(() -> "Melter recipe must have exactly one ingredient, got " + list.size()))
           .fieldOf("ingredients").forGetter(r -> r.getIngredients()),
       ResultTemplate.CODEC.codec().fieldOf("result").forGetter(r -> r.resultTemplate),
       EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
@@ -102,8 +103,7 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
   public boolean matches(MelterRecipeInput inv, Level worldIn) {
     try {
       return matches(inv.getItem(0), ingredients.get(0));
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return false;
     }
   }
@@ -126,7 +126,7 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
     return ingredients.get(slot);
   }
 
-    public NonNullList<Ingredient> getIngredients() {
+  public NonNullList<Ingredient> getIngredients() {
     return ingredients;
   }
 
@@ -156,7 +156,7 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
     return ItemStack.EMPTY;
   }
 
-    public boolean canCraftInDimensions(int width, int height) {
+  public boolean canCraftInDimensions(int width, int height) {
     return width <= 1 && height <= 1;
   }
 

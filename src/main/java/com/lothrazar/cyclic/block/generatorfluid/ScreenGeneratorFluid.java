@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
-import org.joml.Vector3f;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.ScreenBase;
@@ -15,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import org.joml.Vector3f;
 
 public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
 

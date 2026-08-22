@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.block;
 
-import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
@@ -11,6 +8,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.List;
 
 public class MilkSpongeBlock extends BlockCyclic {
 

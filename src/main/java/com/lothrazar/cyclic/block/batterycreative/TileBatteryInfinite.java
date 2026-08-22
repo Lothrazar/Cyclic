@@ -1,20 +1,19 @@
 package com.lothrazar.cyclic.block.batterycreative;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.util.DirectionUtil;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
+import com.lothrazar.library.util.DirectionUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TileBatteryInfinite extends TileBlockEntityCyclic {
 
@@ -49,13 +48,12 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
   }
 
 
-
   @Override
   public void loadAdditional(ValueInput input) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, input.getBooleanOr("flow_" + f.getName(), false));
     }
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     super.loadAdditional(input);
   }
 
@@ -110,22 +108,22 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
     switch (Fields.values()[field]) {
       case D:
         this.setSideField(Direction.DOWN, value % 2);
-      break;
+        break;
       case E:
         this.setSideField(Direction.EAST, value % 2);
-      break;
+        break;
       case N:
         this.setSideField(Direction.NORTH, value % 2);
-      break;
+        break;
       case S:
         this.setSideField(Direction.SOUTH, value % 2);
-      break;
+        break;
       case U:
         this.setSideField(Direction.UP, value % 2);
-      break;
+        break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-      break;
+        break;
     }
   }
 

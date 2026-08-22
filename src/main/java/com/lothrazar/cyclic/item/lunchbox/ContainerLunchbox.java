@@ -3,15 +3,14 @@ package com.lothrazar.cyclic.item.lunchbox;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.items.IItemHandler;
-import com.lothrazar.cyclic.util.CapabilityUtil;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerLunchbox extends ContainerBase {
 
@@ -41,31 +40,31 @@ public class ContainerLunchbox extends ContainerBase {
     }
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-      IItemHandler h = CapabilityUtil.item(bag);
-      if (h != null) {
-        this.slotCount = h.getSlots();
-        this.endInv = h.getSlots();
-        for (int j = 0; j < h.getSlots(); j++) {
-          this.addSlot(new SlotItemHandler(h, j,
-              26 + j * Const.SQ,
-              36) {
+    IItemHandler h = CapabilityUtil.item(bag);
+    if (h != null) {
+      this.slotCount = h.getSlots();
+      this.endInv = h.getSlots();
+      for (int j = 0; j < h.getSlots(); j++) {
+        this.addSlot(new SlotItemHandler(h, j,
+            26 + j * Const.SQ,
+            36) {
 
-            // 26.1: CapabilityUtil.item(...) returns a bridge (IItemHandler.of(resourceHandler)) that no
-            // longer implements IItemHandlerModifiable - the base SlotItemHandler#set() hard-casts to it
-            // and crashes the container on open (container-content sync calls this for every slot).
-            // Emulate "overwrite this slot" via extract-then-insert instead.
-            @Override
-            public void set(ItemStack stack) {
-              IItemHandler handler = getItemHandler();
-              handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
-              if (!stack.isEmpty()) {
-                handler.insertItem(index, stack, false);
-              }
-              setChanged();
+          // 26.1: CapabilityUtil.item(...) returns a bridge (IItemHandler.of(resourceHandler)) that no
+          // longer implements IItemHandlerModifiable - the base SlotItemHandler#set() hard-casts to it
+          // and crashes the container on open (container-content sync calls this for every slot).
+          // Emulate "overwrite this slot" via extract-then-insert instead.
+          @Override
+          public void set(ItemStack stack) {
+            IItemHandler handler = getItemHandler();
+            handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+            if (!stack.isEmpty()) {
+              handler.insertItem(index, stack, false);
             }
-          });
-        }
+            setChanged();
+          }
+        });
       }
+    }
     layoutPlayerInventorySlots(8, 84);
   }
 

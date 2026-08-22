@@ -25,7 +25,7 @@ public class ContainerWirelessEnergy extends ContainerBase {
       int row = j / 9;
       int col = j % 9;
       int xPos = 8 + col * Const.SQ;
-      int yPos = 36 + row * Const.SQ+16;
+      int yPos = 36 + row * Const.SQ + 16;
       addSlot(new SlotItemHandler(tile.gpsSlots, j, xPos, yPos) {
 
         @Override

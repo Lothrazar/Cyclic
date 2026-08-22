@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.net;
 
+import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketPlayerSyncToClient implements CustomPacketPayload {
 
@@ -26,7 +26,8 @@ public class PacketPlayerSyncToClient implements CustomPacketPayload {
     this.mayfly = mayfly;
   }
 
-  public PacketPlayerSyncToClient() {}
+  public PacketPlayerSyncToClient() {
+  }
 
   public static void handle(PacketPlayerSyncToClient message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> ClientNetHandlers.handlePlayerSync(message));

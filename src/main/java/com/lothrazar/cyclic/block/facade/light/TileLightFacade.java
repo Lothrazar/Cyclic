@@ -1,14 +1,14 @@
 package com.lothrazar.cyclic.block.facade.light;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.library.core.ITileFacade;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.library.core.ITileFacade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.block.state.BlockState;
 
 public class TileLightFacade extends TileBlockEntityCyclic implements ITileFacade {
 
@@ -41,7 +41,8 @@ public class TileLightFacade extends TileBlockEntityCyclic implements ITileFacad
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

@@ -1,11 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.event.*;
-import com.lothrazar.cyclic.potion.PotionEventHandler;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
 import com.lothrazar.cyclic.enchant.BeheadingEnchant;
 import com.lothrazar.cyclic.enchant.DisarmEnchant;
@@ -25,7 +19,15 @@ import com.lothrazar.cyclic.enchant.StepEnchant;
 import com.lothrazar.cyclic.enchant.TravellerEnchant;
 import com.lothrazar.cyclic.enchant.VenomEnchant;
 import com.lothrazar.cyclic.enchant.XpEnchant;
+import com.lothrazar.cyclic.event.EnchantEventHandler;
+import com.lothrazar.cyclic.event.ItemEventHandler;
+import com.lothrazar.cyclic.event.WorldEventHandler;
 import com.lothrazar.cyclic.item.equipment.MattockItem;
+import com.lothrazar.cyclic.potion.PotionEventHandler;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public class EventRegistry {
 

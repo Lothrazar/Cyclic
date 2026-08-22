@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.BlockWaxedRedstone;
@@ -52,6 +51,7 @@ import com.lothrazar.cyclic.block.enderctrl.BlockEnderCtrl;
 import com.lothrazar.cyclic.block.enderitemshelf.BlockItemShelf;
 import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.BlockExpPylon;
+import com.lothrazar.cyclic.block.expfountain.BlockExperienceFountain;
 import com.lothrazar.cyclic.block.eye.BlockEye;
 import com.lothrazar.cyclic.block.eyetp.BlockEyeTp;
 import com.lothrazar.cyclic.block.facade.light.BlockLightFacade;
@@ -104,7 +104,6 @@ import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.spikes.EnumSpikeType;
 import com.lothrazar.cyclic.block.spikes.SpikesBlock;
 import com.lothrazar.cyclic.block.spikes.SpikesDiamond;
-import com.lothrazar.cyclic.block.expfountain.BlockExperienceFountain;
 import com.lothrazar.cyclic.block.sprinkler.BlockSprinkler;
 import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
@@ -130,7 +129,13 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChainBlock;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -141,62 +146,63 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.List;
+
 public class BlockRegistry {
 
   public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModCyclic.MODID);
 
 
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
-          .icon(() -> new ItemStack(BlockRegistry.TRASH.get()))
-          .title(Component.translatable("itemGroup." + ModCyclic.MODID))
-          .displayItems((displayParameters, output) -> {
-            //
-            if (ModList.get().isLoaded(CompatConstants.PATCHOULI)) {
-              try {
-                // important: keep FQCN
-                ItemStack guideBook = vazkii.patchouli.api.PatchouliAPI.get().getBookStack(
-                    net.minecraft.resources.Identifier.fromNamespaceAndPath(ModCyclic.MODID, "guide_book"));
-                if (!guideBook.isEmpty()) {
-                  output.accept(guideBook);
-                }
-              }
-              catch (Exception e) {
-                ModCyclic.LOGGER.error("Could not add Patchouli guide_book to creative tab", e);
-              }
+      .icon(() -> new ItemStack(BlockRegistry.TRASH.get()))
+      .title(Component.translatable("itemGroup." + ModCyclic.MODID))
+      .displayItems((displayParameters, output) -> {
+        //
+        if (ModList.get().isLoaded(CompatConstants.PATCHOULI)) {
+          try {
+            // important: keep FQCN
+            ItemStack guideBook = vazkii.patchouli.api.PatchouliAPI.get().getBookStack(
+                net.minecraft.resources.Identifier.fromNamespaceAndPath(ModCyclic.MODID, "guide_book"));
+            if (!guideBook.isEmpty()) {
+              output.accept(guideBook);
             }
-            // Next add all items (includes blocks that have an item version)
-            List<ItemStack> stacks = ItemRegistry.ITEMS.getEntries().stream()
-                .map(reg -> new ItemStack(reg.get()))
-                .filter(stack -> !stack.is(ItemRegistry.MOB_CONTAINER.get()))
-                .toList();
-            output.acceptAll(stacks);
-            // all potion and enchantments at the end
-            HolderLookup.Provider lookup = displayParameters.holders();
-            lookup.lookup(Registries.POTION).ifPresent(potionRegistry -> {
-              PotionRegistry.POTIONS.getEntries().forEach(reg -> {
-                potionRegistry.get(reg.getKey()).ifPresent(potionHolder -> {
-                  output.accept(PotionContents.createItemStack(Items.POTION, potionHolder));
-                  output.accept(PotionContents.createItemStack(Items.SPLASH_POTION, potionHolder));
-                  output.accept(PotionContents.createItemStack(Items.LINGERING_POTION, potionHolder));
-                  output.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, potionHolder));
-                });
+          } catch (Exception e) {
+            ModCyclic.LOGGER.error("Could not add Patchouli guide_book to creative tab", e);
+          }
+        }
+        // Next add all items (includes blocks that have an item version)
+        List<ItemStack> stacks = ItemRegistry.ITEMS.getEntries().stream()
+            .map(reg -> new ItemStack(reg.get()))
+            .filter(stack -> !stack.is(ItemRegistry.MOB_CONTAINER.get()))
+            .toList();
+        output.acceptAll(stacks);
+        // all potion and enchantments at the end
+        HolderLookup.Provider lookup = displayParameters.holders();
+        lookup.lookup(Registries.POTION).ifPresent(potionRegistry -> {
+          PotionRegistry.POTIONS.getEntries().forEach(reg -> {
+            potionRegistry.get(reg.getKey()).ifPresent(potionHolder -> {
+              output.accept(PotionContents.createItemStack(Items.POTION, potionHolder));
+              output.accept(PotionContents.createItemStack(Items.SPLASH_POTION, potionHolder));
+              output.accept(PotionContents.createItemStack(Items.LINGERING_POTION, potionHolder));
+              output.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, potionHolder));
+            });
+          });
+        });
+        lookup.lookup(Registries.ENCHANTMENT).ifPresent(enchantRegistry -> {
+          enchantRegistry.listElements()
+              // 26.1: ResourceKey#location() renamed to identifier()
+              .filter(holder -> holder.key().identifier().getNamespace().equals(ModCyclic.MODID))
+              .forEach(holder -> {
+                ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+                book.enchant(holder, holder.value().getMaxLevel());
+                output.accept(book);
               });
-            });
-            lookup.lookup(Registries.ENCHANTMENT).ifPresent(enchantRegistry -> {
-              enchantRegistry.listElements()
-                  // 26.1: ResourceKey#location() renamed to identifier()
-                  .filter(holder -> holder.key().identifier().getNamespace().equals(ModCyclic.MODID))
-                  .forEach(holder -> {
-                    ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-                    book.enchant(holder, holder.value().getMaxLevel());
-                    output.accept(book);
-                  });
-            });
-          }).build());
+        });
+      }).build());
 
   public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ModCyclic.MODID);
   public static final DeferredBlock<Block> COMPRESSED_COBBLESTONE = BLOCKS.registerBlock("compressed_cobblestone", props -> new BlockFlib(props.strength(1.0F, 7.0F), new BlockFlib.Settings().noTooltip()));
-  public static final DeferredBlock<Block> FLINT_BLOCK = BLOCKS.registerBlock("flint_block", props -> new BlockFlib(props.strength(1.3F, 5.0F), new BlockFlib.Settings().noTooltip()) );
+  public static final DeferredBlock<Block> FLINT_BLOCK = BLOCKS.registerBlock("flint_block", props -> new BlockFlib(props.strength(1.3F, 5.0F), new BlockFlib.Settings().noTooltip()));
   public static final DeferredBlock<Block> SPIKES_IRON = BLOCKS.registerBlock("spikes_iron", props -> new SpikesBlock(props, EnumSpikeType.PLAIN));
   public static final DeferredBlock<Block> SPIKES_FIRE = BLOCKS.registerBlock("spikes_fire", props -> new SpikesBlock(props, EnumSpikeType.FIRE));
   public static final DeferredBlock<Block> SPIKES_CURSE = BLOCKS.registerBlock("spikes_curse", props -> new SpikesBlock(props, EnumSpikeType.CURSE));
@@ -229,44 +235,44 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> LIGHT_CAMO = BLOCKS.registerBlock("light_camo", props -> new BlockLightFacade(props.forceSolidOn()));
   public static final DeferredBlock<Block> LASER = BLOCKS.registerBlock("laser", props -> new BlockLaser(props));
   public static final DeferredBlock<Block> FLOWER_CYAN = BLOCKS.registerBlock("flower_cyan", props -> new FlowerBlock(MobEffects.REGENERATION,
-          4.0F,
-          props
-                  .mapColor(MapColor.PLANT)
-                  .noCollision()
-                  .instabreak()
-                  .sound(SoundType.GRASS)
-                  .offsetType(BlockBehaviour.OffsetType.XZ)
-                  .pushReaction(PushReaction.DESTROY)
+      4.0F,
+      props
+          .mapColor(MapColor.PLANT)
+          .noCollision()
+          .instabreak()
+          .sound(SoundType.GRASS)
+          .offsetType(BlockBehaviour.OffsetType.XZ)
+          .pushReaction(PushReaction.DESTROY)
   ));
   public static final DeferredBlock<Block> FLOWER_PURPLE_TULIP = BLOCKS.registerBlock("flower_purple_tulip", props -> new FlowerBlock(MobEffects.REGENERATION,
-          4.0F,
-          props
-                  .mapColor(MapColor.PLANT)
-                  .noCollision()
-                  .instabreak()
-                  .sound(SoundType.GRASS)
-                  .offsetType(BlockBehaviour.OffsetType.XZ)
-                  .pushReaction(PushReaction.DESTROY)
+      4.0F,
+      props
+          .mapColor(MapColor.PLANT)
+          .noCollision()
+          .instabreak()
+          .sound(SoundType.GRASS)
+          .offsetType(BlockBehaviour.OffsetType.XZ)
+          .pushReaction(PushReaction.DESTROY)
   ));
   public static final DeferredBlock<Block> FLOWER_LIME_CARNATION = BLOCKS.registerBlock("flower_lime_carnation", props -> new FlowerBlock(MobEffects.REGENERATION,
-          4.0F,
-          props
-                  .mapColor(MapColor.PLANT)
-                  .noCollision()
-                  .instabreak()
-                  .sound(SoundType.GRASS)
-                  .offsetType(BlockBehaviour.OffsetType.XZ)
-                  .pushReaction(PushReaction.DESTROY)
+      4.0F,
+      props
+          .mapColor(MapColor.PLANT)
+          .noCollision()
+          .instabreak()
+          .sound(SoundType.GRASS)
+          .offsetType(BlockBehaviour.OffsetType.XZ)
+          .pushReaction(PushReaction.DESTROY)
   ));
   public static final DeferredBlock<Block> FLOWER_ABSALON_TULIP = BLOCKS.registerBlock("flower_absalon_tulip", props -> new FlowerBlock(MobEffects.REGENERATION,
-          4.0F,
-          props
-                  .mapColor(MapColor.PLANT)
-                  .noCollision()
-                  .instabreak()
-                  .sound(SoundType.GRASS)
-                  .offsetType(BlockBehaviour.OffsetType.XZ)
-                  .pushReaction(PushReaction.DESTROY)
+      4.0F,
+      props
+          .mapColor(MapColor.PLANT)
+          .noCollision()
+          .instabreak()
+          .sound(SoundType.GRASS)
+          .offsetType(BlockBehaviour.OffsetType.XZ)
+          .pushReaction(PushReaction.DESTROY)
   ));
   public static final DeferredBlock<Block> MEMBRANE = BLOCKS.registerBlock("membrane", props -> new MembraneBlock(props));
   public static final DeferredBlock<Block> LAMP = BLOCKS.registerBlock("lamp", props -> new MembraneLamp(props), () -> Block.Properties.ofFullCopy(Blocks.REDSTONE_LAMP));

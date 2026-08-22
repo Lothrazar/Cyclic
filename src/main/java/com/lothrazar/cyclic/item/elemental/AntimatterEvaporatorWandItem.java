@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.item.elemental;
 
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.Locale;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
@@ -23,13 +20,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.component.CustomData;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.function.Consumer;
 
 
 public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
@@ -75,13 +76,13 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     //    AtomicBoolean removed = new AtomicBoolean(false);
     switch (fluidMode) {
       case GENERIC:
-      break;
+        break;
       case LAVA:
-      break;
+        break;
       case WATER:
-      break;
+        break;
       default:
-      break;
+        break;
     }
     int countSuccess = 0;
     boolean tryHere = false;

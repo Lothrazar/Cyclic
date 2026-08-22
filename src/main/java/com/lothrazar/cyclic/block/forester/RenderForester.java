@@ -20,7 +20,8 @@ public class RenderForester implements BlockEntityRenderer<TileForester, RenderF
     TileForester blockEntity;
   }
 
-  public RenderForester(BlockEntityRendererProvider.Context d) {}
+  public RenderForester(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -29,7 +30,7 @@ public class RenderForester implements BlockEntityRenderer<TileForester, RenderF
 
   @Override
   public void extractRenderState(TileForester blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

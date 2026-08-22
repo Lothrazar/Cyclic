@@ -23,7 +23,6 @@ public class SoulstoneCharm extends ItemBaseToggle {
   }
 
 
-
   //from LivingEntity class
   public static boolean checkTotemDeathProtection(DamageSource damageSourceIn, Player player, ItemStack itemstack) {
     if (itemstack.getItem() != ItemRegistry.SOULSTONE.get()) {

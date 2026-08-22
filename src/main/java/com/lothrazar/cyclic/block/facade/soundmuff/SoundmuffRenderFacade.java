@@ -20,7 +20,8 @@ public class SoundmuffRenderFacade implements BlockEntityRenderer<SoundmuffTileF
     SoundmuffTileFacade blockEntity;
   }
 
-  public SoundmuffRenderFacade(BlockEntityRendererProvider.Context d) {}
+  public SoundmuffRenderFacade(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public boolean shouldRenderOffScreen() {
@@ -34,7 +35,7 @@ public class SoundmuffRenderFacade implements BlockEntityRenderer<SoundmuffTileF
 
   @Override
   public void extractRenderState(SoundmuffTileFacade blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

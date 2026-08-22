@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
@@ -11,14 +12,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.minecraft.core.registries.Registries;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class PotionRegistry {
 
   public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(Registries.POTION, ModCyclic.MODID);
-  
+
   static final int normal = 3600;
   static final int smal = 1800;
   public static final DeferredHolder<Potion, Potion> ANTIGRAVITY = POTIONS.register("antigravity", () -> new Potion(ModCyclic.MODID + "_antigravity", new MobEffectInstance(PotionEffectRegistry.ANTIGRAVITY, normal, 3, false, false, false)));

@@ -1,14 +1,15 @@
 package com.lothrazar.cyclic.gui;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.client.gui.Font;
-import java.util.Optional;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class TimerBar {
 

@@ -53,7 +53,7 @@ public class ScreenWirelessEnergy extends ScreenBase<ContainerWirelessEnergy> {
   public void extractBackground(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     //    this.drawSlot(ms, 79, 35, TextureRegistry.SLOT_GPS);
-    int y = 35+16;
+    int y = 35 + 16;
     for (int i = 0; i < 8; i++) {
       this.drawSlot(ms, 7 + i * Const.SQ, y, TextureRegistry.SLOT_GPS, 18);
     }

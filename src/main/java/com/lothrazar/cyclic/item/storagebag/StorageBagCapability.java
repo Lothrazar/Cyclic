@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.item.storagebag;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 

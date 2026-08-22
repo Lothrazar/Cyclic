@@ -1,25 +1,31 @@
 package com.lothrazar.cyclic.item.builder;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.util.CapabilityUtil;
-import com.lothrazar.library.util.*;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import com.lothrazar.library.util.BlockUtil;
+import com.lothrazar.library.util.ChatUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
+import com.lothrazar.library.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class PacketSwapBlock implements CustomPacketPayload {
 
@@ -84,7 +90,7 @@ public class PacketSwapBlock implements CustomPacketPayload {
       Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
       BlockPos curPos;
       synchronized (places) {
-        for (Iterator<BlockPos> i = places.iterator(); i.hasNext();) {
+        for (Iterator<BlockPos> i = places.iterator(); i.hasNext(); ) {
           curPos = i.next();
           if (storage.extractEnergy(cost, true) < cost) {
             break;
@@ -148,6 +154,7 @@ public class PacketSwapBlock implements CustomPacketPayload {
       }
     });
   }
+
   public static List<BlockPos> getSelectedBlocks(Level world, BlockPos pos, BuilderActionType actionType, Direction side, BuildStyle style) {
     List<BlockPos> places = new ArrayList<BlockPos>();
     int xMin = pos.getX();

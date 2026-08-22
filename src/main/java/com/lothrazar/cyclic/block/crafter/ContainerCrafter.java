@@ -75,21 +75,21 @@ public class ContainerCrafter extends ContainerBase {
     //add grid
     var h = tile.gridCap;
 //    tile.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
-      int index = 0;
-      for (int rowPos = 0; rowPos < TileCrafter.GRID_NUM_ROWS; rowPos++) {
-        for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
-          this.addSlot(new CrafterGridSlot(h, index,
-              GRID_START_X + colPos * Const.SQ,
-              GRID_START_Y + rowPos * Const.SQ) {
+    int index = 0;
+    for (int rowPos = 0; rowPos < TileCrafter.GRID_NUM_ROWS; rowPos++) {
+      for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
+        this.addSlot(new CrafterGridSlot(h, index,
+            GRID_START_X + colPos * Const.SQ,
+            GRID_START_Y + rowPos * Const.SQ) {
 
-            @Override
-            public void setChanged() {
-              tile.setChanged();
-            }
-          });
-          index++;
-        }
+          @Override
+          public void setChanged() {
+            tile.setChanged();
+          }
+        });
+        index++;
       }
+    }
 //    });
     //add output 
     indexx = 0;
@@ -108,15 +108,15 @@ public class ContainerCrafter extends ContainerBase {
       }
     }
 //    tile.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
-      addSlot(new CrafterGridSlot(tile.preview, 0,
-          PREVIEW_START_X,
-          PREVIEW_START_Y) {
+    addSlot(new CrafterGridSlot(tile.preview, 0,
+        PREVIEW_START_X,
+        PREVIEW_START_Y) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
 //    });
     this.endInv = slots.size();
     layoutPlayerInventorySlots(8, 153);

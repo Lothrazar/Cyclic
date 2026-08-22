@@ -41,7 +41,7 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf, Ite
 
   @Override
   public void extractRenderState(TileItemShelf blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
     int slots = blockEntity.inventory.getSlots();
@@ -67,7 +67,7 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf, Ite
   }
 
   private void renderSlot(TileItemShelf tile, int slot, ItemStack stack, ItemStackRenderState itemState, PoseStack ms,
-      SubmitNodeCollector submitNodeCollector, int combinedLightIn) {
+                          SubmitNodeCollector submitNodeCollector, int combinedLightIn) {
     if (stack.isEmpty()) {
       return;
     }

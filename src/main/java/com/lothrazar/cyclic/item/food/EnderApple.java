@@ -1,10 +1,5 @@
 package com.lothrazar.cyclic.item.food;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.util.ChatUtil;
@@ -23,6 +18,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class EnderApple extends ItemBaseCyclic {
 
@@ -90,8 +91,7 @@ public class EnderApple extends ItemBaseCyclic {
             distanceStructNames.put(name, (int) distance);
           }
         }
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         ModCyclic.LOGGER.error("Apple structure?", e);
       }
       if (distanceStructNames.isEmpty()) {

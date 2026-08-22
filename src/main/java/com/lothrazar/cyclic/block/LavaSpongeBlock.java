@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block;
 
-import java.util.List;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -10,6 +9,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.List;
 
 public class LavaSpongeBlock extends BlockCyclic {
 

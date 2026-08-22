@@ -5,5 +5,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderBeaconAnti extends RenderBeaconBase<TileAntiBeacon> {
 
-  public RenderBeaconAnti(BlockEntityRendererProvider.Context d) {}
+  public RenderBeaconAnti(BlockEntityRendererProvider.Context d) {
+  }
 }

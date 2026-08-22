@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import net.minecraft.resources.Identifier;
@@ -14,6 +13,8 @@ import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.Map;
 
 public class MaterialRegistry {
 

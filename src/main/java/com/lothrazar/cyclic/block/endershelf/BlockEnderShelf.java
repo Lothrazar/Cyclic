@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.block.endershelf;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
 import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
@@ -12,30 +9,33 @@ import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.storage.TagValueInput;
-import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockEnderShelf extends BlockCyclic {
 

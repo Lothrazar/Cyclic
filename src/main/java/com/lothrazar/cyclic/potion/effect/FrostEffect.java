@@ -22,14 +22,18 @@ public class FrostEffect extends CyclicMobEffect {
 
   @Override
   public void tick(EntityTickEvent.Pre event) {
-    if (!(event.getEntity() instanceof LivingEntity living)) { return; }
+    if (!(event.getEntity() instanceof LivingEntity living)) {
+      return;
+    }
 
     int amp = living.getEffect(PotionEffectRegistry.FROST_WALKER).getAmplifier();
     freezeNearbyWater(living, living.level(), living.blockPosition(), amp);
   }
 
   private static void freezeNearbyWater(LivingEntity entity, Level level, BlockPos pos, int amplifier) {
-    if (!entity.onGround()) { return; }
+    if (!entity.onGround()) {
+      return;
+    }
     BlockState frostedIce = Blocks.FROSTED_ICE.defaultBlockState();
     float radius = Math.min(16, 2 + amplifier);
     BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();

@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,7 +25,8 @@ public class SculkFluidBlock extends GenericFluidBlock {
         if (level.getRandom().nextDouble() < 0.10 && ClientConfigCyclic.SCULK_FLUID_XP_SOUND.get()) {
           level.playLocalSound(pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 0.4F, 0.8F + level.getRandom().nextFloat() * 0.4F, false);
         }
-      } else {
+      }
+      else {
         if (player.totalExperience > 0) {
           int drain = state.getFluidState().isSource() ? 2 : 1;
           player.giveExperiencePoints(-drain);

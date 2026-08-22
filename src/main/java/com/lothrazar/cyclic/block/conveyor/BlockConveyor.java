@@ -1,29 +1,23 @@
 package com.lothrazar.cyclic.block.conveyor;
 
-import java.util.AbstractMap.SimpleImmutableEntry;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -43,6 +37,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock {
 
@@ -100,8 +99,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
    * <p>
    * https://gist.github.com/sciwhiz12/0852b629e7a3d0200ffc03ec7edab187
    *
-   * @param shape
-   *          The shape to rotate
+   * @param shape The shape to rotate
    * @return The rotated shape
    */
   public static VoxelShape rot(final VoxelShape shape) {
@@ -194,7 +192,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
           return ANGLEWEST;
         case DOWN:
         case UP:
-        break;
+          break;
       }
       if (state.getValue(TYPE) == ConveyorType.DOWN) {
         switch (facing) {
@@ -208,7 +206,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
             return ANGLEEAST;
           case DOWN:
           case UP:
-          break;
+            break;
         }
       }
     }
@@ -343,6 +341,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
     world.setBlock(pos, state.setValue(BlockStateProperties.HORIZONTAL_FACING, facing).setValue(SPEED, speed).setValue(TYPE, type).setValue(COLOUR, col), 2);
     super.setPlacedBy(world, pos, state, placer, stack);
   }
+
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
     super.appendHoverText(stack, context, tooltip, flag);

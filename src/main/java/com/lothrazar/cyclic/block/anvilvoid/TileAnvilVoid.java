@@ -11,10 +11,8 @@ import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.FluidHelpersUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.MenuProvider;
@@ -24,18 +22,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
 
 
 public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
@@ -55,7 +52,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-// //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  // //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
     return FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
   });
@@ -85,7 +82,6 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerAnvilVoid(i, level, worldPosition, playerInventory, playerEntity);
   }
-
 
 
   @Override
@@ -157,7 +153,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
       case TIMER:
         return this.timer;
       default:
-      break;
+        break;
     }
     return 0;
   }
@@ -167,10 +163,10 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.timer = value;
-      break;
+        break;
     }
   }
 
@@ -185,7 +181,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

@@ -3,20 +3,18 @@ package com.lothrazar.cyclic.block.disenchant;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.FluidHelpersUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.MenuProvider;
@@ -28,19 +26,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.enchantment.ItemEnchantments;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
@@ -68,12 +66,12 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   public static final int CAPACITY = 16 * FluidType.BUCKET_VOLUME;
   ItemStackHandler outputSlots = new ItemStackHandler(2);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-// //  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  // //  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX / 4);
   public static ModConfigSpec.IntValue POWERCONF;
   public static ModConfigSpec.IntValue FLUIDCOST;
   public static ModConfigSpec.IntValue TIMERCONF;
-// //  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  // //  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
     return FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
   });
@@ -149,13 +147,15 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     //success happening
     if (level.getRandom().nextDouble() < 0.5) {
       SoundUtil.playSound(level, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE);
-    } else {
+    }
+    else {
       SoundUtil.playSound(level, worldPosition, SoundEvents.ANVIL_USE);
     }
     energy.extractEnergy(cost, false);
     if (FLUIDCOST.get() > 0) {
       tank.drain(FLUIDCOST.get(), IFluidHandler.FluidAction.EXECUTE);
-    } else if (FLUIDCOST.get() < 0) {
+    }
+    else if (FLUIDCOST.get() < 0) {
       Fluid newFluid = FluidXpJuiceHolder.STILL.get();
       if (!this.getFluid().isEmpty()) {
         //if its holding a tag compatible but different fluid, just fill
@@ -179,12 +179,14 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     if (input.getItem() == Items.ENCHANTED_BOOK && remainingEmpty) { // empty ench on enchbook override
       inputSlots.extractItem(SLOT_INPUT, 64, false); //delete input
       inputSlots.insertItem(SLOT_INPUT, new ItemStack(Items.BOOK), false);
-    } else {
+    }
+    else {
       //was a normal item, so ok to set its ench list to empty
       if (input.getItem() == Items.ENCHANTED_BOOK) { // normal enchanted book - swap in stripped copy
         inputSlots.extractItem(SLOT_INPUT, 64, false); //delete input
         inputSlots.insertItem(SLOT_INPUT, stripped, false);
-      } else { // non-book set as removed from item
+      }
+      else { // non-book set as removed from item
         EnchantmentHelper.updateEnchantments(input, m -> m.removeIf(h -> h.equals(movedKey)));
       }
     }
@@ -204,7 +206,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public int getEnergy() {
-    return CapabilityUtil.energyStored(level,this.getBlockPos());
+    return CapabilityUtil.energyStored(level, this.getBlockPos());
   }
 
   @Override
@@ -221,7 +223,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   @Override
   public void loadAdditional(ValueInput input) {
     tank.deserialize(input.childOrEmpty(NBTFLUID));
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     super.loadAdditional(input);
   }
@@ -239,12 +241,12 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         timer = value;
-      break;
+        break;
       case TIMERMAX:
-      break;
+        break;
     }
   }
 
@@ -288,7 +290,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

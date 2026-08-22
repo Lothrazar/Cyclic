@@ -30,15 +30,23 @@ public class EnderPearlEnchant {
 
   @SubscribeEvent
   public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
-    if (!isEnabled()) { return; }
+    if (!isEnabled()) {
+      return;
+    }
     Level world = event.getLevel();
-    if (world.isClientSide() || event.isCanceled()) { return; }
+    if (world.isClientSide() || event.isCanceled()) {
+      return;
+    }
     ItemStack stack = event.getItemStack();
     int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.PEARL, world), stack);
-    if (level <= 0) { return; }
+    if (level <= 0) {
+      return;
+    }
     int adjustedCooldown = COOLDOWN / level;
     Player player = event.getEntity();
-    if (player.getCooldowns().isOnCooldown(stack)) { return; }
+    if (player.getCooldowns().isOnCooldown(stack)) {
+      return;
+    }
     ThrownEnderpearl pearl = new ThrownEnderpearl(world, player, stack);
     Vec3 lookVector = player.getLookAngle();
     pearl.shoot(lookVector.x(), lookVector.y(), lookVector.z(), VELOCITY, INNACCURACY);

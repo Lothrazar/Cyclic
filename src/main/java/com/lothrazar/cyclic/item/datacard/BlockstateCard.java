@@ -1,12 +1,10 @@
 package com.lothrazar.cyclic.item.datacard;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -18,13 +16,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.component.CustomData;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class BlockstateCard extends ItemBaseCyclic {
 
@@ -83,8 +83,7 @@ public class BlockstateCard extends ItemBaseCyclic {
           return false;
         }
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return false;
     }
     //none had a mismatch

@@ -1,7 +1,8 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import java.util.Locale;
 import net.minecraft.util.StringRepresentable;
+
+import java.util.Locale;
 
 public enum RefillMode implements StringRepresentable {
 

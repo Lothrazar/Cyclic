@@ -3,11 +3,11 @@ package com.lothrazar.cyclic.item.bauble;
 import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class AirAntiGravity extends ItemBaseToggle {
@@ -20,7 +20,7 @@ public class AirAntiGravity extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity,  EquipmentSlot slot) {
+  public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, EquipmentSlot slot) {
     if (!this.canUse(stack)) {
       return;
     }

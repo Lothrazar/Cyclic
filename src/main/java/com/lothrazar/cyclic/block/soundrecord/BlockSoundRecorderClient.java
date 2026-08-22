@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.soundrecord;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.net.PacketRecordSound;
@@ -13,9 +12,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.List;
 
 // 26.1: this used to be an instance method on BlockSoundRecorder itself, manually registered onto the
 // event bus from the constructor via an FMLEnvironment dist check. That pattern crashes a dedicated

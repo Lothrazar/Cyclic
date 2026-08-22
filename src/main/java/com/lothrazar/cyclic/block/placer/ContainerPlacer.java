@@ -19,14 +19,14 @@ public class ContainerPlacer extends ContainerBase {
     tile = (TilePlacer) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-      this.endInv = tile.inventory.getSlots();
-      addSlot(new SlotItemHandler(tile.inventory, 0, 80, 29) {
+    this.endInv = tile.inventory.getSlots();
+    addSlot(new SlotItemHandler(tile.inventory, 0, 80, 29) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TilePlacer.Fields.values().length);
     trackEnergy(tile);

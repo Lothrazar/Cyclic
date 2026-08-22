@@ -33,8 +33,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class WaterSpreaderItem extends ItemBaseCyclic {
 
@@ -65,7 +65,8 @@ public class WaterSpreaderItem extends ItemBaseCyclic {
       if (world.isWaterAt(pos) && world.getBlockState(pos).getBlock() == Blocks.WATER) {
         world.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
         count++;
-      } else {
+      }
+      else {
         BlockState state = world.getBlockState(pos);
         if (state.hasProperty(BlockStateProperties.WATERLOGGED)
             && !state.getValue(BlockStateProperties.WATERLOGGED).booleanValue()

@@ -50,7 +50,8 @@ public class ConveyorItemRenderer<T extends Entity & ItemSupplier> extends Entit
     if (isGui3d) {
       // 3D block models render naturally with no rotation; our renderer never calls the vanilla
       // bob/spin logic so they remain still on the belt.
-    } else {
+    }
+    else {
       ms.mulPose(Axis.XP.rotationDegrees(-90.0F));
     }
     state.item.submit(ms, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);

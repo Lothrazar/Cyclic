@@ -20,7 +20,8 @@ public class RenderFluidCollect implements BlockEntityRenderer<TileFluidCollect,
     TileFluidCollect blockEntity;
   }
 
-  public RenderFluidCollect(BlockEntityRendererProvider.Context d) {}
+  public RenderFluidCollect(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -29,7 +30,7 @@ public class RenderFluidCollect implements BlockEntityRenderer<TileFluidCollect,
 
   @Override
   public void extractRenderState(TileFluidCollect blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

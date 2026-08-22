@@ -1,19 +1,20 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import java.util.LinkedList;
-import java.util.List;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Tooltip;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
@@ -74,7 +75,8 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   }
 
   @Override
-  protected void extractLabels(GuiGraphicsExtractor gg, int x, int y) {}
+  protected void extractLabels(GuiGraphicsExtractor gg, int x, int y) {
+  }
 
   @Override
   public void extractBackground(GuiGraphicsExtractor gg, int x, int y, float partialTicks) {
@@ -92,7 +94,8 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     int index;
 
     public ToggleButton(int x, int y, CompoundTag nbt, StringTag key, Tag defaultValue, Component defaultTitle, Component defaultTooltip) {
-      super(x, y, 0, 20, defaultTitle, (p -> {}), Button.DEFAULT_NARRATION);
+      super(x, y, 0, 20, defaultTitle, (p -> {
+      }), Button.DEFAULT_NARRATION);
       this.width = ScreenStorageBag.this.font.width(defaultTitle.getString()) + 8;
       index = 0;
       titles = new LinkedList<>();

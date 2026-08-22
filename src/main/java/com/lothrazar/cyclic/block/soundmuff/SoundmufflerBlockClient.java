@@ -8,8 +8,8 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 
 // 26.1: moved out of SoundmufflerBlock itself - a class file referencing client-only types
 // (ClientLevel/SoundInstance) in ANY of its methods, even static + @EventBusSubscriber(Dist.CLIENT)
@@ -69,8 +69,7 @@ public class SoundmufflerBlockClient {
       SoundVolumeControlled newSound = new SoundVolumeControlled(sound);
       newSound.setVolume(newVolume);
       event.setSound(newSound);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("Error trying to detect volume of sound " + sound, e);
     }
   }

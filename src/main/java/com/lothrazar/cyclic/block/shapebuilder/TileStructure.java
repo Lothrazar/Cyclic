@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.shapebuilder;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -14,10 +12,7 @@ import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.util.BlockUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -28,11 +23,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TileStructure extends TileBlockEntityCyclic implements MenuProvider {
@@ -91,9 +90,9 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
 
   @Override
   public void loadAdditional(ValueInput input) {
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
-          filter.deserialize(input.childOrEmpty("filter"));
+    filter.deserialize(input.childOrEmpty("filter"));
     int t = input.getIntOr("buildType", 0);
     buildType = BuildStructureType.values()[t];
     buildSize = input.getIntOr("buildSize", 0);
@@ -129,25 +128,25 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case BUILDTYPE:
         if (value >= BuildStructureType.values().length) {
           value = 0;
         }
         this.buildType = BuildStructureType.values()[value];
-      break;
+        break;
       case SIZE:
         this.buildSize = value;
-      break;
+        break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
     }
   }
 
@@ -272,37 +271,37 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
       case CIRCLE:
         shape = ShapeUtil.circleHorizontal(this.getPosTarget(), this.getSize() * 2);
         shape = ShapeUtil.repeatShapeByHeight(shape, getHeight() - 1);
-      break;
+        break;
       case FACING:
         shape = ShapeUtil.line(this.getPosTarget(), this.getCurrentFacing(), this.getSize());
         shape = ShapeUtil.repeatShapeByHeight(shape, getHeight() - 1);
-      break;
+        break;
       case SQUARE:
         shape = ShapeUtil.squareHorizontalHollow(this.getPosTarget(), this.getSize());
         shape = ShapeUtil.repeatShapeByHeight(shape, getHeight() - 1);
-      break;
+        break;
       case SOLID:
         shape = ShapeUtil.squareHorizontalFull(this.getTargetFacing(), this.getSize());
         shape = ShapeUtil.repeatShapeByHeight(shape, getHeight() - 1);
-      break;
+        break;
       case SPHERE:
         shape = ShapeUtil.sphere(this.getPosTarget(), this.getSize());
-      break;
+        break;
       case DOME:
         shape = ShapeUtil.sphereDome(this.getPosTarget(), this.getSize());
-      break;
+        break;
       case CUP:
         shape = ShapeUtil.sphereCup(this.getPosTarget().above(this.getSize()), this.getSize());
-      break;
+        break;
       case DIAGONAL:
         shape = ShapeUtil.diagonal(this.getPosTarget(), this.getCurrentFacing(), this.getSize() * 2, true);
-      break;
+        break;
       case PYRAMID:
         shape = ShapeUtil.squarePyramid(this.getPosTarget(), this.getSize(), getHeight());
-      break;
+        break;
       case TUNNEL:
         shape = ShapeUtil.circleVertical(this.getPosTarget(), this.getSize(), getHeight(), this.getCurrentFacing());
-      break;
+        break;
     }
     return shape;
   }

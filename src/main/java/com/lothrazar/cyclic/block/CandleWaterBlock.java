@@ -36,9 +36,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -106,8 +106,7 @@ public class CandleWaterBlock extends BlockCyclic {
       if (world instanceof ServerLevel sl && !world.isClientSide() && world.getBlockState(pos).getValue(LIT)) {
         trySpawn(sl, pos, rand);
       }
-    }
-    catch (Exception exception) {
+    } catch (Exception exception) {
       ModCyclic.LOGGER.error("Error spawning monster ", exception);
     }
   }

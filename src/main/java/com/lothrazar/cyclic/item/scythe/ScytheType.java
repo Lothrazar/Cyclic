@@ -1,9 +1,10 @@
 package com.lothrazar.cyclic.item.scythe;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public enum ScytheType {
 

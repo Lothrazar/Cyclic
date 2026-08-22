@@ -1,25 +1,23 @@
 package com.lothrazar.cyclic.item.boomerang;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
-import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -37,12 +35,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.server.level.ServerEntity;
+
+import java.util.List;
 
 public class BoomerangEntity extends ThrowableItemProjectile {
 
@@ -160,8 +160,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         if (hasTriggered) {
           this.setRedstoneHasTriggered();
         }
-      }
-      catch (Throwable e) {
+      } catch (Throwable e) {
         //since activated can hit any block, be safe
         ModCyclic.LOGGER.error("Error on activate block", e);
       }
@@ -237,13 +236,13 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     switch (result.getType()) {
       case BLOCK:
         onImpactBlock((BlockHitResult) result);
-      break;
+        break;
       case ENTITY:
         onImpactEntity((EntityHitResult) result);
-      break;
+        break;
       case MISS:
       default:
-      break;
+        break;
     }
   }
 
@@ -282,7 +281,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         if (!entityHit.level().isClientSide()) {
           entityHit.startRiding(this);
         }
-      break;
+        break;
       case DAMAGE:
         if (entityHit instanceof LivingEntity && level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
           LivingEntity live = (LivingEntity) entityHit;
@@ -292,7 +291,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
             //           ("killed one");
           }
         }
-      break;
+        break;
       case STUN:
         //!entityHit.getUniqueID().equals(owner.getUniqueID()) 
         if (entityHit != owner && entityHit instanceof LivingEntity
@@ -303,9 +302,9 @@ public class BoomerangEntity extends ThrowableItemProjectile {
             SoundUtil.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
           }
         }
-      break;
+        break;
       default:
-      break;
+        break;
     }
   }
 

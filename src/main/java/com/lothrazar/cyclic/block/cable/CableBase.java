@@ -1,18 +1,17 @@
 package com.lothrazar.cyclic.block.cable;
 
-import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.library.core.IBlockFacade;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.library.core.IBlockFacade;
 import com.lothrazar.library.util.SoundUtil;
-import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -36,6 +35,9 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+
+import java.util.Map;
+
 //import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 //
 public abstract class CableBase extends BlockCyclic implements SimpleWaterloggedBlock, IBlockFacade {
@@ -136,7 +138,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
   }
 
   @Override
-  public InteractionResult useItemOn(ItemStack st,BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+  public InteractionResult useItemOn(ItemStack st, BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
     if (handIn != InteractionHand.MAIN_HAND) {
       return super.useItemOn(st, state, world, pos, player, handIn, hit);
     }
@@ -210,11 +212,11 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
             ModCyclic.LOGGER.debug("Crouching set to NONE from blocked");
             newState = state.setValue(prop, EnumConnectType.NONE);
             updatePost = true;
-          break;
+            break;
           default: //anything to blocked
             ModCyclic.LOGGER.debug("Crouching set  BLOCKED");
             newState = state.setValue(prop, EnumConnectType.BLOCKED);
-          break;
+            break;
         }
       }
       else { // non-crouching flow
@@ -223,19 +225,19 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
             ModCyclic.LOGGER.debug("NOT Crouching from  BLOCKED into NONE");
             newState = state.setValue(prop, EnumConnectType.NONE);
             updatePost = true;
-          break;
+            break;
           case INVENTORY: // inventory normal
             ModCyclic.LOGGER.debug("NOT Crouching from  INVENTORY into CABLE");
             newState = state.setValue(prop, EnumConnectType.CABLE);//to extract
             updatePost = true;
-          break;
+            break;
           case NONE: // no connection
-          //if its none stay teh same 
-          break;
+            //if its none stay teh same
+            break;
           case CABLE: // extract
             ModCyclic.LOGGER.debug("NOT Crouching from  CABLE into INVENTORY");
             newState = state.setValue(prop, EnumConnectType.INVENTORY);
-          break;
+            break;
         }
       }
       //

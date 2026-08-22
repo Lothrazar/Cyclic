@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.compat.patchouli;
 
-import java.util.function.UnaryOperator;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
@@ -20,6 +19,8 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import vazkii.patchouli.api.IComponentRenderContext;
 import vazkii.patchouli.api.ICustomComponent;
 import vazkii.patchouli.api.IVariable;
+
+import java.util.function.UnaryOperator;
 
 public class SolidifierRecipeComponent implements ICustomComponent {
 

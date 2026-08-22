@@ -1,4 +1,5 @@
 package com.lothrazar.cyclic.block;
+
 public class PeatFuelBlock extends BlockCyclic {
 
   public PeatFuelBlock(Properties properties) {

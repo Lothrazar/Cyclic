@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.soundrecord;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.SoundCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -9,11 +7,8 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -22,9 +17,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
@@ -95,13 +94,13 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
     switch (Fields.values()[field]) {
       case CLEARALL:
         this.clearSounds();
-      break;
+        break;
       case IGNORE:
         this.ignoreSound(value);
-      break;
+        break;
       case SAVE:
         this.saveSoundToCard(value);
-      break;
+        break;
     }
   }
 
@@ -172,7 +171,7 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

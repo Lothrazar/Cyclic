@@ -1,17 +1,19 @@
 package com.lothrazar.cyclic.item;
 
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.library.util.ChatUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Blocks;
@@ -19,11 +21,9 @@ import net.minecraft.world.level.block.CauldronBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.SignText;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.storage.TagValueInput;
+
+import java.util.function.Consumer;
 
 
 public class CarbonPaperItem extends ItemBaseCyclic {

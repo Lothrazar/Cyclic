@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.block.solidifier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.mojang.serialization.MapCodec;
@@ -25,6 +22,10 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
 
   // result uses ItemStackTemplate (not ItemStack) so JSON parsing doesn't require the result item's
@@ -41,8 +42,8 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
   // instead of throwing a raw exception that aborts the entire datapack reload for every recipe type.
   public static final MapCodec<RecipeSolidifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
       Ingredient.CODEC.listOf().validate(list -> list.size() <= 3
-          ? com.mojang.serialization.DataResult.success(list)
-          : com.mojang.serialization.DataResult.error(() -> "Solidifier recipe must have at most three ingredients, got " + list.size()))
+              ? com.mojang.serialization.DataResult.success(list)
+              : com.mojang.serialization.DataResult.error(() -> "Solidifier recipe must have at most three ingredients, got " + list.size()))
           .fieldOf("ingredients").forGetter(r -> r.getIngredients()),
       SizedFluidIngredient.CODEC.fieldOf("mix").forGetter(r -> r.fluidIngredient),
       ItemStackTemplate.CODEC.fieldOf("result").forGetter(r -> r.resultTemplate),
@@ -109,7 +110,7 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
     return getResult().copy();
   }
 
-    public boolean canCraftInDimensions(int width, int height) {
+  public boolean canCraftInDimensions(int width, int height) {
     return true;
   }
 
@@ -121,8 +122,7 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
   public boolean matches(SolidifierRecipeInput inv, Level worldIn) {
     try {
       return matchItems(inv) && fluidIngredient.test(inv.getFluid());
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return false;
     }
   }
@@ -160,7 +160,7 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
     return matchingSlots.contains(0) && matchingSlots.contains(1) && matchingSlots.contains(2);
   }
 
-    public NonNullList<Ingredient> getIngredients() {
+  public NonNullList<Ingredient> getIngredients() {
     return ingredients;
   }
 

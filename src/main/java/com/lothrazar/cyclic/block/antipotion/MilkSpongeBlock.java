@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.antipotion;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.SoundUtil;

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.render.beacon;
 
-import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
@@ -14,6 +13,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
+import java.util.List;
+
 /**
  * Shared renderer base for the Cyclic beacon family. The concrete renderer
  * only needs to declare its tile type as the type argument; activation is
@@ -21,7 +22,7 @@ import org.jspecify.annotations.Nullable;
  * to vanilla's own {@link BeaconRenderer#submitBeaconBeam}, since 26.1's
  * beam rendering moved onto the SubmitNodeCollector deferred-submission
  * pipeline and vanilla already exposes that logic as a public static helper.
- *
+ * <p>
  * Per-color rendering is driven by {@link BeaconBeamOwner.Section#getColor()},
  * which {@link BeamHolder#updateBeam} populates from {@code BeaconBeamBlock}s
  * in the column (vanilla stained glass etc.).
@@ -51,7 +52,7 @@ public abstract class RenderBeaconBase<T extends BlockEntity & BeamHolder> imple
 
   @Override
   public void extractRenderState(T tile, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(tile, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = tile;
     if (tile.isBeamActive() && tile.getLevel() != null) {

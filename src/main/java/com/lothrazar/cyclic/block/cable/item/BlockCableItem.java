@@ -2,17 +2,18 @@ package com.lothrazar.cyclic.block.cable.item;
 
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.library.data.ShapeCache;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
+import com.lothrazar.library.data.ShapeCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
@@ -21,7 +22,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -37,7 +37,10 @@ public class BlockCableItem extends CableBase {
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     boolean facadesEnabled = false;
-    try { facadesEnabled = ConfigRegistry.CABLE_FACADES.get(); } catch (Exception e) {}
+    try {
+      facadesEnabled = ConfigRegistry.CABLE_FACADES.get();
+    } catch (Exception e) {
+    }
     if (facadesEnabled) {
       VoxelShape facade = this.getFacadeShape(state, worldIn, pos, context);
       if (facade != null) {
@@ -56,7 +59,7 @@ public class BlockCableItem extends CableBase {
           Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.itemFilter.getStackInSlot(0));
         }
         for (Direction dir : Direction.values()) {
-          IItemHandler items = CapabilityUtil.item(worldIn,pos, dir);
+          IItemHandler items = CapabilityUtil.item(worldIn, pos, dir);
           if (items != null) {
             for (int i = 0; i < items.getSlots(); ++i) {
               Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
@@ -89,7 +92,7 @@ public class BlockCableItem extends CableBase {
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
 //      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-      IItemHandler cap = CapabilityUtil.item(worldIn,pos.relative(d),d.getOpposite()); //= facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.ITEM_HANDLER, d.getOpposite()).orElse(null);
+      IItemHandler cap = CapabilityUtil.item(worldIn, pos.relative(d), d.getOpposite()); //= facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.ITEM_HANDLER, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockAndUpdate(pos, stateIn);

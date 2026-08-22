@@ -36,15 +36,15 @@ public class TileMoon extends TileBlockEntityCyclic {
         if (newPower != this.getBlockState().getValue(BlockMoon.LEVEL)) {
           level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(BlockMoon.LEVEL, newPower));
         }
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         //
       }
     }
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

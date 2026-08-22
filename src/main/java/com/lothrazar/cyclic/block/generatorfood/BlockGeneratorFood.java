@@ -1,9 +1,7 @@
 package com.lothrazar.cyclic.block.generatorfood;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.AbstractContainerMenu;

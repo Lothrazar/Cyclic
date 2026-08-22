@@ -27,7 +27,8 @@ public class RenderSprinkler implements BlockEntityRenderer<TileSprinkler, Rende
     float partialTicks;
   }
 
-  public RenderSprinkler(BlockEntityRendererProvider.Context d) {}
+  public RenderSprinkler(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -36,7 +37,7 @@ public class RenderSprinkler implements BlockEntityRenderer<TileSprinkler, Rende
 
   @Override
   public void extractRenderState(TileSprinkler blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
     state.partialTicks = partialTicks;

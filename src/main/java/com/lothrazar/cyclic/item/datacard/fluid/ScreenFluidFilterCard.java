@@ -36,8 +36,8 @@ public class ScreenFluidFilterCard extends ScreenBase<ContainerFluidFilterCard> 
       ClientPacketDistributor.sendToServer(new PacketFluidFilterCard(PacketFluidFilterCard.TOGGLE_IGNORE));
       FluidFilterCardItem.toggleFilterType(screenContainer.bag);
     }));
-    size=14;
-    btnTagMatch = this.addRenderableWidget(new ButtonTextured(x+3, topPos + 51, size, size, TextureEnum.CRAFT_EMPTY, "", b -> {
+    size = 14;
+    btnTagMatch = this.addRenderableWidget(new ButtonTextured(x + 3, topPos + 51, size, size, TextureEnum.CRAFT_EMPTY, "", b -> {
       ClientPacketDistributor.sendToServer(new PacketFluidFilterCard(PacketFluidFilterCard.TOGGLE_TAGMATCH));
       FluidFilterCardItem.toggleTagMatch(screenContainer.bag);
     }));

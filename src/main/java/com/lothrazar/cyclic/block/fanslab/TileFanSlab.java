@@ -1,22 +1,21 @@
 package com.lothrazar.cyclic.block.fanslab;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.HolderLookup;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.List;
 
 public class TileFanSlab extends TileBlockEntityCyclic {
 
@@ -103,15 +102,15 @@ public class TileFanSlab extends TileBlockEntityCyclic {
       case X:
         end = end.offset(0, 0, 1); //X means EASTorwest. adding +1z means GO 1 south
         end = end.offset(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
-      break;
+        break;
       case Z:
         end = end.offset(1, 0, 0);
         end = end.offset(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
-      break;
+        break;
       case Y:
         start = start.offset(1, 0, 0);
         end = end.offset(0, 0, 1);
-      break;
+        break;
     }
     //ok now we have basically teh 3d box we wanted
     //problem: NORTH and WEST are skipping first blocks right at fan, but shouldnt.
@@ -122,24 +121,24 @@ public class TileFanSlab extends TileBlockEntityCyclic {
       case NORTH:
         start = start.south();
         start = start.south();// push while INSIDE the block
-      break;
+        break;
       case SOUTH:
         start = start.north(); // push while INSIDE the block
         end = end.south();
-      break;
+        break;
       case EAST:
         start = start.west(); // push while INSIDE the block
         end = end.east();
-      break;
+        break;
       case WEST:
         start = start.east(); // push while INSIDE the block
         start = start.east();
-      break;
+        break;
       case DOWN:
-      break;
+        break;
       case UP:
       default:
-      break;
+        break;
     }
     // Use encapsulatingFullBlocks so the AABB is min/max'd per axis;
     // the Y-axis branch above offsets start east and end south, leaving start.x > end.x,
@@ -162,27 +161,27 @@ public class TileFanSlab extends TileBlockEntityCyclic {
         case NORTH:
           direction = !doPush ? 1 : -1;
           newz += direction * speed;
-        break;
+          break;
         case SOUTH:
           direction = doPush ? 1 : -1;
           newz += direction * speed;
-        break;
+          break;
         case EAST:
           direction = doPush ? 1 : -1;
           newx += direction * speed;
-        break;
+          break;
         case WEST:
           direction = !doPush ? 1 : -1;
           newx += direction * speed;
-        break;
+          break;
         case DOWN:
           direction = !doPush ? 1 : -1;
           newy += direction * speed;
-        break;
+          break;
         case UP:
           direction = doPush ? 1 : -1;
           newy += direction * speed;
-        break;
+          break;
       }
       entity.setDeltaMovement(newx, newy, newz);
       if (level.isClientSide() && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
@@ -232,10 +231,10 @@ public class TileFanSlab extends TileBlockEntityCyclic {
         if (range > MAX_RANGE) {
           range = MAX_RANGE;
         }
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case SPEED:
         speed = value;
         if (speed < MIN_SPEED) {
@@ -244,7 +243,7 @@ public class TileFanSlab extends TileBlockEntityCyclic {
         if (speed > MAX_SPEED) {
           speed = MAX_SPEED;
         }
-      break;
+        break;
     }
   }
 }

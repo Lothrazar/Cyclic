@@ -1,10 +1,9 @@
 package com.lothrazar.cyclic.item.enderbook;
 
-import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -12,6 +11,8 @@ import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+
+import javax.annotation.Nonnull;
 
 public class EnderBookContainer extends ContainerBase {
 

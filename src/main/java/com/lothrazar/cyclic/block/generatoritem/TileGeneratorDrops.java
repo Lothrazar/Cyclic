@@ -8,10 +8,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -19,13 +16,14 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
@@ -99,8 +97,15 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
 
   private void findMatchingRecipe() {
     RecipeInput input = new RecipeInput() {
-      @Override public ItemStack getItem(int i) { return i == 0 ? inputSlots.getStackInSlot(0) : ItemStack.EMPTY; }
-      @Override public int size() { return 1; }
+      @Override
+      public ItemStack getItem(int i) {
+        return i == 0 ? inputSlots.getStackInSlot(0) : ItemStack.EMPTY;
+      }
+
+      @Override
+      public int size() {
+        return 1;
+      }
     };
     if (currentRecipe != null && currentRecipe.matches(input, level)) {
       return;
@@ -133,7 +138,7 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
 
   @Override
   public void loadAdditional(ValueInput input) {
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     burnTime = input.getIntOr("burnTime", 0);
     burnTimeMax = input.getIntOr("burnTimeMax", 0);
@@ -171,16 +176,16 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.burnTime = value;
-      break;
+        break;
       case BURNMAX:
         this.burnTimeMax = value;
-      break;
+        break;
       case FLOWING:
         this.flowing = value;
-      break;
+        break;
     }
   }
 
@@ -204,7 +209,7 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

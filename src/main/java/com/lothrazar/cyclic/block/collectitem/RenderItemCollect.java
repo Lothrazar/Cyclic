@@ -20,7 +20,8 @@ public class RenderItemCollect implements BlockEntityRenderer<TileItemCollector,
     TileItemCollector blockEntity;
   }
 
-  public RenderItemCollect(BlockEntityRendererProvider.Context d) {}
+  public RenderItemCollect(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -29,7 +30,7 @@ public class RenderItemCollect implements BlockEntityRenderer<TileItemCollector,
 
   @Override
   public void extractRenderState(TileItemCollector blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

@@ -29,7 +29,7 @@ public class ContainerFluidCollect extends ContainerBase {
         tile.setChanged();
       }
     });
-    addSlot(new SlotItemHandler(tile.filter, 0, 9+20, 7) {
+    addSlot(new SlotItemHandler(tile.filter, 0, 9 + 20, 7) {
 
       @Override
       public void setChanged() {

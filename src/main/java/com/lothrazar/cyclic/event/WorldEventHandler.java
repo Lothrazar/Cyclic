@@ -8,9 +8,8 @@ import com.lothrazar.cyclic.cache.ServerCacheHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
@@ -29,7 +28,7 @@ public class WorldEventHandler {
       ModCyclic.LOGGER.debug(world.isClientSide() + " Explosion cancelled " + event.getExplosion());
       event.setCanceled(true);
     }
- }
+  }
 
   @SubscribeEvent
   public void onLivingSpawnEvent(FinalizeSpawnEvent event) {
@@ -46,7 +45,7 @@ public class WorldEventHandler {
           && height > 0
           && CandlePeaceBlock.isBad(mob, res)
           && ServerCacheHolder.CANDLE_PEACE.hasCollision(mob.level(), mob.blockPosition(), radius.intValue(), height.intValue())
-      //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.CANDLE_PEACE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), radius, height)
+        //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.CANDLE_PEACE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), radius, height)
       ) {
         //default range 32 and filtered
         ModCyclic.LOGGER.debug(mob.blockPosition() + " Spawn cancelled by CacheCandle " + mob.getType());
@@ -59,7 +58,7 @@ public class WorldEventHandler {
           && height > 0
           && BlockAltarNoTraders.isSpawnDenied(mob, res)
           && ServerCacheHolder.ALTAR_SOLICITING.hasCollision(mob.level(), mob.blockPosition(), radius.intValue(), height.intValue())
-      //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.ALTAR_SOLICITING.get().defaultBlockState().setValue(BlockAltarNoTraders.LIT, true), radius, height)
+        //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.ALTAR_SOLICITING.get().defaultBlockState().setValue(BlockAltarNoTraders.LIT, true), radius, height)
       ) {
         ModCyclic.LOGGER.debug(mob.blockPosition() + " Spawn cancelled by cache-altar " + mob.getType());
         event.setSpawnCancelled(true);

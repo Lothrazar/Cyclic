@@ -1,23 +1,16 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -28,22 +21,29 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
-import com.lothrazar.cyclic.util.CapabilityUtil;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
-import net.neoforged.neoforge.capabilities.Capabilities;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 public class ItemStorageBag extends ItemBaseCyclic {
   public static CompoundTag getCustomData(ItemStack stack) {
     return stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
   }
+
   public static void setCustomData(ItemStack stack, CompoundTag tag) {
     stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
   }
@@ -129,26 +129,26 @@ public class ItemStorageBag extends ItemBaseCyclic {
     String refillMode = nbt.getStringOr("refill_mode", "");
     if (!pickupMode.equals("")) {
       tooltip.accept(Component.translatable("item.cyclic.storage_bag.tooltip.pickup",
-          Component.translatable(String.format(
-              pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
+              Component.translatable(String.format(
+                  pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
           .withStyle(ChatFormatting.GREEN));
     }
     if (!depositMode.equals("")) {
       tooltip.accept(Component.translatable("item.cyclic.storage_bag.tooltip.deposit",
-          Component.translatable(String.format(
-              depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
+              Component.translatable(String.format(
+                  depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
           .withStyle(ChatFormatting.BLUE));
     }
     if (!refillMode.equals("")) {
       tooltip.accept(Component.translatable("item.cyclic.storage_bag.tooltip.refill",
-          Component.translatable(String.format(
-              refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
+              Component.translatable(String.format(
+                  refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
           .withStyle(ChatFormatting.RED));
     }
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity,  EquipmentSlot slot) {
+  public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, EquipmentSlot slot) {
     timer++;
     if (timer < REFILL_TICKS) {
       return;
@@ -198,7 +198,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   public static ItemStack tryInsert(ItemStack bag, ItemStack stack) {
     AtomicReference<ItemStack> returnStack = new AtomicReference<>(stack.copy());
-    IItemHandler h = CapabilityUtil.item(bag); if (h != null) {
+    IItemHandler h = CapabilityUtil.item(bag);
+    if (h != null) {
       returnStack.set(ItemHandlerHelper.insertItem(h, stack, false));
     }
     return returnStack.get();
@@ -213,7 +214,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   private static boolean bagHasItem(ItemStack bag, ItemStack stack) {
     AtomicBoolean hasItem = new AtomicBoolean(false);
-    IItemHandler h = CapabilityUtil.item(bag); if (h != null) {
+    IItemHandler h = CapabilityUtil.item(bag);
+    if (h != null) {
       for (int i = 0; i < h.getSlots(); i++) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           hasItem.set(true);
@@ -226,7 +228,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
   //unused but possibly useful
   public static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
-    IItemHandler h = CapabilityUtil.item(bag); if (h != null) {
+    IItemHandler h = CapabilityUtil.item(bag);
+    if (h != null) {
       for (int i = 0; i < h.getSlots(); i++) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);
@@ -238,7 +241,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   private static int getLastSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
-    IItemHandler h = CapabilityUtil.item(bag); if (h != null) {
+    IItemHandler h = CapabilityUtil.item(bag);
+    if (h != null) {
       for (int i = h.getSlots() - 1; i >= 0; i--) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);

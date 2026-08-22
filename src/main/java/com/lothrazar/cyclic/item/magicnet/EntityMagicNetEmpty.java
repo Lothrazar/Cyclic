@@ -10,13 +10,15 @@ import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.SoundUtil;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.server.level.ServerEntity;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,14 +26,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.server.level.ServerEntity;
-import net.minecraft.world.item.component.CustomData;
 
 public class EntityMagicNetEmpty extends ThrowableItemProjectile {
 

@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.conveyor;
 
-import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -13,19 +11,23 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 
+import java.util.List;
+
 public class TileConveyor extends TileBlockEntityCyclic {
 
-  private static int extractRate() { return ConfigRegistry.CONVEYOR_EXTRACT_RATE == null ? 20 : ConfigRegistry.CONVEYOR_EXTRACT_RATE.get(); }
+  private static int extractRate() {
+    return ConfigRegistry.CONVEYOR_EXTRACT_RATE == null ? 20 : ConfigRegistry.CONVEYOR_EXTRACT_RATE.get();
+  }
+
   private int extractCooldown = 0;
 
   public TileConveyor(BlockPos pos, BlockState state) {
@@ -34,7 +36,8 @@ public class TileConveyor extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {
@@ -65,7 +68,8 @@ public class TileConveyor extends TileBlockEntityCyclic {
     // Periodically extract one item from the block at the belt's input end
     if (e.extractCooldown > 0) {
       e.extractCooldown--;
-    } else {
+    }
+    else {
       e.extractCooldown = extractRate();
       tryExtractFromInput(blockState, blockPos, level);
     }
@@ -79,8 +83,8 @@ public class TileConveyor extends TileBlockEntityCyclic {
     boolean nearExit = switch (facing) {
       case NORTH -> nZ < 0.2;
       case SOUTH -> nZ > 0.8;
-      case WEST  -> nX < 0.2;
-      case EAST  -> nX > 0.8;
+      case WEST -> nX < 0.2;
+      case EAST -> nX > 0.8;
       default -> false;
     };
     if (!nearExit) {
@@ -133,7 +137,8 @@ public class TileConveyor extends TileBlockEntityCyclic {
   private static void syncEntityPos(Entity entity, double x, double y, double z) {
     if (entity instanceof ServerPlayer sp) {
       sp.connection.teleport(x, y, z, sp.getYRot(), sp.getXRot());
-    } else {
+    }
+    else {
       entity.setPos(x, y, z);
     }
   }
@@ -192,7 +197,8 @@ public class TileConveyor extends TileBlockEntityCyclic {
 
         return;
       }
-    } else if (entity.getY() > heightLimit) {
+    }
+    else if (entity.getY() > heightLimit) {
       return;
     }
 
@@ -231,7 +237,8 @@ public class TileConveyor extends TileBlockEntityCyclic {
         Vec3 cur = entity.getDeltaMovement();
         entity.setDeltaMovement(xSpeed, cur.y, zSpeed);
       }
-    } else if (xSpeed != 0.0D || ySpeed != 0.0D || zSpeed != 0.0D) {
+    }
+    else if (xSpeed != 0.0D || ySpeed != 0.0D || zSpeed != 0.0D) {
       entity.setDeltaMovement(xSpeed, ySpeed, zSpeed);
     }
   }

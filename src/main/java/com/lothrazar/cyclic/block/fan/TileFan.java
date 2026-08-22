@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.fan;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
@@ -12,10 +11,6 @@ import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
@@ -25,10 +20,14 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
 
 public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -122,15 +121,15 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
       case X:
         end = end.offset(0, 0, 1); //X means EASTorwest. adding +1z means GO 1 south
         end = end.offset(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
-      break;
+        break;
       case Z:
         end = end.offset(1, 0, 0);
         end = end.offset(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
-      break;
+        break;
       case Y:
         start = start.offset(1, 0, 0);
         end = end.offset(0, 0, 1);
-      break;
+        break;
     }
     //ok now we have basically teh 3d box we wanted
     //problem: NORTH and WEST are skipping first blocks right at fan, but shouldnt.
@@ -140,21 +139,21 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
     switch (face) {
       case NORTH:
         start = start.south();
-      break;
+        break;
       case SOUTH:
         end = end.south();
-      break;
+        break;
       case EAST:
         end = end.east();
-      break;
+        break;
       case WEST:
         start = start.east();
-      break;
+        break;
       case DOWN:
-      break;
+        break;
       case UP:
       default:
-      break;
+        break;
     }
     AABB region = AABB.encapsulatingFullBlocks(start, end);
     List<Entity> entitiesFound = this.getLevel().getEntitiesOfClass(Entity.class, region);
@@ -179,27 +178,27 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
         case NORTH:
           direction = !doPush ? 1 : -1;
           newz += direction * speed;
-        break;
+          break;
         case SOUTH:
           direction = doPush ? 1 : -1;
           newz += direction * speed;
-        break;
+          break;
         case EAST:
           direction = doPush ? 1 : -1;
           newx += direction * speed;
-        break;
+          break;
         case WEST:
           direction = !doPush ? 1 : -1;
           newx += direction * speed;
-        break;
+          break;
         case DOWN:
           direction = !doPush ? 1 : -1;
           newy += direction * speed;
-        break;
+          break;
         case UP:
           direction = doPush ? 1 : -1;
           newy += direction * speed;
-        break;
+          break;
       }
       entity.setDeltaMovement(newx, newy, newz);
       if (level.isClientSide() && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
@@ -247,7 +246,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
     switch (f) {
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
       case RANGE:
         range = value;
         if (range < MIN_RANGE) {
@@ -256,10 +255,10 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
         if (range > MAX_RANGE) {
           range = MAX_RANGE;
         }
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case SPEED:
         speed = value;
         if (speed < MIN_SPEED) {
@@ -268,7 +267,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
         if (speed > MAX_SPEED) {
           speed = MAX_SPEED;
         }
-      break;
+        break;
     }
   }
 

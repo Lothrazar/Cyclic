@@ -1,24 +1,17 @@
 package com.lothrazar.cyclic.block;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.core.Const;
-import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.core.IHasEnergy;
 import com.lothrazar.library.core.IHasFluid;
+import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.packet.PacketSyncEnergy;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.FakePlayerUtil;
@@ -27,8 +20,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -45,6 +36,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -55,6 +48,14 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public abstract class TileBlockEntityCyclic extends BlockEntity implements Container, IHasEnergy, IHasFluid {
 
@@ -160,19 +161,19 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (fp == null) {
       return;
     }
-      ItemStack maybeTool = inv.getStackInSlot(0);
-      if (!maybeTool.isEmpty()) {
-        if (maybeTool.getCount() <= 0) {
-          maybeTool = ItemStack.EMPTY;
-        }
+    ItemStack maybeTool = inv.getStackInSlot(0);
+    if (!maybeTool.isEmpty()) {
+      if (maybeTool.getCount() <= 0) {
+        maybeTool = ItemStack.EMPTY;
       }
-      if (!maybeTool.equals(fp.get().getItemInHand(hand))) {
-        fp.get().setItemInHand(hand, maybeTool);
-      }
+    }
+    if (!maybeTool.equals(fp.get().getItemInHand(hand))) {
+      fp.get().setItemInHand(hand, maybeTool);
+    }
   }
 
   public static InteractionResult interactUseOnBlock(WeakReference<FakePlayer> fakePlayer,
-      Level world, BlockPos targetPos, InteractionHand hand, Direction facing) throws Exception {
+                                                     Level world, BlockPos targetPos, InteractionHand hand, Direction facing) throws Exception {
     if (fakePlayer == null) {
       return InteractionResult.FAIL;
     }
@@ -192,7 +193,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
    * SOURCE https://github.com/Lothrazar/Cyclic/pull/1994 @metalshark
    */
   public static InteractionResult playerAttackBreakBlock(WeakReference<FakePlayer> fakePlayer,
-      Level world, BlockPos targetPos, InteractionHand hand, Direction facing) throws Exception {
+                                                         Level world, BlockPos targetPos, InteractionHand hand, Direction facing) throws Exception {
     if (fakePlayer == null) {
       return InteractionResult.FAIL;
     }
@@ -200,8 +201,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
       fakePlayer.get().gameMode.handleBlockBreakAction(targetPos, ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,
           facing, world.getMaxY(), 0);
       return InteractionResult.SUCCESS;
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return InteractionResult.FAIL;
     }
   }
@@ -378,7 +378,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return moveItemsInternal(max, handlerHere, theslot, themFacingMe, tileTarget);
   }
 
-  private  boolean moveItemsInternal(int max, IItemHandler handlerHere, int theslot, final Direction themFacingMe, final BlockEntity tileTarget) {
+  private boolean moveItemsInternal(int max, IItemHandler handlerHere, int theslot, final Direction themFacingMe, final BlockEntity tileTarget) {
     if (max <= 0 || tileTarget == null || handlerHere == null) {
       return false;
     }
@@ -387,7 +387,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
       return false;
     }
 
-    final IItemHandler handlerOutput =  CapabilityUtil.item(level, tileTarget.getBlockPos(), themFacingMe); //  tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
+    final IItemHandler handlerOutput = CapabilityUtil.item(level, tileTarget.getBlockPos(), themFacingMe); //  tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
@@ -423,7 +423,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
       return false; //important to not desync cables 
     }
     Direction myFacingDir = loc.getSide();
-    final IEnergyStorage handlerHere =  CapabilityUtil.energy(level, this.worldPosition, myFacingDir); //this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
+    final IEnergyStorage handlerHere = CapabilityUtil.energy(level, this.worldPosition, myFacingDir); //this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
     ServerLevel serverWorld = loc.getTargetLevel(level);
     final BlockEntity tileTarget = serverWorld.getBlockEntity(loc.getPos());
     final Direction themFacingMe = myFacingDir.getOpposite();
@@ -444,6 +444,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     final BlockEntity tileTarget = level.getBlockEntity(posTarget);
     return moveEnergyInternal(quantity, handlerHere, themFacingMe, tileTarget);
   }
+
   private static boolean moveEnergyInternal(final int quantity, final IEnergyStorage handlerHere, final Direction themFacingMe, final BlockEntity tileTarget) {
     if (handlerHere == null) {
       return false;
@@ -451,7 +452,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (tileTarget == null) {
       return false;
     }
-    final IEnergyStorage handlerOutput =  CapabilityUtil.energy(tileTarget.getLevel(),tileTarget.getBlockPos(), themFacingMe);// tileTarget.getCapability(ForgeCapabilities.ENERGY, themFacingMe).orElse(null);
+    final IEnergyStorage handlerOutput = CapabilityUtil.energy(tileTarget.getLevel(), tileTarget.getBlockPos(), themFacingMe);// tileTarget.getCapability(ForgeCapabilities.ENERGY, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
@@ -514,13 +515,14 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   @Override
-  public void setFluid(FluidStack fluid) {}
+  public void setFluid(FluidStack fluid) {
+  }
 
   /************************** IInventory needed for IRecipe **********************************/
   @Deprecated
   @Override
   public int getContainerSize() { // was getSizeInventory
-    IItemHandler invo = CapabilityUtil.item(level,worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    IItemHandler invo = CapabilityUtil.item(level, worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     if (invo != null) {
       return invo.getSlots();
     }
@@ -536,13 +538,13 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   @Deprecated
   @Override
   public ItemStack getItem(int index) { // was getStackInSlot
-    IItemHandler invo = CapabilityUtil.item(level,worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    IItemHandler invo = CapabilityUtil.item(level, worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     try {
       if (invo != null && index < invo.getSlots()) {
         return invo.getStackInSlot(index);
       }
+    } catch (Exception e) {
     }
-    catch (Exception e) {}
     return ItemStack.EMPTY;
   }
 
@@ -607,7 +609,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Override
   public int getEnergy() {
-   var energy = CapabilityUtil.energy(level,worldPosition);
+    var energy = CapabilityUtil.energy(level, worldPosition);
 
     return energy == null ? 0 : energy.getEnergyStored();
   }
@@ -629,10 +631,11 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   protected int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
+
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
     if (level.isClientSide() == false && level.getGameTime() % Const.TICKS_PER_SEC == 0) { //if serverside then
-      var energy = CapabilityUtil.energy(level,worldPosition);
+      var energy = CapabilityUtil.energy(level, worldPosition);
       if (energy != null) {
         final int currentEnergy = energy.getEnergyStored();
         if (currentEnergy != energyLastSynced) {
@@ -672,8 +675,9 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   public boolean getBlockStateVertical() {
-    if (this.getBlockState().hasProperty(BlockStateProperties.FACING))
+    if (this.getBlockState().hasProperty(BlockStateProperties.FACING)) {
       return this.getBlockState().getValue(BlockStateProperties.FACING).getAxis().isVertical();
+    }
     return false;
   }
 

@@ -11,5 +11,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
  */
 public class RenderBeaconPotion extends RenderBeaconBase<TilePotionBeacon> {
 
-  public RenderBeaconPotion(BlockEntityRendererProvider.Context d) {}
+  public RenderBeaconPotion(BlockEntityRendererProvider.Context d) {
+  }
 }

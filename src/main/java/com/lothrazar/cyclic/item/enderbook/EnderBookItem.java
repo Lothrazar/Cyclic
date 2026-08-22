@@ -1,9 +1,8 @@
 package com.lothrazar.cyclic.item.enderbook;
 
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.util.ChatUtil;
@@ -27,12 +26,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
-import com.lothrazar.cyclic.util.CapabilityUtil;
+
+import java.util.function.Consumer;
 
 public class EnderBookItem extends ItemBaseCyclic {
 
@@ -96,7 +95,7 @@ public class EnderBookItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn,  EquipmentSlot slot) {
+  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn, EquipmentSlot slot) {
     CompoundTag tag = getData(stack);
     if (!tag.contains(TELEPORT_COUNTDOWN) || !(entityIn instanceof LivingEntity)) {
       return;

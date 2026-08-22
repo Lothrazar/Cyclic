@@ -31,14 +31,14 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
     super.init();
     int x = leftPos + 150;
     int y = topPos + 8;
-     int size = 20;
+    int size = 20;
     btnType = this.addRenderableWidget(new ButtonTextured(x, y, size, size, TextureEnum.RENDER_HIDE, "", b -> {
       //pressed
       ClientPacketDistributor.sendToServer(new PacketFilterCard(PacketFilterCard.TOGGLE_IGNORE));
       FilterCardItem.toggleFilterType(screenContainer.bag);
     }));
-    size=14;
-    btnTagMatch = this.addRenderableWidget(new ButtonTextured(x+3, topPos + 51, size, size, TextureEnum.CRAFT_EMPTY, "", b -> {
+    size = 14;
+    btnTagMatch = this.addRenderableWidget(new ButtonTextured(x + 3, topPos + 51, size, size, TextureEnum.CRAFT_EMPTY, "", b -> {
       //pressed
       ClientPacketDistributor.sendToServer(new PacketFilterCard(PacketFilterCard.TOGGLE_TAGMATCH));
       FilterCardItem.toggleTagMatch(screenContainer.bag);

@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.block.tank;
 
-import java.util.List;
-import java.util.function.Consumer;
-
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.ChatFormatting;
@@ -16,6 +13,8 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+
+import java.util.function.Consumer;
 
 
 public class ItemBlockTank extends BlockItem {
@@ -44,8 +43,7 @@ public class ItemBlockTank extends BlockItem {
       float current = fstack.getAmount();
       float max = TileTank.CAPACITY;
       return Math.round(13.0F * current / max);
-    }
-    catch (Throwable e) {
+    } catch (Throwable e) {
       //lazy 
     }
     return 1;

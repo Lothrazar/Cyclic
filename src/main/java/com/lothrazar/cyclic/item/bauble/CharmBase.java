@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import java.util.UUID;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
@@ -10,10 +9,11 @@ import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
-import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -27,11 +27,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
+import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.minecraft.core.Holder;
-import net.minecraft.resources.Identifier;
+
+import java.util.UUID;
 
 public abstract class CharmBase extends ItemBaseToggle {
 
@@ -59,7 +60,7 @@ public abstract class CharmBase extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn,  EquipmentSlot slot) {
+  public void inventoryTick(ItemStack stack, ServerLevel worldIn, Entity entityIn, EquipmentSlot slot) {
     if (!this.canUse(stack)) {
       return;
     }
@@ -132,19 +133,19 @@ public abstract class CharmBase extends ItemBaseToggle {
   private static void toggleAttribute(Player player, Item charm, Holder<Attribute> attr, UUID id, float factor, int flatIncrease, Operation op) {
     ItemStack charmStack = CharmUtil.getIfEnabled(player, charm);
     AttributeInstance attrPlayer = player.getAttribute(attr);
-    AttributeModifier oldValue = attrPlayer.getModifier(Identifier.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)));
+    AttributeModifier oldValue = attrPlayer.getModifier(Identifier.fromNamespaceAndPath("cyclic", id.toString().replace("-", "_").substring(0, 20)));
     if (charmStack.isEmpty()) {
       ///i am NOT holding it. OR im holding but its OFF
       //remove my modifier
       if (oldValue != null) {
-        attrPlayer.removeModifier(Identifier.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)));
+        attrPlayer.removeModifier(Identifier.fromNamespaceAndPath("cyclic", id.toString().replace("-", "_").substring(0, 20)));
       }
     }
     else { // im   holding it AND its enabled
       if (oldValue == null) {
         /// add new
         double baseVal = attrPlayer.getBaseValue();
-        AttributeModifier newValue = new AttributeModifier(Identifier.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)), baseVal * factor + flatIncrease, op);
+        AttributeModifier newValue = new AttributeModifier(Identifier.fromNamespaceAndPath("cyclic", id.toString().replace("-", "_").substring(0, 20)), baseVal * factor + flatIncrease, op);
         attrPlayer.addPermanentModifier(newValue);
         ItemStackUtil.damageItem(player, charmStack);
       }

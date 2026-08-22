@@ -7,26 +7,24 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.food.FoodProperties;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
@@ -94,7 +92,8 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
     if (stack.has(DataComponents.FOOD)) {
-      FoodProperties food = stack.get(DataComponents.FOOD); float foodVal = food != null ? food.nutrition() + food.saturation() : 0;
+      FoodProperties food = stack.get(DataComponents.FOOD);
+      float foodVal = food != null ? food.nutrition() + food.saturation() : 0;
       int burnTimeTicks = (int) (TICKS_PER_FOOD.get() * foodVal);
       //      int testTotal = RF_PER_TICK.get() * burnTimeTicks;
       // BURN IT
@@ -120,7 +119,7 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
 
   @Override
   public void loadAdditional(ValueInput input) {
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     super.loadAdditional(input);
   }
@@ -152,16 +151,16 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.burnTime = value;
-      break;
+        break;
       case BURNMAX:
         this.burnTimeMax = value;
-      break;
+        break;
       case FLOWING:
         this.flowing = value;
-      break;
+        break;
     }
   }
 
@@ -186,7 +185,7 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

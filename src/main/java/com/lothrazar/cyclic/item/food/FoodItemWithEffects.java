@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.item.food;
 
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -11,10 +9,13 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 public class FoodItemWithEffects extends ItemBaseCyclic {
 

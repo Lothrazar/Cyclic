@@ -5,5 +5,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderBeaconRedstone extends RenderBeaconBase<TileBeaconRedstone> {
 
-  public RenderBeaconRedstone(BlockEntityRendererProvider.Context d) {}
+  public RenderBeaconRedstone(BlockEntityRendererProvider.Context d) {
+  }
 }

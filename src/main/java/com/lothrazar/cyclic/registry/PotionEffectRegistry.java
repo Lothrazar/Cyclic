@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.potion.CyclicMobEffect;
 import com.lothrazar.cyclic.potion.effect.ButterEffect;
@@ -12,15 +10,18 @@ import com.lothrazar.cyclic.potion.effect.NoClipEffect;
 import com.lothrazar.cyclic.potion.effect.SnowwalkEffect;
 import com.lothrazar.cyclic.potion.effect.StunEffect;
 import com.lothrazar.cyclic.potion.effect.WaterwalkEffect;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PotionEffectRegistry {
 

@@ -23,9 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -33,11 +30,8 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -47,18 +41,23 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 @SuppressWarnings("unchecked")
@@ -71,7 +70,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
   ItemStackHandler inputHandler = new ItemStackHandler(IO_SIZE);
   ItemStackHandler outHandler = new ItemStackHandler(IO_SIZE);
 
-  final ItemStackHandler gridCap =  new ItemStackHandler(GRID_SIZE);
+  final ItemStackHandler gridCap = new ItemStackHandler(GRID_SIZE);
   final ItemStackHandler preview = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputHandler, outHandler);
 
@@ -90,7 +89,9 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
 
   public enum ItemHandlers {
     INPUT, OUTPUT, GRID, PREVIEW
-  };
+  }
+
+  ;
 
   public enum Fields {
     TIMER, REDSTONE, RENDER;
@@ -326,28 +327,29 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
 
   @Override
   public void loadAdditional(ValueInput input) {
-          energy.deserialize(input.childOrEmpty("energy"));
+    energy.deserialize(input.childOrEmpty("energy"));
     inputHandler.deserialize(input.childOrEmpty("input"));
     outHandler.deserialize(input.childOrEmpty("output"));
     gridCap.deserialize(input.childOrEmpty("grid"));
     preview.deserialize(input.childOrEmpty("preview"));
     super.loadAdditional(input);
   }
+
   @Override
   public void saveAdditional(ValueOutput output) {
 
-      energy.serialize(output.child("energy"));
+    energy.serialize(output.child("energy"));
 
-      inputHandler.serialize(output.child("input"));
-
-
-      outHandler.serialize(output.child("output"));
+    inputHandler.serialize(output.child("input"));
 
 
-      gridCap.serialize(output.child("grid"));
+    outHandler.serialize(output.child("output"));
 
 
-      preview.serialize(output.child("preview"));
+    gridCap.serialize(output.child("grid"));
+
+
+    preview.serialize(output.child("preview"));
 
     super.saveAdditional(output);
   }
@@ -370,13 +372,13 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
     switch (TileCrafter.Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
     }
   }
 
@@ -397,7 +399,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

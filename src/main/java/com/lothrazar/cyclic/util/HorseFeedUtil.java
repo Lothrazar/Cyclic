@@ -13,13 +13,13 @@ public class HorseFeedUtil {
 
   /**
    * Standard finishing actions for a successful horse-carrot feed:
-   *  - sets cancellation result BEFORE canceling (NeoForge requires this order so the
-   *    client doesn't fall through to the mount interaction)
-   *  - cancels the event so vanilla's mount-on-right-click is suppressed
-   *  - shrinks the held stack respecting creative mode
-   *  - if the player still ended up riding this horse (client prediction edge case),
-   *    immediately stops them
-   *  - triggers the horse eating animation when applicable
+   * - sets cancellation result BEFORE canceling (NeoForge requires this order so the
+   * client doesn't fall through to the mount interaction)
+   * - cancels the event so vanilla's mount-on-right-click is suppressed
+   * - shrinks the held stack respecting creative mode
+   * - if the player still ended up riding this horse (client prediction edge case),
+   * immediately stops them
+   * - triggers the horse eating animation when applicable
    */
   public static void finishFeed(PlayerInteractEvent.EntityInteract event, AbstractHorse horse) {
     event.setCancellationResult(InteractionResult.SUCCESS);

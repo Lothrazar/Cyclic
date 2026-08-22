@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.compat.jei;
 
-import java.util.Objects;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.crusher.ContainerCrusher;
 import com.lothrazar.cyclic.block.crusher.ScreenCrusher;
@@ -11,6 +10,7 @@ import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.melter.ScreenMelter;
 import com.lothrazar.cyclic.block.packager.ContainerPackager;
 import com.lothrazar.cyclic.block.packager.ScreenPackager;
+import com.lothrazar.cyclic.block.packager.UtilPackager;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.ScreenSolidifier;
 import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
@@ -30,7 +30,6 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
-import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.HorseInventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -41,7 +40,8 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
-import com.lothrazar.cyclic.block.packager.UtilPackager;
+
+import java.util.Objects;
 
 @JeiPlugin
 public class CyclicPluginJEI implements IModPlugin {
@@ -101,8 +101,8 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(CrusherRecipeCategory.TYPE, rm.recipeMap().byType(CyclicRecipeType.CRUSHER.get()).stream().toList());
     registry.addRecipes(PackagerRecipeCategory.TYPE,
         rm.recipeMap().byType(RecipeType.CRAFTING).stream()
-          .filter(h -> UtilPackager.isRecipeValid(h.value(), world.registryAccess()))
-          .toList());
+            .filter(h -> UtilPackager.isRecipeValid(h.value(), world.registryAccess()))
+            .toList());
     for (var item : ItemRegistry.ITEMS.getEntries()) {
       ItemStack st = new ItemStack(item.get());
       if (!st.isEmpty() && (st.getItem() instanceof BucketItem == false)) {

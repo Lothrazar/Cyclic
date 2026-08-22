@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.render.beacon;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -9,15 +7,17 @@ import net.minecraft.util.ARGB;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BeaconBeamOwner;
 import net.minecraft.world.level.block.entity.BeaconBeamOwner.Section;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Tile-side contract for the Cyclic beacon family
  * (potion beacon, anti beacon, redstone beacon).
- *
+ * <p>
  * Implementers own a {@link BeamStuff} and decide when the beam is "active"
  * (lit by power, redstone, GUI state, etc.). Renderers should target
  * {@code RenderBeaconBase<T extends BlockEntity &amp; BeamHolder>} instead of
@@ -29,7 +29,7 @@ public interface BeamHolder {
 
   /**
    * @return true if the beam should currently render/tick. Tile-specific:
-   *         redstone power, LIT block-state property, configured timer, etc.
+   * redstone power, LIT block-state property, configured timer, etc.
    */
   boolean isBeamActive();
 
@@ -49,12 +49,12 @@ public interface BeamHolder {
    * Walks the column above the beacon a few blocks per tick and builds beam
    * sections, then swaps them into the public list each time the scan reaches
    * the world surface. Ported from {@code BeaconBlockEntity.tick} in 1.21:
-   *
-   *  - color blocks now implement {@link BeaconBeamBlock} (vanilla's
-   *    {@code BlockState#getBeaconColorMultiplier} was removed),
-   *  - {@link Section} stores ARGB ints instead
-   *    of {@code float[3]}; mixing uses {@link ARGB#average}.
-   *
+   * <p>
+   * - color blocks now implement {@link BeaconBeamBlock} (vanilla's
+   * {@code BlockState#getBeaconColorMultiplier} was removed),
+   * - {@link Section} stores ARGB ints instead
+   * of {@code float[3]}; mixing uses {@link ARGB#average}.
+   * <p>
    * For the beam to form without requiring stained glass on top, the beacon
    * block itself implements {@link BeaconBeamBlock} (returning white).
    */

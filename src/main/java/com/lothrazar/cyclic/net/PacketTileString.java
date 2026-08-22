@@ -1,18 +1,18 @@
 package com.lothrazar.cyclic.net;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketTileString implements CustomPacketPayload {
 
@@ -38,7 +38,8 @@ public class PacketTileString implements CustomPacketPayload {
     this.pos = pos;
   }
 
-  public PacketTileString() {}
+  public PacketTileString() {
+  }
 
   public static void handle(PacketTileString message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> {
@@ -52,7 +53,7 @@ public class PacketTileString implements CustomPacketPayload {
         world.sendBlockUpdated(message.pos, oldState, oldState, 3);
       }
     });
-    
+
   }
 
   public static PacketTileString decode(RegistryFriendlyByteBuf buf) {

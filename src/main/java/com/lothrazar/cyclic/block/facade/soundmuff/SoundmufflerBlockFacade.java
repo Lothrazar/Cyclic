@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.facade.soundmuff;
 
-import com.lothrazar.library.core.IBlockFacade;
 import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
+import com.lothrazar.library.core.IBlockFacade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;

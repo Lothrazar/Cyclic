@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.placerfluid;
 
-import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -9,10 +8,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -21,14 +16,19 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
+import java.util.function.Predicate;
+
 public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvider {
 
   public static final int CAPACITY = 8 * FluidType.BUCKET_VOLUME;
-  FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());;
+  FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  ;
 
   @Override
   public IFluidHandler getFluidHandler(Direction side) {
@@ -122,10 +122,10 @@ public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvid
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
     }
   }
 }

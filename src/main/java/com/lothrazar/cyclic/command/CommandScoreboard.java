@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.command;
 
-import java.util.Collection;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.mojang.brigadier.context.CommandContext;
@@ -9,6 +8,8 @@ import net.minecraft.world.scores.Objective;
 import net.minecraft.world.scores.ScoreAccess;
 import net.minecraft.world.scores.ScoreHolder;
 import net.minecraft.world.scores.Scoreboard;
+
+import java.util.Collection;
 
 public class CommandScoreboard {
 

@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.util;
 
-import org.apache.commons.lang3.tuple.Triple;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.library.core.IHasClickToggle;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
+import org.apache.commons.lang3.tuple.Triple;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
@@ -33,8 +33,7 @@ public class CharmUtil {
         if (first != null && isMatching(first.stack(), match)) {
           return first.stack();
         }
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         // if API not installed or fails
       }
     }
@@ -61,8 +60,7 @@ public class CharmUtil {
             // else found but turned off, keep looking
           }
         }
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
         // if API not installed or fails
       }
     }

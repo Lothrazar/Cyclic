@@ -20,7 +20,8 @@ public class RenderFan implements BlockEntityRenderer<TileFan, RenderFan.State> 
     TileFan blockEntity;
   }
 
-  public RenderFan(BlockEntityRendererProvider.Context d) {}
+  public RenderFan(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -29,7 +30,7 @@ public class RenderFan implements BlockEntityRenderer<TileFan, RenderFan.State> 
 
   @Override
   public void extractRenderState(TileFan blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

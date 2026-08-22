@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.command;
 
-import java.util.stream.Collectors;
 import com.lothrazar.library.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -9,6 +8,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.stream.Collectors;
 
 public class CommandNbt {
 

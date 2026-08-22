@@ -1,13 +1,14 @@
 package com.lothrazar.cyclic.capabilities.block;
 
-import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.packet.PacketSyncFluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+
+import java.util.function.Predicate;
 
 public class FluidTankBase extends FluidTank {
 

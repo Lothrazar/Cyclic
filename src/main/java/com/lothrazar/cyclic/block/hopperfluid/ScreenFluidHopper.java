@@ -1,9 +1,7 @@
 package com.lothrazar.cyclic.block.hopperfluid;
 
-import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.gui.FluidBar;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -12,6 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class ScreenFluidHopper extends ScreenBase<ContainerFluidHopper> {
 
   private FluidBar fluid;
+
   public ScreenFluidHopper(ContainerFluidHopper screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
   }
@@ -20,11 +19,12 @@ public class ScreenFluidHopper extends ScreenBase<ContainerFluidHopper> {
   public void init() {
     super.init();
     fluid = new FluidBar(this.font, 8, 8, TileFluidHopper.CAPACITY);
-  fluid.guiLeft =  leftPos;
-  fluid.guiTop =   topPos;
+    fluid.guiLeft = leftPos;
+    fluid.guiTop = topPos;
 
 
   }
+
   @Override
   public void extractRenderState(GuiGraphicsExtractor ms, int mouseX, int mouseY, float partialTicks) {
     super.extractRenderState(ms, mouseX, mouseY, partialTicks);

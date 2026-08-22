@@ -20,7 +20,8 @@ public class RenderDropper implements BlockEntityRenderer<TileDropper, RenderDro
     TileDropper blockEntity;
   }
 
-  public RenderDropper(BlockEntityRendererProvider.Context d) {}
+  public RenderDropper(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -29,7 +30,7 @@ public class RenderDropper implements BlockEntityRenderer<TileDropper, RenderDro
 
   @Override
   public void extractRenderState(TileDropper blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

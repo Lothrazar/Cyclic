@@ -25,7 +25,7 @@ public class ButtonMachineField extends ButtonMachine {
   }
 
   public ButtonMachineField(int xPos, int yPos, int field, BlockPos pos,
-      TextureEnum toff, TextureEnum tonn, String tooltipPrefix) {
+                            TextureEnum toff, TextureEnum tonn, String tooltipPrefix) {
     super(xPos, yPos, 20, 20, "", (p) -> {
       ClientPacketDistributor.sendToServer(new PacketTileData(field, pos));
     });
@@ -49,19 +49,19 @@ public class ButtonMachineField extends ButtonMachine {
   }
 
   private void onValueUpdate(int val) {
-    if(tooltipPrefix != null) {
+    if (tooltipPrefix != null) {
       setTooltip(ChatUtil.lang(this.tooltipPrefix + val));
     }
     switch (val) {
       case 0:
         setTextureId(textureZero);
-      break;
+        break;
       case 1:
         setTextureId(textureOne);
-      break;
+        break;
       case 2:
         setTextureId(textureTwo);
-      break;
+        break;
     }
   }
 }

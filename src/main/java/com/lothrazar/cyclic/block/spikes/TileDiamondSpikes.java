@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.block.spikes;
 
-import java.lang.ref.WeakReference;
-import java.util.Map;
-import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -10,12 +7,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.FakePlayer;
+
+import java.lang.ref.WeakReference;
 
 public class TileDiamondSpikes extends TileBlockEntityCyclic {
 
@@ -50,7 +46,8 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

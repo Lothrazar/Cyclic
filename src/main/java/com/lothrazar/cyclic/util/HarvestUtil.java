@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.util;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.api.IHarvesterOverride;
 import com.lothrazar.cyclic.compat.CompatConstants;
@@ -12,6 +9,8 @@ import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -29,8 +28,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class HarvestUtil {
 
@@ -48,10 +49,10 @@ public class HarvestUtil {
     switch (type) {
       case LEAVES:
         doBreak = blockState.is(BlockTags.LEAVES);
-      break;
+        break;
       case BRUSH:
         doBreak = blockState.is(DataTags.PLANTS);
-      break;
+        break;
       case FORAGE:
         doBreak = blockState.is(BlockTags.FLOWERS)
             || blockState.is(BlockTags.CORALS) || blockState.is(BlockTags.WALL_CORALS)
@@ -59,7 +60,7 @@ public class HarvestUtil {
             || blockState.is(DataTags.VINES)
             || blockState.is(DataTags.CACTUS)
             || blockState.is(DataTags.CROP_BLOCKS);
-      break;
+        break;
     }
     if (doBreak) {
       if (blockState.is(DataTags.CROP_BLOCKS)) {
@@ -70,9 +71,9 @@ public class HarvestUtil {
         //harvest block with player context: better mod compatibility
         if (type == ScytheType.BRUSH && player.level() instanceof ServerLevel sl
             && EnchantmentHelper.getEnchantmentLevel(
-                sl.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
-                    .getOrThrow(Enchantments.SILK_TOUCH),
-                player) > 0) {
+            sl.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
+                .getOrThrow(Enchantments.SILK_TOUCH),
+            player) > 0) {
           //only brush needed silk override, tree leaves worked regardless
           ItemStackUtil.drop(world, posCurrent, blockState.getBlock());
         }

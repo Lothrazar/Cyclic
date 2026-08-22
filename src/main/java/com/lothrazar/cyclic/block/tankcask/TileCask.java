@@ -1,23 +1,22 @@
 package com.lothrazar.cyclic.block.tankcask;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.DirectionUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public class TileCask extends TileBlockEntityCyclic {
 
@@ -99,25 +98,25 @@ public class TileCask extends TileBlockEntityCyclic {
     switch (Fields.values()[field]) {
       case FLOWING:
         flowing = value;
-      break;
+        break;
       case D:
         this.setSideField(Direction.DOWN, value % 2);
-      break;
+        break;
       case E:
         this.setSideField(Direction.EAST, value % 2);
-      break;
+        break;
       case N:
         this.setSideField(Direction.NORTH, value % 2);
-      break;
+        break;
       case S:
         this.setSideField(Direction.SOUTH, value % 2);
-      break;
+        break;
       case U:
         this.setSideField(Direction.UP, value % 2);
-      break;
+        break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-      break;
+        break;
     }
   }
 

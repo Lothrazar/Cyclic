@@ -22,6 +22,7 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
+
 public class CharmOverpowered extends CharmBase {
 
   public CharmOverpowered(Properties properties) {

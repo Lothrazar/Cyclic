@@ -1,8 +1,7 @@
 package com.lothrazar.cyclic.item.datacard.fluid;
 
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -14,15 +13,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import com.lothrazar.cyclic.util.CapabilityUtil;
+
+import java.util.function.Consumer;
 
 /**
  * Fluid-side counterpart to FilterCardItem. Single bucket slot that defines

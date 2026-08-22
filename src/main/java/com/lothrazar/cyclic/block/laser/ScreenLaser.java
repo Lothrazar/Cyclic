@@ -8,9 +8,9 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.components.Tooltip;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ScreenLaser extends ScreenBase<ContainerLaser> {

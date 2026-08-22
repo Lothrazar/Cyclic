@@ -23,21 +23,21 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.LaserItem;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.server.level.ServerLevel;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.capabilities.Capabilities;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.util.CapabilityUtil;
+
 public class PacketEntityLaser implements CustomPacketPayload {
 
   public static final CustomPacketPayload.Type<PacketEntityLaser> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(ModCyclic.MODID, "packet_entity_laser"));
@@ -79,7 +79,7 @@ public class PacketEntityLaser implements CustomPacketPayload {
         //        target.causeFallDamage(0, 0, null);
       }
     });
-    
+
   }
 
   private static boolean canShoot(ServerPlayer sender, Entity target, ItemStack stack) {

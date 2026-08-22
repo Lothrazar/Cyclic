@@ -1,16 +1,15 @@
 package com.lothrazar.cyclic.compat.jei;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
@@ -23,11 +22,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
 
+import java.util.List;
+
 public class GenfluidRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeGeneratorFluid>> {
 
   private static final int FONT = 0xFFFFFFFF;
   static final Identifier ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "generator_fluid");
-  static final RecipeType<RecipeHolder<RecipeGeneratorFluid>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
+  static final RecipeType<RecipeHolder<RecipeGeneratorFluid>> TYPE = new RecipeType<>(ID, (Class) RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
 

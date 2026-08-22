@@ -1,12 +1,13 @@
 package com.lothrazar.cyclic.config;
 
-import java.awt.Color;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.awt.*;
 
 public class ClientConfigCyclic {
 
@@ -88,8 +89,7 @@ public class ClientConfigCyclic {
     //   String h = String.format("#%02x%02x%02x", Color.DARK_GRAY.getRed(), Color.DARK_GRAY.getGreen(), Color.DARK_GRAY.getBlue());
     try {
       return Color.decode(string);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("Invalid color string in client config, try default #404040" + string);
     }
     return DEFAULTC;

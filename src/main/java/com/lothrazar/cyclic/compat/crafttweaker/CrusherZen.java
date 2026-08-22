@@ -1,9 +1,5 @@
 package com.lothrazar.cyclic.compat.crafttweaker;
 
-import java.util.Arrays;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.openzen.zencode.java.ZenCodeType;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.action.recipe.ActionAddRecipe;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
@@ -17,6 +13,11 @@ import com.lothrazar.library.recipe.ingredient.RandomizedOutputIngredient;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openzen.zencode.java.ZenCodeType;
+
+import java.util.Arrays;
 
 @ZenRegister
 @ZenCodeType.Name("mods.cyclic.crusher")

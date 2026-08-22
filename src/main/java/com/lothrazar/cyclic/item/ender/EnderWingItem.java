@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.ender;
 
-import java.util.Optional;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
@@ -43,6 +42,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Optional;
 
 public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
 

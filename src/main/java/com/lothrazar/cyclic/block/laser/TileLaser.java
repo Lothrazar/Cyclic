@@ -7,10 +7,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.data.OffsetEnum;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -19,10 +16,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 
 public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
@@ -51,6 +48,7 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
     super(TileRegistry.LASER.get(), pos, state);
     this.needsRedstone = 0;
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileLaser e) {
     e.tick();
   }
@@ -108,40 +106,40 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
     switch (Fields.values()[id]) {
       case THICK:
         this.thick = value;
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case BLUE:
         blue = value;
-      break;
+        break;
       case GREEN:
         green = value;
-      break;
+        break;
       case RED:
         red = value;
-      break;
+        break;
       case ALPHA:
         alpha = value;
-      break;
+        break;
       case XOFF:
         if (value >= OffsetEnum.values().length) {
           value = 0;
         }
         this.xOffset = OffsetEnum.values()[value];
-      break;
+        break;
       case YOFF:
         if (value >= OffsetEnum.values().length) {
           value = 0;
         }
         this.yOffset = OffsetEnum.values()[value];
-      break;
+        break;
       case ZOFF:
         if (value >= OffsetEnum.values().length) {
           value = 0;
         }
         this.zOffset = OffsetEnum.values()[value];
-      break;
+        break;
     }
   }
 

@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.wireless.energy;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.library.data.BlockPosDim;
@@ -18,13 +16,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RenderWirelessEnergy implements BlockEntityRenderer<TileWirelessEnergy, RenderWirelessEnergy.State> {
 
   public static class State extends BlockEntityRenderState {
     TileWirelessEnergy blockEntity;
   }
 
-  public RenderWirelessEnergy(BlockEntityRendererProvider.Context d) {}
+  public RenderWirelessEnergy(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public boolean shouldRenderOffScreen() {
@@ -38,7 +40,7 @@ public class RenderWirelessEnergy implements BlockEntityRenderer<TileWirelessEne
 
   @Override
   public void extractRenderState(TileWirelessEnergy blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }
@@ -60,7 +62,8 @@ public class RenderWirelessEnergy implements BlockEntityRenderer<TileWirelessEne
     }
     if (PreviewOutlineType.SHADOW.ordinal() == previewType) {
       RenderBlockUtils.renderOutline(te.getBlockPos(), shape, matrix, 0.9F, ClientConfigCyclic.getColor(te));
-    } else if (PreviewOutlineType.WIREFRAME.ordinal() == previewType) {
+    }
+    else if (PreviewOutlineType.WIREFRAME.ordinal() == previewType) {
       for (BlockPos crd : shape) {
         RenderBlockUtils.createBox(matrix, crd, Vec3.atLowerCornerOf(te.getBlockPos()));
       }

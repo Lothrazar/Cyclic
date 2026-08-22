@@ -1,11 +1,10 @@
 package com.lothrazar.cyclic.item.crafting;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -19,10 +18,10 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class CraftingBagContainer extends ContainerBase implements IContainerCraftingAction {
 
@@ -78,12 +77,13 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     this.craftResult.setItem(0, ItemStack.EMPTY);
     if (playerIn.level().isClientSide() == false) {
       IItemHandler handler = CapabilityUtil.item(bag);//bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
-      if (handler != null)
+      if (handler != null) {
         for (int i = 0; i < 9; i++) {
           ItemStack crafty = this.craftMatrix.getItem(i);
           handler.extractItem(i, 64, false);
           handler.insertItem(i, crafty, false);
         }
+      }
     }
   }
 

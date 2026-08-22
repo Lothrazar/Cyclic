@@ -22,7 +22,8 @@ public class RenderCableFacade implements BlockEntityRenderer<TileCableBase, Ren
     TileCableBase blockEntity;
   }
 
-  public RenderCableFacade(BlockEntityRendererProvider.Context d) {}
+  public RenderCableFacade(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public boolean shouldRenderOffScreen() {
@@ -36,7 +37,7 @@ public class RenderCableFacade implements BlockEntityRenderer<TileCableBase, Ren
 
   @Override
   public void extractRenderState(TileCableBase blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

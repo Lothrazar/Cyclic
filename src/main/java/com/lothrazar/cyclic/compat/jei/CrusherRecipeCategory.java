@@ -27,7 +27,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
 
   private static final int FONT = 0xFFFFFFFF;
   private static final Identifier ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "crusher");
-  static final RecipeType<RecipeHolder<RecipeCrusher>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
+  static final RecipeType<RecipeHolder<RecipeCrusher>> TYPE = new RecipeType<>(ID, (Class) RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
   private Font font;

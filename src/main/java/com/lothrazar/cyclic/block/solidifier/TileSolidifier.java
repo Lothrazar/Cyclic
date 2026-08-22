@@ -8,10 +8,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -21,14 +18,14 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.minecraft.core.Direction;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
@@ -41,7 +38,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
 
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
-//  public static final int TRANSFER_FLUID_PER_TICK = FluidType.BUCKET_VOLUME / 20;
+  //  public static final int TRANSFER_FLUID_PER_TICK = FluidType.BUCKET_VOLUME / 20;
   private RecipeSolidifier currentRecipe;
   FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
 
@@ -109,19 +106,19 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
       case BURNMAX:
         this.burnTimeMax = value;
-      break;
+        break;
       case LOCK:
         this.lock = value % 2;
-      break;
+        break;
     }
   }
 
@@ -155,7 +152,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   @Override
   public void loadAdditional(ValueInput input) {
     tank.deserialize(input.childOrEmpty(NBTFLUID));
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inputSlots.deserialize(input.childOrEmpty(NBTINV));
     outputSlots.deserialize(input.childOrEmpty("invoutput"));
     burnTimeMax = input.getIntOr("burnTimeMax", 0);
@@ -265,7 +262,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.generatoritem;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -17,7 +18,6 @@ import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class RecipeGeneratorItem implements Recipe<RecipeInput> {
 
@@ -51,7 +51,7 @@ public class RecipeGeneratorItem implements Recipe<RecipeInput> {
     return ItemStack.EMPTY;
   }
 
-    public boolean canCraftInDimensions(int width, int height) {
+  public boolean canCraftInDimensions(int width, int height) {
     return true;
   }
 
@@ -64,8 +64,7 @@ public class RecipeGeneratorItem implements Recipe<RecipeInput> {
   public boolean matches(RecipeInput inv, Level worldIn) {
     try {
       return matches(inv.getItem(0), ingredients.get(0));
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return false;
     }
   }
@@ -88,7 +87,7 @@ public class RecipeGeneratorItem implements Recipe<RecipeInput> {
     return ingredients.get(slot);
   }
 
-    public NonNullList<Ingredient> getIngredients() {
+  public NonNullList<Ingredient> getIngredients() {
     return ingredients;
   }
 

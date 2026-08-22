@@ -1,16 +1,11 @@
 package com.lothrazar.cyclic.block.clock;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,7 +13,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -48,8 +47,7 @@ public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProv
   public void tick() {
     try {
       updateMyState();
-    }
-    catch (Throwable e) {
+    } catch (Throwable e) {
       ModCyclic.LOGGER.error("Clock blockstate update error", e);
     }
   }
@@ -203,37 +201,37 @@ public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProv
           value = 15;
         }
         power = value;
-      break;
+        break;
       case TIMER:
         timer = value;
-      break;
+        break;
       case DELAY:
         delay = Math.max(value, 1);
-      break;
+        break;
       case DURATION:
         duration = Math.max(value, 1);
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case D:
         this.setSideField(Direction.DOWN, value % 2);
-      break;
+        break;
       case E:
         this.setSideField(Direction.EAST, value % 2);
-      break;
+        break;
       case N:
         this.setSideField(Direction.NORTH, value % 2);
-      break;
+        break;
       case S:
         this.setSideField(Direction.SOUTH, value % 2);
-      break;
+        break;
       case U:
         this.setSideField(Direction.UP, value % 2);
-      break;
+        break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-      break;
+        break;
     }
   }
 }

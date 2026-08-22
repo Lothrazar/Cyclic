@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.render.overlay.HorseCarrotClientCache;
 import com.lothrazar.cyclic.item.animal.ItemHorseCopperRadar;
 import com.lothrazar.cyclic.item.animal.ItemHorseEmeraldJump;
 import com.lothrazar.cyclic.item.animal.ItemHorseEnder;
@@ -9,6 +8,7 @@ import com.lothrazar.cyclic.item.animal.ItemHorseHealthDiamondCarrot;
 import com.lothrazar.cyclic.item.animal.ItemHorseNetheriteFire;
 import com.lothrazar.cyclic.item.animal.ItemHorsePrismarineWater;
 import com.lothrazar.cyclic.item.animal.ItemHorseRedstoneSpeed;
+import com.lothrazar.cyclic.render.overlay.HorseCarrotClientCache;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -53,16 +53,30 @@ public class PacketSyncHorseCarrots implements CustomPacketPayload {
     return TYPE;
   }
 
-  public boolean copper() { return (flags & FLAG_COPPER) != 0; }
-  public boolean netherite() { return (flags & FLAG_NETHERITE) != 0; }
-  public boolean prismarine() { return (flags & FLAG_PRISMARINE) != 0; }
+  public boolean copper() {
+    return (flags & FLAG_COPPER) != 0;
+  }
+
+  public boolean netherite() {
+    return (flags & FLAG_NETHERITE) != 0;
+  }
+
+  public boolean prismarine() {
+    return (flags & FLAG_PRISMARINE) != 0;
+  }
 
   public static PacketSyncHorseCarrots readFrom(AbstractHorse horse) {
     CompoundTag d = horse.getPersistentData();
     byte flags = 0;
-    if (d.getBooleanOr(ItemHorseCopperRadar.NBT_KEY, false)) { flags |= FLAG_COPPER; }
-    if (d.getBooleanOr(ItemHorseNetheriteFire.NBT_KEY, false)) { flags |= FLAG_NETHERITE; }
-    if (d.getBooleanOr(ItemHorsePrismarineWater.NBT_KEY, false)) { flags |= FLAG_PRISMARINE; }
+    if (d.getBooleanOr(ItemHorseCopperRadar.NBT_KEY, false)) {
+      flags |= FLAG_COPPER;
+    }
+    if (d.getBooleanOr(ItemHorseNetheriteFire.NBT_KEY, false)) {
+      flags |= FLAG_NETHERITE;
+    }
+    if (d.getBooleanOr(ItemHorsePrismarineWater.NBT_KEY, false)) {
+      flags |= FLAG_PRISMARINE;
+    }
     return new PacketSyncHorseCarrots(
         horse.getId(),
         d.getIntOr(ItemHorseRedstoneSpeed.NBT_COUNT, 0),

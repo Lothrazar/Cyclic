@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.item.elemental;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -26,7 +26,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.core.registries.BuiltInRegistries;
+
+import java.util.List;
 
 public class FishingEnderEntity extends ThrowableItemProjectile {
 

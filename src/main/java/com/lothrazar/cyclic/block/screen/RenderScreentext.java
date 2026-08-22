@@ -26,7 +26,8 @@ public class RenderScreentext implements BlockEntityRenderer<TileScreentext, Ren
     TileScreentext blockEntity;
   }
 
-  public RenderScreentext(BlockEntityRendererProvider.Context d) {}
+  public RenderScreentext(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public boolean shouldRender(TileScreentext blockEntity, Vec3 cameraPosition) {
@@ -40,7 +41,7 @@ public class RenderScreentext implements BlockEntityRenderer<TileScreentext, Ren
 
   @Override
   public void extractRenderState(TileScreentext blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }

@@ -2,12 +2,12 @@ package com.lothrazar.cyclic.fluid.block;
 
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.BuddingAmethystBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.server.level.ServerLevel;
 
 public class AmethystFluidBlock extends LiquidBlock {
 

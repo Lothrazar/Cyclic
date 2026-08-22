@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-// import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
 import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
@@ -37,6 +36,7 @@ import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
 import com.lothrazar.cyclic.block.enderitemshelf.TileItemShelf;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
+import com.lothrazar.cyclic.block.expfountain.TileExperienceFountain;
 import com.lothrazar.cyclic.block.eye.TileEye;
 import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
 import com.lothrazar.cyclic.block.facade.light.TileLightFacade;
@@ -74,7 +74,6 @@ import com.lothrazar.cyclic.block.soundrecord.TileSoundRecorder;
 import com.lothrazar.cyclic.block.spawntriggers.TileAltar;
 import com.lothrazar.cyclic.block.spawntriggers.TilePeace;
 import com.lothrazar.cyclic.block.spikes.TileDiamondSpikes;
-import com.lothrazar.cyclic.block.expfountain.TileExperienceFountain;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.TileCask;
@@ -94,6 +93,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+// import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
 
 public class TileRegistry {
 

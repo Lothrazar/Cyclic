@@ -6,9 +6,9 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextBoxAutosave;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.components.Tooltip;
 
 public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
 

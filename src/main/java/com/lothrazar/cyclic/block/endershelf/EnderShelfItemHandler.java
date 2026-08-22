@@ -4,15 +4,15 @@ import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient.SyncPacketType;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.EnchantUtil;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 public class EnderShelfItemHandler extends ItemStackHandler {
 

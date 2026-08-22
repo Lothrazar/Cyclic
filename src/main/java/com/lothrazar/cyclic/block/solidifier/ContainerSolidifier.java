@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.solidifier;
 
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.core.Const;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
@@ -64,7 +64,7 @@ public class ContainerSolidifier extends ContainerBase {
   }
 
   public int getEnergy() {
-    return CapabilityUtil.energyStored(tile.getLevel(),tile.getBlockPos());// tile.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    return CapabilityUtil.energyStored(tile.getLevel(), tile.getBlockPos());// tile.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   @Override

@@ -23,19 +23,20 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import com.lothrazar.cyclic.ModCyclic;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class PacketCraftAction implements CustomPacketPayload {
 
@@ -74,7 +75,7 @@ public class PacketCraftAction implements CustomPacketPayload {
         performAction(c, sender, message.action);
       }
     });
-    
+
   }
 
   private static void performAction(IContainerCraftingAction c, Player player, CraftingActionEnum action) {
@@ -86,13 +87,13 @@ public class PacketCraftAction implements CustomPacketPayload {
           c.transferStack(player, i);
         }
         c.getCraftResult().clearContent();
-      break;
+        break;
       case SPREAD:
         balanceLargestSlot(c, false);
-      break;
+        break;
       case SPREADMATCH:
         balanceLargestSlot(c, true);
-      break;
+        break;
     }
   }
 

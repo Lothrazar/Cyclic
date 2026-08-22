@@ -1,17 +1,15 @@
 package com.lothrazar.cyclic.block.beaconredstone;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.render.beacon.BeamHolder;
 import com.lothrazar.cyclic.render.beacon.BeamStuff;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class TileBeaconRedstone extends TileBlockEntityCyclic implements BeamHolder {
 
@@ -46,7 +44,8 @@ public class TileBeaconRedstone extends TileBlockEntityCyclic implements BeamHol
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

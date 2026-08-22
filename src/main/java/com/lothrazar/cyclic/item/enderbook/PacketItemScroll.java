@@ -18,7 +18,8 @@ public class PacketItemScroll implements CustomPacketPayload {
   private int slot;
   private boolean isDown;
 
-  public PacketItemScroll() {}
+  public PacketItemScroll() {
+  }
 
   public PacketItemScroll(int slot, boolean isDown) {
     this.slot = slot;

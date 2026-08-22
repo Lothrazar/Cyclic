@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.magnet;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -9,10 +8,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.data.Vector3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
@@ -23,9 +18,13 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
 
 import static com.lothrazar.cyclic.block.BlockCyclic.LIT;
 
@@ -57,7 +56,7 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic implements MenuPr
   @Override
   public void loadAdditional(ValueInput input) {
     super.loadAdditional(input);
-          filter.deserialize(input.childOrEmpty("filter"));
+    filter.deserialize(input.childOrEmpty("filter"));
   }
 
   @Override
@@ -137,7 +136,8 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic implements MenuPr
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

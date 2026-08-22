@@ -1,10 +1,9 @@
 package com.lothrazar.cyclic.gui;
 
-import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.core.Const;
+import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.library.util.ChatUtil;
-import java.util.Optional;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractSliderButton;
@@ -18,6 +17,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
+
+import java.util.Optional;
 
 public abstract class ScreenBase<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 

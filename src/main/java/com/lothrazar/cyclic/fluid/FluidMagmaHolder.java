@@ -3,14 +3,13 @@ package com.lothrazar.cyclic.fluid;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.fluid.block.MagmaFluidBlock;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.library.fluid.ConfigurableFlowingFluid;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.library.fluid.ConfigurableFlowingFluid;
+import com.lothrazar.library.item.BucketItemFlib;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
-import com.lothrazar.library.item.BucketItemFlib;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
@@ -18,6 +17,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
+
 //Thanks to example https://github.com/MinecraftForge/MinecraftForge/blob/1.15.x/src/test/java/net/minecraftforge/debug/fluid/NewFluidTest.java
 public class FluidMagmaHolder {
 

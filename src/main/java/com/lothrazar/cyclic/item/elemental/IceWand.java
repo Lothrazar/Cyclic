@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.elemental;
 
-import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
@@ -34,8 +33,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
-import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.List;
 
 public class IceWand extends ItemBaseCyclic {
 

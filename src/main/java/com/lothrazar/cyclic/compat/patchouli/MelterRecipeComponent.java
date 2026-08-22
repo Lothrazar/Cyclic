@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.compat.patchouli;
 
-import java.util.function.UnaryOperator;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.FluidRenderMap;
@@ -18,6 +17,8 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import vazkii.patchouli.api.IComponentRenderContext;
 import vazkii.patchouli.api.ICustomComponent;
 import vazkii.patchouli.api.IVariable;
+
+import java.util.function.UnaryOperator;
 
 public class MelterRecipeComponent implements ICustomComponent {
 

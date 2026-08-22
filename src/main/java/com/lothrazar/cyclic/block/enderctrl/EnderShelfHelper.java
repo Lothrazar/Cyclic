@@ -1,9 +1,5 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -14,6 +10,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 public class EnderShelfHelper {

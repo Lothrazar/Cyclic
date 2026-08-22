@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.item.random;
+
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.BlockUtil;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
@@ -13,8 +13,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import com.lothrazar.cyclic.ModCyclic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +28,11 @@ public class PacketRandomize implements CustomPacketPayload {
 
   private static final Random RND = new Random();
 
-  @Override public CustomPacketPayload.Type<? extends CustomPacketPayload> type() { return TYPE; }
+  @Override
+  public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
   private BlockPos pos;
   private Direction side;
   private InteractionHand hand;
@@ -38,6 +42,7 @@ public class PacketRandomize implements CustomPacketPayload {
     this.side = side;
     hand = h;
   }
+
   public static PacketRandomize decode(RegistryFriendlyByteBuf buf) {
     PacketRandomize p = new PacketRandomize(buf.readBlockPos(),
         Direction.values()[buf.readInt()],
@@ -46,11 +51,13 @@ public class PacketRandomize implements CustomPacketPayload {
 
 
   }
+
   public static void encode(RegistryFriendlyByteBuf buf, PacketRandomize msg) {
     buf.writeBlockPos(msg.pos);
     buf.writeInt(msg.side.ordinal());
     buf.writeInt(msg.hand.ordinal());
   }
+
   public static void handle(PacketRandomize message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> {
       var player = ctx.player();

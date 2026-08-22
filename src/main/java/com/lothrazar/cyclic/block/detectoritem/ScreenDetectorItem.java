@@ -9,9 +9,9 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.components.Tooltip;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
@@ -32,7 +32,7 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
     btnRender = addRenderableWidget(new ButtonMachineField(x, y, TileDetectorItem.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x += 22;
-    int h = 20, w=50;
+    int h = 20, w = 50;
     btnComp = addRenderableWidget(new ButtonMachine(x, y, w, h, "", (p) -> {
       int f = TileDetectorItem.Fields.GREATERTHAN.ordinal();
       ClientPacketDistributor.sendToServer(new PacketTileData(f,
@@ -40,8 +40,8 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
     }));
     //x 
     //sliders
-      w = 160;
-      h = 18;
+    w = 160;
+    h = 18;
     x = leftPos + 8;
     y += h + 4;
     int f = TileDetectorItem.Fields.RANGEX.ordinal();

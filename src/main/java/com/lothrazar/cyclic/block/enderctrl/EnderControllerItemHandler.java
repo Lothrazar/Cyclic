@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
@@ -11,6 +9,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnderControllerItemHandler extends ItemStackHandler {
 
@@ -46,8 +47,7 @@ public class EnderControllerItemHandler extends ItemStackHandler {
         TileEnderShelf shelf = (TileEnderShelf) te;
         try {
           stack = insertItemActual(shelf, stack, insertWhenEmpty, simulate);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
           ModCyclic.LOGGER.error("Insert item shelf error", e);
         }
       }
@@ -132,8 +132,7 @@ public class EnderControllerItemHandler extends ItemStackHandler {
       BlockPos extractPos = this.controller.getShelves().get(shelf);
       BlockEntity te = this.controller.getLevel().getBlockEntity(extractPos);
       return EnderShelfHelper.getShelfHandler(te);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return null; // index OOB, etc 
     }
   }

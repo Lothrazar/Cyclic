@@ -1,4 +1,5 @@
 package com.lothrazar.cyclic.gui;
+
 public class ButtonMachine extends ButtonTextured {
 
   private int tileField;

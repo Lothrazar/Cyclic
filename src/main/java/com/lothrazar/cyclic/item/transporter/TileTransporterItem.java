@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.item.transporter;
 
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
@@ -14,6 +12,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -26,6 +25,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -35,8 +35,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.ChestType;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
+
+import java.util.function.Consumer;
 
 
 public class TileTransporterItem extends ItemBaseCyclic {
@@ -76,7 +76,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
 
   private boolean placeStoredTileEntity(Player player, ItemStack heldChestSack, BlockPos pos) {
     CompoundTag itemData = heldChestSack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-    Identifier res =   Identifier.parse(itemData.getStringOr(KEY_BLOCKID, ""));
+    Identifier res = Identifier.parse(itemData.getStringOr(KEY_BLOCKID, ""));
     java.util.Optional<Holder.Reference<Block>> blockRef = BuiltInRegistries.BLOCK.get(res);
     if (blockRef.isEmpty()) {
       heldChestSack = ItemStack.EMPTY;
@@ -107,8 +107,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
         world.blockEntityChanged(pos);
         //        world.blockEntityChangedWithoutNeighborUpdates(pos);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("Error attempting to place block in world", e);
       ChatUtil.sendStatusMessage(player, "chest_sack.error.place");
       world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());

@@ -1,4 +1,5 @@
 package com.lothrazar.cyclic.item.animal;
+
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.library.util.ItemStackUtil;
@@ -6,9 +7,9 @@ import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;

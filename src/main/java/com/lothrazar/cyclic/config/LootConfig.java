@@ -1,10 +1,5 @@
 package com.lothrazar.cyclic.config;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.brigadier.StringReader;
 import net.minecraft.commands.arguments.item.ItemInput;
@@ -17,19 +12,26 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Standalone config for vanilla loot-chest injection.
  * Lives in its own file (cyclic-loot.toml) so pack authors can edit chest loot
  * without scrolling through the giant common config.
- *
+ * <p>
  * Each entry is a CSV string: "modid:item,min,max,chance"
- *   min/max  = stack size range (inclusive)
- *   chance   = percent (0-100) that this entry is rolled per chest
+ * min/max  = stack size range (inclusive)
+ * chance   = percent (0-100) that this entry is rolled per chest
  */
 public class LootConfig {
 
   public static final ModConfigSpec SPEC;
-  /** key = vanilla loot table path (e.g. "chests/simple_dungeon"), value = configured CSV lines */
+  /**
+   * key = vanilla loot table path (e.g. "chests/simple_dungeon"), value = configured CSV lines
+   */
   public static final Map<String, ConfigValue<List<? extends String>>> ENTRIES = new LinkedHashMap<>();
 
   /**
@@ -37,324 +39,324 @@ public class LootConfig {
    * Each pair = { table_path_relative_to_minecraft_namespace, default CSV lines }.
    * Defaults are intentionally conservative (one cyclic item, low chance) so we don't
    * surprise players who installed the mod but never opened the config.
-   *
+   * <p>
    * custom_name is italicized by default (vanilla treats renamed items like anvil output). To suppress it: custom_name='{"text":"Cool","italic":false}'.
    * lore lines are italic + purple by default for the same reason. Override per-line with "italic":false,"color":"white" etc.
-   *
-   If you want the whole item to look "vanilla-renamed-but-not-italic", that's custom_name='{"text":"Cool","italic":false,"color":"gold"}'.
+   * <p>
+   * If you want the whole item to look "vanilla-renamed-but-not-italic", that's custom_name='{"text":"Cool","italic":false,"color":"gold"}'.
    */
   private static final String[][] TABLES = {
       // Underground / overworld dungeons
-      { "chests/simple_dungeon",             """
-cyclic:charm_speed,1,1,5
-cyclic:ender_bag,1,1,5
-cyclic:quiver_damage,1,1,12
-cyclic:copper_sword[damage=15],1,1,5
-cyclic:netherite_nugget,1,1,2
-cyclic:boomerang_damage,1,1,6
- cyclic:heart,1,1,1
-      """.strip()  },
-      { "chests/abandoned_mineshaft",        """
-cyclic:charm_luck,1,1,5
-cyclic:apple_bone,2,6,30
-cyclic:copper_pickaxe,1,1,15
-cyclic:storage_bag,1,1,8
-cyclic:heart,1,1,2
-cyclic:netherite_nugget,1,1,2
-cyclic:boomerang_carry,1,1,6
-cyclic:gem_amber,1,1,1
-cyclic:gem_obsidian,1,1,1
-      """.strip()  },
-      { "chests/buried_treasure",         "cyclic:charm_crit,1,1,15" },
-      { "chests/spawn_bonus_chest",     """
-cyclic:sandstone_axe[enchantments={levels:{"minecraft:unbreaking":3}}],1,1,40
-cyclic:sandstone_shovel[enchantments={levels:{"minecraft:unbreaking":3}}],1,1,40
- cyclic:sleeping_mat,1,1,60
- cyclic:slingshot,1,1,40
- 
-""".strip() },
+      {"chests/simple_dungeon", """
+          cyclic:charm_speed,1,1,5
+          cyclic:ender_bag,1,1,5
+          cyclic:quiver_damage,1,1,12
+          cyclic:copper_sword[damage=15],1,1,5
+          cyclic:netherite_nugget,1,1,2
+          cyclic:boomerang_damage,1,1,6
+           cyclic:heart,1,1,1
+          """.strip()},
+      {"chests/abandoned_mineshaft", """
+          cyclic:charm_luck,1,1,5
+          cyclic:apple_bone,2,6,30
+          cyclic:copper_pickaxe,1,1,15
+          cyclic:storage_bag,1,1,8
+          cyclic:heart,1,1,2
+          cyclic:netherite_nugget,1,1,2
+          cyclic:boomerang_carry,1,1,6
+          cyclic:gem_amber,1,1,1
+          cyclic:gem_obsidian,1,1,1
+          """.strip()},
+      {"chests/buried_treasure", "cyclic:charm_crit,1,1,15"},
+      {"chests/spawn_bonus_chest", """
+          cyclic:sandstone_axe[enchantments={levels:{"minecraft:unbreaking":3}}],1,1,40
+          cyclic:sandstone_shovel[enchantments={levels:{"minecraft:unbreaking":3}}],1,1,40
+           cyclic:sleeping_mat,1,1,60
+           cyclic:slingshot,1,1,40
+          
+          """.strip()},
       // Strongholds
-      { "chests/stronghold_corridor",   """
-cyclic:heart,1,1,2
-cyclic:netherite_nugget,1,1,2
-cyclic:emerald_sword[enchantments={levels:{"minecraft:unbreaking":3}},lore=['{"text":"Ancient","color":"green","italic":true}'],custom_name='{"text":"Whispering Edge","italic":false,"color":"green"}'],1,1,3""".strip() },
-      { "chests/stronghold_crossing",      """
-      
-cyclic:ender_eye_reuse,1,1,5
-      """.strip() },
-      { "chests/stronghold_library",       """
-
-cyclic:netherite_nugget,1,1,2
-cyclic:shield_leather,1,1,8
-cyclic:ender_book,1,1,15
-      """.strip() },
+      {"chests/stronghold_corridor", """
+          cyclic:heart,1,1,2
+          cyclic:netherite_nugget,1,1,2
+          cyclic:emerald_sword[enchantments={levels:{"minecraft:unbreaking":3}},lore=['{"text":"Ancient","color":"green","italic":true}'],custom_name='{"text":"Whispering Edge","italic":false,"color":"green"}'],1,1,3""".strip()},
+      {"chests/stronghold_crossing", """
+          
+          cyclic:ender_eye_reuse,1,1,5
+          """.strip()},
+      {"chests/stronghold_library", """
+          
+          cyclic:netherite_nugget,1,1,2
+          cyclic:shield_leather,1,1,8
+          cyclic:ender_book,1,1,15
+          """.strip()},
       // Desert / jungle / igloo
-      { "chests/desert_pyramid",           """
-cyclic:apple_emerald,2,8,15
-cyclic:charm_xp_speed,1,1,10
-cyclic:sandstone_sword,1,1,15
-cyclic:boomerang_damage,1,1,6
-cyclic:heart,1,1,2
-      """.strip()  },
-      { "chests/jungle_temple",             """
-cyclic:apple_bone,2,6,30
-cyclic:gem_amber,1,1,2
-cyclic:gem_obsidian,1,1,2
-cyclic:netherite_nugget,1,1,2
-cyclic:boomerang_carry,1,1,6
-cyclic:boomerang_stun,1,1,6
-cyclic:heart,1,1,2
-      """.strip()  },
-      { "chests/jungle_temple_dispenser",  """
-minecraft:tipped_arrow[potion_contents={potion:"minecraft:gravity",custom_effects:[{id:"minecraft:slowness",amplifier:2,duration:100}]}],32,64,15
-minecraft:tipped_arrow[potion_contents={potion:"minecraft:stun"]}],16,64,5
-      """.strip() },
-      { "chests/igloo_chest",              """
-cyclic:scepter_ice[damage=15],1,1,15
-cyclic:scepter_water[damage=15],1,1,15
-cyclic:scepter_antimatter[damage=15],1,1,5
-      """.strip()  },
+      {"chests/desert_pyramid", """
+          cyclic:apple_emerald,2,8,15
+          cyclic:charm_xp_speed,1,1,10
+          cyclic:sandstone_sword,1,1,15
+          cyclic:boomerang_damage,1,1,6
+          cyclic:heart,1,1,2
+          """.strip()},
+      {"chests/jungle_temple", """
+          cyclic:apple_bone,2,6,30
+          cyclic:gem_amber,1,1,2
+          cyclic:gem_obsidian,1,1,2
+          cyclic:netherite_nugget,1,1,2
+          cyclic:boomerang_carry,1,1,6
+          cyclic:boomerang_stun,1,1,6
+          cyclic:heart,1,1,2
+          """.strip()},
+      {"chests/jungle_temple_dispenser", """
+          minecraft:tipped_arrow[potion_contents={potion:"minecraft:gravity",custom_effects:[{id:"minecraft:slowness",amplifier:2,duration:100}]}],32,64,15
+          minecraft:tipped_arrow[potion_contents={potion:"minecraft:stun"]}],16,64,5
+          """.strip()},
+      {"chests/igloo_chest", """
+          cyclic:scepter_ice[damage=15],1,1,15
+          cyclic:scepter_water[damage=15],1,1,15
+          cyclic:scepter_antimatter[damage=15],1,1,5
+          """.strip()},
       // Pillager / woodland
-      { "chests/pillager_outpost",         """
-cyclic:quiver_lightning,1,1,10
-cyclic:shield_obsidian,1,1,8
-cyclic:charm_crit,1,1,12
-cyclic:boomerang_stun,1,1,6
-""".strip() },
-      { "chests/woodland_mansion",         """
-cyclic:scepter_hypno,1,1,8
-cyclic:glowing_helmet,1,1,10
-cyclic:charm_invisible,1,1,3
-cyclic:netherite_nugget,2,8,25
-cyclic:evoker_fang,1,1,8
-cyclic:heart,1,1,2
-      """.strip() },
+      {"chests/pillager_outpost", """
+          cyclic:quiver_lightning,1,1,10
+          cyclic:shield_obsidian,1,1,8
+          cyclic:charm_crit,1,1,12
+          cyclic:boomerang_stun,1,1,6
+          """.strip()},
+      {"chests/woodland_mansion", """
+          cyclic:scepter_hypno,1,1,8
+          cyclic:glowing_helmet,1,1,10
+          cyclic:charm_invisible,1,1,3
+          cyclic:netherite_nugget,2,8,25
+          cyclic:evoker_fang,1,1,8
+          cyclic:heart,1,1,2
+          """.strip()},
       // Nether
-      { "chests/nether_bridge",           """
-cyclic:mattock_nether,1,1,5
-cyclic:charm_fire,1,1,5
-cyclic:netherbrick_sword,1,1,5
-      """.strip() },
-      { "chests/bastion_treasure",        """
-cyclic:spikes_diamond,1,1,1
-cyclic:charm_fire,1,1,1
-cyclic:charm_wing,1,1,5
-cyclic:netherite_nugget,1,1,2
-cyclic:gem_amber,1,1,2
-cyclic:gem_obsidian,1,1,2
-cyclic:netherbrick_sword,1,1,5
-cyclic:scepter_fire,1,1,8
-cyclic:evoker_fang,1,1,5
- cyclic:heart,1,1,2
-      """.strip() },
-      { "chests/bastion_other",           """
- cyclic:heart,1,1,2
-  cyclic:netherbrick_axe,1,1,5
-  cyclic:netherite_nugget,1,1,2
-  cyclic:gem_amber,1,1,2
-  cyclic:gem_obsidian,1,1,2
-      """.strip() },
-      { "chests/bastion_bridge",          """
-cyclic:quiver_lightning,1,1,10
-cyclic:shield_obsidian,1,1,8
- cyclic:heart,1,1,2
-      """.strip() },
-      { "chests/bastion_hoglin_stable",   """
-      
-      """.strip() },
-      { "chests/ruined_portal",            """
-cyclic:amethyst_pickaxe,1,1,10
-      """.strip() },
+      {"chests/nether_bridge", """
+          cyclic:mattock_nether,1,1,5
+          cyclic:charm_fire,1,1,5
+          cyclic:netherbrick_sword,1,1,5
+          """.strip()},
+      {"chests/bastion_treasure", """
+          cyclic:spikes_diamond,1,1,1
+          cyclic:charm_fire,1,1,1
+          cyclic:charm_wing,1,1,5
+          cyclic:netherite_nugget,1,1,2
+          cyclic:gem_amber,1,1,2
+          cyclic:gem_obsidian,1,1,2
+          cyclic:netherbrick_sword,1,1,5
+          cyclic:scepter_fire,1,1,8
+          cyclic:evoker_fang,1,1,5
+           cyclic:heart,1,1,2
+          """.strip()},
+      {"chests/bastion_other", """
+          cyclic:heart,1,1,2
+           cyclic:netherbrick_axe,1,1,5
+           cyclic:netherite_nugget,1,1,2
+           cyclic:gem_amber,1,1,2
+           cyclic:gem_obsidian,1,1,2
+          """.strip()},
+      {"chests/bastion_bridge", """
+          cyclic:quiver_lightning,1,1,10
+          cyclic:shield_obsidian,1,1,8
+           cyclic:heart,1,1,2
+          """.strip()},
+      {"chests/bastion_hoglin_stable", """
+          
+          """.strip()},
+      {"chests/ruined_portal", """
+          cyclic:amethyst_pickaxe,1,1,10
+          """.strip()},
       // End
-      { "chests/end_city_treasure",        """
-cyclic:amethyst_sword,1,1,10
-cyclic:charm_crit,1,1,1
-cyclic:scepter_teleport,1,1,5
-cyclic:apple_ender,2,8,15
-cyclic:emerald_chestplate,1,1,1
-cyclic:scepter_snow,1,1,8
-cyclic:scepter_fire,1,1,8
-cyclic:scepter_lightning,1,1,8
-cyclic:evoker_fang,1,1,5
- cyclic:heart,1,1,1
-cyclic:chorus_flight,1,1,1
-  cyclic:gem_amber,1,1,1
-  cyclic:gem_obsidian,1,1,1
-      """.strip() },
+      {"chests/end_city_treasure", """
+          cyclic:amethyst_sword,1,1,10
+          cyclic:charm_crit,1,1,1
+          cyclic:scepter_teleport,1,1,5
+          cyclic:apple_ender,2,8,15
+          cyclic:emerald_chestplate,1,1,1
+          cyclic:scepter_snow,1,1,8
+          cyclic:scepter_fire,1,1,8
+          cyclic:scepter_lightning,1,1,8
+          cyclic:evoker_fang,1,1,5
+           cyclic:heart,1,1,1
+          cyclic:chorus_flight,1,1,1
+            cyclic:gem_amber,1,1,1
+            cyclic:gem_obsidian,1,1,1
+          """.strip()},
       // Ocean / shipwrecks / ruins
-      { "chests/shipwreck_map",           """
-cyclic:scepter_teleport,1,1,5
-      """.strip()},
-      { "chests/shipwreck_supply",        """
-cyclic:apple_honey,8,16,10
-cyclic:peat_fuel,4,32,25
-      """.strip()},
-      { "chests/shipwreck_treasure",      """
-cyclic:apple_diamond,4,6,15
-cyclic:scepter_teleport,1,1,5
-  cyclic:gem_amber,1,1,2
-   cyclic:heart,1,1,2
-  cyclic:gem_obsidian,1,1,2
-      """.strip()},
-      { "chests/underwater_ruin_big",     """
-cyclic:amethyst_pickaxe,1,1,5
- cyclic:heart,1,1,2
-      """.strip()},
-      { "chests/underwater_ruin_small",   """
-      
-  cyclic:gem_amber,1,1,2
-  cyclic:gem_obsidian,1,1,2
-      """.strip()},
+      {"chests/shipwreck_map", """
+          cyclic:scepter_teleport,1,1,5
+          """.strip()},
+      {"chests/shipwreck_supply", """
+          cyclic:apple_honey,8,16,10
+          cyclic:peat_fuel,4,32,25
+          """.strip()},
+      {"chests/shipwreck_treasure", """
+          cyclic:apple_diamond,4,6,15
+          cyclic:scepter_teleport,1,1,5
+            cyclic:gem_amber,1,1,2
+             cyclic:heart,1,1,2
+            cyclic:gem_obsidian,1,1,2
+          """.strip()},
+      {"chests/underwater_ruin_big", """
+          cyclic:amethyst_pickaxe,1,1,5
+           cyclic:heart,1,1,2
+          """.strip()},
+      {"chests/underwater_ruin_small", """
+          
+          cyclic:gem_amber,1,1,2
+          cyclic:gem_obsidian,1,1,2
+          """.strip()},
       // Ancient city
-      { "chests/ancient_city",             """
-cyclic:ender_bag,1,1,5
-cyclic:scepter_lightning,1,1,6
-cyclic:evoker_fang,1,1,5
-
-  cyclic:heart,1,1,2
-  cyclic:netherite_nugget,1,1,2
-  cyclic:soulstone,1,1,2
-  cyclic:gem_amber,1,1,2
-  cyclic:gem_obsidian,1,1,2
-
-
-      """.strip() },
-      { "chests/ancient_city_ice_box",    """
-
-  cyclic:netherite_nugget,1,1,2
-  cyclic:soulstone,1,1,2
-      """.strip() },
+      {"chests/ancient_city", """
+          cyclic:ender_bag,1,1,5
+          cyclic:scepter_lightning,1,1,6
+          cyclic:evoker_fang,1,1,5
+          
+            cyclic:heart,1,1,2
+            cyclic:netherite_nugget,1,1,2
+            cyclic:soulstone,1,1,2
+            cyclic:gem_amber,1,1,2
+            cyclic:gem_obsidian,1,1,2
+          
+          
+          """.strip()},
+      {"chests/ancient_city_ice_box", """
+          
+          cyclic:netherite_nugget,1,1,2
+          cyclic:soulstone,1,1,2
+          """.strip()},
       // Trial chambers (1.21)
-      { "chests/trial_chambers/reward_common",           """
-cyclic:amethyst_sword,1,1,5
-  cyclic:gem_amber,1,1,2
-  cyclic:gem_obsidian,1,1,2
-      """.strip() },
-      { "chests/trial_chambers/reward_rare",             """
-cyclic:emerald_sword[enchantments={levels:{"minecraft:sharpness":3}}],1,1,15
-  cyclic:netherite_nugget,1,1,2
-      """.strip() },
-      { "chests/trial_chambers/reward_unique",           """
-cyclic:scepter_missile,1,1,8
-cyclic:apple_lofty_stature,2,4,8
-cyclic:soulstone,1,1,2
-cyclic:scepter_snow,1,1,6
-  cyclic:heart,1,1,2
-cyclic:charm_void,1,1,2
-  cyclic:charm_knockback_resistance,1,1,2
-  cyclic:charm_magicdefense,1,1,5
-  cyclic:charm_creeper,1,1,2
-  cyclic:charm_attack_speed,1,1,2
-  cyclic:soulstone,1,1,2
-      """.strip() },
-      { "chests/trial_chambers/reward_ominous_common",   """
-  cyclic:charm_wing,1,1,3
-  cyclic:charm_knockback_resistance,1,1,8
-      """.strip() },
-      { "chests/trial_chambers/reward_ominous_rare",     """
-  cyclic:scepter_missile,1,1,8
-    cyclic:charm_wing,1,1,3
-  cyclic:charm_magicdefense,1,1,8
-  cyclic:evoker_fang,1,1,5
-  cyclic:heart,1,1,5
-  cyclic:charm_creeper,1,1,8
-  cyclic:soulstone,1,1,2
-  cyclic:netherite_nugget,1,1,8
-  cyclic:charm_ultimate,1,1,2
-      """.strip() },
-      { "chests/trial_chambers/reward_ominous_unique",   """
- cyclic:scepter_antimatter,1,1,2
-  cyclic:chorus_flight,6,16,5
-  cyclic:heart,1,1,5
-  cyclic:charm_magicdefense,1,1,8
-  cyclic:charm_creeper,1,1,8
-  cyclic:charm_attack_speed,1,1,8
-  cyclic:charm_knockback_resistance,1,1,8
-  cyclic:soulstone,1,1,2
-  cyclic:charm_ultimate,1,1,2
-      """.strip() },
-      { "chests/trial_chambers/supply",                  """
-
-cyclic:shield_obsidian[enchantments={levels:{"minecraft:unbreaking":3}}],1,1,8
-      """.strip() },
+      {"chests/trial_chambers/reward_common", """
+          cyclic:amethyst_sword,1,1,5
+            cyclic:gem_amber,1,1,2
+            cyclic:gem_obsidian,1,1,2
+          """.strip()},
+      {"chests/trial_chambers/reward_rare", """
+          cyclic:emerald_sword[enchantments={levels:{"minecraft:sharpness":3}}],1,1,15
+            cyclic:netherite_nugget,1,1,2
+          """.strip()},
+      {"chests/trial_chambers/reward_unique", """
+          cyclic:scepter_missile,1,1,8
+          cyclic:apple_lofty_stature,2,4,8
+          cyclic:soulstone,1,1,2
+          cyclic:scepter_snow,1,1,6
+            cyclic:heart,1,1,2
+          cyclic:charm_void,1,1,2
+            cyclic:charm_knockback_resistance,1,1,2
+            cyclic:charm_magicdefense,1,1,5
+            cyclic:charm_creeper,1,1,2
+            cyclic:charm_attack_speed,1,1,2
+            cyclic:soulstone,1,1,2
+          """.strip()},
+      {"chests/trial_chambers/reward_ominous_common", """
+          cyclic:charm_wing,1,1,3
+          cyclic:charm_knockback_resistance,1,1,8
+          """.strip()},
+      {"chests/trial_chambers/reward_ominous_rare", """
+          cyclic:scepter_missile,1,1,8
+            cyclic:charm_wing,1,1,3
+          cyclic:charm_magicdefense,1,1,8
+          cyclic:evoker_fang,1,1,5
+          cyclic:heart,1,1,5
+          cyclic:charm_creeper,1,1,8
+          cyclic:soulstone,1,1,2
+          cyclic:netherite_nugget,1,1,8
+          cyclic:charm_ultimate,1,1,2
+          """.strip()},
+      {"chests/trial_chambers/reward_ominous_unique", """
+          cyclic:scepter_antimatter,1,1,2
+           cyclic:chorus_flight,6,16,5
+           cyclic:heart,1,1,5
+           cyclic:charm_magicdefense,1,1,8
+           cyclic:charm_creeper,1,1,8
+           cyclic:charm_attack_speed,1,1,8
+           cyclic:charm_knockback_resistance,1,1,8
+           cyclic:soulstone,1,1,2
+           cyclic:charm_ultimate,1,1,2
+          """.strip()},
+      {"chests/trial_chambers/supply", """
+          
+          cyclic:shield_obsidian[enchantments={levels:{"minecraft:unbreaking":3}}],1,1,8
+          """.strip()},
       // Villages
-      { "chests/village/village_armorer",       """
-  cyclic:charm_longfall,1,1,8
-  cyclic:charm_venom,1,1,8
-  cyclic:charm_xp_speed,1,1,8
-      """.strip() },
-      { "chests/village/village_butcher",           """
+      {"chests/village/village_armorer", """
+          cyclic:charm_longfall,1,1,8
+          cyclic:charm_venom,1,1,8
+          cyclic:charm_xp_speed,1,1,8
+          """.strip()},
+      {"chests/village/village_butcher", """
           
-            cyclic:apple_bone,1,2,30
-            cyclic:lunchbox,1,1,5
-      """.strip() },
-      { "chests/village/village_cartographer",      """
-
-  cyclic:charm_longfall,1,1,5
-  cyclic:charm_venom,1,1,5
-      """.strip() },
-      { "chests/village/village_desert_house",      """
-  cyclic:scepter_randomize,1,1,5
-  cyclic:sandstone_pickaxe,1,1,5
-  cyclic:sandstone_shovel,1,1,5
-      """.strip() },
-      { "chests/village/village_fisher",            """
-       cyclic:flippers,1,1,15
-      """.strip() },
-      { "chests/village/village_fletcher",          """
-      
-      """.strip() },
-      { "chests/village/village_mason",             """
-      
-      """.strip() },
-      { "chests/village/village_plains_house",      """
-  cyclic:lunchbox,1,1,10
-      """.strip() },
-      { "chests/village/village_savanna_house",     """
-  cyclic:lunchbox,1,1,10
-      """.strip() },
-      { "chests/village/village_shepherd",          """
-  cyclic:shearing,1,1,15
-      """.strip() },
-      { "chests/village/village_snowy_house",       """
-      
-  cyclic:scythe_brush,1,1,10
-      """.strip() },
-      { "chests/village/village_taiga_house",       """
-  cyclic:scythe_harvest,1,1,8
-      """.strip() },
-      { "chests/village/village_tannery",           """
-      
-cyclic:shield_leather,1,1,25
-      
-      """.strip() },
-      { "chests/village/village_temple",            """
+                cyclic:apple_bone,1,2,30
+                cyclic:lunchbox,1,1,5
+          """.strip()},
+      {"chests/village/village_cartographer", """
           
-  cyclic:heart,1,1,1
-            cyclic:charm_antipotion,1,1,10
-      """.strip() },
-      { "chests/village/village_toolsmith",     """
-            cyclic:mattock,1,1,12
-            cyclic:scythe_harvest,1,1,8
-      """.strip() },
-      { "chests/village/village_weaponsmith",  """
-           cyclic:emerald_sword,1,1,10
-           cyclic:spikes_iron,1,2,10
-      """.strip()},
+          cyclic:charm_longfall,1,1,5
+          cyclic:charm_venom,1,1,5
+          """.strip()},
+      {"chests/village/village_desert_house", """
+          cyclic:scepter_randomize,1,1,5
+          cyclic:sandstone_pickaxe,1,1,5
+          cyclic:sandstone_shovel,1,1,5
+          """.strip()},
+      {"chests/village/village_fisher", """
+           cyclic:flippers,1,1,15
+          """.strip()},
+      {"chests/village/village_fletcher", """
+          
+          """.strip()},
+      {"chests/village/village_mason", """
+          
+          """.strip()},
+      {"chests/village/village_plains_house", """
+          cyclic:lunchbox,1,1,10
+          """.strip()},
+      {"chests/village/village_savanna_house", """
+          cyclic:lunchbox,1,1,10
+          """.strip()},
+      {"chests/village/village_shepherd", """
+          cyclic:shearing,1,1,15
+          """.strip()},
+      {"chests/village/village_snowy_house", """
+          
+          cyclic:scythe_brush,1,1,10
+          """.strip()},
+      {"chests/village/village_taiga_house", """
+          cyclic:scythe_harvest,1,1,8
+          """.strip()},
+      {"chests/village/village_tannery", """
+          
+          cyclic:shield_leather,1,1,25
+          
+          """.strip()},
+      {"chests/village/village_temple", """
+          
+          cyclic:heart,1,1,1
+                    cyclic:charm_antipotion,1,1,10
+          """.strip()},
+      {"chests/village/village_toolsmith", """
+                cyclic:mattock,1,1,12
+                cyclic:scythe_harvest,1,1,8
+          """.strip()},
+      {"chests/village/village_weaponsmith", """
+               cyclic:emerald_sword,1,1,10
+               cyclic:spikes_iron,1,2,10
+          """.strip()},
   };
 
   static {
     ModConfigSpec.Builder b = new ModConfigSpec.Builder();
     b.comment(
-        "Cyclic loot-chest injection.",
-        "Add items to vanilla chest loot tables without touching datapacks.",
-        "Each list entry is a CSV string: modid:item,min,max,chance",
-        "  min   = minimum stack size (>=1)",
-        "  max   = maximum stack size (>= min)",
-        "  chance = percent (0-100) that this entry rolls in a given chest",
-        "Unknown items are skipped with a warning. Empty list = no injection.",
-        "Delete a line to disable that entry; add as many lines per chest as you want.  " +
-        "Adding new/modded chests is supported if they are not already listed")
+            "Cyclic loot-chest injection.",
+            "Add items to vanilla chest loot tables without touching datapacks.",
+            "Each list entry is a CSV string: modid:item,min,max,chance",
+            "  min   = minimum stack size (>=1)",
+            "  max   = maximum stack size (>= min)",
+            "  chance = percent (0-100) that this entry rolls in a given chest",
+            "Unknown items are skipped with a warning. Empty list = no injection.",
+            "Delete a line to disable that entry; add as many lines per chest as you want.  " +
+                "Adding new/modded chests is supported if they are not already listed")
         .push("loot_inject");
     for (String[] pair : TABLES) {
       String path = pair[0];
@@ -453,7 +455,7 @@ cyclic:shield_leather,1,1,25
   /**
    * Parsed form of one CSV line. Returns null on a bad line (and logs).
    * Item spec uses the same bracket syntax as /give:
-   *   cyclic:charm_crit[damage=23,custom_name='{"text":"Cool"}']
+   * cyclic:charm_crit[damage=23,custom_name='{"text":"Cool"}']
    */
   public static ParsedEntry parse(String csv, HolderLookup.Provider registries) {
     if (csv == null || csv.isEmpty()) {
@@ -477,8 +479,7 @@ cyclic:shield_leather,1,1,25
         return null;
       }
       return new ParsedEntry(holder, patch, min, max, chance);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       ModCyclic.LOGGER.error("[cyclic-loot] failed to parse '" + csv + "': " + e.getMessage());
       return null;
     }

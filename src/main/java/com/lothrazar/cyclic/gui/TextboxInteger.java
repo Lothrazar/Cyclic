@@ -1,9 +1,7 @@
 package com.lothrazar.cyclic.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.library.core.IHasTooltip;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.input.CharacterEvent;
@@ -11,6 +9,9 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TextboxInteger extends EditBox implements IHasTooltip {
 
@@ -21,7 +22,7 @@ public class TextboxInteger extends EditBox implements IHasTooltip {
   private List<Component> tooltip;
 
   public TextboxInteger(Font fontIn, int xIn, int yIn, int widthIn,
-      BlockPos pos, int field) {
+                        BlockPos pos, int field) {
     super(fontIn, xIn, yIn, widthIn, 16, null);
     this.setMaxLength(2);
     this.setBordered(true);
@@ -80,8 +81,7 @@ public class TextboxInteger extends EditBox implements IHasTooltip {
   public int getCurrent() {
     try {
       return Integer.parseInt(this.getValue());
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return 0;
     }
   }

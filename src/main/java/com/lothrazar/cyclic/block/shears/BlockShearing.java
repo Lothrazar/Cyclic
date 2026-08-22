@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.shears;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import net.minecraft.core.BlockPos;
@@ -8,7 +7,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -18,6 +16,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.IShearable;
+
+import java.util.List;
 
 public class BlockShearing extends BlockCyclic {
 
@@ -40,7 +40,7 @@ public class BlockShearing extends BlockCyclic {
     if (entityIn instanceof IShearable sheep) {
       //do it
 //      IForgeShearable sheep = (IForgeShearable) entityIn;
-      if (sheep.isShearable(null,ItemStack.EMPTY, worldIn, pos) && worldIn instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+      if (sheep.isShearable(null, ItemStack.EMPTY, worldIn, pos) && worldIn instanceof net.minecraft.server.level.ServerLevel serverLevel) {
         List<ItemStack> drops = sheep.onSheared(null, ItemStack.EMPTY, worldIn, pos); //, worldIn.random.nextInt(3)
         drops.forEach(d -> {
           RandomSource rand = worldIn.getRandom();

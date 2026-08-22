@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.enchant;
 
-import java.util.Collections;
-import java.util.List;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.util.GrowthUtil;
 import com.lothrazar.library.util.EnchantUtil;
@@ -18,6 +16,9 @@ import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
+import java.util.Collections;
+import java.util.List;
+
 public class GrowthEnchant {
 
   public static final String ID = "growth";
@@ -31,7 +32,6 @@ public class GrowthEnchant {
   public static boolean isEnabled() {
     return CFG == null || CFG.get();
   }
-
 
 
   @SubscribeEvent

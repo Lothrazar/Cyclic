@@ -1,14 +1,10 @@
 package com.lothrazar.cyclic.block.beaconpotion;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.BlockAndLightGetter;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.Block;
@@ -21,7 +17,7 @@ import net.minecraft.world.level.material.FluidState;
 
 public class BlockPotion extends BlockCyclic implements BeaconBeamBlock {
 
-  private static final float[] COLOR = new float[] { 1, 1, 1 };
+  private static final float[] COLOR = new float[]{1, 1, 1};
 
   public BlockPotion(Properties properties) {
     super(properties.strength(1.8F)

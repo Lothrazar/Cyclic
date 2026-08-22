@@ -3,10 +3,8 @@ package com.lothrazar.cyclic.item.food;
 import com.lothrazar.cyclic.capabilities.player.PlayerCyclicAttachment;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.AttachmentRegistry;
-import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.AttributesUtil;
 import com.lothrazar.library.util.ChatUtil;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,9 +16,6 @@ public class LoftyStatureApple extends ItemBaseCyclic {
     super(properties);
   }
 
-
-
-  
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {

@@ -1,13 +1,10 @@
 package com.lothrazar.cyclic.render.overlay;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.item.animal.ItemHorseQuartzStep;
 import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import java.util.Optional;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.HorseInventoryScreen;
@@ -21,6 +18,10 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class HorseCarrotOverlay {
 

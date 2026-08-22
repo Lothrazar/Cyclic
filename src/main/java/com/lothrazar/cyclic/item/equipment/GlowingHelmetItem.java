@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.library.core.Const;
@@ -18,10 +16,11 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+
+import java.util.function.Consumer;
 
 public class GlowingHelmetItem extends Item implements IHasClickToggle {
 

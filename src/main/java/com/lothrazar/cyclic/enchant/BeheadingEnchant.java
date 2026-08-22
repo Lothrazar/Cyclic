@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.enchant;
 
-import java.util.Map;
-import org.jetbrains.annotations.Nullable;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
@@ -23,8 +21,9 @@ import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import org.jetbrains.annotations.Nullable;
 
-import static com.lothrazar.library.util.EnchantUtil.getCurrentLevelTool;
+import java.util.Map;
 
 public class BeheadingEnchant {
 

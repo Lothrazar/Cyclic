@@ -8,9 +8,9 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.components.Tooltip;
 
 public class ScreenUser extends ScreenBase<ContainerUser> {
 
@@ -38,7 +38,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, f, menu.tile.getBlockPos()));
     x = leftPos + 2 * w;
     y = topPos + h + 6;
-    w=120;
+    w = 120;
     f = TileUser.Fields.TIMERDEL.ordinal();
     GuiSliderInteger slider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(), 1, 64, menu.tile.getField(f)));
     slider.setTooltip(Tooltip.create(ChatUtil.ilang("block.cyclic.user.delay")));

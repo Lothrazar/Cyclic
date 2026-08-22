@@ -1,10 +1,5 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -12,10 +7,8 @@ import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.MenuProvider;
@@ -30,12 +23,17 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -47,15 +45,17 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   public static ModConfigSpec.IntValue POWERCONF;
   public static ModConfigSpec.BooleanValue NBT_IGNORED;
   public static ModConfigSpec.ConfigValue<Integer> TIMER;
-  public static  ModConfigSpec.ConfigValue<List<? extends String>> IGNORE_LIST;
-  public static  ModConfigSpec.ConfigValue<List<? extends String>> IGNORE_RECIPES;
+  public static ModConfigSpec.ConfigValue<List<? extends String>> IGNORE_LIST;
+  public static ModConfigSpec.ConfigValue<List<? extends String>> IGNORE_RECIPES;
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
     protected void onContentsChanged(int slot) {
       TileUncraft.this.status = UncraftStatusEnum.EMPTY;
-    };
+    }
+
+    ;
   };
   ItemStackHandler outputSlots = new ItemStackHandler(8 * 2) {
 
@@ -64,7 +64,9 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       if (TileUncraft.this.status == UncraftStatusEnum.NOROOM) {
         TileUncraft.this.status = UncraftStatusEnum.EMPTY;
       }
-    };
+    }
+
+    ;
   };
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
 
@@ -143,7 +145,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void loadAdditional(ValueInput input) {
-          energy.deserialize(input.childOrEmpty(NBTENERGY));
+    energy.deserialize(input.childOrEmpty(NBTENERGY));
     inventory.deserialize(input.childOrEmpty(NBTINV));
     this.status = UncraftStatusEnum.values()[input.getIntOr("ucstats", 0)];
     super.loadAdditional(input);
@@ -266,13 +268,13 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case STATUS:
         this.status = UncraftStatusEnum.values()[value];
-      break;
+        break;
       case TIMER:
         timer = value;
-      break;
+        break;
     }
   }
 

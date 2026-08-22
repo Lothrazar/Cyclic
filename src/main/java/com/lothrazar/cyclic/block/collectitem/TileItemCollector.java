@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.collectitem;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
@@ -10,10 +9,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
@@ -25,9 +20,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
 
 public class TileItemCollector extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -41,7 +40,7 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
   private boolean directionIsUp = false;
   //radius 7 translates to 15x15 area (center block + 7 each side)
   ItemStackHandler inventory = new ItemStackHandler(2 * 9);
-// //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  // //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
@@ -158,19 +157,19 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.setNeedsRedstone(value);
-      break;
+        break;
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-      break;
+        break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-      break;
+        break;
       case DIRECTION:
         this.directionIsUp = value == 1;
-      break;
+        break;
     }
   }
 

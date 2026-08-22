@@ -24,7 +24,7 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
 
   private static final int FONT = 0xFFFFFFFF;
   private static final Identifier ID = Identifier.fromNamespaceAndPath(ModCyclic.MODID, "generator_item");
-  static final RecipeType<RecipeHolder<RecipeGeneratorItem>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
+  static final RecipeType<RecipeHolder<RecipeGeneratorItem>> TYPE = new RecipeType<>(ID, (Class) RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
 

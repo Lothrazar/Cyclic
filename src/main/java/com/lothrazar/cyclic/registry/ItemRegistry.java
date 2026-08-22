@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.library.core.Const;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.batteryclay.ItemBlockClayBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
@@ -51,9 +50,9 @@ import com.lothrazar.cyclic.item.boomerang.BoomerangItem;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
+import com.lothrazar.cyclic.item.compass.GpsCompassItem;
 import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickItem;
-import com.lothrazar.cyclic.item.compass.GpsCompassItem;
 import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -92,12 +91,12 @@ import com.lothrazar.cyclic.item.equipment.RotatorItem;
 import com.lothrazar.cyclic.item.equipment.ShearsMaterial;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem.ShieldType;
-import com.lothrazar.cyclic.item.food.FoodItemWithEffects;
 import com.lothrazar.cyclic.item.food.AppleChocolate;
 import com.lothrazar.cyclic.item.food.ChocolateMilk;
 import com.lothrazar.cyclic.item.food.EdibleFlightItem;
 import com.lothrazar.cyclic.item.food.EdibleSpecItem;
 import com.lothrazar.cyclic.item.food.EnderApple;
+import com.lothrazar.cyclic.item.food.FoodItemWithEffects;
 import com.lothrazar.cyclic.item.food.HeartItem;
 import com.lothrazar.cyclic.item.food.HeartToxicItem;
 import com.lothrazar.cyclic.item.food.LoftyStatureApple;
@@ -118,10 +117,9 @@ import com.lothrazar.cyclic.item.torchthrow.ItemTorchThrower;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
 import com.lothrazar.cyclic.registry.MaterialRegistry.ToolMats;
+import com.lothrazar.library.core.Const;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.component.Consumable;
-import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
@@ -129,8 +127,9 @@ import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 import net.minecraft.world.item.equipment.ArmorType;
-
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -386,7 +385,6 @@ public class ItemRegistry {
   public static final DeferredItem<Item> TILE_TRANSPORTER = ITEMS.registerItem("tile_transporter", props -> new TileTransporterItem(props));
 
 
-
   // ---- core ----
   public static final DeferredItem<Item> GPS_COMPASS = ITEMS.registerItem("compass_gps", props -> new GpsCompassItem(props.stacksTo(1)));
   public static final DeferredItem<Item> LOCATION_DATA = ITEMS.registerItem("location_data", props -> new LocationGpsCard(props));
@@ -471,7 +469,7 @@ public class ItemRegistry {
   public static final DeferredItem<Item> SPIKES_CURSE = ITEMS.registerItem("spikes_curse", props -> new BlockItem(BlockRegistry.SPIKES_CURSE.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> SPIKES_FIRE = ITEMS.registerItem("spikes_fire", props -> new BlockItem(BlockRegistry.SPIKES_FIRE.get(), props.useBlockDescriptionPrefix()));
 
-public static final DeferredItem<Item> SHEARING = ITEMS.registerItem("shearing", props -> new BlockItem(BlockRegistry.SHEARING.get(), props.useBlockDescriptionPrefix()));
+  public static final DeferredItem<Item> SHEARING = ITEMS.registerItem("shearing", props -> new BlockItem(BlockRegistry.SHEARING.get(), props.useBlockDescriptionPrefix()));
 
 
   // ---- ENERGY
@@ -495,7 +493,7 @@ public static final DeferredItem<Item> SHEARING = ITEMS.registerItem("shearing",
   public static final DeferredItem<Item> PEAT_UNBAKED = ITEMS.registerItem("peat_unbaked", props -> new BlockItem(BlockRegistry.PEAT_UNBAKED.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> PEAT_BAKED = ITEMS.registerItem("peat_baked", props -> new BlockItem(BlockRegistry.PEAT_BAKED.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> PEAT_FARM = ITEMS.registerItem("peat_farm", props -> new BlockItem(BlockRegistry.PEAT_FARM.get(), props.useBlockDescriptionPrefix()));
- // ---- energy machine blocks
+  // ---- energy machine blocks
   public static final DeferredItem<Item> BATTERY_CLAY = ITEMS.registerItem("battery_clay", props -> new ItemBlockClayBattery(BlockRegistry.BATTERY_CLAY.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> BATTERY = ITEMS.registerItem("battery", props -> new ItemBlockBattery(BlockRegistry.BATTERY.get(), props.useBlockDescriptionPrefix()));
   public static final DeferredItem<Item> CRAFTER = ITEMS.registerItem("crafter", props -> new BlockItem(BlockRegistry.CRAFTER.get(), props.useBlockDescriptionPrefix()));
@@ -572,9 +570,8 @@ public static final DeferredItem<Item> SHEARING = ITEMS.registerItem("shearing",
   public static final DeferredItem<Item> SPRINKLER = ITEMS.registerItem("sprinkler", props -> new BlockItem(BlockRegistry.SPRINKLER.get(), props.useBlockDescriptionPrefix()));
 
 
-
   public static final DeferredItem<Item> CONVEYOR = ITEMS.registerItem("conveyor", props -> new BlockItem(BlockRegistry.CONVEYOR.get(), props.useBlockDescriptionPrefix()));
- public static final DeferredItem<Item> TELEPORT = ITEMS.registerItem("teleport", props -> new BlockItem(BlockRegistry.TELEPORT.get(), props.useBlockDescriptionPrefix()));
+  public static final DeferredItem<Item> TELEPORT = ITEMS.registerItem("teleport", props -> new BlockItem(BlockRegistry.TELEPORT.get(), props.useBlockDescriptionPrefix()));
 
 
   public static final DeferredItem<Item> ENDER_SHELF = ITEMS.registerItem("ender_shelf", props -> new BlockItem(BlockRegistry.ENDER_SHELF.get(), props.useBlockDescriptionPrefix()));

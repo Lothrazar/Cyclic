@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.command;
 
-import java.util.Collection;
-import java.util.Optional;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.PlayerUtil;
@@ -12,9 +9,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Collection;
+import java.util.Optional;
 
 public class CommandHome {
 

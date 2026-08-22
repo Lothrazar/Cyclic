@@ -27,12 +27,11 @@ import com.lothrazar.library.util.BlockUtil;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
@@ -45,7 +44,7 @@ public class AutoTorchItem extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, ServerLevel world, Entity entityIn,  EquipmentSlot slot) {
+  public void inventoryTick(ItemStack stack, ServerLevel world, Entity entityIn, EquipmentSlot slot) {
     if (!this.isOn(stack)) {
       return;
     }

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.detectorentity;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -11,9 +10,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.data.EntityFilterType;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
@@ -24,9 +20,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.HolderLookup;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
 
 public class TileDetector extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -81,15 +80,15 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
     switch (this.compType) {
       case LESS:
         trigger = (entitiesFound < limitUntilRedstone);
-      break;
+        break;
       case GREATER:
         trigger = (entitiesFound > limitUntilRedstone);
-      break;
+        break;
       case EQUAL:
         trigger = (entitiesFound == limitUntilRedstone);
-      break;
+        break;
       default:
-      break;
+        break;
     }
     if (isPoweredNow != trigger) {
       isPoweredNow = trigger;
@@ -97,8 +96,7 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
       level.sendBlockUpdated(this.getBlockPos(), state, state, 3);
       try {
         level.updateNeighborsAt(this.getBlockPos(), this.getBlockState().getBlock());
-      }
-      catch (Throwable e) {
+      } catch (Throwable e) {
         //somehow this lead to a  
         //        java.lang.NullPointerException
         //        at net.minecraft.block.BlockDoor.neighborChanged(BlockDoor.java:228)
@@ -188,7 +186,7 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
     switch (Fields.values()[field]) {
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
-      break;
+        break;
       case GREATERTHAN:
         if (value >= CompareType.values().length) {
           value = 0;
@@ -197,7 +195,7 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
           value = CompareType.values().length - 1;
         }
         this.compType = CompareType.values()[value];
-      break;
+        break;
       case LIMIT:
         if (value > 999) {
           value = 999;
@@ -206,16 +204,16 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
           value = 0;
         }
         this.limitUntilRedstone = value;
-      break;
+        break;
       case RANGEX:
         this.rangeX = value;
-      break;
+        break;
       case RANGEY:
         this.rangeY = value;
-      break;
+        break;
       case RANGEZ:
         this.rangeZ = value;
-      break;
+        break;
       case ENTITYTYPE:
         if (value >= EntityFilterType.values().length) {
           value = 0;
@@ -224,7 +222,7 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
           value = EntityFilterType.values().length - 1;
         }
         this.entityFilter = EntityFilterType.values()[value];
-      break;
+        break;
     }
   }
 
@@ -242,7 +240,7 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
     if (eType >= 0 && eType < EntityFilterType.values().length) {
       this.entityFilter = EntityFilterType.values()[eType];
     }
-          filter.deserialize(input.childOrEmpty("filter"));
+    filter.deserialize(input.childOrEmpty("filter"));
     super.loadAdditional(input);
   }
 

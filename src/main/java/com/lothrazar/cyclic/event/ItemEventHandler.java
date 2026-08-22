@@ -1,12 +1,7 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.item.elemental.FireballItem;
-import com.lothrazar.library.core.Const;
-import com.lothrazar.library.core.IEntityInteractable;
-import com.lothrazar.library.packet.BlockFacadeMessage;
 import com.lothrazar.cyclic.block.cable.CableBase;
-import com.lothrazar.library.core.IBlockFacade;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
@@ -20,11 +15,12 @@ import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
-import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.item.elemental.AntimatterEvaporatorWandItem;
+import com.lothrazar.cyclic.item.elemental.FireballItem;
 import com.lothrazar.cyclic.item.equipment.GlowingHelmetItem;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.food.LoftyStatureApple;
+import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -32,6 +28,10 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
+import com.lothrazar.library.core.Const;
+import com.lothrazar.library.core.IBlockFacade;
+import com.lothrazar.library.core.IEntityInteractable;
+import com.lothrazar.library.packet.BlockFacadeMessage;
 import com.lothrazar.library.util.AttributesUtil;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.ItemStackUtil;
@@ -41,6 +41,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -51,17 +52,15 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.animal.equine.AbstractHorse;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -69,17 +68,29 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.living.*;
-import net.neoforged.neoforge.event.entity.player.*;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
+import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.entity.player.BonemealEvent;
+import net.neoforged.neoforge.event.entity.player.CanContinueSleepingEvent;
+import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
+import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ItemEventHandler {
 
@@ -236,8 +247,8 @@ public class ItemEventHandler {
     if (event.getEntity() instanceof AbstractHorse horse) {
       if (horse.getPersistentData().getBooleanOr(ItemHorseNetheriteFire.NBT_KEY, false)
           && (src.is(DamageTypes.LAVA) || src.is(DamageTypes.IN_FIRE) || src.is(DamageTypes.ON_FIRE) || src.is(DamageTypes.HOT_FLOOR)
-              || src.is(DamageTypes.FIREBALL) || src.is(DamageTypes.UNATTRIBUTED_FIREBALL)
-              || src.is(DamageTypes.LIGHTNING_BOLT))) {
+          || src.is(DamageTypes.FIREBALL) || src.is(DamageTypes.UNATTRIBUTED_FIREBALL)
+          || src.is(DamageTypes.LIGHTNING_BOLT))) {
         event.setNewDamage(0);
         horse.clearFire();
         return;
@@ -272,7 +283,7 @@ public class ItemEventHandler {
         if (this.damageFinder(event, player, ItemRegistry.CHARM_WATER.get(), 0)) {
           //and a holdover bonus
           MobEffectInstance eff = new MobEffectInstance(MobEffects.WATER_BREATHING, Const.TICKS_PER_SEC * 10, 1, false, false, false);
-          
+
           player.addEffect(eff);
         }
       }
@@ -394,35 +405,36 @@ public class ItemEventHandler {
   }
 
   private void tryItemHorseEnder(EntityTickEvent.Pre event) {
-    if(event.getEntity() instanceof LivingEntity liv)
-    if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
-        && liv.getPersistentData().getIntOr(ItemHorseEnder.NBT_KEYACTIVE, 0) > 0) {
-      // 
-      if (liv.isInWater()
-          
-          && liv.getAirSupply() < liv.getMaxAirSupply()
-          && !liv.hasEffect(MobEffects.WATER_BREATHING)) {
-        liv.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, Const.TICKS_PER_SEC * 60, 4, false, false, false));
-        liv.addEffect(new MobEffectInstance(PotionEffectRegistry.SWIMSPEED, Const.TICKS_PER_SEC * 60, 1, false, false, false));
-        ItemHorseEnder.onSuccess(liv);
-      }
-      if (liv.isOnFire()
-          && !liv.hasEffect(MobEffects.FIRE_RESISTANCE)) {
-        liv.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, Const.TICKS_PER_SEC * 60, 4, false, false, false));
-        liv.clearFire();
-        ItemHorseEnder.onSuccess(liv);
-      }
-      if (liv.fallDistance > 12
-          && !liv.hasEffect(MobEffects.SLOW_FALLING)) {
-        liv.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, Const.TICKS_PER_SEC * 60, 4, false, false, false));
+    if (event.getEntity() instanceof LivingEntity liv) {
+      if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
+          && liv.getPersistentData().getIntOr(ItemHorseEnder.NBT_KEYACTIVE, 0) > 0) {
+        //
+        if (liv.isInWater()
 
-        ItemHorseEnder.onSuccess(liv);
-      }
-      if (liv.getHealth() < 6
-          && !liv.hasEffect(MobEffects.ABSORPTION)) {
-        liv.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, Const.TICKS_PER_SEC * 60, 4, false, false, false));
-        liv.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, Const.TICKS_PER_SEC * 60, 4, false, false, false));
-        ItemHorseEnder.onSuccess(liv);
+            && liv.getAirSupply() < liv.getMaxAirSupply()
+            && !liv.hasEffect(MobEffects.WATER_BREATHING)) {
+          liv.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, Const.TICKS_PER_SEC * 60, 4, false, false, false));
+          liv.addEffect(new MobEffectInstance(PotionEffectRegistry.SWIMSPEED, Const.TICKS_PER_SEC * 60, 1, false, false, false));
+          ItemHorseEnder.onSuccess(liv);
+        }
+        if (liv.isOnFire()
+            && !liv.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+          liv.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, Const.TICKS_PER_SEC * 60, 4, false, false, false));
+          liv.clearFire();
+          ItemHorseEnder.onSuccess(liv);
+        }
+        if (liv.fallDistance > 12
+            && !liv.hasEffect(MobEffects.SLOW_FALLING)) {
+          liv.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, Const.TICKS_PER_SEC * 60, 4, false, false, false));
+
+          ItemHorseEnder.onSuccess(liv);
+        }
+        if (liv.getHealth() < 6
+            && !liv.hasEffect(MobEffects.ABSORPTION)) {
+          liv.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, Const.TICKS_PER_SEC * 60, 4, false, false, false));
+          liv.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, Const.TICKS_PER_SEC * 60, 4, false, false, false));
+          ItemHorseEnder.onSuccess(liv);
+        }
       }
     }
   }
@@ -659,12 +671,12 @@ public class ItemEventHandler {
       switch (ItemStorageBag.getPickupMode(bag)) {
         case EVERYTHING:
           resultStack = ItemStorageBag.tryInsert(bag, resultStack);
-        break;
+          break;
         case FILTER:
           resultStack = ItemStorageBag.tryFilteredInsert(bag, resultStack);
-        break;
+          break;
         case NOTHING:
-        break;
+          break;
       }
       if (resultStack.isEmpty()) {
         break;

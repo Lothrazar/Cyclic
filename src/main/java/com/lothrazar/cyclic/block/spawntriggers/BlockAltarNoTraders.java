@@ -10,9 +10,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -65,9 +65,9 @@ public class BlockAltarNoTraders extends BlockCyclic implements SimpleWaterlogge
   @Override
   public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
     world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
-      SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
-      ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
-      return InteractionResult.SUCCESS;
+    SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
+    ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
+    return InteractionResult.SUCCESS;
   }
 
   @Override

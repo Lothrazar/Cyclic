@@ -3,14 +3,13 @@ package com.lothrazar.cyclic.item.compass;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 
 public class ContainerGpsCompass extends ContainerBase {
 
@@ -23,9 +22,11 @@ public class ContainerGpsCompass extends ContainerBase {
     // find the compass in mainhand, offhand, then full inventory
     if (player.getMainHandItem().is(ItemRegistry.GPS_COMPASS.get())) {
       bag = player.getMainHandItem();
-    } else if (player.getOffhandItem().is(ItemRegistry.GPS_COMPASS.get())) {
+    }
+    else if (player.getOffhandItem().is(ItemRegistry.GPS_COMPASS.get())) {
       bag = player.getOffhandItem();
-    } else {
+    }
+    else {
       for (int i = 0; i < playerInventory.getContainerSize(); i++) {
         ItemStack s = playerInventory.getItem(i);
         if (s.is(ItemRegistry.GPS_COMPASS.get())) {
@@ -38,7 +39,7 @@ public class ContainerGpsCompass extends ContainerBase {
     if (h != null) {
       this.endInv = 1;
       // single GPS card slot, centered
-      this.addSlot(new SlotItemHandler(h, 0, 80, 36){
+      this.addSlot(new SlotItemHandler(h, 0, 80, 36) {
         @Override
         public int getMaxStackSize() {
           return 1;

@@ -2,12 +2,13 @@ package com.lothrazar.cyclic.block.cable.energy;
 
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.library.data.ShapeCache;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
+import com.lothrazar.library.data.ShapeCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -35,7 +35,10 @@ public class BlockCableEnergy extends CableBase {
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     boolean facadesEnabled = false;
-    try { facadesEnabled = ConfigRegistry.CABLE_FACADES.get(); } catch (Exception e) {}
+    try {
+      facadesEnabled = ConfigRegistry.CABLE_FACADES.get();
+    } catch (Exception e) {
+    }
     if (facadesEnabled) {
       VoxelShape facade = this.getFacadeShape(state, worldIn, pos, context);
       if (facade != null) {
@@ -65,7 +68,7 @@ public class BlockCableEnergy extends CableBase {
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
 //      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-      IEnergyStorage energy = CapabilityUtil.energy(worldIn,pos.relative(d));
+      IEnergyStorage energy = CapabilityUtil.energy(worldIn, pos.relative(d));
       if (energy != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockAndUpdate(pos, stateIn);

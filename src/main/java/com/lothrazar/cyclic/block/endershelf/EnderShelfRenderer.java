@@ -41,7 +41,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf, E
 
   @Override
   public void extractRenderState(TileEnderShelf blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
     var h = blockEntity.inventory;
@@ -68,7 +68,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf, E
   }
 
   private void renderSlot(TileEnderShelf tile, int slot, ItemStack stack, ItemStackRenderState itemState, PoseStack ms,
-      SubmitNodeCollector submitNodeCollector, int combinedLightIn) {
+                          SubmitNodeCollector submitNodeCollector, int combinedLightIn) {
     if (stack.isEmpty()) {
       return;
     }

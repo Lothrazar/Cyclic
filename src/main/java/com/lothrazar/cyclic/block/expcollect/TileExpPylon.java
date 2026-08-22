@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.expcollect;
 
-import java.util.List;
-import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
@@ -12,10 +10,7 @@ import com.lothrazar.library.util.FluidHelpersUtil;
 import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.MenuProvider;
@@ -26,12 +21,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.minecraft.core.Direction;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -73,7 +72,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
       return;
     }
     //if turned on, collect from the world
-    if(this.collect != 0) {
+    if (this.collect != 0) {
       collectLocalExperience();
     }
   }
@@ -148,9 +147,9 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
     List<ExperienceOrb> list = level.getEntitiesOfClass(ExperienceOrb.class, new AABB(
         worldPosition.getX() - radius, worldPosition.getY() - 1, worldPosition.getZ() - radius,
         worldPosition.getX() + radius, worldPosition.getY() + 2, worldPosition.getZ() + radius), (entity) -> {
-          return entity.isAlive() && entity.getValue() > 0;
-          //entity != null && entity.getHorizontalFacing() == facing;
-        });
+      return entity.isAlive() && entity.getValue() > 0;
+      //entity != null && entity.getHorizontalFacing() == facing;
+    });
     if (list.size() > 0) {
       ExperienceOrb myOrb = list.get(level.getRandom().nextInt(list.size()));
       int addMeXp = myOrb.getValue();
@@ -187,10 +186,10 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case COLLECT:
         this.collect = value % 2;
-      break;
+        break;
     }
   }
 
@@ -199,7 +198,8 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
     switch (Fields.values()[field]) {
       case REDSTONE:
         return this.needsRedstone;
-      case COLLECT:;
+      case COLLECT:
+        ;
         return this.collect;
     }
     return 0;

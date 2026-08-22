@@ -1,9 +1,7 @@
 package com.lothrazar.cyclic.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.library.core.IHasTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractSliderButton;
@@ -14,6 +12,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuiSliderInteger extends AbstractSliderButton implements IHasTooltip {
 
@@ -27,8 +28,8 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   private List<Component> tooltip;
 
   public GuiSliderInteger(int x, int y, int width, int height, int field,
-      BlockPos pos, int min, int max,
-      double initialVal) {
+                          BlockPos pos, int min, int max,
+                          double initialVal) {
     super(x, y, width, height, Component.empty(), 0);
     this.field = field;
     this.pos = pos;
@@ -133,7 +134,7 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
 
   /**
    * move position by delta and save and refresh. adds delta to integer version of slider value and sends both updates
-   * 
+   *
    * @param delta
    */
   private void moveSliderAndUpdate(int delta) {

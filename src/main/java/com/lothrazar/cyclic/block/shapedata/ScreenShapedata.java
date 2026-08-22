@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.shapedata;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.Fields;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.StructCommands;
 import com.lothrazar.cyclic.gui.ButtonMachine;
@@ -11,10 +9,13 @@ import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.components.Tooltip;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
 
@@ -39,11 +40,11 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
     for (StructCommands shape : StructCommands.values()) {
       ButtonMachine btnShape = addRenderableWidget(new ButtonMachine(x, y, width, 20,
           shape.name(), (p) -> {
-            //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
-            ClientPacketDistributor.sendToServer(
-                new PacketTileData(Fields.COMMAND.ordinal(),
-                    shape.ordinal(), menu.tile.getBlockPos()));
-          }));
+        //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
+        ClientPacketDistributor.sendToServer(
+            new PacketTileData(Fields.COMMAND.ordinal(),
+                shape.ordinal(), menu.tile.getBlockPos()));
+      }));
       btnShape.setTooltip(Tooltip.create(Component.translatable("block.cyclic.computer_shape.command")));
       map.put(shape, btnShape);
       y += 20;

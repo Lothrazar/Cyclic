@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.shapedata;
 
-import java.awt.Color;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -14,13 +13,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
+import java.awt.*;
+
 public class RenderShapedata implements BlockEntityRenderer<TileShapedata, RenderShapedata.State> {
 
   public static class State extends BlockEntityRenderState {
     TileShapedata blockEntity;
   }
 
-  public RenderShapedata(BlockEntityRendererProvider.Context d) {}
+  public RenderShapedata(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public State createRenderState() {
@@ -29,7 +31,7 @@ public class RenderShapedata implements BlockEntityRenderer<TileShapedata, Rende
 
   @Override
   public void extractRenderState(TileShapedata blockEntity, State state, float partialTicks, Vec3 cameraPosition,
-      ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+                                 ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
     BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
     state.blockEntity = blockEntity;
   }
