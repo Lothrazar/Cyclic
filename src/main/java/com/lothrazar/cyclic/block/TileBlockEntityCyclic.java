@@ -614,8 +614,16 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Override
   public void setEnergy(int value) {
-    var energy = CapabilityUtil.energy(level,worldPosition);
-    if (energy instanceof EnergyStorageWrapper wrapper) {
+    // 26.1: CapabilityUtil.energy(level, pos) always returns a freshly-wrapped EnergyHandlerAdapter
+    // now (IEnergyStorage.of(EnergyHandler) unconditionally allocates one, confirmed via bytecode -
+    // it never passes through an already-correct instance), so the instanceof EnergyStorageWrapper
+    // check below was always false and this was a silent no-op. Symptom: the client-side energy
+    // widget would stop updating from the periodic PacketSyncEnergy packets (this is the client-side
+    // handler for that) while the screen was open, only catching up on a full resync when the
+    // container was closed and reopened. getEnergyHandler(Direction) is each subclass's own
+    // unwrapped EnergyStorageWrapper field - use that directly instead of round-tripping through the
+    // capability lookup.
+    if (getEnergyHandler(null) instanceof EnergyStorageWrapper wrapper) {
       wrapper.setEnergy(value);
     }
   }
