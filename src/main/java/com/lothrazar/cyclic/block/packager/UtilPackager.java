@@ -123,7 +123,17 @@ public class UtilPackager {
   public static void buildRecipeCaches(final RecipeManager recipeManager, RegistryAccess ra) {
     recipeLoop: for (final RecipeHolder<CraftingRecipe> r : recipeManager.recipeMap().byType(RecipeType.CRAFTING)) {
       CraftingRecipe recipe = r.value();
-      final ItemStack recipeOutput = recipe.assemble(CraftingInput.EMPTY);
+      final ItemStack recipeOutput;
+      try {
+        // Some special vanilla CraftingRecipe subclasses (e.g. DecoratedPotRecipe) assume a fully
+        // populated 3x3 grid and throw when probed with an empty input - not a candidate for packager
+        // conversion regardless, so skip it rather than crashing the whole cache build (same guard as
+        // isRecipeValid above).
+        recipeOutput = recipe.assemble(CraftingInput.EMPTY);
+      }
+      catch (Exception e) {
+        continue recipeLoop;
+      }
       if (recipeOutput.getMaxStackSize() == 1 || recipeOutput.getCount() != 1) {
         continue;
       }

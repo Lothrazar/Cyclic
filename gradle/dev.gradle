@@ -1,0 +1,44 @@
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
+tasks.register('syncExampleConfigs') {
+  group = 'documentation'
+  description = 'Copies generated example config files from run/config/ into examples/.'
+
+  // Resolve everything project-related at configuration time so the task stays
+  // compatible with the configuration cache (Task.project is unavailable at execution time).
+  def modId       = project.mod_id
+  def projectName = project.name
+  def srcDir      = file('run/config')
+  def destDir     = file('examples')
+
+  doLast {
+    if (!srcDir.exists()) {
+      logger.lifecycle("[${projectName}] run/config/ not found nothing to sync.")
+      return
+    }
+
+    def found = [
+      "${modId}.json",
+      "${modId}.toml",
+      "${modId}-common.toml",
+      "${modId}-client.toml",
+      "${modId}-server.toml"
+    ].collect { new File(srcDir, it) }.findAll { it.exists() }
+
+    if (found.isEmpty()) {
+      logger.lifecycle("[${projectName}] No matching config files in run/config/ for '${modId}'.")
+      return
+    }
+
+    destDir.mkdirs()
+    found.each { src ->
+      Files.copy(
+        src.toPath(),
+        new File(destDir, src.name).toPath(),
+        StandardCopyOption.REPLACE_EXISTING
+      )
+      logger.lifecycle("[${projectName}] Synced: ${src.name} → examples/")
+    }
+  }
+}

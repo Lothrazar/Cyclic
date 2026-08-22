@@ -1,13 +1,9 @@
-import net.darkhax.curseforgegradle.TaskPublishCurseForge
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
-
 plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.141'
     id 'idea'
-    id 'net.darkhax.curseforgegradle' version '1.1.25'
+    id 'net.darkhax.curseforgegradle' version '1.1.25' apply false
     id 'com.modrinth.minotaur' version '2.9.0' apply false
 }
 def localProps = new Properties()
@@ -43,7 +39,6 @@ sourceSets.main.resources {
 sourceSets.main.java {
     exclude 'com/lothrazar/cyclic/compat/crafttweaker/**'
 }
-
 
 
 repositories {
@@ -109,7 +104,7 @@ neoForge {
 
         server {
             server()
-            programArgument '--nogui'
+            // programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
@@ -173,8 +168,8 @@ dependencies {
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // for other mods depending on THIS FLIB library, use either a local copy or a maven
-    //   implementation "local.mods:flib:${minecraft_version}-${flib_version}"
-  implementation "curse.maven:flib-661261:${flib_file}"
+      implementation "local.mods:flib:${minecraft_version}-${flib_version}"
+ // implementation "curse.maven:flib-661261:${flib_file}"
 
 
   //these mods have API jars for compile as well as the full mod for local
@@ -260,32 +255,7 @@ publishing {
 }
 
 apply from: 'gradle/deploy.gradle'
-
-// Capture ext properties set by deploy.gradle into local vars so they are
-// accessible inside the task closure (where ext resolves to the task's ext).
-def cfApiKey  = ext.cfApiKey
-def changelog = ext.changelog
-
-// --- CurseForge ---
-// Defined here (not deploy.gradle) so TaskPublishCurseForge resolves against
-// the plugins {} block classpath.
-// it will safely fail if the version already exists: will not overwrite or create a duplicate entry
-tasks.register('publishCurseForge', TaskPublishCurseForge) {
-  group       = 'publishing'
-  description = 'Uploads the mod jar to CurseForge.'
-  dependsOn jar
-
-  apiToken = cfApiKey
-  def mainFile = upload(curse_id, jar)
-  mainFile.displayName   = "${mod_name} ${project.version}"
-  mainFile.releaseType   = 'release'
-  mainFile.addGameVersion(minecraft_version)
-  mainFile.addGameVersion('NeoForge')
-  mainFile.addGameVersion('Java 25')
-  mainFile.addEnvironment('Client', 'Server')
-  mainFile.changelog     = changelog
-  mainFile.changelogType = 'markdown'
-}
+apply from: 'gradle/dev.gradle'
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
@@ -298,46 +268,4 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
-}
-
-tasks.register('syncExampleConfigs') {
-  group = 'documentation'
-  description = 'Copies generated example config files from run/config/ into examples/.'
-
-  // Resolve everything project-related at configuration time so the task stays
-  // compatible with the configuration cache (Task.project is unavailable at execution time).
-  def modId       = project.mod_id
-  def projectName = project.name
-  def srcDir      = file('run/config')
-  def destDir     = file('examples')
-
-  doLast {
-    if (!srcDir.exists()) {
-      logger.lifecycle("[${projectName}] run/config/ not found nothing to sync.")
-      return
-    }
-
-    def found = [
-      "${modId}.json",
-      "${modId}.toml",
-      "${modId}-common.toml",
-      "${modId}-client.toml",
-      "${modId}-server.toml"
-    ].collect { new File(srcDir, it) }.findAll { it.exists() }
-
-    if (found.isEmpty()) {
-      logger.lifecycle("[${projectName}] No matching config files in run/config/ for '${modId}'.")
-      return
-    }
-
-    destDir.mkdirs()
-    found.each { src ->
-      Files.copy(
-        src.toPath(),
-        new File(destDir, src.name).toPath(),
-        StandardCopyOption.REPLACE_EXISTING
-      )
-      logger.lifecycle("[${projectName}] Synced: ${src.name} → examples/")
-    }
-  }
 }

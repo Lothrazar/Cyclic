@@ -60,14 +60,37 @@ tasks.named('publish') {
 // Run all at once:
 //   gradlew publishAll
 // ---------------------------------------------------------------------------
+apply plugin: 'net.darkhax.curseforgegradle'
 apply plugin: 'com.modrinth.minotaur'
 
 def changelogText = (new groovy.json.JsonSlurper().parse(file('update.json'))[minecraft_version]?[mod_version] ?: '') as String
 def mrToken       = findProperty('modrinth_token') ?: deployProps.getProperty('modrinth_token', '') ?: System.getenv('MODRINTH_TOKEN') ?: ''
+def cfApiKey      = findProperty('curseforge_api_key') ?: deployProps.getProperty('curseforge_api_key', '') ?: System.getenv('CURSEFORGE_API_KEY') ?: ''
 
-// Exposed as ext so publishCurseForge in build.gradle can read them after apply from:
-ext.cfApiKey  = findProperty('curseforge_api_key') ?: deployProps.getProperty('curseforge_api_key', '') ?: System.getenv('CURSEFORGE_API_KEY') ?: ''
-ext.changelog = changelogText
+// --- CurseForge ---
+// Loaded by name rather than a static "import" - a class from a plugin declared 'apply false'
+// in build.gradle's plugins {} block isn't resolvable via compile-time import in a separately
+// applied script file (import resolution happens before that classpath is merged in). Loading
+// it dynamically at execution time, after 'apply plugin' above, works around that.
+def curseForgeTaskType = project.buildscript.classLoader.loadClass('net.darkhax.curseforgegradle.TaskPublishCurseForge')
+
+// it will safely fail if the version already exists: will not overwrite or create a duplicate entry
+tasks.register('publishCurseForge', curseForgeTaskType) {
+  group       = 'publishing'
+  description = 'Uploads the mod jar to CurseForge.'
+  dependsOn jar
+
+  apiToken = cfApiKey
+  def mainFile = upload(curse_id, jar)
+  mainFile.displayName   = "${mod_name} ${project.version}"
+  mainFile.releaseType   = 'release'
+  mainFile.addGameVersion(minecraft_version)
+  mainFile.addGameVersion('NeoForge')
+  mainFile.addGameVersion('Java 25')
+  mainFile.addEnvironment('Client', 'Server')
+  mainFile.changelog     = changelogText
+  mainFile.changelogType = 'markdown'
+}
 
 // --- Modrinth ---
 modrinth {
@@ -105,6 +128,51 @@ tasks.register('publishModrinth') {
 }
 
 // --- Combined tasks ---
+// Resolved at configuration time (not inside doFirst) so this stays compatible with the
+// configuration cache - Task.project is unavailable at execution time.
+//
+// Uses 'project' (this mod's own project), not 'rootProject': this workspace's settings.gradle
+// includes every mod as a subproject of an aggregating 'mc261-mods' root (see the
+// `if (project == rootProject)` guard around the wrapper task in build.gradle for the same
+// distinction), so when a mod is built via a ':ModName:release' task path, 'rootProject' means
+// the whole workspace folder, not this mod's own git repo.
+def releaseRepoDir  = project.projectDir
+def releaseRepoName = project.name
+def releaseTag      = "v${minecraft_version}-${mod_version}"
+
+// Refuse to publish unless HEAD is tagged with the exact version this release would build,
+// so a forgotten ./git_tag.sh run fails loudly instead of publishing an untagged commit.
+//
+// This is its own task (with no dependencies of its own) rather than a doFirst on 'release',
+// because 'release' only depends on the publish tasks - dependsOn tasks always run BEFORE a
+// task's own actions, so a check living on 'release' itself would run AFTER the uploads it's
+// meant to guard. Wiring it as a dependency of each publish task instead makes it run first
+// no matter which entry point (release, or an individual publishX task) is used.
+tasks.register('checkReleaseTag') {
+  group       = 'publishing'
+  description = 'Fails if HEAD is not tagged with the version this project would release.'
+
+  doFirst {
+    def out = new ByteArrayOutputStream()
+    def proc = new ProcessBuilder('git', '-C', releaseRepoDir.toString(), 'describe', '--tags', '--exact-match', 'HEAD')
+        .redirectErrorStream(true)
+        .start()
+    out << proc.inputStream
+    proc.waitFor()
+    def actualTag = out.toString().trim()
+    if (proc.exitValue() != 0 || actualTag != releaseTag) {
+      throw new GradleException(
+        "HEAD is not tagged '${releaseTag}' - run './git_tag.sh ${releaseRepoName}' from the workbench root before releasing." +
+        (proc.exitValue() == 0 ? " (HEAD is currently tagged '${actualTag}')" : " (HEAD has no tag)")
+      )
+    }
+  }
+}
+
+tasks.named('publishCurseForge').configure { dependsOn 'checkReleaseTag' }
+tasks.named('publishModrinth').configure { dependsOn 'checkReleaseTag' }
+tasks.named('publish').configure { dependsOn 'checkReleaseTag' }
+
 tasks.register('release') {
   group       = 'publishing'
   description = 'Publishes to CurseForge, Modrinth, and Maven.'

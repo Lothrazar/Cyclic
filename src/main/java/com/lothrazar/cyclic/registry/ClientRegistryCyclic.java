@@ -13,8 +13,14 @@ import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneMod
 import com.lothrazar.cyclic.render.SpinModelRenderer;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import com.lothrazar.library.render.type.FakeBlockRenderTypes;
+import com.lothrazar.library.render.type.LineRenderType;
+import com.lothrazar.library.render.type.LaserRenderType;
+import com.lothrazar.library.render.type.OverlayRenderType;
+import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.cyclic.ModCyclic;
  import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
 import com.lothrazar.cyclic.block.beaconpotion.RenderBeaconPotion;
@@ -144,6 +150,21 @@ import com.lothrazar.cyclic.item.storagebag.ScreenStorageBag;
 
 @EventBusSubscriber(modid = ModCyclic.MODID, value = Dist.CLIENT)
 public class ClientRegistryCyclic {
+
+  // FLib defines these RenderPipelines but only registers them if a consuming mod calls
+  // registerPipelines() from its own RegisterRenderPipelinesEvent listener (see the javadoc on
+  // LaserRenderType.registerPipelines) - nothing here was doing that, so every FLib-backed render
+  // (tomb-line box outlines, location_data/randomizer colour cubes, laser beam, fluid tank, facade
+  // overlay) was either crashing (missing-vertex-element checks happen before the pipeline is ever
+  // touched) or silently drawing nothing (no such CPU-side check, draw call just no-ops).
+  @SubscribeEvent
+  public static void onRegisterRenderPipelines(RegisterRenderPipelinesEvent event) {
+    FakeBlockRenderTypes.registerPipelines(event);
+    LineRenderType.registerPipelines(event);
+    LaserRenderType.registerPipelines(event);
+    OverlayRenderType.registerPipelines(event);
+    FluidTankRenderType.registerPipelines(event);
+  }
 
   @SubscribeEvent
   public static void onRegisterGuiOverlays(RegisterGuiLayersEvent event) {
