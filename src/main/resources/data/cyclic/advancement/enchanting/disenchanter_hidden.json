@@ -19,11 +19,16 @@
     "place_disenchanter": {
       "trigger": "minecraft:placed_block",
       "conditions": {
-        "location": {
-          "block": {
-            "blocks": ["cyclic:disenchanter"]
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": ["cyclic:disenchanter"]
+              }
+            }
           }
-        }
+        ]
       }
     }
   }

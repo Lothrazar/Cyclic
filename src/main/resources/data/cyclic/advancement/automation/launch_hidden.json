@@ -13,17 +13,22 @@
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": true
-  },
+	},
   "parent": "cyclic:automation/first_conveyor",
   "criteria": {
     "place_launch_plate": {
       "trigger": "minecraft:placed_block",
       "conditions": {
-        "location": {
-          "block": {
-            "blocks": ["cyclic:plate_launch"]
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": ["cyclic:plate_launch"]
+              }
+            }
           }
-        }
+        ]
       }
     }
   }
