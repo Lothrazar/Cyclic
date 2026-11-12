@@ -107,6 +107,9 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
   private void normalFlow() {
     for (Direction incomingSide : Direction.values()) {
       final FluidTankBase sideHandler = flow.get(incomingSide).orElse(null);
+      if (sideHandler == null || sideHandler.getFluidAmount() <= 0) {
+        continue;
+      }
       for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
